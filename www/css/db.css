@@ -1,0 +1,157 @@
+body {
+	margin				: 0px;
+}
+
+.main {
+	padding				: 10px;
+}
+
+h1 {
+	color				: white;
+	padding				: 5px;
+	background-color	: #b32;
+	background-position	: 0px 1px;
+	background-repeat	: no-repeat;
+}
+
+a {
+	color				: #b32;
+}
+
+a:hover {
+	color				: black;
+}
+
+input,
+textarea,
+select,
+input.dfile {
+	border				: 1px solid #bbb;
+}
+
+input.dint,
+input.duint,
+input.ddate,
+input.dfloat {
+	width				: 80px;
+}
+
+img.dfile {
+	position			: absolute;
+	left				: 800px;
+}
+
+input.button {
+	color				: white;
+	font-weight			: bold;
+	min-width			: 100px;
+	background-color	: #b32;
+	cursor				: pointer;
+	border				: 0px;
+	-moz-border-radius	: 5px;
+}
+
+input.ddatetime {
+    width				: 120px;
+}
+
+input.dstring {
+	width				: 400px;
+}
+
+input.dtinytext {
+	width				: 700px;
+}
+
+textarea.dtext {
+	width				: 700px;
+	height				: 200px;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+	background-color	: #f5f5f5;
+}
+
+select {
+	width				: 300px;
+}
+
+input.button:hover {
+	background-color	: orange;
+}
+
+input.button:focus {
+	background-color	: orange;
+}
+
+.derror {
+	text-align			: center;
+	background-color	: #fee;
+}
+
+table.results {
+	border-collapse		: collapse;
+	border-spacing		: 0px;
+	font-size			: 90%;
+	white-space			: nowrap;
+	margin-bottom		: 20px;
+}
+
+table.results td {
+	padding				: 1px;
+}
+
+table.results tr.header {
+	background-color	: #b32;
+	color				: white;
+}
+
+table.results tr {
+	background-color	: white;
+}
+
+table.results tr.odd {
+	background-color	: #eee;
+}
+table.results tr:hover td {
+	background-color	: #fee;
+}
+table.results tr.odd:hover td {
+	background-color	: #ffd7d7;
+}
+
+div.links {
+	position			: absolute;
+	width				: 100%;
+	height				: 22px;
+	top					: 45px;
+	left				: 0px;
+
+	font-size			: 0pt;
+	line-height			: 0pt;
+	color				: #e82;
+	background-color	: #e82;
+}
+
+div.links a:first-child {
+	margin-left			: 2px;
+}
+
+div.links a {
+	padding-left		: 8px;
+	padding-right		: 8px;
+
+	font-family			: "Trebuchet MS";
+	font-weight			: bold;
+	font-size			: 12pt;
+	line-height			: 22px;
+	color				: white;
+	font-variant		: small-caps;
+	text-decoration		: none;
+}
+
+div.links a:hover {
+	background-color	: black;
+}

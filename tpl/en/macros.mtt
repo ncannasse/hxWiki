@@ -1,0 +1,25 @@
+<macros>
+
+	<macro name="confirm()">onclick="return confirm('Please confirm this action.')"</macro>
+
+	<macro name="versionDesc(v)">
+		::if v.code == 0::
+			<a href="/::v._entry._path::?version=::v.id::">View</a>
+		::elseif v.code == 1::
+			Deleted
+		::elseif v.code == 2::
+			Renamed from ::v.content:: to ::v.htmlContent::
+		::elseif v.code == 3::
+			::if v.content == null::
+			Set title to ::v.htmlContent::
+			::elseif v.htmlContent == null::
+			Removed title ::v.content::
+			::else::
+			Changed title from ::v.content:: to ::v.htmlContent::
+			::end::
+		::else::
+			Unknown #::v.code::
+		::end::
+	</macro>
+
+</macros>

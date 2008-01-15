@@ -1,0 +1,17 @@
+<texts>
+
+	<t id="date_fmt">%A %d %B at %H:%M</t>
+	<t id="locale1">en_US.UTF-8</t>
+	<t id="locale2">EN</t>
+
+	<t id="err_must_login">You must login before being able to do this action</t>
+	<t id="err_unknown_action">Unknown action <em>::action::</em></t>
+	<t id="err_unknown_user_pass">Wrong username or password</t>
+
+	<t id="entry_modified">Your modifications have been saved</t>
+	<t id="entry_deleted">This entry content has been deleted</t>
+	<t id="err_cant_rename_entry">You can't use this name for this entry because it's already used</t>
+	<t id="err_cant_rename_rec">Recursive entries are not allowed</t>
+	<t id="entry_renamed">This entry has been successfully renamed</t>
+
+</texts>

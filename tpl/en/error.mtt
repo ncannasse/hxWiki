@@ -1,0 +1,13 @@
+::use 'design.mtt'::
+
+<h1>Error</h1>
+
+<div class="error">::error::</div>
+
+<h2>Stack</h2>
+
+<pre>
+::raw stack::
+</pre>
+
+::end::

@@ -1,0 +1,11 @@
+::use 'design.mtt'::
+
+<h1>Wiki Map</h1>
+
+<ul class="map">
+	::foreach e roots::
+	::use 'map_tree.mtt'::::end::
+	::end::
+</ul>
+
+::end::

@@ -1,0 +1,15 @@
+x title is separate
+x create/edit in hierarchy
+x allow rename
+x display sitemap (rec.tree in mtt ???)
+x rename / changing title versioning
+x rename : allow / for reparenting
+x skinable
+- custom syntax with realtime preview
+- cascade updates for referenced content/title
+- file upload
+- allow to list some directory content
+- on edit, lock with timeout
+- multilang
+- user : infos + changes history
+- haxe skin

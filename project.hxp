@@ -1,0 +1,32 @@
+﻿<haxe selected="0">
+  <output name="Web" mode="neko" out="www/index.n" class="App" lib="" cmd="http://dev.hxwiki.com" main="True" debug="False">-cp src
+--override
+-D spod_rtti</output>
+  <files path="">
+    <dir path="db">
+      <file path="src\db\Entry.hx" />
+      <file path="src\db\Session.hx" />
+      <file path="src\db\SessionData.hx" />
+      <file path="src\db\User.hx" />
+      <file path="src\db\Version.hx" />
+    </dir>
+    <dir path="handler">
+      <file path="src\handler\Action.hx" />
+      <file path="src\handler\Handler.hx" />
+      <file path="src\handler\Main.hx" />
+    </dir>
+    <dir path="tpl">
+      <file path="www\css\default.css" />
+      <file path="tpl\en\design.mtt" />
+      <file path="tpl\en\entry.mtt" />
+      <file path="tpl\en\error.mtt" />
+      <file path="tpl\en\macros.mtt" />
+      <file path="tpl\en\map.mtt" />
+      <file path="tpl\en\map_tree.mtt" />
+      <file path="tpl\en\texts.xml" />
+    </dir>
+    <file path="src\App.hx" />
+    <file path="src\Config.hx" />
+    <file path="src\Text.hx" />
+  </files>
+</haxe>
