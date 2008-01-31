@@ -4,17 +4,18 @@
 		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
 		<title>haxeWiki</title>
 		<link rel="stylesheet" type="text/css" href="/css/::style::.css"/>
+		<script type="text/javascript" src="/wiki.js"/>
 	</head>
 
 	<body>
 
-		<div id="site">
+		<div class="site">
 
-		<div id="header">
+		<div class="header">
 			<a href="/">haXe Wiki</a>
 		</div>
 
-		<div id="menu">
+		<div class="menu">
 			::if user == null::
 				<form action="/wiki/login" method="POST">
 					<span class="group"><span class="tfield">User :</span> <input name="user" class="field"/></span>
@@ -31,16 +32,16 @@
 			::raw notification.text::
 		</div>
 
-		<div id="content">
+		<div class="content">
 			::raw __content__::
 		</div>
 
-		<ul id="links">
+		<ul class="links">
 			<li ::cond isAdmin::><a href="/db">Database</a></li>
 			<li><a href="/wiki/map">Wiki Map</a></li>
 		</ul>
 
-		<div id="footer">
+		<div class="footer">
 			&copy; 2007-2008 Nicolas Cannasse | Powered by <a href="http://haxe.org">haXe</a>
 		</div>
 		</div>

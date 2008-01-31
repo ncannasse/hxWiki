@@ -2,6 +2,7 @@
   <output name="Web" mode="neko" out="www/index.n" class="App" lib="" cmd="http://dev.hxwiki.com" main="True" debug="False">-cp src
 --override
 -D spod_rtti</output>
+  <output name="JS" mode="js" out="www/wiki.js" class="Editor" lib="" cmd="" main="False" debug="False">-cp src</output>
   <files path="">
     <dir path="db">
       <file path="src\db\Entry.hx" />
@@ -27,6 +28,7 @@
     </dir>
     <file path="src\App.hx" />
     <file path="src\Config.hx" />
+    <file path="src\Editor.hx" />
     <file path="src\Text.hx" />
   </files>
 </haxe>

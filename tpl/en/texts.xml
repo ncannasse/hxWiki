@@ -14,4 +14,15 @@
 	<t id="err_cant_rename_rec">Recursive entries are not allowed</t>
 	<t id="entry_renamed">This entry has been successfully renamed</t>
 
+	<!-- editor -->
+
+	<t id="empty_text">Text</t>
+	<t id="empty_link_text">http://www.domain.com|Title</t>
+
+	<t id="bold">B</t>
+	<t id="italic">I</t>
+	<t id="code">Code</t>
+	<t id="link">A</t>
+	<t id="external_link">URL</t>
+
 </texts>

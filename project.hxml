@@ -4,3 +4,9 @@
 -cp src
 --override
 -D spod_rtti
+
+--next
+# JS
+-js www/wiki.js
+Editor
+-cp src

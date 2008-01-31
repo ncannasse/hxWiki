@@ -8,21 +8,34 @@
 	::end::
 </div>
 
-<ul class="buttons">
+<ul class="buttons" ::cond user::>
 	::if oldversion == null::
 	<li><a href="/wiki/edit?path=::entry._path::">edit</a></li>
 	<li ::cond entry.id != null::><a href="/wiki/rename?path=::entry._path::">rename</a></li>
 	<li ::cond entry._version != null::><a href="/wiki/delete?path=::entry._path::" $$confirm()>delete</a></li>
 	::end::
 	<li><a href="/::entry._path::?history=1">history</a></li>
+	<li><a href="/db/Entry/edit/::entry.id::" ::cond isAdmin && entry.id != null::>db</a></li>
 </ul>
 
-<form method="POST" action="/wiki/edit?submit=1" ::cond edit::>
-	<input type="hidden" name="path" value="::entry._path::"/>
-	<span class="tfield">Title :</span> <input name="title" value="::entry._title::" class="field"/>
-	<span class="tfield">Content :</span> <textarea name="content">::if entry._version != null::::entry._version.content::::end::</textarea>
-	<input type="submit" value="Edit" $$confirm() class="button"/>
-</form>
+::if edit::
+
+	::raw editor.initJS()::
+
+	<form method="POST" action="/wiki/edit?submit=1">
+		<input type="hidden" name="path" value="::entry._path::"/>
+		<span class="tfield">Title :</span> <input name="title" value="::entry._title::" class="field"/>
+		<ul class="buttons">
+			::foreach b editor.config.buttons::
+			<li><a href="#" onclick="::editor.buttonAction(b)::">::b.label::</a></li>
+			::end::
+		</ul>
+		<span class="tfield">Content :</span>
+		<textarea name="::editor.content::" onkeyup="::editor.config.name::.updatePreview()" onkeydown="return ::editor.config.name::.handleTab(event)">::if entry._version != null::::entry._version.content::::end::</textarea>
+		<input type="submit" value="Modify" $$confirm() class="button"/>
+		<input type="submit" value="Cancel" onclick="if( confirm('Cancel Changes ?') ) document.location = '/::e._path::'; return false" class="button"/>
+	</form>
+::end::
 
 <form method="POST" action="/wiki/rename?submit=1" ::cond rename::>
 	<input type="hidden" name="path" value="::entry._path::"/>
@@ -42,22 +55,30 @@
 			<th>User</th>
 			<th>Action</th>
 		</tr>
-		<tr ::repeat v history::>
+		::foreach v history::
+		<tr ::attr class if( repeat.v.even ) "even" else "odd"::>
 			<td>#::v.id::</td>
 			<td>::v.date::</td>
 			<td><a href="/wiki/user?name=::v._author.name::">::v._author.name::</a></td>
 			<td>$$versionDesc(::v::)</td>
 		</tr>
+		::end::
 	</table>
+::elseif edit::
+	<div class="view" id="::editor.preview::">
+	</div>
+	<script type="text/javascript">
+		::editor.config.name::.updatePreview();
+	</script>
 ::elseif version == null::
 	<div class="error" ::cond edit != true::>
 		This page does not currently exists, you can <a href="/wiki/edit?path=::entry._path::">create</a> it.
 	</div>
 ::else::
-	<div id="view">
+	<div class="view">
 	::raw version.htmlContent::
 	</div>
-	<div id="version">
+	<div class="version">
 		version #::version.id::, modified ::version.date:: by <a href="/wiki/user?name=::version._author.name::">::version._author.name::</a>
 	</div>
 ::end::

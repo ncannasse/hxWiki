@@ -2,41 +2,41 @@ body {
 	text-align: center;
 }
 
-#site {
+.site {
 	width : 800px;
 	position : relative;
 	margin : 0px auto 0px auto;
 	text-align : justify;
 }
 
-#header {
+.header {
 	text-align : center;
 }
 
-#header a {
+.header a {
 	font-size : 30px;
 	text-decoration : none;
 }
 
-#menu {
+.menu {
 	float : right;
 	text-align : right;
 }
 
-#menu .field {
+.menu .field {
 	width : 50px;
 }
 
-#menu .group {
+.menu .group {
 	display : block;
 	margin-bottom : 2px;
 }
 
-#menu .tfield {
+.menu .tfield {
 	display : inline;
 }
 
-#menu strong {
+.menu strong {
 	display : block;
 }
 
@@ -55,17 +55,17 @@ div.error, div#notification.error {
 	text-align : center;
 }
 
-#content {
+.content {
 }
 
-#view {
+.view {
 	width : 800;
 	background-color : #eee;
 	margin-top : 10px;
 	padding : 5px;
 }
 
-#version {
+.version {
 	font-size : 10px;
 	text-align : right;
 }
@@ -113,18 +113,18 @@ ul.buttons a:hover, input.button:hover {
 	background-color : #eee;
 }
 
-ul#links {
+ul.links {
 	margin : 5px 0px 0px 0px;
 	padding : 0;
 	float : left;
 	list-style-type : none;
 }
 
-ul#links li {
+ul.links li {
 	display : inline;
 }
 
-#footer {
+.footer {
 	text-align : right;
 	margin-top : 10px;
 	font-size : 14px;
@@ -141,3 +141,46 @@ ul.map li.has_content {
 	font-style : normal;
 }
 
+table.history th {
+	text-align : center;
+	color : white;
+	padding-left : 10px;
+	padding-right : 10px;
+	background-color : #aaa;
+}
+
+table.history tr.even {
+	background-color : #eee;
+}
+
+pre {
+	background-color : #f7f7f7;
+	border : 1px dashed #aaa;
+	padding : 5px;
+	margin : 10px;
+}
+
+pre.xml span {
+	color : #009;
+}
+
+pre.xml span.comment, pre.xml span.string, pre.haxe span.comment {
+	color : #090;
+}
+
+pre.haxe span.kwd {
+	color : #009;
+	font-weight : bold;
+}
+
+pre.haxe span.type, pre.haxe span.number {
+	color : #557;
+}
+
+pre.haxe span.string {
+	color : red;
+}
+
+pre.haxe span.op {
+	font-weight : bold;
+}

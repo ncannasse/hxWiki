@@ -5,7 +5,7 @@ x display sitemap (rec.tree in mtt ???)
 x rename / changing title versioning
 x rename : allow / for reparenting
 x skinable
-- custom syntax with realtime preview
+x custom syntax with realtime preview
 - cascade updates for referenced content/title
 - file upload
 - allow to list some directory content

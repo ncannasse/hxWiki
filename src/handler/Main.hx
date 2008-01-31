@@ -75,14 +75,33 @@ class Main extends Handler<Void> {
 		App.context.entry = entry;
 	}
 
+	function createEditor() {
+		var config = {
+			empty_text : Text.get.empty_text,
+			name : "editor",
+		};
+		var e = new Editor(config);
+		e.addButton(Text.get.bold,"**");
+		e.addButton(Text.get.italic,"//");
+		e.addButton(Text.get.code,"''");
+		e.addButton("H1","====== "," ======");
+		e.addButton("H2","===== "," =====");
+		e.addButton("H3","==== "," ====");
+		e.addButton(Text.get.link,"[[","]]");
+		e.addButton(Text.get.external_link,"[[","]]",Text.get.empty_link_text);
+		return e;
+	}
+
 	function doEdit() {
+		var editor = createEditor();
 		var entry = getEntry();
 		App.context.edit = true;
 		App.context.entry = entry;
+		App.context.editor = editor;
 		if( !request.exists("submit") )
 			return;
 		// edit
-		var content = StringTools.trim(request.get("content")).split("\r\n").join("\n");
+		var content = request.get(editor.content);
 		var entry = if( entry.id == null ) { entry.insert(); entry; } else db.Entry.manager.get(entry.id);
 		var oldTitle = entry.title;
 		entry.title = StringTools.trim(request.get("title",entry.name));
@@ -93,14 +112,19 @@ class Main extends Handler<Void> {
 			v.setChange(VTitle,oldTitle,entry.title);
 			v.insert();
 		}
-		if( content == "" )
+		var v = null;
+		if( StringTools.trim(content).length == 0 )
 			entry.markDeleted(App.user);
 		else if( entry.version == null || entry.version.content != content ) {
-			var v = new db.Version(entry,App.user);
+			v = new db.Version(entry,App.user);
 			v.content = content;
-			v.htmlContent = content;
 			v.insert();
 			entry.version = v;
+		} else if( entry.version != null )
+			v = db.Version.manager.get(entry.version.id);
+		if( v != null ) {
+			v.htmlContent = editor.format(content);
+			v.update();
 		}
 		entry.update();
 		throw Action.Done(entry.getURL(),Text.get.entry_modified);
