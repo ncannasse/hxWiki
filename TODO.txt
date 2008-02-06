@@ -6,6 +6,7 @@ x rename / changing title versioning
 x rename : allow / for reparenting
 x skinable
 x custom syntax with realtime preview
+- absolute + relative wiki links
 - cascade updates for referenced content/title
 - file upload
 - allow to list some directory content
