@@ -61,6 +61,7 @@ class Entry extends neko.db.Object {
 	}
 
 	public function cleanup() {
+		if( id == null ) return;
 		if( db.Version.manager.count({ eid : id }) > 0 || manager.count({ pid : id }) > 0 ) return;
 		delete();
 		if( parent != null ) parent.cleanup();
