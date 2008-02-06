@@ -1,6 +1,6 @@
 <config
 	lang="en"
-	db="mysql://root:@localhost:3306/hxwiki"
+	db="mysql://root:@slave:3306/hxwiki"
 	debug="1"
 	cache="0"
 />
