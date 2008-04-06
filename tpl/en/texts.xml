@@ -17,12 +17,15 @@
 	<!-- editor -->
 
 	<t id="empty_text">Text</t>
-	<t id="empty_link_text">http://www.domain.com|Title</t>
+	<t id="empty_link_text">page</t>
+	<t id="empty_external_link_text">http://www.domain.com|Title</t>
 
 	<t id="bold">B</t>
 	<t id="italic">I</t>
 	<t id="code">Code</t>
 	<t id="link">A</t>
 	<t id="external_link">URL</t>
+
+	<t id="allowed_extensions">gif|png|jpg|zip|gz|tgz|dmg|exe|swf|txt|xml|pdf</t>
 
 </texts>

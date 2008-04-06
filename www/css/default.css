@@ -184,3 +184,19 @@ pre.haxe span.string {
 pre.haxe span.op {
 	font-weight : bold;
 }
+
+a.intern {
+	color : #008;
+}
+
+a.broken {
+	color : #d00;
+}
+
+a.extern {
+	color : #080;
+}
+
+a.file {
+	color : #f80;
+}

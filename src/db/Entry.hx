@@ -18,6 +18,7 @@ class Entry extends neko.db.Object {
 	public var pid : SNull<SInt>;
 	public var parent(dynamic,dynamic) : SNull<Entry>;
 	public var title : SNull<STinyText>;
+	public var vid : SNull<SInt>;
 	public var version(dynamic,dynamic) : SNull<Version>;
 
 	public function childs() {
@@ -58,6 +59,10 @@ class Entry extends neko.db.Object {
 
 	public function get_path() {
 		return list().map(function(e) { return e.name; }).join("/");
+	}
+
+	public function hasContent() {
+		return vid != null;
 	}
 
 	public function cleanup() {

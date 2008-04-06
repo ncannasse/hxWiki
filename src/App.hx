@@ -46,7 +46,9 @@ class App {
 		// init
 		request = new mtwin.web.Request();
 		context = Reflect.empty();
-		session = db.Session.initialize(neko.Web.getCookies().get("sid"));
+		var sid = request.get("sid");
+		if( sid == null ) sid = neko.Web.getCookies().get("sid");
+		session = db.Session.initialize(sid);
 		if( session.data == null ) {
 			try {
 				session.insert();

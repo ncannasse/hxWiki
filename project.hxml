@@ -10,3 +10,10 @@
 -js www/wiki.js
 Editor
 -cp src
+
+--next
+# 
+-swf www/upload.swf
+-swf-version 9
+-main Uploader
+-cp src

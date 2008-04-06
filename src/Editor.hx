@@ -13,26 +13,34 @@ typedef EditorButton = {
 
 class Editor {
 
+	public static function normalize(name:String) {
+		return ~/[^a-z0-9.]+/g.replace(name.toLowerCase(),"_");
+	}
+
 	public var content(default,null) : String;
 	public var preview(default,null) : String;
 	var config : {
 		buttons : Array<EditorButton>,
 		text : String,
 		name : String,
+		path : Array<String>,
+		sid : String,
 	};
+	var titles : Hash<{ exists : Bool, title : String }>;
+	#if js
+	var uploadImage : Bool;
+	#end
+
 
 	public function new(data) {
 		#if js
 		config = haxe.Unserializer.run(data);
 		#else true
-		config = {
-			buttons : new Array(),
-			text : data.empty_text,
-			name : data.name,
-		};
+		config = data;
 		#end
 		content = config.name + "_content";
 		preview = config.name + "_preview";
+		titles = new Hash();
 	}
 
 	#if js
@@ -53,6 +61,38 @@ class Editor {
 		var sel = new js.Selection(getDocument());
 		sel.insert("\t","","");
 		return false;
+	}
+
+	public function initUpload( title, pattern, img ) {
+		var _ = haxe.remoting.Connection;
+		var params = {
+			title : title,
+			pattern : pattern,
+			url : "/wiki/upload",
+			bgcolor : 0x000000,
+			fgcolor : 0xFFFFFF,
+			color : 0x008000,
+			object : config.name,
+			sid : config.sid,
+		};
+		var swf = new js.SWFObject("/upload.swf","swf_upload",100,5,"9","#FFFFFF");
+		var params = Lambda.map(Reflect.fields(params),function(k) return k+"="+StringTools.urlEncode(Reflect.field(params,k)));
+		swf.addParam("AllowScriptAccess","always");
+		swf.addParam("wmode","transparent");
+		swf.addParam("FlashVars",params.join("&"));
+		swf.write("upload");
+		uploadImage = img;
+	}
+
+	function uploadError( e : String ) {
+		js.Lib.alert(e);
+	}
+
+	function uploadResult( url : String ) {
+		var sel = new js.Selection(getDocument());
+		var text = uploadImage ? "@" + url + "@" : "{{" + url + "}}";
+		sel.insert(sel.get(),text,"");
+		updatePreview();
 	}
 
 	#else true
@@ -83,10 +123,41 @@ class Editor {
 
 	// ---------------- FORMAT ----------------
 
-	public function getInfos( link : String ) {
+	public function getTitle( path : Array<String> ) {
+		#if js
+		var data = haxe.Http.request("/wiki/title?path="+path.join("/"));
+		if( data == "" )
+			return null;
+		return StringTools.htmlEscape(data);
+		#else true
+		return null;
+		#end
+	}
+
+	function getInfos( link : String ) {
+		var inf = link.split("|");
+		var title = null;
+		if( inf.length == 2 ) {
+			link = inf[0];
+			title = inf[1];
+		}
+		var parts = link.split("/");
+		var path = Lambda.array(Lambda.map(parts,normalize));
+		if( path[0] == "" ) // absolute path
+			path.shift();
+		else
+			path = config.path.concat(path);
+		var url = path.join("/");
+		var inf = titles.get(url);
+		if( inf == null ) {
+			var t = getTitle(path);
+			inf = (t == null) ? { title : parts[parts.length-1], exists : false } : { title : t, exists : true };
+			titles.set(url,inf);
+		}
 		return {
-			url : "/"+link,
-			title : link,
+			url : "/" + url,
+			title : if( title == null ) inf.title else title,
+			exists : inf.exists,
 		};
 	}
 
@@ -171,11 +242,15 @@ class Editor {
 		t = ~/===== ?(.*?) ?=====/g.replace(t,"<h2>$1</h2>");
 		t = ~/==== ?(.*?) ?====/g.replace(t,"<h3>$1</h3>");
 		// links
-		t = ~/\[\[([^\]]*?)\|(.*?)\]\]/g.replace(t,'<a href="$1">$2</a>');
-		t = ~/\[\[(.*?)\]\]/.customReplace(t,function(r) {
+		t = ~/\[\[(https?:[^\]]*?)\|(.*?)\]\]/g.replace(t,'<a href="$1" class="extern">$2</a>');
+		t = ~/\[\[([^\]]*?)\]\]/.customReplace(t,function(r) {
 			var i = me.getInfos(r.matched(1));
-			return '<a href="'+i.url+'">'+i.title+'</a>';
+			var cl = i.exists ? "intern" : "broken";
+			return '<a href="'+i.url+'" class="'+cl+'">'+i.title+'</a>';
 		});
+		// images / files
+		t = ~/@([ A-Za-z0-9._-]+)@/g.replace(t,'<img src="/file/$1" alt="$1" class="intern"/>');
+		t = ~/\{\{([ A-Za-z0-9._-]+)\}\}/g.replace(t,'<a href="/file/$1" class="file">$1</a>');
 		// lists
 		t = list(t);
 		// bold

@@ -3,9 +3,12 @@
 --override
 -D spod_rtti</output>
   <output name="JS" mode="js" out="www/wiki.js" class="Editor" lib="" cmd="" main="False" debug="False">-cp src</output>
+  <output name="" mode="swf9" out="www/upload.swf" class="Uploader" lib="" cmd="" main="True" debug="False">-cp src</output>
   <files path="">
     <dir path="db">
+      <file path="src\db\Dependency.hx" />
       <file path="src\db\Entry.hx" />
+      <file path="src\db\File.hx" />
       <file path="src\db\Session.hx" />
       <file path="src\db\SessionData.hx" />
       <file path="src\db\User.hx" />
@@ -30,5 +33,7 @@
     <file path="src\Config.hx" />
     <file path="src\Editor.hx" />
     <file path="src\Text.hx" />
+    <file path="TODO.txt" />
+    <file path="src\Uploader.hx" />
   </files>
 </haxe>
