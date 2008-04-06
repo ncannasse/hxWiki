@@ -44,16 +44,17 @@ class Main extends Handler<Void> {
 	function doLogin() {
 		var user = request.get("user");
 		var pass = request.get("pass");
+		var url = request.get("url","/");
 		var u = db.User.manager.search({ name : user, pass : pass },false).first();
 		if( u == null )
-			throw Action.Error("/",Text.get.err_unknown_user_pass);
+			throw Action.Error(url,Text.get.err_unknown_user_pass);
 		App.session.setUser(u);
-		throw Action.Goto("/");
+		throw Action.Goto(url);
 	}
 
 	function doLogout() {
 		App.session.delete();
-		throw Action.Goto("/");
+		throw Action.Goto(request.get("url","/"));
 	}
 
 	function getEntry( ?path ) {

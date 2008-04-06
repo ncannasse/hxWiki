@@ -10,6 +10,7 @@ x links handling
 x cascade updates for referenced content/title
 x file upload
 x images insert
+x menu
 - swf insert
 - allow to list some directory content
 - on edit, lock with timeout

@@ -18,25 +18,42 @@ body {
 	text-decoration : none;
 }
 
-.menu {
+ul.menu {
+	padding-left : 0px;
+	margin-top : 0px;
+	margin-bottom : 0px;
+}
+
+ul.menu li {
+	padding-right : 10px;
+	display : inline;
+}
+
+ul.menu li a {
+	text-decoration : none;
+	color : black;
+	font-size : 20px;
+}
+
+.login {
 	float : right;
 	text-align : right;
 }
 
-.menu .field {
+.login .field {
 	width : 50px;
 }
 
-.menu .group {
+.login .group {
 	display : block;
 	margin-bottom : 2px;
 }
 
-.menu .tfield {
+.login .tfield {
 	display : inline;
 }
 
-.menu strong {
+.login strong {
 	display : block;
 }
 

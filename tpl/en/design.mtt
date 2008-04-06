@@ -15,16 +15,23 @@
 			<a href="/">haXe Wiki</a>
 		</div>
 
-		<div class="menu">
+		<ul class="menu">
+			::foreach l links(0)::
+			<li><a href="::l.url::">::l.title::</a></li>
+			::end::
+		</ul>
+
+		<div class="login">
 			::if user == null::
 				<form action="/wiki/login" method="POST">
 					<span class="group"><span class="tfield">User :</span> <input name="user" class="field"/></span>
 					<span class="group"><span class="tfield">Pass :</span> <input type="password" name="pass" class="field"/></span>
+					<input type="hidden" name="url" value="::request.getURI()::"/>
 					<input type="submit" value="OK" class="button"/>
 				</form>
 			::else::
 				<strong>::user.name::</strong>
-				<a href="/wiki/logout" $$confirm()>Logout</a>
+				<a href="/wiki/logout?url=::request.getURI()::" $$confirm()>Logout</a>
 			::end::
 		</div>
 
@@ -39,6 +46,9 @@
 		<ul class="links">
 			<li ::cond isAdmin::><a href="/db">Database</a></li>
 			<li><a href="/wiki/map">Wiki Map</a></li>
+			::foreach l links(1)::
+			<li><a href="::l.url::">::l.title::</a></li>
+			::end::
 		</ul>
 
 		<div class="footer">

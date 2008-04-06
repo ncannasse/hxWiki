@@ -3,5 +3,6 @@
 	db="mysql://root:@slave:3306/hxwiki"
 	debug="1"
 	cache="0"
+	style="default"
 	max_allowed_upload="10000000"
 />

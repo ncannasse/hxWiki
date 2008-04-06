@@ -118,6 +118,7 @@ class App {
 		context.session = session;
 		context.request = request;
 		context.style = Config.get("style","default");
+		context.links = db.Link.manager.list;
 		if( session != null && session.notification != null ) {
 			context.notification = session.notification;
 			session.notification = null;
