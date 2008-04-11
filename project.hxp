@@ -21,6 +21,7 @@
       <file path="src\handler\Main.hx" />
     </dir>
     <dir path="tpl">
+      <file path="config.xml" />
       <file path="www\css\default.css" />
       <file path="tpl\en\design.mtt" />
       <file path="tpl\en\entry.mtt" />

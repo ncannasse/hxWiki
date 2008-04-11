@@ -27,6 +27,7 @@ class Editor {
 		sid : String,
 	};
 	var titles : Hash<{ exists : Bool, title : String }>;
+	var uniqueId : Int;
 	#if js
 	var uploadImage : Bool;
 	var refresh : { last : Float, time : Float, pending : Bool };
@@ -69,6 +70,12 @@ class Editor {
 			return false;
 		}
 		prev.innerHTML = format(getDocument().value);
+		// execute generate JS scripts
+		for( i in 1...uniqueId ) {
+			var e = js.Lib.document.getElementById("js_"+i);
+			if( e != null )
+				js.Lib.eval(e.innerHTML);
+		}
 		if( refresh.last > 0 )
 			refresh.time = refresh.last - start;
 		refresh.last = haxe.Timer.stamp();
@@ -154,6 +161,17 @@ class Editor {
 		#end
 	}
 
+	function makePath( link : String ) {
+		var parts = link.split("/");
+		var path = Lambda.array(Lambda.map(parts,normalize));
+		if( path[0] == "" ) { // absolute path
+			path.shift();
+			if( path.length == 0 ) path = config.path.copy();
+		} else
+			path = config.path.concat(path);
+		return { path : path, title : parts[parts.length-1] };
+	}
+
 	function getInfos( link : String ) {
 		var inf = link.split("|");
 		var title = null;
@@ -161,17 +179,12 @@ class Editor {
 			link = inf[0];
 			title = inf[1];
 		}
-		var parts = link.split("/");
-		var path = Lambda.array(Lambda.map(parts,normalize));
-		if( path[0] == "" ) // absolute path
-			path.shift();
-		else
-			path = config.path.concat(path);
-		var url = path.join("/");
+		var p = makePath(link);
+		var url = p.path.join("/");
 		var inf = titles.get(url);
 		if( inf == null ) {
-			var t = getTitle(path);
-			inf = (t == null) ? { title : parts[parts.length-1], exists : false } : { title : t, exists : true };
+			var t = getTitle(p.path);
+			inf = (t == null) ? { title : p.title, exists : false } : { title : t, exists : true };
 			titles.set(url,inf);
 		}
 		return {
@@ -179,6 +192,14 @@ class Editor {
 			title : if( title == null ) inf.title else title,
 			exists : inf.exists,
 		};
+	}
+
+	public function getSubLinks( path : Array<String> ) : Array<{ url : String, title : String }> {
+		#if js
+		return haxe.Unserializer.run( haxe.Http.request("/wiki/sublist?path="+path.join("/")) );
+		#else true
+		return null;
+		#end
 	}
 
 	function list( t : String ) : String {
@@ -264,6 +285,15 @@ class Editor {
 		// links
 		t = ~/\[\[(https?:[^\]]*?)\|(.*?)\]\]/g.replace(t,'<a href="$1" class="extern">$2</a>');
 		t = ~/\[\[([^\]]*?)\]\]/.customReplace(t,function(r) {
+			var link = r.matched(1);
+			if( link.substr(link.length-2,2) == ".*" ) {
+				var list = me.getSubLinks(me.makePath(link.substr(0,link.length-2)).path);
+				var str = '<ul class="subs">';
+				for( i in list )
+					str += '<li><a href="'+i.url+'" class="intern">'+i.title+'</a>';
+				str += "</ul>";
+				return str;
+			}
 			var i = me.getInfos(r.matched(1));
 			var cl = i.exists ? "intern" : "broken";
 			return '<a href="'+i.url+'" class="'+cl+'">'+i.title+'</a>';
@@ -271,6 +301,20 @@ class Editor {
 		// images / files
 		t = ~/@([ A-Za-z0-9._-]+)@/g.replace(t,'<img src="/file/$1" alt="$1" class="intern"/>');
 		t = ~/\{\{([ A-Za-z0-9._-]+)\}\}/g.replace(t,'<a href="/file/$1" class="file">$1</a>');
+		t = ~/@([ A-Za-z0-9._-]+\.swf):([0-9]+)x([0-9]+)(:[^@]+)?@/g.customReplace(t,function(r) {
+			var id = me.uniqueId++;
+			var str = '<div id="swf_'+id+'"></div>';
+			str += '<script type="text/javascript" id="js_'+id+'">';
+			str += "var o = new js.SWFObject('/file/"+r.matched(1)+"','swfobj_"+id+"',"+r.matched(2)+","+r.matched(3)+",'9','#FFFFFF');";
+			var params = r.matched(4);
+			if( params != null ) {
+				params = Lambda.map(params.substr(1).split("&amp;"),function(p) return Lambda.map(p.split("="),StringTools.urlEncode).join("=")).join("&");
+				str += "o.addParam('FlashVars','"+params+"');";
+			}
+			str += "o.write('swf_"+id+"');";
+			str += "</script>";
+			return str;
+		});
 		// lists
 		t = list(t);
 		// bold
@@ -283,6 +327,7 @@ class Editor {
 	}
 
 	public function format( t : String ) : String {
+		uniqueId = 1;
 		t = StringTools.replace(t,"\r\n","\n");
 		var me = this;
 		var b = new StringBuf();

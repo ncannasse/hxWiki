@@ -11,11 +11,14 @@ x cascade updates for referenced content/title
 x file upload
 x images insert
 x menu
-- swf insert
-- allow to list some directory content
-- on edit, lock with timeout
+x swf insert
+x allow to list some directory content
+- directory list dependency
+- fill title cache on edit
+- check version on save
 - multilang
 - user : infos + changes history
 - haxe skin
 - search
 - backlinks
+- custom span classes

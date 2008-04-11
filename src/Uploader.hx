@@ -54,7 +54,11 @@ class Uploader {
 			flash.Lib.current.graphics.clear();
 			cnx.uploadResult.call([url]);
 		} catch( err : Dynamic ) {
-			cnx.uploadError.call([Std.string(err)]);
+			var estr = Std.string(err);
+			var m = "Invalid char";
+			if( estr.substr(0,m.length) == m )
+				estr += " in "+e.data;
+			cnx.uploadError.call([estr]);
 		}
 	}
 

@@ -32,13 +32,14 @@ class Main extends Handler<Void> {
 
 	override function initialize() {
 		free("login",doLogin);
+		free("map","map.mtt",doMap);
 		logged("logout",doLogout);
 		logged("edit","entry.mtt",doEdit);
 		logged("delete",doDelete);
 		logged("rename","entry.mtt",doRename);
 		logged("title",doTitle);
 		logged("upload",doUpload);
-		free("map","map.mtt",doMap);
+		logged("sublist",doSubList);
 	}
 
 	function doLogin() {
@@ -119,6 +120,9 @@ class Main extends Handler<Void> {
 			dep.title = entry2.hasContent() ? entry2.get_title() : null;
 			dep.insert();
 			return dep.title;
+		}
+		e.getSubLinks = function(path) {
+			return me.getSubLinks(me.getEntry(path));
 		}
 		return e;
 	}
@@ -217,6 +221,17 @@ class Main extends Handler<Void> {
 		var e = getEntry();
 		if( e.hasContent() )
 			neko.Lib.print(e.get_title());
+	}
+
+	function doSubList() {
+		var a = getSubLinks(getEntry());
+		neko.Lib.print(haxe.Serializer.run(a));
+	}
+
+	function getSubLinks( e : db.Entry ) {
+		if( e.id == null )
+			return [];
+		return Lambda.array(db.Entry.manager.search({ pid : e.id },false).map(function(e) return { url : e.getURL(), title : e.get_title() }));
 	}
 
 	function doFile( fname : String ) {

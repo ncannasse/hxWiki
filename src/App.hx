@@ -7,6 +7,7 @@ class App {
 	public static var user : db.User;
 	public static var request : mtwin.web.Request;
 	public static var context : Dynamic;
+	public static var langs : Array<String>;
 
 	static var template : mtwin.templo.Loader;
 
@@ -59,6 +60,24 @@ class App {
 			}
 		}
 		user = if( session.uid != null ) db.User.manager.get(session.uid) else null;
+
+		// init langs
+		var langs = new Array();
+		var ldata = neko.Web.getClientHeader("Accept-Language");
+		var ldata = if( ldata == null ) [] else ldata.split(",");
+		ldata.push("en");
+		for( l in ldata ) {
+			var l = l.split(";")[0].split("-")[0];
+			if( l.charCodeAt(0) == 20 ) l = l.substr(1);
+			for( x in langs )
+				if( x == l ) {
+					l = null;
+					break;
+				}
+			if( l != null ) langs.push(l);
+		}
+		App.langs = langs;
+
 		// execute
 		var h = new handler.Main();
 		var level = if( request.getPathInfoPart(0) == "index.n" ) 1 else 0;
