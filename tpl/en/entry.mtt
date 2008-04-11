@@ -31,7 +31,7 @@
 			::foreach b editor.config.buttons::
 			<li><a href="#" onclick="::editor.buttonAction(b)::">::b.label::</a></li>
 			::end::
-			<li><a href="#" onclick="::editor.config.name::.initUpload('Image','*.png;*.gif;*.jpg',true)">IMG</a></li>
+			<li><a href="#" onclick="::editor.config.name::.initUpload('Image','*.png;*.gif;*.jpg;*.swf',true)">IMG</a></li>
 			<li><a href="#" onclick="::editor.config.name::.initUpload('All','::extensions::',false)">FILE</a></li>
 		</ul>
 		<span class="tfield">Content :</span>
@@ -46,10 +46,6 @@
 	<span class="tfield">New name :</span> <input name="name" value="::entry._path::" class="field"/>
 	<input type="submit" value="Rename" $$confirm() class="button"/>
 </form>
-
-<div class="error" ::cond oldversion::>
-	You are viewing an old version of this entry, click <a href="/::entry._path::">here</a> to see latest version.
-</div>
 
 ::if history::
 	<table class="history">
@@ -79,6 +75,9 @@
 		This page does not currently exists, you can <a href="/wiki/edit?path=::entry._path::">create</a> it.
 	</div>
 ::else::
+	<div class="error" ::cond oldversion::>
+		You are viewing an old version of this entry, click <a href="/::entry._path::">here</a> to see latest version.
+	</div>
 	<div class="view">
 	::raw version.htmlContent::
 	</div>

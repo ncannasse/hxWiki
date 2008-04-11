@@ -97,7 +97,7 @@ class Main extends Handler<Void> {
 		var config = {
 			buttons : new Array(),
 			text : Text.get.empty_text,
-			name : "editor",
+			name : "wikeditor",
 			path : entry.get_path().split("/"),
 			sid : App.session.sid,
 		};
@@ -239,6 +239,53 @@ class Main extends Handler<Void> {
 		neko.Web.redirect(neko.Web.getURI()+"?reload=1");
 	}
 
+	static function readBits( s : String, pos : Int, nbits : Int ) {
+		var base = pos >> 3;
+		var n = 8 - (pos - (base << 3)); // number of bits to keep
+		nbits -= n;
+		var k = s.charCodeAt(base) & ((1 << n) - 1);
+		if( nbits < 0 ) {
+			k >>= -nbits;
+			nbits = 0;
+			return k;
+		}
+		while( nbits > 0 ) {
+			var c = s.charCodeAt(++base);
+			if( nbits >= 8 ) {
+				k = (k << 8) | c;
+				nbits -= 8;
+			} else {
+				k = (k << nbits) | (c >> (8 - nbits));
+				nbits = 0;
+			}
+		}
+		return k;
+	}
+
+	static function getSWFHeader( content : String ) {
+		var compressed = switch( content.substr(0,3) ) {
+		case "CWS": true;
+		case "FWS": false;
+		default: throw "Invalid SWF";
+		}
+		var buf;
+		if( compressed ) {
+			// uncompress a small amount of data
+			buf = neko.Lib.makeString(64);
+			var bytes = new neko.zip.Uncompress(15);
+			bytes.run(content,8,buf,8);
+			bytes.close();
+		} else
+			buf = content;
+		var base = 8 * 8;
+		var nbits = readBits(buf,base,5);
+		base += 5 + nbits;
+		var width = readBits(buf,base,nbits);
+		base += nbits * 2;
+		var height = readBits(buf,base,nbits);
+		return { version : content.charCodeAt(4), width : Math.round(width / 20), height : Math.round(height / 20) };
+	}
+
 	function doUpload() {
 		try {
 			var datas = neko.Web.getMultipart(Std.parseInt(Config.get("max_allowed_upload","0")));
@@ -251,19 +298,24 @@ class Main extends Handler<Void> {
 			if( !Lambda.exists(Text.get.allowed_extensions.split("|"),function(x) return ext == x) )
 				throw "Unsupported file extension "+ext;
 			var f = db.File.manager.search({ name : filename },false).first();
+			var content = datas.get("file");
 			if( f != null ) {
-				if( !request.exists("rewrite") )
-					throw "File "+filename+" already exists";
+				if( !request.exists("rewrite") && content != f.content )
+					throw "File "+filename+" already exists with different content";
 				f = db.File.manager.get(f.id,true);
 			} else {
 				f = new db.File();
 				f.name = filename;
 				f.update = f.insert;
 			}
-			f.content = datas.get("file");
+			f.content = content;
 			f.update();
 			neko.db.Manager.cnx.commit();
 			try neko.FileSystem.deleteFile(neko.Web.getCwd()+"/file/"+filename) catch( e : Dynamic ) {};
+			if( ext == "swf" ) {
+				var h = getSWFHeader(content);
+				filename += ":"+h.width+"x"+h.height;
+			}
 			neko.Lib.print(haxe.Serializer.run(filename));
 		} catch( e : Dynamic ) {
 			var s = new haxe.Serializer();

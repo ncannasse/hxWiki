@@ -29,12 +29,14 @@ class Editor {
 	var titles : Hash<{ exists : Bool, title : String }>;
 	#if js
 	var uploadImage : Bool;
+	var refresh : { last : Float, time : Float, pending : Bool };
 	#end
 
 
 	public function new(data) {
 		#if js
 		config = haxe.Unserializer.run(data);
+		refresh = { last : 0., time : 0., pending : false };
 		#else true
 		config = data;
 		#end
@@ -51,7 +53,25 @@ class Editor {
 
 	public function updatePreview() {
 		var prev = js.Lib.document.getElementById(preview);
+		var start = haxe.Timer.stamp();
+		if( refresh.time > 0.1 && start - refresh.last < refresh.time * 5 ) {
+			haxe.Firebug.trace("dt="+refresh.time+" t="+(start-refresh.last));
+			if( !refresh.pending ) {
+				refresh.pending = true;
+				var t = new haxe.Timer(1000);
+				var me = this;
+				t.run = function() {
+					t.stop();
+					me.refresh.pending = false;
+					me.updatePreview();
+				};
+			}
+			return false;
+		}
 		prev.innerHTML = format(getDocument().value);
+		if( refresh.last > 0 )
+			refresh.time = refresh.last - start;
+		refresh.last = haxe.Timer.stamp();
 		return false;
 	}
 
@@ -117,7 +137,7 @@ class Editor {
 		updatePreview();
 		return false;
 		#else true
-		return 'return '+config.name+'.buttonAction(editor.config.buttons['+b.id+'])';
+		return 'return '+config.name+'.buttonAction('+config.name+'.config.buttons['+b.id+'])';
 		#end
 	}
 
