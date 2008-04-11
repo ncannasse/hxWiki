@@ -25,9 +25,10 @@ class Editor {
 		name : String,
 		path : Array<String>,
 		sid : String,
+		titles : Hash<{ exists : Bool, title : String }>,
 	};
-	var titles : Hash<{ exists : Bool, title : String }>;
 	var uniqueId : Int;
+	var subcache : Hash<Array<{ title : String, url : String }>>;
 	#if js
 	var uploadImage : Bool;
 	var refresh : { last : Float, time : Float, pending : Bool };
@@ -41,9 +42,9 @@ class Editor {
 		#else true
 		config = data;
 		#end
+		subcache = new Hash();
 		content = config.name + "_content";
 		preview = config.name + "_preview";
-		titles = new Hash();
 	}
 
 	#if js
@@ -109,6 +110,18 @@ class Editor {
 		swf.addParam("FlashVars",params.join("&"));
 		swf.write("upload");
 		uploadImage = img;
+	}
+
+	public function spanAction( title ) {
+		var span = js.Lib.window.prompt(title);
+		if( span == null || !~/^([A-Za-z0-9_])+$/.match(span) )
+			return false;
+		var sel = new js.Selection(getDocument());
+		var text = sel.get();
+		if( text == "" ) text = config.text;
+		sel.insert("["+span+"]",text,"[/"+span+"]");
+		updatePreview();
+		return false;
 	}
 
 	function uploadError( e : String ) {
@@ -181,11 +194,11 @@ class Editor {
 		}
 		var p = makePath(link);
 		var url = p.path.join("/");
-		var inf = titles.get(url);
+		var inf = config.titles.get(url);
 		if( inf == null ) {
 			var t = getTitle(p.path);
 			inf = (t == null) ? { title : p.title, exists : false } : { title : t, exists : true };
-			titles.set(url,inf);
+			config.titles.set(url,inf);
 		}
 		return {
 			url : "/" + url,
@@ -272,10 +285,18 @@ class Editor {
 		return '<pre'+cl+'>'+t+"</pre>";
 	}
 
+	static function makeSpans( t : String ) : String {
+		return ~/\n*\[([A-Za-z0-9_]+)\]\n*([^<>]*?)\n*\[\/\1\]\n*/.customReplace(t,function(r) {
+			return '<span class="'+r.matched(1)+'">'+makeSpans(r.matched(2))+'</span>';
+		});
+	}
+
 	function paragraph( t : String ) : String {
 		var me = this;
 		// unhtml
 		t = StringTools.htmlEscape(t);
+		// span
+		t = makeSpans(t);
 		// newlines
 		t = StringTools.replace(t,"\n","<br/>");
 		// titles
@@ -287,7 +308,12 @@ class Editor {
 		t = ~/\[\[([^\]]*?)\]\]/.customReplace(t,function(r) {
 			var link = r.matched(1);
 			if( link.substr(link.length-2,2) == ".*" ) {
-				var list = me.getSubLinks(me.makePath(link.substr(0,link.length-2)).path);
+				var path = me.makePath(link.substr(0,link.length-2)).path;
+				var list = me.subcache.get(path.join("/"));
+				if( list == null ) {
+					list = me.getSubLinks(path);
+					me.subcache.set(path.join("/"),list);
+				}
 				var str = '<ul class="subs">';
 				for( i in list )
 					str += '<li><a href="'+i.url+'" class="intern">'+i.title+'</a>';
@@ -341,7 +367,7 @@ class Editor {
 		for( t in ~/\n[ \t]*\n/g.split(t) ) {
 			var p = paragraph(t);
 			switch( p.substr(0,3) ) {
-			case "<h1","<h2","<h3","<ul","<pr","##C":
+			case "<h1","<h2","<h3","<ul","<pr","##C","<sp":
 				b.add(p);
 			default:
 				b.add("<p>");

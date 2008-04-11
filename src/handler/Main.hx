@@ -71,16 +71,24 @@ class Main extends Handler<Void> {
 		v.update();
 	}
 
-	function doView( entry : db.Entry ) {
+	function contentChanged( entry : db.Entry ) {
 		for( d in db.Dependency.manager.search({ eid : entry.id },false) ) {
-			var e2 = getEntry(d.path.split("/"));
-			if( (e2.hasContent() ? e2.get_title() : null) != d.title ) {
-				updateContent(entry);
-				break;
-			}
+			var e2 = d.target;
+			if( e2 == null ) e2 = getEntry(d.path.split("/"));
+			if( d.subs != null ) {
+				var s = db.Dependency.manager.subSignature(e2);
+				if( s != d.subs )
+					return true;
+			} else if( (e2.hasContent() ? e2.get_title() : null) != d.title )
+				return true;
 		}
-		App.context.version = entry.version;
+		return false;
+	}
 
+	function doView( entry : db.Entry ) {
+		if( contentChanged(entry) )
+			updateContent(entry);
+		App.context.version = entry.version;
 		if( request.exists("version") ) {
 			var version = db.Version.manager.search({ id : request.getInt("version"), eid : entry.id },false).first();
 			if( version != null && version != entry.version ) {
@@ -101,7 +109,15 @@ class Main extends Handler<Void> {
 			name : "wikeditor",
 			path : entry.get_path().split("/"),
 			sid : App.session.sid,
+			titles : new Hash(),
 		};
+		// fill titles cache
+		for( d in db.Dependency.manager.search({ eid : entry.id },false) ) {
+			var e = d.entry;
+			if( e == null ) e = getEntry(d.path.split("/"));
+			config.titles.set(d.path,{ title : e.get_title(), exists : e.hasContent() });
+		}
+
 		var e = new Editor(config);
 		e.addButton(Text.get.bold,"**");
 		e.addButton(Text.get.italic,"//");
@@ -116,13 +132,21 @@ class Main extends Handler<Void> {
 			var entry2 = me.getEntry(path);
 			var dep = new db.Dependency();
 			dep.entry = entry;
+			dep.target = entry2;
 			dep.path = path.join("/");
 			dep.title = entry2.hasContent() ? entry2.get_title() : null;
 			dep.insert();
 			return dep.title;
 		}
 		e.getSubLinks = function(path) {
-			return me.getSubLinks(me.getEntry(path));
+			var entry2 = me.getEntry(path);
+			var dep = new db.Dependency();
+			dep.entry = entry;
+			dep.target = entry2;
+			dep.path = path.join("/");
+			dep.subs = db.Dependency.manager.subSignature(entry2);
+			dep.insert();
+			return me.getSubLinks(entry2);
 		}
 		return e;
 	}
@@ -205,6 +229,7 @@ class Main extends Handler<Void> {
 			entry.name = name;
 			entry.parent = parent;
 			entry.update();
+			db.Dependency.manager.renamed(entry);
 			if( oldparent != null && parent != oldparent ) oldparent.cleanup();
 			var v = new db.Version(entry,App.user);
 			v.setChange(VName,old,entry.get_path());

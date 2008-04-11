@@ -13,12 +13,13 @@ x images insert
 x menu
 x swf insert
 x allow to list some directory content
-- directory list dependency
-- fill title cache on edit
+x dependency id-cache
+x directory list dependency
+x fill title cache on edit
+x custom span classes
 - check version on save
 - multilang
 - user : infos + changes history
 - haxe skin
 - search
 - backlinks
-- custom span classes

@@ -31,6 +31,7 @@
 			::foreach b editor.config.buttons::
 			<li><a href="#" onclick="::editor.buttonAction(b)::">::b.label::</a></li>
 			::end::
+			<li><a href="#" onclick="::editor.config.name::.spanAction('Please choose CSS class :')">SPAN</a></li>
 			<li><a href="#" onclick="::editor.config.name::.initUpload('Image','*.png;*.gif;*.jpg;*.swf',true)">IMG</a></li>
 			<li><a href="#" onclick="::editor.config.name::.initUpload('All','::extensions::',false)">FILE</a></li>
 		</ul>
