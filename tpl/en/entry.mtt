@@ -8,13 +8,17 @@
 	::end::
 </div>
 
+::set eparams = 'path='+entry._path+';lang='+entry._lang.code::
+
 <ul class="buttons" ::cond user::>
 	::if oldversion == null::
-	<li><a href="/wiki/edit?path=::entry._path::">edit</a></li>
-	<li ::cond entry.id != null::><a href="/wiki/rename?path=::entry._path::">rename</a></li>
-	<li ::cond entry._version != null::><a href="/wiki/delete?path=::entry._path::" $$confirm()>delete</a></li>
+	<li><a href="/wiki/edit?::eparams::">edit</a></li>
+	<li ::cond entry.id != null::><a href="/wiki/rename?::eparams::">rename</a></li>
+	<li ::cond entry._version != null::><a href="/wiki/delete?::eparams::" $$confirm()>delete</a></li>
+	::else::
+	<li><a href="/wiki/restore?::eparams::;version=::version.id::" $$confirm()>restore</a></li>
 	::end::
-	<li><a href="/::entry._path::?history=1">history</a></li>
+	<li><a href="/wiki/history?::eparams::">history</a></li>
 	<li><a href="/db/Entry/edit/::entry.id::" ::cond isAdmin && entry.id != null::>db</a></li>
 </ul>
 
@@ -26,6 +30,7 @@
 
 	<form method="POST" action="/wiki/edit?submit=1">
 		<input type="hidden" name="path" value="::entry._path::"/>
+		<input type="hidden" name="lang" value="::entry._lang.code::"/>
 		<span class="tfield">Title :</span> <input name="title" value="::entry._title::" class="field"/>
 		<ul class="buttons">
 			::foreach b editor.config.buttons::
@@ -44,6 +49,7 @@
 
 <form method="POST" action="/wiki/rename?submit=1" ::cond rename::>
 	<input type="hidden" name="path" value="::entry._path::"/>
+	<input type="hidden" name="lang" value="::entry._lang.code::"/>
 	<span class="tfield">New name :</span> <input name="name" value="::entry._path::" class="field"/>
 	<input type="submit" value="Rename" $$confirm() class="button"/>
 </form>
@@ -72,8 +78,8 @@
 		::editor.config.name::.updatePreview();
 	</script>
 ::elseif version == null::
-	<div class="error" ::cond edit != true::>
-		This page does not currently exists, you can <a href="/wiki/edit?path=::entry._path::">create</a> it.
+	<div class="error" ::cond edit != true && rename != true::>
+		This page does not currently exists, you can <a href="/wiki/edit?::eparams::">create</a> it.
 	</div>
 ::else::
 	<div class="error" ::cond oldversion::>

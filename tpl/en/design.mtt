@@ -8,8 +8,7 @@
 	</head>
 
 	<body>
-
-		<div class="site">
+	<div class="site">
 
 		<div class="header">
 			<a href="/">haXe Wiki</a>
@@ -26,13 +25,21 @@
 				<form action="/wiki/login" method="POST">
 					<span class="group"><span class="tfield">User :</span> <input name="user" class="field"/></span>
 					<span class="group"><span class="tfield">Pass :</span> <input type="password" name="pass" class="field"/></span>
-					<input type="hidden" name="url" value="::request.getURI()::"/>
+					<input type="hidden" name="url" value="::uri::"/>
 					<input type="submit" value="OK" class="button"/>
 				</form>
 			::else::
 				<strong>::user.name::</strong>
-				<a href="/wiki/logout?url=::request.getURI()::" $$confirm()>Logout</a>
+				<a href="/wiki/logout?url=::uri::" $$confirm()>Logout</a>
 			::end::
+		</div>
+
+		<div class="langs">
+			<ul>
+			::foreach l langs::
+			<li><a href="/wiki/setlang?url=::uri::;lang=::l.code::" class="::lang_classes(l)::"><img src="/file/flag_::l.code::.gif" alt="::l.name::"/></a></li>
+			::end::
+			</ul>
 		</div>
 
 		<div id="notification" ::cond notification:: ::attr class if( notification.error ) 'error'::>
@@ -54,7 +61,7 @@
 		<div class="footer">
 			&copy; 2007-2008 Nicolas Cannasse | Powered by <a href="http://haxe.org">haXe</a>
 		</div>
-		</div>
 
+	</div>
 	</body>
 </html>

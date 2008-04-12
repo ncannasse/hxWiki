@@ -9,6 +9,7 @@ class SessionData extends neko.db.Object {
 
 	public var user(dynamic,dynamic) : User;
 	public var userName : String;
+	public var lang : Int;
 	public var notification : { error : Bool, text : String };
 
 	public function setUser( u : User ) {

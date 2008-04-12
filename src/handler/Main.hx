@@ -24,15 +24,16 @@ class Main extends Handler<Void> {
 			path.add(Editor.normalize(part));
 			part = request.getPathInfoPart(level++);
 		}
-		var entry = db.Entry.get(path);
 		App.prepareTemplate("entry.mtt");
 		this.request = request;
-		doView(entry);
+		doView(path);
 	}
 
 	override function initialize() {
 		free("login",doLogin);
 		free("map","map.mtt",doMap);
+		free("setlang",doSetLang);
+		free("history","entry.mtt",doHistory);
 		logged("logout",doLogout);
 		logged("edit","entry.mtt",doEdit);
 		logged("delete",doDelete);
@@ -40,6 +41,7 @@ class Main extends Handler<Void> {
 		logged("title",doTitle);
 		logged("upload",doUpload);
 		logged("sublist",doSubList);
+		logged("restore",doRestore);
 	}
 
 	function doLogin() {
@@ -58,9 +60,15 @@ class Main extends Handler<Void> {
 		throw Action.Goto(request.get("url","/"));
 	}
 
-	function getEntry( ?path ) {
-		if( path == null ) path = request.get("path").split("/");
-		return db.Entry.get(Lambda.map(path,Editor.normalize));
+	function getEntry( ?path, lang ) {
+		if( path == null ) path = request.get("path","").split("/");
+		return db.Entry.get(Lambda.map(path,Editor.normalize),lang);
+	}
+
+	function getLang() {
+		var l = db.Lang.manager.byCode(request.get("lang",""));
+		if( l == null ) l = db.Lang.manager.get(App.session.lang,false);
+		return l;
 	}
 
 	function updateContent( entry : db.Entry ) {
@@ -74,7 +82,7 @@ class Main extends Handler<Void> {
 	function contentChanged( entry : db.Entry ) {
 		for( d in db.Dependency.manager.search({ eid : entry.id },false) ) {
 			var e2 = d.target;
-			if( e2 == null ) e2 = getEntry(d.path.split("/"));
+			if( e2 == null ) e2 = getEntry(d.path.split("/"),entry.lang);
 			if( d.subs != null ) {
 				var s = db.Dependency.manager.subSignature(e2);
 				if( s != d.subs )
@@ -85,36 +93,74 @@ class Main extends Handler<Void> {
 		return false;
 	}
 
-	function doView( entry : db.Entry ) {
-		if( contentChanged(entry) )
-			updateContent(entry);
-		App.context.version = entry.version;
+	function doView( path : List<String> ) {
+		// list available contents
+		var langs = new Hash();
+		var def = null;
+		var cur = null;
+		for( l in db.Lang.manager.all(false) ) {
+			var vid = db.Entry.manager.resolve(path,l);
+			if( vid != null ) {
+				langs.set(l.code,vid);
+				if( l.id == App.session.lang )
+					cur = l;
+			}
+			if( l.code == Config.LANG )
+				def = l;
+		}
+		// force lang
+		if( cur == null && request.exists("lang") )
+			cur = db.Lang.manager.byCode(request.get("lang"));
+
+		// force version
+		var version = null;
 		if( request.exists("version") ) {
-			var version = db.Version.manager.search({ id : request.getInt("version"), eid : entry.id },false).first();
-			if( version != null && version != entry.version ) {
-				App.context.version = version;
-				App.context.oldversion = true;
+			version = db.Version.manager.get(request.getInt("version"),false);
+			if( version != null ) {
+				if( version.entry.get_path() != path.join("/") )
+					version = null;
+				else {
+					cur = version.entry.lang;
+					App.context.oldversion = version.entry.vid != version.id;
+				}
 			}
 		}
-		if( request.exists("history") )
-			App.context.history = db.Version.manager.search({ eid : entry.id },false);
-		if( !entry.hasContent() ) entry.cleanup();
+
+		var entry = if( cur != null ) db.Entry.get(path,cur) else db.Entry.get(path,def);
+		if( version == null )
+			version = entry.version;
+		var lang = entry.lang;
+		App.langFlags = function(l) return langs.exists(l.code);
+		App.langSelected = lang;
+		if( !entry.hasContent() )
+			entry.cleanup();
+		else if( contentChanged(entry) )
+			updateContent(entry);
+		App.context.version = version;
 		App.context.entry = entry;
 	}
 
+	function doHistory() {
+		var entry = getEntry(getLang());
+		App.context.entry = entry;
+		App.context.history = db.Version.manager.history(entry);
+	}
+
 	function createEditor( entry : db.Entry ) {
+		var lang = entry.lang;
 		var config = {
 			buttons : new Array(),
 			text : Text.get.empty_text,
 			name : "wikeditor",
 			path : entry.get_path().split("/"),
 			sid : App.session.sid,
+			lang : lang.code,
 			titles : new Hash(),
 		};
 		// fill titles cache
 		for( d in db.Dependency.manager.search({ eid : entry.id },false) ) {
 			var e = d.entry;
-			if( e == null ) e = getEntry(d.path.split("/"));
+			if( e == null ) e = getEntry(d.path.split("/"),lang);
 			config.titles.set(d.path,{ title : e.get_title(), exists : e.hasContent() });
 		}
 
@@ -129,7 +175,7 @@ class Main extends Handler<Void> {
 		e.addButton(Text.get.external_link,"[[","]]",Text.get.empty_external_link_text);
 		var me = this;
 		e.getTitle = function(path:Array<String>) {
-			var entry2 = me.getEntry(path);
+			var entry2 = me.getEntry(path,lang);
 			var dep = new db.Dependency();
 			dep.entry = entry;
 			dep.target = entry2;
@@ -139,7 +185,7 @@ class Main extends Handler<Void> {
 			return dep.title;
 		}
 		e.getSubLinks = function(path) {
-			var entry2 = me.getEntry(path);
+			var entry2 = me.getEntry(path,lang);
 			var dep = new db.Dependency();
 			dep.entry = entry;
 			dep.target = entry2;
@@ -152,11 +198,13 @@ class Main extends Handler<Void> {
 	}
 
 	function doEdit() {
-		var entry = getEntry();
+		var entry = getEntry(getLang());
 		var editor = createEditor(entry);
 		App.context.edit = true;
 		App.context.entry = entry;
 		App.context.editor = editor;
+		App.langSelected = entry.lang;
+		App.langFlags = function(l) return l == entry.lang;
 		App.context.extensions = "*."+Text.get.allowed_extensions.split("|").join(";*.");
 		if( !request.exists("submit") )
 			return;
@@ -192,25 +240,29 @@ class Main extends Handler<Void> {
 	}
 
 	function doDelete() {
-		var entry = getEntry();
-		if( entry.id != null && entry.version != null ) {
-			var entry = db.Entry.manager.get(entry.id);
-			entry.markDeleted(App.user);
-			entry.update();
-			db.Dependency.manager.cleanup(entry);
+		// delete for all langs
+		var entry = null;
+		for( l in db.Lang.manager.all(false) ) {
+			entry = getEntry(l);
+			if( entry.id != null && entry.version != null ) {
+				var entry = db.Entry.manager.get(entry.id);
+				entry.markDeleted(App.user);
+				entry.update();
+				db.Dependency.manager.cleanup(entry);
+			}
 		}
 		throw Action.Done(entry.getURL(),Text.get.entry_deleted);
 	}
 
 	function doRename() {
-		var entry = getEntry();
+		var entry = getEntry(getLang());
 		App.context.entry = entry;
 		App.context.rename = true;
 		var path = request.get("name","").split("/");
 		if( !request.exists("submit") || path.length == 0 || entry.id == null )
 			return;
 		var name = Editor.normalize(path.pop());
-		var parent = getEntry(path);
+		var parent = getEntry(path,entry.lang);
 		if( parent != null && parent.id == null ) parent.insert();
 		// check that target does not already exists
 		if( db.Entry.manager.count({ pid : parent == null ? null : parent.id, name : name }) > 0 )
@@ -239,17 +291,19 @@ class Main extends Handler<Void> {
 	}
 
 	function doMap() {
-		App.context.roots = db.Entry.manager.getChilds(null);
+		var lang = getLang();
+		App.langSelected = lang;
+		App.context.roots = db.Entry.manager.getRoots(lang);
 	}
 
 	function doTitle() {
-		var e = getEntry();
+		var e = getEntry(getLang());
 		if( e.hasContent() )
 			neko.Lib.print(e.get_title());
 	}
 
 	function doSubList() {
-		var a = getSubLinks(getEntry());
+		var a = getSubLinks(getEntry(getLang()));
 		neko.Lib.print(haxe.Serializer.run(a));
 	}
 
@@ -362,6 +416,28 @@ class Main extends Handler<Void> {
 			s.serializeException(Std.string(e));
 			neko.Lib.print(s.toString());
 		}
+	}
+
+	function doSetLang() {
+		var lang = db.Lang.manager.search({ code : request.get("lang") },false).first();
+		if( lang == null )
+			throw Action.Error(request.get("url"),Text.get.err_no_such_lang);
+		App.session.lang = lang.id;
+		throw Action.Goto(request.get("url")+"?lang="+lang.code);
+	}
+
+	function doRestore() {
+		var e = getEntry(getLang());
+		var v = db.Version.manager.get(request.getInt("version"),false);
+		if( v == null || v.entry != e || v.getChange() != VContent )
+			throw Action.Error(e.getURL(),Text.get.err_cant_restore);
+		var e = db.Entry.manager.get(e.id);
+		e.version = v;
+		e.update();
+		var v = new db.Version(e,App.user);
+		v.setChange(VRestore,Std.string(e.vid),null);
+		v.insert();
+		throw Action.Goto(e.getURL());
 	}
 
 }

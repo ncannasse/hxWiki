@@ -7,7 +7,8 @@ class App {
 	public static var user : db.User;
 	public static var request : mtwin.web.Request;
 	public static var context : Dynamic;
-	public static var langs : Array<String>;
+	public static var langFlags : db.Lang -> Bool;
+	public static var langSelected : db.Lang;
 
 	static var template : mtwin.templo.Loader;
 
@@ -43,6 +44,19 @@ class App {
 		neko.Web.redirect(url);
 	}
 
+	static function initLang() {
+		var ldata = neko.Web.getClientHeader("Accept-Language");
+		var ldata = if( ldata == null ) [] else ldata.split(",");
+		var r = ~/^ ?([a-z]+)(-[a-zA-Z]+)?(;.*)?$/;
+		ldata.push(Config.LANG);
+		for( l in ldata ) {
+			if( !r.match(l) ) continue;
+			var l = db.Lang.manager.byCode(r.matched(1));
+			if( l != null ) return l.id;
+		}
+		return null;
+	}
+
 	static function mainLoop() {
 		// init
 		request = new mtwin.web.Request();
@@ -51,6 +65,7 @@ class App {
 		if( sid == null ) sid = neko.Web.getCookies().get("sid");
 		session = db.Session.initialize(sid);
 		if( session.data == null ) {
+			session.lang = initLang();
 			try {
 				session.insert();
 				neko.Web.setHeader("Set-Cookie", "sid="+session.sid+"; path=/");
@@ -60,23 +75,8 @@ class App {
 			}
 		}
 		user = if( session.uid != null ) db.User.manager.get(session.uid) else null;
-
-		// init langs
-		var langs = new Array();
-		var ldata = neko.Web.getClientHeader("Accept-Language");
-		var ldata = if( ldata == null ) [] else ldata.split(",");
-		ldata.push("en");
-		for( l in ldata ) {
-			var l = l.split(";")[0].split("-")[0];
-			if( l.charCodeAt(0) == 20 ) l = l.substr(1);
-			for( x in langs )
-				if( x == l ) {
-					l = null;
-					break;
-				}
-			if( l != null ) langs.push(l);
-		}
-		App.langs = langs;
+		langFlags = function(l) return true;
+		langSelected = null;
 
 		// execute
 		var h = new handler.Main();
@@ -138,6 +138,12 @@ class App {
 		context.request = request;
 		context.style = Config.get("style","default");
 		context.links = db.Link.manager.list;
+		context.langs = db.Lang.manager.all(false);
+		context.uri = request.getURI();
+		context.lang_classes = function(l) {
+			var f = if( langFlags == null ) true else langFlags(l);
+			return (f ? "on" : "off") + ((l == langSelected) ? " current" : "");
+		};
 		if( session != null && session.notification != null ) {
 			context.notification = session.notification;
 			session.notification = null;
@@ -169,6 +175,8 @@ class App {
 		user = null;
 		request = null;
 		context = null;
+		langFlags = null;
+		langSelected = null;
 	}
 
 	static function main() {

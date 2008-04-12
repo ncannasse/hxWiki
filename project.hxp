@@ -9,6 +9,7 @@
       <file path="src\db\Dependency.hx" />
       <file path="src\db\Entry.hx" />
       <file path="src\db\File.hx" />
+      <file path="src\db\Lang.hx" />
       <file path="src\db\Link.hx" />
       <file path="src\db\Session.hx" />
       <file path="src\db\SessionData.hx" />

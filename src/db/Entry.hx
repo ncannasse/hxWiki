@@ -9,6 +9,7 @@ class Entry extends neko.db.Object {
 		return [
 			{ key : "pid", prop : "parent", manager : Entry.manager, lock : false },
 			{ key : "vid", prop : "version", manager : Version.manager, lock : false },
+			{ key : "lid", prop : "lang", manager : Lang.manager, lock : false },
 		];
 	}
 	public static var manager = new EntryManager(Entry);
@@ -20,6 +21,8 @@ class Entry extends neko.db.Object {
 	public var title : SNull<STinyText>;
 	public var vid : SNull<SInt>;
 	public var version(dynamic,dynamic) : SNull<Version>;
+	public var lang(dynamic,dynamic) : Lang;
+	public var lid : SInt;
 
 	public function childs() {
 		return db.Entry.manager.getChilds(this);
@@ -84,12 +87,13 @@ class Entry extends neko.db.Object {
 		return id+"#"+get_path();
 	}
 
-	public static function get( path : List<String> ) {
+	public static function get( path : List<String>, lang : Lang ) {
 		var entry : db.Entry = null;
 		for( name in path ) {
-			var e = db.Entry.manager.search({ name : name, pid : if( entry == null ) null else entry.id },false).first();
+			var e = db.Entry.manager.search({ name : name, pid : if( entry == null ) null else entry.id, lid : lang.id },false).first();
 			if( e == null ) {
 				e = new db.Entry();
+				e.lang = lang;
 				e.name = name;
 				e.parent = entry;
 			}
@@ -103,7 +107,24 @@ class Entry extends neko.db.Object {
 class EntryManager extends neko.db.Manager<Entry> {
 
 	public function getChilds( e : Entry ) {
-		var cond = (e == null)?"pid IS NULL":"pid = "+e.id;
-		return objects("SELECT * FROM Entry WHERE "+cond+" ORDER BY name",false);
+		return objects("SELECT * FROM Entry WHERE pid = "+e.id+" ORDER BY name",false);
 	}
+
+	public function getRoots( l : Lang ) {
+		return objects("SELECT * FROM Entry WHERE pid IS NULL AND lid = "+l.id+" ORDER BY name",false);
+	}
+
+	public function resolve( path : List<String>, lang : Lang ) {
+		var eid = null;
+		var vid = null;
+		for( name in path ) {
+			var r = result("SELECT id, vid FROM Entry WHERE name = "+quote(name)+" AND lid = "+lang.id+" AND pid "+((eid == null)?"IS NULL":"= "+eid));
+			if( r == null )
+				return null;
+			eid = r.id;
+			vid = r.vid;
+		}
+		return vid;
+	}
+
 }

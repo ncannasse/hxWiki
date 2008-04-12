@@ -6,6 +6,7 @@ enum VersionChange {
 	VDeleted;
 	VName;
 	VTitle;
+	VRestore;
 }
 
 class Version extends neko.db.Object {
@@ -16,7 +17,7 @@ class Version extends neko.db.Object {
 			{ key : "uid", prop : "author", manager : User.manager, lock : false },
 		];
 	}
-	public static var manager = new neko.db.Manager<Version>(Version);
+	public static var manager = new VersionManager(Version);
 
 	public var id : SId;
 	public var date : SDateTime;
@@ -39,8 +40,20 @@ class Version extends neko.db.Object {
 		htmlContent = vnew;
 	}
 
+	public function getChange() : VersionChange {
+		return Reflect.field(VersionChange,Type.getEnumConstructs(VersionChange)[code]);
+	}
+
 	public override function toString() {
 		return "v" + id + "#" + entry.get_path();
+	}
+
+}
+
+class VersionManager extends neko.db.Manager<Version> {
+
+	public function history( e : Entry ) {
+		return objects("SELECT * FROM Version WHERE eid = "+e.id+" ORDER BY id DESC",false);
 	}
 
 }

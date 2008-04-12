@@ -25,6 +25,7 @@ class Editor {
 		name : String,
 		path : Array<String>,
 		sid : String,
+		lang : String,
 		titles : Hash<{ exists : Bool, title : String }>,
 	};
 	var uniqueId : Int;
@@ -165,7 +166,7 @@ class Editor {
 
 	public function getTitle( path : Array<String> ) {
 		#if js
-		var data = haxe.Http.request("/wiki/title?path="+path.join("/"));
+		var data = haxe.Http.request("/wiki/title?path="+path.join("/")+";lang="+config.lang);
 		if( data == "" )
 			return null;
 		return StringTools.htmlEscape(data);
@@ -209,7 +210,7 @@ class Editor {
 
 	public function getSubLinks( path : Array<String> ) : Array<{ url : String, title : String }> {
 		#if js
-		return haxe.Unserializer.run( haxe.Http.request("/wiki/sublist?path="+path.join("/")) );
+		return haxe.Unserializer.run( haxe.Http.request("/wiki/sublist?path="+path.join("/")+";lang="+config.lang) );
 		#else true
 		return null;
 		#end

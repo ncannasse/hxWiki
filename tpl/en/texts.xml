@@ -13,6 +13,9 @@
 	<t id="err_cant_rename_entry">You can't use this name for this entry because it's already used</t>
 	<t id="err_cant_rename_rec">Recursive entries are not allowed</t>
 	<t id="entry_renamed">This entry has been successfully renamed</t>
+	<t id="err_no_such_version">This version doesn't exists</t>
+	<t id="err_no_such_lang">This language has not been defined yet</t>
+	<t id="err_cant_restore">You can't restore this version</t>
 
 	<!-- editor -->
 

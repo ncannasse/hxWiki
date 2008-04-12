@@ -17,9 +17,11 @@ x dependency id-cache
 x directory list dependency
 x fill title cache on edit
 x custom span classes
+x restore deleted version
+x multilang
 - check version on save
-- multilang
 - user : infos + changes history
-- haxe skin
 - search
 - backlinks
+- user subscribe
+- user group rights : global + per file/dir

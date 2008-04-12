@@ -19,6 +19,7 @@ body {
 }
 
 ul.menu {
+	margin-left : 0px;
 	padding-left : 0px;
 	margin-top : 0px;
 	margin-bottom : 0px;
@@ -42,6 +43,10 @@ ul.menu li a {
 
 .login .field {
 	width : 50px;
+}
+
+.login form {
+	margin : 0px 0px 0px 0px;
 }
 
 .login .group {
@@ -123,7 +128,7 @@ ul.buttons a, input.button {
 	color : black;
 	padding : 1px 3px 1px 3px;
 	border : 1px solid #aaa;
-	-moz-border-radius : 5px;
+	-moz-border-radius : 3px;
 }
 
 ul.buttons a:hover, input.button:hover {
@@ -217,3 +222,27 @@ a.extern {
 a.file {
 	color : #f80;
 }
+
+.langs ul {
+	clear : both;
+	float : right;
+	margin : 5px 0px 0px 0px;
+}
+
+.langs li {
+	display : inline;
+}
+
+.langs img {
+	border : 0px;
+}
+
+.langs a.off img {
+	opacity	 : 0.40;
+	filter	 : alpha(opacity=40);
+}
+
+.langs a.current img {
+	border : 2px solid #888;
+}
+

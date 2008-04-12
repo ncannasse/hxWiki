@@ -17,6 +17,8 @@
 			::else::
 			Changed title from ::v.content:: to ::v.htmlContent::
 			::end::
+		::elseif v.code == 4::
+			Restored to version #::v.content::
 		::else::
 			Unknown #::v.code::
 		::end::
