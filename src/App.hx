@@ -136,10 +136,18 @@ class App {
 		context.user = user;
 		context.session = session;
 		context.request = request;
-		context.style = Config.get("style","default");
-		context.links = db.Link.manager.list;
-		context.langs = db.Lang.manager.all(false);
-		context.uri = request.getURI();
+		context.config = {
+			title : Config.get("title"),
+			style : Config.get("style","default"),
+		};
+		if( database == null ) {
+			context.links = function(_) return [];
+			context.langs = [];
+		} else {
+			context.links = db.Link.manager.list;
+			context.langs = db.Lang.manager.all(false);
+		}
+		context.uri = (request == null) ? "/" : request.getURI();
 		context.lang_classes = function(l) {
 			var f = if( langFlags == null ) true else langFlags(l);
 			return (f ? "on" : "off") + ((l == langSelected) ? " current" : "");

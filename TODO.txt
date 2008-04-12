@@ -20,8 +20,11 @@ x custom span classes
 x restore deleted version
 x multilang
 - check version on save
+- show diff in history
+- allow to edit one part of the page
 - user : infos + changes history
 - search
 - backlinks
 - user subscribe
 - user group rights : global + per file/dir
+- latest changes list

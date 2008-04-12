@@ -2,8 +2,8 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-		<title>haxeWiki</title>
-		<link rel="stylesheet" type="text/css" href="/css/::style::.css"/>
+		<title>::config.title::</title>
+		<link rel="stylesheet" type="text/css" href="/css/::config.style::.css"/>
 		<script type="text/javascript" src="/wiki.js"/>
 	</head>
 
@@ -11,7 +11,7 @@
 	<div class="site">
 
 		<div class="header">
-			<a href="/">haXe Wiki</a>
+			<a href="/">::config.title::</a>
 		</div>
 
 		<ul class="menu">
