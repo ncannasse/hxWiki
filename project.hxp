@@ -22,15 +22,19 @@
       <file path="src\handler\Main.hx" />
     </dir>
     <dir path="tpl">
+      <file path="tpl\en\backlinks.mtt" />
       <file path="config.xml" />
       <file path="www\css\default.css" />
       <file path="tpl\en\design.mtt" />
       <file path="tpl\en\entry.mtt" />
       <file path="tpl\en\error.mtt" />
+      <file path="tpl\en\history.mtt" />
       <file path="tpl\en\macros.mtt" />
       <file path="tpl\en\map.mtt" />
       <file path="tpl\en\map_tree.mtt" />
+      <file path="tpl\en\register.mtt" />
       <file path="tpl\en\texts.xml" />
+      <file path="tpl\en\user.mtt" />
     </dir>
     <file path="src\App.hx" />
     <file path="src\Config.hx" />

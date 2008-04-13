@@ -1,0 +1,63 @@
+::use 'design.mtt'::
+
+::if entry == null::
+<h1>Latest Changes</h1>
+::else::
+<h1>::entry._path::::if lang:: [::lang.code::]::end::</h1>
+::end::
+
+<p ::cond entry != null && lang != null ::>
+	<a href="/wiki/history?path=::entry._path::">All languages</a>
+</p>
+
+<pre ::cond diff::>
+::diff::
+</pre>
+
+<table class="history">
+	<tr>
+		<th>Ver</th>
+		<th>Date</th>
+		<th ::cond entry == null::>Entry</th>
+		<th ::cond lang == null::>Lg</th>
+		<th>User</th>
+		<th>Action</th>
+	</tr>
+	::foreach v history::
+	<tr ::attr class if( repeat.v.even ) "even" else "odd"::>
+		<td>#::v.id::</td>
+		<td>::v.date::</td>
+		<td ::cond entry == null::><a href="/::v._entry._path::?lang=::v._entry._lang.code::">::v._entry._path::</a></td>
+		<td ::cond lang == null::>::v._entry._lang.code::</td>
+		<td><a href="/wiki/user?name=::v._author.name::">::v._author.name::</a></td>
+		<td>
+		::if v.code == 0::
+			<a href="/::v._entry._path::?version=::v.id::">View</a> |
+			<a href="/wiki/history?::params::;diff=::v.id::">Diff</a>
+		::elseif v.code == 1::
+			Deleted
+		::elseif v.code == 2::
+			Renamed from ::v.content:: to ::v.htmlContent::
+		::elseif v.code == 3::
+			::if v.content == null::
+			Set title to ::v.htmlContent::
+			::elseif v.htmlContent == null::
+			Removed title ::v.content::
+			::else::
+			Changed title from ::v.content:: to ::v.htmlContent::
+			::end::
+		::elseif v.code == 4::
+			Restored to version #::v.content::
+		::else::
+			Unknown #::v.code::
+		::end::
+		</td>
+	</tr>
+	::end::
+</table>
+
+<p class="browse">
+	::if page > 0::<a href="/wiki/history?::params::page=::(page-1)::">Previous</a>::else::Previous::end:: | <a href="/wiki/history?::params::page=::(page+1)::">Next</a>
+</p>
+
+::end::

@@ -37,8 +37,22 @@ ul.menu li a {
 }
 
 .login {
-	float : right;
-	text-align : right;
+	position : absolute;
+	top : 30px;
+	right : 0px;
+	text-align: right;
+}
+
+.login p {
+	width : 120px;
+	text-align : justify;
+	font-size : 8pt;
+	margin-top : 0px;
+	margin-bottom : 5px;
+}
+
+.login h1 {
+	display : none;
 }
 
 .login .field {
@@ -128,6 +142,7 @@ ul.buttons a, input.button {
 	color : black;
 	padding : 1px 3px 1px 3px;
 	border : 1px solid #aaa;
+	height : 21px;
 	-moz-border-radius : 3px;
 }
 
@@ -223,10 +238,18 @@ a.file {
 	color : #f80;
 }
 
+.langs h1 {
+	display : none;
+}
+
 .langs ul {
-	clear : both;
-	float : right;
-	margin : 5px 0px 0px 0px;
+	position : absolute;
+	top : 150px;
+	right : 0px;
+}
+
+.langs ul.logged {
+	top : 100px;
 }
 
 .langs li {
@@ -245,4 +268,37 @@ a.file {
 .langs a.current img {
 	border : 2px solid #888;
 }
+
+form.register {
+	padding-left : 100px;
+	width : 250px;
+	height : 150px;
+}
+
+form.register .tfield {
+	float : left;
+	width : 100px;
+}
+
+form.register .field {
+	float : right;
+	width : 130px;
+}
+
+form.register .group {
+	display : block;
+	height : 30px;
+}
+
+form.register .button {
+	float : right;
+}
+
+dl.user dt {
+	float : left;
+	width : 70px;
+	font-weight : bold;
+	margin-left : 40px;
+}
+
 

@@ -22,6 +22,10 @@
 
 		<div class="login">
 			::if user == null::
+				<h1>Login</h1>
+				<p>
+					You can <a href="/wiki/register">register</a> to create an account and edit the pages of the Wiki.
+				</p>
 				<form action="/wiki/login" method="POST">
 					<span class="group"><span class="tfield">User :</span> <input name="user" class="field"/></span>
 					<span class="group"><span class="tfield">Pass :</span> <input type="password" name="pass" class="field"/></span>
@@ -35,7 +39,8 @@
 		</div>
 
 		<div class="langs">
-			<ul>
+			<h1>Langs</h1>
+			<ul ::attr class if( user != null ) 'logged'::>
 			::foreach l langs::
 			<li><a href="/wiki/setlang?url=::uri::;lang=::l.code::" class="::lang_classes(l)::"><img src="/file/flag_::l.code::.gif" alt="::l.name::"/></a></li>
 			::end::
@@ -53,6 +58,7 @@
 		<ul class="links">
 			<li ::cond isAdmin::><a href="/db">Database</a></li>
 			<li><a href="/wiki/map">Wiki Map</a></li>
+			<li><a href="/wiki/history">Latest Changes</a></li>
 			::foreach l links(1)::
 			<li><a href="::l.url::">::l.title::</a></li>
 			::end::

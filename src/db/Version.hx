@@ -52,8 +52,11 @@ class Version extends neko.db.Object {
 
 class VersionManager extends neko.db.Manager<Version> {
 
-	public function history( e : Entry ) {
-		return objects("SELECT * FROM Version WHERE eid = "+e.id+" ORDER BY id DESC",false);
+	public function history( e : List<Entry>, user : User, pos : Int, count : Int ) {
+		var cond = (e == null || e.isEmpty())?"TRUE":"eid IN ("+e.map(function(e) return e.id).join(",")+")";
+		if( user != null )
+			cond += " AND uid = "+user.id;
+		return objects("SELECT * FROM Version WHERE "+cond+" ORDER BY id DESC LIMIT "+pos+","+count,false);
 	}
 
 }

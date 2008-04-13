@@ -34,4 +34,8 @@ class DependencyManager extends neko.db.Manager<Dependency> {
 		execute("UPDATE Dependency SET tid = NULL WHERE tid = "+e.id);
 	}
 
+	public function getBackLinks( e : Entry ) {
+		return Entry.manager.objects("SELECT Entry.* FROM Dependency, Entry WHERE Entry.id = Dependency.eid AND path = "+quote(e.get_path()),false);
+	}
+
 }

@@ -13,21 +13,20 @@
 <ul class="buttons" ::cond user::>
 	::if oldversion == null::
 	<li><a href="/wiki/edit?::eparams::">edit</a></li>
-	<li ::cond entry.id != null::><a href="/wiki/rename?::eparams::">rename</a></li>
+	<li ::cond entry.id != null::><a href="/::entry._path::?lang=::entry._lang.code::;rename=1">rename</a></li>
 	<li ::cond entry._version != null::><a href="/wiki/delete?::eparams::" $$confirm()>delete</a></li>
 	::else::
 	<li><a href="/wiki/restore?::eparams::;version=::version.id::" $$confirm()>restore</a></li>
 	::end::
 	<li><a href="/wiki/history?::eparams::">history</a></li>
+	<li><a href="/wiki/backlinks?::eparams::">backlinks</a></li>
 	<li><a href="/db/Entry/edit/::entry.id::" ::cond isAdmin && entry.id != null::>db</a></li>
 </ul>
 
-::if edit::
 
+<div class="editor" ::cond edit::>
 	::raw editor.initJS()::
-
 	<div id="upload"></div>
-
 	<form method="POST" action="/wiki/edit?submit=1">
 		<input type="hidden" name="path" value="::entry._path::"/>
 		<input type="hidden" name="lang" value="::entry._lang.code::"/>
@@ -45,35 +44,17 @@
 		<input type="submit" value="Modify" class="button"/>
 		<input type="submit" value="Cancel" onclick="if( confirm('Cancel Changes ?') ) document.location = '/::e._path::'; return false" class="button"/>
 	</form>
-::end::
+</div>
 
-<form method="POST" action="/wiki/rename?submit=1" ::cond rename::>
+<form method="POST" action="/wiki/rename?submit=1" class="rename" ::cond rename::>
 	<input type="hidden" name="path" value="::entry._path::"/>
 	<input type="hidden" name="lang" value="::entry._lang.code::"/>
 	<span class="tfield">New name :</span> <input name="name" value="::entry._path::" class="field"/>
 	<input type="submit" value="Rename" $$confirm() class="button"/>
 </form>
 
-::if history::
-	<table class="history">
-		<tr>
-			<th>Ver</th>
-			<th>Date</th>
-			<th>User</th>
-			<th>Action</th>
-		</tr>
-		::foreach v history::
-		<tr ::attr class if( repeat.v.even ) "even" else "odd"::>
-			<td>#::v.id::</td>
-			<td>::v.date::</td>
-			<td><a href="/wiki/user?name=::v._author.name::">::v._author.name::</a></td>
-			<td>$$versionDesc(::v::)</td>
-		</tr>
-		::end::
-	</table>
-::elseif edit::
-	<div class="view" id="::editor.preview::">
-	</div>
+::if edit::
+	<div class="view" id="::editor.preview::"></div>
 	<script type="text/javascript">
 		::editor.config.name::.updatePreview();
 	</script>
@@ -86,7 +67,7 @@
 		You are viewing an old version of this entry, click <a href="/::entry._path::">here</a> to see latest version.
 	</div>
 	<div class="view">
-	::raw version.htmlContent::
+		::raw version.htmlContent::
 	</div>
 	<div class="version">
 		version #::version.id::, modified ::version.date:: by <a href="/wiki/user?name=::version._author.name::">::version._author.name::</a>

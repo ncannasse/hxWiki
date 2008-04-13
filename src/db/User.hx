@@ -12,6 +12,7 @@ class User extends neko.db.Object {
 	// prefs
 	public var pass : SString<32>;
 	public var email : SNull<SString<50>>;
+	public var realName : STinyText;
 
 	// rights
 	public var isAdmin : SBool;

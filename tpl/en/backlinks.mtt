@@ -1,0 +1,15 @@
+::use 'design.mtt'::
+
+<h1>::entry._path:: backlinks</h1>
+
+<div class="error" ::cond backlinks.length == 0::>
+	No backlink has been found for this page.
+</div>
+
+<ul class="backlinks">
+	::foreach l backlinks::
+	<li><a href="/::l._path::?lang=::l._lang.code::">::l._title::</a> /::l._path:: [::l._lang.code::]</li>
+	::end::
+</ul>
+
+::end::

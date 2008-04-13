@@ -19,12 +19,14 @@ x fill title cache on edit
 x custom span classes
 x restore deleted version
 x multilang
-- check version on save
-- show diff in history
-- allow to edit one part of the page
-- user : infos + changes history
-- search
-- backlinks
-- user subscribe
+x latest changes list
+x changes for all languages
+x rename should rename all langs
+x show diff in history
+x backlinks
+x user subscribe
+x user : infos + changes history
 - user group rights : global + per file/dir
-- latest changes list
+- search
+- check version on save
+- allow to edit one part of the page

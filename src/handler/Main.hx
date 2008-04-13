@@ -10,8 +10,8 @@ class Main extends Handler<Void> {
 			execute(request,level);
 			return;
 		case "db":
-			mt.db.Admin.handler();
-			return;
+			if( isAdmin() )
+				mt.db.Admin.handler();
 		case "file":
 			doFile(request.getPathInfoPart(level++));
 			return;
@@ -33,7 +33,10 @@ class Main extends Handler<Void> {
 		free("login",doLogin);
 		free("map","map.mtt",doMap);
 		free("setlang",doSetLang);
-		free("history","entry.mtt",doHistory);
+		free("history","history.mtt",doHistory);
+		free("backlinks","backlinks.mtt",doBackLinks);
+		free("register","register.mtt",doRegister);
+		free("user","user.mtt",doUser);
 		logged("logout",doLogout);
 		logged("edit","entry.mtt",doEdit);
 		logged("delete",doDelete);
@@ -44,11 +47,15 @@ class Main extends Handler<Void> {
 		logged("restore",doRestore);
 	}
 
+	function encodePass( p : String ) {
+		return haxe.Md5.encode("some salt with "+p+" and "+p);
+	}
+
 	function doLogin() {
 		var user = request.get("user");
-		var pass = request.get("pass");
+		var pass = request.get("pass","");
 		var url = request.get("url","/");
-		var u = db.User.manager.search({ name : user, pass : pass },false).first();
+		var u = db.User.manager.search({ name : user, pass : encodePass(pass) },false).first();
 		if( u == null )
 			throw Action.Error(url,Text.get.err_unknown_user_pass);
 		App.session.setUser(u);
@@ -60,8 +67,11 @@ class Main extends Handler<Void> {
 		throw Action.Goto(request.get("url","/"));
 	}
 
-	function getEntry( ?path, lang ) {
-		if( path == null ) path = request.get("path","").split("/");
+	function getPath() {
+		return request.get("path","").split("/");
+	}
+
+	function getEntry( path, lang ) {
 		return db.Entry.get(Lambda.map(path,Editor.normalize),lang);
 	}
 
@@ -69,6 +79,13 @@ class Main extends Handler<Void> {
 		var l = db.Lang.manager.byCode(request.get("lang",""));
 		if( l == null ) l = db.Lang.manager.get(App.session.lang,false);
 		return l;
+	}
+
+	function getEntries( path ) {
+		var entries = new List();
+		for( l in db.Lang.manager.all(false) )
+			entries.add(getEntry(path,l));
+		return entries;
 	}
 
 	function updateContent( entry : db.Entry ) {
@@ -109,7 +126,7 @@ class Main extends Handler<Void> {
 				def = l;
 		}
 		// force lang
-		if( cur == null && request.exists("lang") )
+		if( request.exists("lang") )
 			cur = db.Lang.manager.byCode(request.get("lang"));
 
 		// force version
@@ -138,12 +155,45 @@ class Main extends Handler<Void> {
 			updateContent(entry);
 		App.context.version = version;
 		App.context.entry = entry;
+		App.context.rename = request.exists("rename");
 	}
 
 	function doHistory() {
-		var entry = getEntry(getLang());
-		App.context.entry = entry;
-		App.context.history = db.Version.manager.history(entry);
+		var entries = null;
+		var user = null;
+		var params = "";
+		if( request.exists("path") ) {
+			var lang = if( request.exists("lang") ) getLang() else null;
+			var path = getPath();
+			if( lang == null )
+				entries = getEntries(path);
+			else {
+				entries = new List();
+				entries.add(getEntry(path,lang));
+			}
+			App.langSelected = lang;
+			App.context.lang = lang;
+			App.context.entry = entries.first();
+			params = "path="+path.join("/") + ((lang == null) ? "" : ";lang="+lang.code);
+		} else if( request.exists("user") ) {
+			user = db.User.manager.get(request.getInt("user"),false);
+			if( user == null )
+				throw Action.Error("/wiki/history",Text.get.err_no_such_user);
+			App.context.u = user;
+			params = "user="+user.id;
+		}
+		if( request.exists("diff") ) {
+			var v = db.Version.manager.get(request.getInt("diff"),false);
+			if( v != null && v.getChange() == VContent )
+				App.context.diff = mtwin.text.Diff.diff(v.content,v.htmlContent);
+		}
+		var page = request.getInt("page",0);
+		if( page < 0 ) page = 0;
+		App.context.page = page;
+		App.context.history = db.Version.manager.history(entries,user,page * 20,20);
+		if( params.length > 0 )
+			params += ";";
+		App.context.params = params;
 	}
 
 	function createEditor( entry : db.Entry ) {
@@ -159,7 +209,7 @@ class Main extends Handler<Void> {
 		};
 		// fill titles cache
 		for( d in db.Dependency.manager.search({ eid : entry.id },false) ) {
-			var e = d.entry;
+			var e = d.target;
 			if( e == null ) e = getEntry(d.path.split("/"),lang);
 			config.titles.set(d.path,{ title : e.get_title(), exists : e.hasContent() });
 		}
@@ -198,7 +248,7 @@ class Main extends Handler<Void> {
 	}
 
 	function doEdit() {
-		var entry = getEntry(getLang());
+		var entry = getEntry(getPath(),getLang());
 		var editor = createEditor(entry);
 		App.context.edit = true;
 		App.context.entry = entry;
@@ -241,37 +291,42 @@ class Main extends Handler<Void> {
 
 	function doDelete() {
 		// delete for all langs
-		var entry = null;
-		for( l in db.Lang.manager.all(false) ) {
-			entry = getEntry(l);
-			if( entry.id != null && entry.version != null ) {
-				var entry = db.Entry.manager.get(entry.id);
-				entry.markDeleted(App.user);
-				entry.update();
-				db.Dependency.manager.cleanup(entry);
-			}
+		var path = getPath();
+		for( e in getEntries(path) ) {
+			if( e.id == null || e.vid == null )
+				continue;
+			var e = db.Entry.manager.get(e.id);
+			e.markDeleted(App.user);
+			e.update();
+			db.Dependency.manager.cleanup(e);
 		}
-		throw Action.Done(entry.getURL(),Text.get.entry_deleted);
+		throw Action.Done("/"+path.join("/"),Text.get.entry_deleted);
 	}
 
 	function doRename() {
-		var entry = getEntry(getLang());
-		App.context.entry = entry;
-		App.context.rename = true;
 		var path = request.get("name","").split("/");
-		if( !request.exists("submit") || path.length == 0 || entry.id == null )
-			return;
 		var name = Editor.normalize(path.pop());
+		if( name == "" )
+			throw Action.Error("/"+request.get("path",""),Text.get.err_cant_rename_entry);
+		for( e in getEntries(getPath()) )
+			if( e.id != null )
+				doRenameEntry(e,path,name);
+		throw Action.Done("/"+path.join("/"),Text.get.entry_renamed);
+	}
+
+	function doRenameEntry( entry : db.Entry, path, name ) {
+		// target parent
 		var parent = getEntry(path,entry.lang);
-		if( parent != null && parent.id == null ) parent.insert();
+		if( parent != null && parent.id == null )
+			parent.insert();
 		// check that target does not already exists
 		if( db.Entry.manager.count({ pid : parent == null ? null : parent.id, name : name }) > 0 )
-			throw Action.Error("/wiki/rename?path="+entry.get_path(),Text.get.err_cant_rename_entry);
+			throw Action.Error(entry.getURL(),Text.get.err_cant_rename_used);
 		// check that we don't create a recursive entry
 		var x = parent;
 		while( x != null ) {
 			if( x == entry )
-				throw Action.Error("/wiki/rename?path="+entry.get_path(),Text.get.err_cant_rename_rec);
+				throw Action.Error(entry.getURL(),Text.get.err_cant_rename_rec);
 			x = x.parent;
 		}
 		if( name != entry.name || parent != entry.parent ) {
@@ -282,12 +337,12 @@ class Main extends Handler<Void> {
 			entry.parent = parent;
 			entry.update();
 			db.Dependency.manager.renamed(entry);
-			if( oldparent != null && parent != oldparent ) oldparent.cleanup();
+			if( oldparent != null && parent != oldparent )
+				oldparent.cleanup();
 			var v = new db.Version(entry,App.user);
 			v.setChange(VName,old,entry.get_path());
 			v.insert();
 		}
-		throw Action.Done(entry.getURL(),Text.get.entry_renamed);
 	}
 
 	function doMap() {
@@ -297,13 +352,13 @@ class Main extends Handler<Void> {
 	}
 
 	function doTitle() {
-		var e = getEntry(getLang());
+		var e = getEntry(getPath(),getLang());
 		if( e.hasContent() )
 			neko.Lib.print(e.get_title());
 	}
 
 	function doSubList() {
-		var a = getSubLinks(getEntry(getLang()));
+		var a = getSubLinks(getEntry(getPath(),getLang()));
 		neko.Lib.print(haxe.Serializer.run(a));
 	}
 
@@ -427,7 +482,7 @@ class Main extends Handler<Void> {
 	}
 
 	function doRestore() {
-		var e = getEntry(getLang());
+		var e = getEntry(getPath(),getLang());
 		var v = db.Version.manager.get(request.getInt("version"),false);
 		if( v == null || v.entry != e || v.getChange() != VContent )
 			throw Action.Error(e.getURL(),Text.get.err_cant_restore);
@@ -438,6 +493,34 @@ class Main extends Handler<Void> {
 		v.setChange(VRestore,Std.string(e.vid),null);
 		v.insert();
 		throw Action.Goto(e.getURL());
+	}
+
+	function doBackLinks() {
+		var e = getEntry(getPath(),getLang());
+		App.context.entry = e;
+		App.context.backlinks = db.Dependency.manager.getBackLinks(e);
+	}
+
+	function doRegister() {
+		var login = request.get("login");
+		if( login == null )
+			return;
+		if( db.User.manager.count({ name : login }) > 0 || !~/^[A-Za-z0-9_]+$/.match(login) )
+			throw Action.Error("/wiki/register",Text.get.err_user_invalid);
+		var u = new db.User();
+		u.name = login;
+		u.pass = encodePass(request.get("spass"));
+		u.realName = request.get("name");
+		u.email = request.get("email");
+		u.insert();
+		throw Action.Done("/wiki/register",Text.get.user_registered);
+	}
+
+	function doUser() {
+		var u = db.User.manager.search({ name : request.get("name") },false).first();
+		if( u == null )
+			throw Action.Error("/",Text.get.err_no_such_user);
+		App.context.u = u;
 	}
 
 }

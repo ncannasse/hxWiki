@@ -1,0 +1,17 @@
+::use 'design.mtt'::
+
+<h1>Register</h1>
+
+<p>
+	You can create an account to edit the pages of the Wiki, please specify the following informations :
+</p>
+
+<form method="POST" action="/wiki/register" class="register">
+	<span class="group"><span class="tfield">Login :</span> <input name="login" class="field"/></span>
+	<span class="group"><span class="tfield">Realname :</span> <input name="name" class="field"/></span>
+	<span class="group"><span class="tfield">Pass :</span> <input type="password" name="spass" class="field"/></span>
+	<span class="group"><span class="tfield">Email :</span> <input name="email" class="field"/></span>
+	<input type="submit" value="Register" class="button"/>
+</form>
+
+::end::

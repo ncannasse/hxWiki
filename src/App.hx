@@ -99,7 +99,7 @@ class App {
 			case Error(url,err,params):
 				database.rollback();
 				neko.db.Manager.cleanup();
-				session.sync();
+				session = db.Session.initialize(sid);
 				if( user != null ) user.sync();
 				session.setError(err,params);
 				session.update();

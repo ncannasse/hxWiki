@@ -1,0 +1,18 @@
+::use 'design.mtt'::
+
+<h1>::u.name::</h1>
+
+<dl class="user">
+	<dt>Login</dt>
+	<dd>::u.name::</dd>
+	<dt>Name</dt>
+	<dd>::u.realName::</dd>
+	<dt>Mail</dt>
+	<dd>::u.email.split("@")[0]:: at ::u.email.split("@")[1]::</dd>
+</dl>
+
+<p>
+	<a href="/wiki/history?user=::u.id::">See latest changes</a>
+</p>
+
+::end::

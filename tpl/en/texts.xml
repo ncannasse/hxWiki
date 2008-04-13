@@ -10,12 +10,16 @@
 
 	<t id="entry_modified">Your modifications have been saved</t>
 	<t id="entry_deleted">This entry content has been deleted</t>
-	<t id="err_cant_rename_entry">You can't use this name for this entry because it's already used</t>
+	<t id="err_cant_rename_entry">You can't rename this entry</t>
+	<t id="err_cant_rename_used">You can't use this name for this entry because it's already used</t>
 	<t id="err_cant_rename_rec">Recursive entries are not allowed</t>
 	<t id="entry_renamed">This entry has been successfully renamed</t>
 	<t id="err_no_such_version">This version doesn't exists</t>
 	<t id="err_no_such_lang">This language has not been defined yet</t>
 	<t id="err_cant_restore">You can't restore this version</t>
+	<t id="err_user_invalid">This user already exists or your login contains invalid chars</t>
+	<t id="user_registered">Your account has been successfully created</t>
+	<t id="err_no_such_user">This user doesn't exists</t>
 
 	<!-- editor -->
 
