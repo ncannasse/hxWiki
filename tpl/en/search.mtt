@@ -1,0 +1,19 @@
+::use 'design.mtt'::
+
+<h1>Search Results</h1>
+
+<p>
+	Results for search <b>::s::</b> :
+</p>
+
+<ul class="results">
+	::foreach e results::
+	<li><a href="/::e._path::?lang=::e._lang.code::">::e._title::</a> /::e._path:: [::e._lang.code::]</li>
+	::end::
+</ul>
+
+<p class="browse">
+	::if page > 0::<a href="/wiki/search?s=::s::;page=::(page-1)::">Previous</a>::else::Previous::end:: | <a href="/wiki/search?s=::s::;page=::(page+1)::">Next</a>
+</p>
+
+::end::

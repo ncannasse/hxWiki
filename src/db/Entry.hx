@@ -127,4 +127,22 @@ class EntryManager extends neko.db.Manager<Entry> {
 		return vid;
 	}
 
+	public function updateSearchContent( e : Entry ) {
+		try {
+			if( e.version == null )
+				execute("DELETE FROM Search WHERE id = "+e.id);
+			else {
+				var content = quote(e.get_title()+" "+e.version.content);
+				execute("INSERT INTO Search (id,data) VALUES ("+e.id+","+content+") ON DUPLICATE KEY UPDATE data = "+content);
+			}
+		} catch( err : Dynamic ) {
+			execute("CREATE TABLE Search ( id int primary key, data text not null, fulltext key Search_data(data) ) TYPE=MYISAM");
+			updateSearchContent(e);
+		}
+	}
+
+	public function searchExpr( expr : String, pos : Int, count : Int ) : List<Entry> {
+		return results("SELECT id FROM Search WHERE MATCH(data) AGAINST ("+quote(expr)+" IN BOOLEAN MODE) LIMIT "+pos+","+count).map(function(r) return db.Entry.manager.get(r.id,false));
+	}
+
 }

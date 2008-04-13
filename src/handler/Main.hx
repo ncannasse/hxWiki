@@ -52,6 +52,7 @@ class Main extends Handler<Void> {
 		free("sublist",doSubList);
 		free("restore",doRestore);
 		free("logout",doLogout);
+		free("search","search.mtt",doSearch);
 	}
 
 	function encodePass( p : String ) {
@@ -329,9 +330,10 @@ class Main extends Handler<Void> {
 			entry.markDeleted(App.user);
 		else if( entry.version == null || entry.version.content != content ) {
 			v = new db.Version(entry,App.user);
-			v.content = content;
+			v.setChange(VContent,content,null);
 			v.insert();
 			entry.version = v;
+			db.Entry.manager.updateSearchContent(entry);
 		} else if( entry.vid != null )
 			v = db.Version.manager.get(entry.vid);
 		if( v != null ) {
@@ -354,6 +356,7 @@ class Main extends Handler<Void> {
 			var e = db.Entry.manager.get(e.id);
 			e.markDeleted(App.user);
 			e.update();
+			db.Entry.manager.updateSearchContent(e);
 			db.Dependency.manager.cleanup(e);
 		}
 		throw Action.Done("/"+path.join("/"),Text.get.entry_deleted);
@@ -554,6 +557,7 @@ class Main extends Handler<Void> {
 		var e = db.Entry.manager.get(e.id);
 		e.version = v;
 		e.update();
+		db.Entry.manager.updateSearchContent(e);
 		var v = new db.Version(e,App.user);
 		v.setChange(VRestore,Std.string(e.vid),null);
 		v.insert();
@@ -590,6 +594,15 @@ class Main extends Handler<Void> {
 		if( u == null )
 			throw Action.Error("/",Text.get.err_no_such_user);
 		App.context.u = u;
+	}
+
+	function doSearch() {
+		var s = request.get("s","");
+		var page = request.getInt("page",0);
+		if( page < 0 ) page = 0;
+		App.context.page = page;
+		App.context.s = s;
+		App.context.results = db.Entry.manager.searchExpr(s,page * 50,50);
 	}
 
 	public function setupDatabase() {

@@ -35,6 +35,7 @@
       <file path="tpl\en\map.mtt" />
       <file path="tpl\en\map_tree.mtt" />
       <file path="tpl\en\register.mtt" />
+      <file path="tpl\en\search.mtt" />
       <file path="tpl\en\texts.xml" />
       <file path="tpl\en\user.mtt" />
     </dir>

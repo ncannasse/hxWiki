@@ -242,14 +242,10 @@ a.file {
 	display : none;
 }
 
-.langs ul {
+.langs {
 	position : absolute;
-	top : 150px;
+	top : 130px;
 	right : 0px;
-}
-
-.langs ul.logged {
-	top : 100px;
 }
 
 .langs li {
@@ -301,4 +297,17 @@ dl.user dt {
 	margin-left : 40px;
 }
 
+.search {
+	position : absolute;
+	right : 0px;
+	top : 170px;
+}
+
+.search .field {
+	width : 60px;
+}
+
+.search h1 {
+	display : none;
+}
 

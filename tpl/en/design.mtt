@@ -47,6 +47,14 @@
 			</ul>
 		</div>
 
+		<div class="search">
+			<h1>Search</h1>
+			<form action="/wiki/search">
+				<input name="s" class="field"/>
+				<input type="submit" value="Search" class="button"/>
+			</form>
+		</div>
+
 		<div id="notification" ::cond notification:: ::attr class if( notification.error ) 'error'::>
 			::raw notification.text::
 		</div>

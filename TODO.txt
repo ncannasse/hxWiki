@@ -27,6 +27,6 @@ x backlinks
 x user subscribe
 x user : infos + changes history
 x user group rights : global + per file/dir
-- search
+x search
 - allow to edit one part of the page
 ? check version / lock / merge on save
