@@ -21,6 +21,12 @@
 	<t id="user_registered">Your account has been successfully created</t>
 	<t id="err_no_such_user">This user doesn't exists</t>
 
+	<!-- rights -->
+
+	<t id="err_cant_view">You are not allowed to view this content, please login or register</t>
+	<t id="err_cant_edit">You are not allowed to edit this page</t>
+	<t id="err_cant_delete">You are not allowed to delete this page</t>
+
 	<!-- editor -->
 
 	<t id="empty_text">Text</t>
@@ -32,7 +38,5 @@
 	<t id="code">Code</t>
 	<t id="link">A</t>
 	<t id="external_link">URL</t>
-
-	<t id="allowed_extensions">gif|png|jpg|zip|gz|tgz|dmg|exe|swf|txt|xml|pdf</t>
 
 </texts>

@@ -10,9 +10,14 @@
 	<a href="/wiki/history?path=::entry._path::">All languages</a>
 </p>
 
-<pre ::cond diff::>
-::diff::
-</pre>
+<div class="diff" ::cond diff::>
+	<p>
+	Differences between version ::if diff.v1 == null::EMPTY::else::#::diff.v1::::end:: and #::diff.v2::
+	</p>
+	<pre>
+::diff.txt::
+	</pre>
+</div>
 
 <table class="history">
 	<tr>
@@ -29,11 +34,11 @@
 		<td>::v.date::</td>
 		<td ::cond entry == null::><a href="/::v._entry._path::?lang=::v._entry._lang.code::">::v._entry._path::</a></td>
 		<td ::cond lang == null::>::v._entry._lang.code::</td>
-		<td><a href="/wiki/user?name=::v._author.name::">::v._author.name::</a></td>
+		<td>::if v.uid::<a href="/wiki/user?name=::v._author.name::">::v._author.name::</a>::else::Anonymous::end::</td>
 		<td>
 		::if v.code == 0::
 			<a href="/::v._entry._path::?version=::v.id::">View</a> |
-			<a href="/wiki/history?::params::;diff=::v.id::">Diff</a>
+			<a href="/wiki/history?::params::page=::page::;diff=::v.id::">Diff</a>
 		::elseif v.code == 1::
 			Deleted
 		::elseif v.code == 2::

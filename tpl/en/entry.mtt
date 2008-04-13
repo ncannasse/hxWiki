@@ -10,17 +10,17 @@
 
 ::set eparams = 'path='+entry._path+';lang='+entry._lang.code::
 
-<ul class="buttons" ::cond user::>
+<ul class="buttons">
 	::if oldversion == null::
-	<li><a href="/wiki/edit?::eparams::">edit</a></li>
-	<li ::cond entry.id != null::><a href="/::entry._path::?lang=::entry._lang.code::;rename=1">rename</a></li>
-	<li ::cond entry._version != null::><a href="/wiki/delete?::eparams::" $$confirm()>delete</a></li>
+	<li ::cond rights.canEdit::><a href="/wiki/edit?::eparams::">edit</a></li>
+	<li ::cond entry.id != null && rights.canDelete::><a href="/::entry._path::?lang=::entry._lang.code::;rename=1">rename</a></li>
+	<li ::cond entry._version != null && rights.canDelete::><a href="/wiki/delete?::eparams::" $$confirm()>delete</a></li>
 	::else::
-	<li><a href="/wiki/restore?::eparams::;version=::version.id::" $$confirm()>restore</a></li>
+	<li><a href="/wiki/restore?::eparams::;version=::version.id::" $$confirm() ::cond rights.canEdit::>restore</a></li>
 	::end::
 	<li><a href="/wiki/history?::eparams::">history</a></li>
 	<li><a href="/wiki/backlinks?::eparams::">backlinks</a></li>
-	<li><a href="/db/Entry/edit/::entry.id::" ::cond isAdmin && entry.id != null::>db</a></li>
+	<li><a href="/db/Entry/edit/::entry.id::" ::cond dbAccess && entry.id != null::>db</a></li>
 </ul>
 
 
@@ -36,8 +36,8 @@
 			<li><a href="#" onclick="::editor.buttonAction(b)::">::b.label::</a></li>
 			::end::
 			<li><a href="#" onclick="::editor.config.name::.spanAction('Please choose CSS class :')">SPAN</a></li>
-			<li><a href="#" onclick="::editor.config.name::.initUpload('Image','*.png;*.gif;*.jpg;*.swf',true)">IMG</a></li>
-			<li><a href="#" onclick="::editor.config.name::.initUpload('All','::extensions::',false)">FILE</a></li>
+			<li><a href="#" onclick="::editor.config.name::.initUpload('Image','::editor.extensions(extensions.images)::',true)" ::cond group.canUploadImages::>IMG</a></li>
+			<li><a href="#" onclick="::editor.config.name::.initUpload('All','::editor.extensions(extensions.files)::',false)" ::cond group.canUploadFile::>FILE</a></li>
 		</ul>
 		<span class="tfield">Content :</span>
 		<textarea name="::editor.content::" onkeyup="::editor.config.name::.updatePreview()" onkeydown="return ::editor.config.name::.handleTab(event)">::if entry._version != null::::entry._version.content::::end::</textarea>
@@ -70,7 +70,7 @@
 		::raw version.htmlContent::
 	</div>
 	<div class="version">
-		version #::version.id::, modified ::version.date:: by <a href="/wiki/user?name=::version._author.name::">::version._author.name::</a>
+		version #::version.id::, modified ::version.date:: by ::if version.uid::<a href="/wiki/user?name=::version._author.name::">::version._author.name::</a>::else::Anonymous::end::
 	</div>
 ::end::
 

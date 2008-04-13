@@ -26,7 +26,7 @@ x show diff in history
 x backlinks
 x user subscribe
 x user : infos + changes history
-- user group rights : global + per file/dir
+x user group rights : global + per file/dir
 - search
-- check version on save
 - allow to edit one part of the page
+? check version / lock / merge on save

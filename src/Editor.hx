@@ -138,6 +138,10 @@ class Editor {
 
 	#else true
 
+	public function extensions( l : Iterable<String> ) {
+		return Lambda.map(l,function(e) return "*."+e).join(";");
+	}
+
 	public function initJS() {
 		return '<script type="text/javascript">'+config.name+'=new Editor("'+haxe.Serializer.run(config)+'")</script>';
 	}

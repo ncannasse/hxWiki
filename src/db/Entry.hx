@@ -51,7 +51,7 @@ class Entry extends neko.db.Object {
 	}
 
 	public function getURL() {
-		return "/"+get_path();
+		return "/"+get_path()+"?lang="+lang.code;
 	}
 
 	public function get_title() {

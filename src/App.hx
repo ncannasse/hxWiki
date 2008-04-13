@@ -70,7 +70,8 @@ class App {
 				session.insert();
 				neko.Web.setHeader("Set-Cookie", "sid="+session.sid+"; path=/");
 			} catch( e : Dynamic ) {
-				mt.db.Admin.initializeDatabase();
+				new handler.Main().setupDatabase();
+				database.commit();
 				throw "Database initialized";
 			}
 		}
@@ -156,8 +157,6 @@ class App {
 			context.notification = session.notification;
 			session.notification = null;
 		}
-		if( user != null && user.isAdmin )
-			context.isAdmin = true;
 	}
 
 	static function errorHandler( e : Dynamic ) {

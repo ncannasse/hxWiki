@@ -22,7 +22,7 @@ class Version extends neko.db.Object {
 	public var id : SId;
 	public var date : SDateTime;
 	public var entry(dynamic,dynamic) : Entry;
-	public var author(dynamic,dynamic) : User;
+	public var author(dynamic,dynamic) : SNull<User>;
 	public var code : SInt;
 	public var content : SNull<SText>;
 	public var htmlContent : SNull<SText>;
@@ -57,6 +57,17 @@ class VersionManager extends neko.db.Manager<Version> {
 		if( user != null )
 			cond += " AND uid = "+user.id;
 		return objects("SELECT * FROM Version WHERE "+cond+" ORDER BY id DESC LIMIT "+pos+","+count,false);
+	}
+
+	public function previous( v : Version ) {
+		var r = result("SELECT MAX(id) as id FROM Version WHERE eid = "+v.entry.id+" AND id < "+v.id+" AND code IN (0,4)");
+		if( r == null )
+			return null;
+		var v = get(r.id,false);
+		// retrieve content of restored version
+		if( v.getChange() == VRestore )
+			v = get(Std.parseInt(v.content),false);
+		return v;
 	}
 
 }

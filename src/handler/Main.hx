@@ -3,15 +3,22 @@ import db.Version.VersionChange;
 
 class Main extends Handler<Void> {
 
+	var group : db.Group;
+
 	public function dispatch( request : mtwin.web.Request, level ) {
+		group = if( App.user == null ) db.Group.manager.search({ name : "offline" },false).first() else App.user.group;
+		App.context.dbAccess = group.canAccessDB;
+
 		var part = request.getPathInfoPart(level++);
 		switch( part ) {
 		case "wiki":
 			execute(request,level);
 			return;
 		case "db":
-			if( isAdmin() )
+			if( App.user != null && App.user.group.canAccessDB ) {
 				mt.db.Admin.handler();
+				return;
+			}
 		case "file":
 			doFile(request.getPathInfoPart(level++));
 			return;
@@ -37,14 +44,14 @@ class Main extends Handler<Void> {
 		free("backlinks","backlinks.mtt",doBackLinks);
 		free("register","register.mtt",doRegister);
 		free("user","user.mtt",doUser);
-		logged("logout",doLogout);
-		logged("edit","entry.mtt",doEdit);
-		logged("delete",doDelete);
-		logged("rename","entry.mtt",doRename);
-		logged("title",doTitle);
-		logged("upload",doUpload);
-		logged("sublist",doSubList);
-		logged("restore",doRestore);
+		free("edit","entry.mtt",doEdit);
+		free("delete",doDelete);
+		free("rename",doRename);
+		free("title",doTitle);
+		free("upload",doUpload);
+		free("sublist",doSubList);
+		free("restore",doRestore);
+		free("logout",doLogout);
 	}
 
 	function encodePass( p : String ) {
@@ -86,6 +93,18 @@ class Main extends Handler<Void> {
 		for( l in db.Lang.manager.all(false) )
 			entries.add(getEntry(path,l));
 		return entries;
+	}
+
+	function getRights( entry : db.Entry ) {
+		var p = (entry == null) ? [] : entry.get_path().split("/");
+		while( true ) {
+			var r = db.GroupRights.manager.getWithKeys({ gid : group.id, path : p.join("/") },false);
+			if( r != null )
+				return r;
+			if( p.pop() == null )
+				break;
+		}
+		return new db.GroupRights(group,"");
 	}
 
 	function updateContent( entry : db.Entry ) {
@@ -144,6 +163,13 @@ class Main extends Handler<Void> {
 		}
 
 		var entry = if( cur != null ) db.Entry.get(path,cur) else db.Entry.get(path,def);
+
+		// check rights
+		var r = getRights(entry);
+		if( !r.canView )
+			throw Action.Error("/wiki/register",Text.get.err_cant_view);
+		App.context.rights = r;
+
 		if( version == null )
 			version = entry.version;
 		var lang = entry.lang;
@@ -159,22 +185,25 @@ class Main extends Handler<Void> {
 	}
 
 	function doHistory() {
+		var entry = null;
 		var entries = null;
 		var user = null;
 		var params = "";
 		if( request.exists("path") ) {
 			var lang = if( request.exists("lang") ) getLang() else null;
 			var path = getPath();
-			if( lang == null )
+			if( lang == null ) {
 				entries = getEntries(path);
-			else {
+				entry = entries.first();
+			} else {
+				entry = getEntry(path,lang);
 				entries = new List();
-				entries.add(getEntry(path,lang));
+				entries.add(entry);
 			}
 			App.langSelected = lang;
 			App.context.lang = lang;
-			App.context.entry = entries.first();
-			params = "path="+path.join("/") + ((lang == null) ? "" : ";lang="+lang.code);
+			App.context.entry = entry;
+			params = "path="+entry.get_path() + ((lang == null) ? "" : ";lang="+lang.code);
 		} else if( request.exists("user") ) {
 			user = db.User.manager.get(request.getInt("user"),false);
 			if( user == null )
@@ -182,10 +211,18 @@ class Main extends Handler<Void> {
 			App.context.u = user;
 			params = "user="+user.id;
 		}
+		if( !getRights(entry).canView )
+			throw Action.Error("/wiki/register",Text.get.err_cant_view);
 		if( request.exists("diff") ) {
 			var v = db.Version.manager.get(request.getInt("diff"),false);
-			if( v != null && v.getChange() == VContent )
-				App.context.diff = mtwin.text.Diff.diff(v.content,v.htmlContent);
+			if( v != null && v.getChange() == VContent && v.entry == entry ) {
+				var v2 = db.Version.manager.previous(v);
+				App.context.diff = {
+					v1 : if( v2 == null ) null else v2.id,
+					v2 : v.id,
+					txt : mtwin.text.Diff.diff(if( v2 == null ) "" else v2.content,v.content),
+				};
+			}
 		}
 		var page = request.getInt("page",0);
 		if( page < 0 ) page = 0;
@@ -247,6 +284,15 @@ class Main extends Handler<Void> {
 		return e;
 	}
 
+	function getExtensions( group : db.Group ) {
+		var imgs = if( group.canUploadImage ) ["gif","png","jpg","jpeg"] else [];
+		if( group.canUploadSWF ) imgs.push("swf");
+		return {
+			images : imgs,
+			files : group.allowedFiles.split("|").concat(imgs),
+		};
+	}
+
 	function doEdit() {
 		var entry = getEntry(getPath(),getLang());
 		var editor = createEditor(entry);
@@ -255,7 +301,15 @@ class Main extends Handler<Void> {
 		App.context.editor = editor;
 		App.langSelected = entry.lang;
 		App.langFlags = function(l) return l == entry.lang;
-		App.context.extensions = "*."+Text.get.allowed_extensions.split("|").join(";*.");
+		App.context.extensions = getExtensions(group);
+
+		// check rights for create/edit
+		var r = getRights(entry);
+		if( !r.canEdit || (entry.id == null && !r.canCreate) )
+			throw Action.Error(entry.getURL(),Text.get.err_cant_edit);
+		App.context.rights = r;
+		App.context.group = group;
+
 		if( !request.exists("submit") )
 			return;
 		// edit
@@ -295,6 +349,8 @@ class Main extends Handler<Void> {
 		for( e in getEntries(path) ) {
 			if( e.id == null || e.vid == null )
 				continue;
+			if( !getRights(e).canDelete )
+				throw Action.Error(e.getURL(),Text.get.err_cant_delete);
 			var e = db.Entry.manager.get(e.id);
 			e.markDeleted(App.user);
 			e.update();
@@ -306,9 +362,10 @@ class Main extends Handler<Void> {
 	function doRename() {
 		var path = request.get("name","").split("/");
 		var name = Editor.normalize(path.pop());
+		var psrc = getPath();
 		if( name == "" )
-			throw Action.Error("/"+request.get("path",""),Text.get.err_cant_rename_entry);
-		for( e in getEntries(getPath()) )
+			throw Action.Error("/"+psrc.join("/"),Text.get.err_cant_rename_entry);
+		for( e in getEntries(psrc) )
 			if( e.id != null )
 				doRenameEntry(e,path,name);
 		throw Action.Done("/"+path.join("/"),Text.get.entry_renamed);
@@ -319,6 +376,11 @@ class Main extends Handler<Void> {
 		var parent = getEntry(path,entry.lang);
 		if( parent != null && parent.id == null )
 			parent.insert();
+		// check rights
+		if( !getRights(entry).canDelete )
+			throw Action.Error(entry.getURL(),Text.get.err_cant_delete);
+		if( !getRights(parent).canCreate )
+			throw Action.Error((parent == null)?"/":parent.getURL(),Text.get.err_cant_edit);
 		// check that target does not already exists
 		if( db.Entry.manager.count({ pid : parent == null ? null : parent.id, name : name }) > 0 )
 			throw Action.Error(entry.getURL(),Text.get.err_cant_rename_used);
@@ -365,7 +427,7 @@ class Main extends Handler<Void> {
 	function getSubLinks( e : db.Entry ) {
 		if( e.id == null )
 			return [];
-		return Lambda.array(db.Entry.manager.search({ pid : e.id },false).map(function(e) return { url : e.getURL(), title : e.get_title() }));
+		return Lambda.array(db.Entry.manager.search({ pid : e.id },false).map(function(e) return { url : "/"+e.get_path(), title : e.get_title() }));
 	}
 
 	function doFile( fname : String ) {
@@ -437,14 +499,14 @@ class Main extends Handler<Void> {
 
 	function doUpload() {
 		try {
-			var datas = neko.Web.getMultipart(Std.parseInt(Config.get("max_allowed_upload","0")));
+			var datas = neko.Web.getMultipart(group.maxUploadSize);
 			var filename = datas.get("Filename");
 			if( filename == null )
 				throw "No filename defined";
 			if( !~/^[ A-Za-z0-9._-]+$/.match(filename) )
 				throw "Invalid filename "+filename;
-			var ext = filename.split(".")[1];
-			if( !Lambda.exists(Text.get.allowed_extensions.split("|"),function(x) return ext == x) )
+			var ext = filename.split(".")[1].toLowerCase();
+			if( !Lambda.exists(getExtensions(group).files,function(x) return ext == x) )
 				throw "Unsupported file extension "+ext;
 			var f = db.File.manager.search({ name : filename },false).first();
 			var content = datas.get("file");
@@ -457,6 +519,7 @@ class Main extends Handler<Void> {
 				f.name = filename;
 				f.update = f.insert;
 			}
+			f.user = App.user;
 			f.content = content;
 			f.update();
 			neko.db.Manager.cnx.commit();
@@ -486,6 +549,8 @@ class Main extends Handler<Void> {
 		var v = db.Version.manager.get(request.getInt("version"),false);
 		if( v == null || v.entry != e || v.getChange() != VContent )
 			throw Action.Error(e.getURL(),Text.get.err_cant_restore);
+		if( !getRights(e).canEdit )
+			throw Action.Error(e.getURL(),Text.get.err_cant_edit);
 		var e = db.Entry.manager.get(e.id);
 		e.version = v;
 		e.update();
@@ -497,6 +562,8 @@ class Main extends Handler<Void> {
 
 	function doBackLinks() {
 		var e = getEntry(getPath(),getLang());
+		if( !getRights(e).canView )
+			throw Action.Error("/",Text.get.err_cant_view);
 		App.context.entry = e;
 		App.context.backlinks = db.Dependency.manager.getBackLinks(e);
 	}
@@ -512,6 +579,8 @@ class Main extends Handler<Void> {
 		u.pass = encodePass(request.get("spass"));
 		u.realName = request.get("name");
 		u.email = request.get("email");
+		if( u.email == "" ) u.email = null;
+		u.group = db.Group.manager.search({ name : "user" },false).first();
 		u.insert();
 		throw Action.Done("/wiki/register",Text.get.user_registered);
 	}
@@ -521,6 +590,51 @@ class Main extends Handler<Void> {
 		if( u == null )
 			throw Action.Error("/",Text.get.err_no_such_user);
 		App.context.u = u;
+	}
+
+	public function setupDatabase() {
+		// create structure
+		mt.db.Admin.initializeDatabase();
+		// default lang
+		var l = new db.Lang();
+		l.code = Config.LANG;
+		l.name = "Default";
+		l.insert();
+		// admin group
+		var g = new db.Group("admin");
+		var gadmin = g;
+		g.canAccessDB = true;
+		g.allowedFiles = "zip|gz|tgz|dmg|exe|swf|txt|xml|pdf";
+		g.canUploadImage = true;
+		g.canUploadSWF = true;
+		g.maxUploadSize = 10000000;
+		g.insert();
+		var r = new db.GroupRights(g,"");
+		r.canView = true;
+		r.canCreate = true;
+		r.canDelete = true;
+		r.canEdit = true;
+		r.insert();
+		// user group
+		var g = new db.Group("user");
+		g.insert();
+		var r = new db.GroupRights(g,"");
+		r.canView = true;
+		r.canEdit = true;
+		r.insert();
+		// offline group
+		var g = new db.Group("offline");
+		g.insert();
+		var r = new db.GroupRights(g,"");
+		r.canView = true;
+		r.insert();
+		// create admin user
+		var u = new db.User();
+		u.name = "admin";
+		u.realName = "Admin";
+		u.pass = encodePass(Config.get("admin_password"));
+		u.group = gadmin;
+		u.insert();
 	}
 
 }

@@ -8,7 +8,13 @@
 	<dt>Name</dt>
 	<dd>::u.realName::</dd>
 	<dt>Mail</dt>
+	::if u.email::
 	<dd>::u.email.split("@")[0]:: at ::u.email.split("@")[1]::</dd>
+	::else::
+	<dd>not specified</dd>
+	::end::
+	<dt>Group</dt>
+	<dd>::u._group.name::</dd>
 </dl>
 
 <p>

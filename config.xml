@@ -5,5 +5,5 @@
 	cache="0"
 	style="default"
 	title="haXe Wiki"
-	max_allowed_upload="10000000"
+	admin_password="admin"
 />
