@@ -1,5 +1,5 @@
 <li ::attr class if( e.vid != null ) 'has_content'::>
-	<a href="/::e._path::">::e._title::</a>
+	<a href="::e.getURL()::">::e._title::</a>
 	<ul class="map">
 	::foreach e e.childs()::
 		::use 'map_tree.mtt'::::end::
