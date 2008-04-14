@@ -256,17 +256,17 @@ class Editor {
 		case "haxe":
 			var tags = new Array();
 			var tag = function(c,s) { tags.push('<span class="'+c+'">'+s+'</span>'); return "##TAG"+(tags.length-1)+"##"; };
-			t = ~/"[^"]*?"/.customReplace(t,function(r) {
-				return tag("string",r.matched(0));
-			});
-			t = ~/'[^']*?'/.customReplace(t,function(r) {
-				return tag("string",r.matched(0));
+			t = ~/\/\*((.|\n)*?)\*\//.customReplace(t,function(r) {
+				return tag("comment",r.matched(0));
 			});
 			t = ~/\/\/[^\n]*/.customReplace(t,function(r) {
 				return tag("comment",r.matched(0));
 			});
-			t = ~/\/\*((.|\n)*?)\*\//.customReplace(t,function(r) {
-				return tag("comment",r.matched(0));
+			t = ~/"(\\"|[^"])*?"/.customReplace(t,function(r) {
+				return tag("string",r.matched(0));
+			});
+			t = ~/'(\\'|[^'])*?'/.customReplace(t,function(r) {
+				return tag("string",r.matched(0));
 			});
 			var kwds = [
 				"function","var","class","if","else","while","do","for","break","continue","return",
