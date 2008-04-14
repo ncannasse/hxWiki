@@ -10,6 +10,7 @@ class GroupRights extends neko.db.Object {
 	public static var manager = new neko.db.Manager<GroupRights>(GroupRights);
 
 	public var group(dynamic,dynamic) : Group;
+	public var gid : SInt;
 	public var path : SString<200>;
 	public var canView : SBool;
 	public var canEdit : SBool;

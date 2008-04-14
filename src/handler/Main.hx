@@ -109,7 +109,7 @@ class Main extends Handler<Void> {
 	}
 
 	function updateContent( entry : db.Entry ) {
-		var editor = createEditor(entry);
+		var editor = createEditor(entry,false);
 		var v = db.Version.manager.get(entry.vid);
 		db.Dependency.manager.cleanup(entry);
 		v.htmlContent = editor.format(v.content);
@@ -234,7 +234,7 @@ class Main extends Handler<Void> {
 		App.context.params = params;
 	}
 
-	function createEditor( entry : db.Entry ) {
+	function createEditor( entry : db.Entry, cache : Bool ) {
 		var lang = entry.lang;
 		var config = {
 			buttons : new Array(),
@@ -246,11 +246,12 @@ class Main extends Handler<Void> {
 			titles : new Hash(),
 		};
 		// fill titles cache
-		for( d in db.Dependency.manager.search({ eid : entry.id },false) ) {
-			var e = d.target;
-			if( e == null ) e = getEntry(d.path.split("/"),lang);
-			config.titles.set(d.path,{ title : e.get_title(), exists : e.hasContent() });
-		}
+		if( cache )
+			for( d in db.Dependency.manager.search({ eid : entry.id },false) ) {
+				var e = d.target;
+				if( e == null ) e = getEntry(d.path.split("/"),lang);
+				config.titles.set(d.path,{ title : e.get_title(), exists : e.hasContent() });
+			}
 
 		var e = new Editor(config);
 		e.addButton(Text.get.bold,"**");
@@ -296,7 +297,8 @@ class Main extends Handler<Void> {
 
 	function doEdit() {
 		var entry = getEntry(getPath(),getLang());
-		var editor = createEditor(entry);
+		var submit = request.exists("submit");
+		var editor = createEditor(entry,!submit);
 		App.context.edit = true;
 		App.context.entry = entry;
 		App.context.editor = editor;
@@ -311,7 +313,7 @@ class Main extends Handler<Void> {
 		App.context.rights = r;
 		App.context.group = group;
 
-		if( !request.exists("submit") )
+		if( !submit )
 			return;
 		// edit
 		var content = request.get(editor.content);

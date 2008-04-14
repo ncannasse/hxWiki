@@ -312,7 +312,7 @@ class Editor {
 		t = ~/\[\[(https?:[^\]]*?)\|(.*?)\]\]/g.replace(t,'<a href="$1" class="extern">$2</a>');
 		t = ~/\[\[([^\]]*?)\]\]/.customReplace(t,function(r) {
 			var link = r.matched(1);
-			if( link.substr(link.length-2,2) == ".*" ) {
+			if( link.substr(link.length-2,2) == "/*" ) {
 				var path = me.makePath(link.substr(0,link.length-2)).path;
 				var list = me.subcache.get(path.join("/"));
 				if( list == null ) {

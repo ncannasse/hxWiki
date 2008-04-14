@@ -65,8 +65,8 @@ class App {
 		if( sid == null ) sid = neko.Web.getCookies().get("sid");
 		session = db.Session.initialize(sid);
 		if( session.data == null ) {
-			session.lang = initLang();
 			try {
+				session.lang = initLang();
 				session.insert();
 				neko.Web.setHeader("Set-Cookie", "sid="+session.sid+"; path=/");
 			} catch( e : Dynamic ) {
