@@ -36,8 +36,8 @@
 			<li><a href="#" onclick="::editor.buttonAction(b)::">::b.label::</a></li>
 			::end::
 			<li><a href="#" onclick="::editor.config.name::.spanAction('Please choose CSS class :')">SPAN</a></li>
-			<li><a href="#" onclick="::editor.config.name::.initUpload('Image','::editor.extensions(extensions.images)::',true)" ::cond group.canUploadImages::>IMG</a></li>
-			<li><a href="#" onclick="::editor.config.name::.initUpload('All','::editor.extensions(extensions.files)::',false)" ::cond group.canUploadFile::>FILE</a></li>
+			<li><a href="#" onclick="::editor.config.name::.initUpload('Image','::editor.extensions(extensions.images)::',true)" ::cond group.canUploadImage::>IMG</a></li>
+			<li><a href="#" onclick="::editor.config.name::.initUpload('All','::editor.extensions(extensions.files)::',false)" ::cond group.canUploadImage::>FILE</a></li>
 		</ul>
 		<span class="tfield">Content :</span>
 		<textarea name="::editor.content::" onkeyup="::editor.config.name::.updatePreview()" onkeydown="return ::editor.config.name::.handleTab(event)">::if entry._version != null::::entry._version.content::::end::</textarea>
