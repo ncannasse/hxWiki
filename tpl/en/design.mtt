@@ -4,10 +4,11 @@
 		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
 		<title>::config.title::</title>
 		<link rel="stylesheet" type="text/css" href="/css/::config.style::.css"/>
-		<script type="text/javascript" src="/wiki.js"/>
+		<script type="text/javascript" src="/wiki.js"></script>
 	</head>
 
 	<body>
+	<div class="all">
 	<div class="site">
 
 		<div class="header">
@@ -76,6 +77,7 @@
 			&copy; 2007-2008 Nicolas Cannasse | Powered by <a href="http://haxe.org">haXe</a>
 		</div>
 
+	</div>
 	</div>
 	</body>
 </html>
