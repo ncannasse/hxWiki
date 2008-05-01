@@ -39,6 +39,26 @@
 						</p>
 					::end::
 				</div>
+				
+				<div class="search">
+					<h1>Search</h1>
+					<form action="/wiki/search">
+						<input name="s" class="field"/>
+						<input type="submit" value="OK" class="button"/>
+					</form>
+				</div>
+				
+				<div class="links">
+					<h1>Options</h1>
+					<ul>
+						<li ::cond dbAccess::><a href="/db">Database</a></li>
+						<li><a href="/wiki/map">Wiki Map</a></li>
+						<li><a href="/wiki/history">Latest Changes</a></li>
+						::foreach l links(1)::
+						<li><a href="::l.url::">::l.title::</a></li>
+						::end::
+					</ul>
+				</div>
 
 				<div class="langs">
 					<h1>Langs</h1>
@@ -47,15 +67,7 @@
 					<li><a href="/wiki/setlang?url=::uri::;lang=::l.code::" class="::lang_classes(l)::"><img src="/img/::config.style::/flags/flag_::l.code::.gif" alt="::l.name::"/> <span class="name">::l.name::</span></a></li>
 					::end::
 					</ul>
-				</div>
-
-				<div class="search">
-					<h1>Search</h1>
-					<form action="/wiki/search">
-						<input name="s" class="field"/>
-						<input type="submit" value="OK" class="button"/>
-					</form>
-				</div>
+				</div>				
 
 				<div id="notification" ::cond notification:: ::attr class if( notification.error ) 'error'::>
 					::raw notification.text::
@@ -63,16 +75,7 @@
 
 				<div class="content">
 					::raw __content__::
-				</div>
-
-				<ul class="links">
-					<li ::cond dbAccess::><a href="/db">Database</a></li>
-					<li><a href="/wiki/map">Wiki Map</a></li>
-					<li><a href="/wiki/history">Latest Changes</a></li>
-					::foreach l links(1)::
-					<li><a href="::l.url::">::l.title::</a></li>
-					::end::
-				</ul>
+				</div>				
 		</div>
 		<div class="footer">
 			(c) 2007-2008 <a href="http://www.motion-twin.com" target="_blank">Motion-Twin</a> · Powered by <a href="http://haxe.org">haXe</a>

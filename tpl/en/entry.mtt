@@ -10,20 +10,6 @@
 
 ::set eparams = 'path='+entry._path+';lang='+entry._lang.code::
 
-<ul class="buttons">
-	::if oldversion == null::
-	<li ::cond rights.canEdit::><a href="/wiki/edit?::eparams::">edit</a></li>
-	<li ::cond entry.id != null && rights.canDelete::><a href="/::entry._path::?lang=::entry._lang.code::;rename=1">rename</a></li>
-	<li ::cond entry._version != null && rights.canDelete::><a href="/wiki/delete?::eparams::" $$confirm()>delete</a></li>
-	::else::
-	<li ::cond rights.canEdit::><a href="/wiki/restore?::eparams::;version=::version.id::" $$confirm()>restore</a></li>
-	::end::
-	<li><a href="/wiki/history?::eparams::">history</a></li>
-	<li><a href="/wiki/backlinks?::eparams::">backlinks</a></li>
-	<li ::cond dbAccess && entry.id != null::><a href="/db/Entry/edit/::entry.id::">db</a></li>
-</ul>
-
-
 <div class="editor" ::cond edit::>
 	::raw editor.initJS()::
 	<div id="upload"></div>
@@ -73,5 +59,18 @@
 		version #::version.id::, modified ::version.date:: by ::if version.uid::<a href="/wiki/user?name=::version._author.name::">::version._author.name::</a>::else::Anonymous::end::
 	</div>
 ::end::
+
+<ul class="buttons">
+	::if oldversion == null::
+	<li ::cond rights.canEdit::><a href="/wiki/edit?::eparams::">edit</a></li>
+	<li ::cond entry.id != null && rights.canDelete::><a href="/::entry._path::?lang=::entry._lang.code::;rename=1">rename</a></li>
+	<li ::cond entry._version != null && rights.canDelete::><a href="/wiki/delete?::eparams::" $$confirm()>delete</a></li>
+	::else::
+	<li ::cond rights.canEdit::><a href="/wiki/restore?::eparams::;version=::version.id::" $$confirm()>restore</a></li>
+	::end::
+	<li><a href="/wiki/history?::eparams::">history</a></li>
+	<li><a href="/wiki/backlinks?::eparams::">backlinks</a></li>
+	<li ::cond dbAccess && entry.id != null::><a href="/db/Entry/edit/::entry.id::">db</a></li>
+</ul>
 
 ::end::

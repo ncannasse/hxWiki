@@ -52,13 +52,13 @@ ul {
 	list-style			: none;	
 }
 
-.content ul {
+.view ul {
 	list-style-image	: url('/img/haxe/items/ul_spot.gif');
 	list-style-position	: inside;
 	margin				: 5px 0px 25px 10px;	
 }
 
-.content ul li {
+.view ul li {
 	margin-bottom		: 1px;	
 }
 
@@ -122,11 +122,21 @@ input {
 }	
 
 input.button {
-	border-style		: none;	
+	border-style		: none;
+	width				: 110px;
+	height				: 34px;
+	background			: transparent url('/img/haxe/buttons/button1.png') top left no-repeat;
+	font-size			: 11pt;	
+	color				: #09598a;
+	font-weight			: bold;
+	font-variant		: small-caps;
+	padding-bottom		: 3px;
+	margin				: 5px 0px 15px 0px;	
 }
 
 input.button:hover {
-	cursor				: pointer;	
+	cursor				: pointer;
+	background-image	: url('/img/haxe/buttons/button1_hover.png');
 }
 
 input.field {	
@@ -138,7 +148,7 @@ input.field {
 textarea {
 	font-size			: 9pt;
 	width				: 640px;
-	height				: 600px;
+	height				: 300px;
 	background-color	: #eef7fd;
 	padding				: 5px;
 }
@@ -173,7 +183,7 @@ textarea {
 	width				: 963px; 
 	min-height			: 720px; /* repasar ie6 */
 	background-image	: url('/img/haxe/bg_content.png');
-	background-position	: center top;		
+	background-position	: center top;			
 }				
 
 .footer {	
@@ -184,7 +194,7 @@ textarea {
 	background-image	: url('/img/haxe/bg_bottom.png');
 	background-repeat	: repeat-x;	
 	color				: #c35700;
-	font-size			: 9pt;
+	font-size			: 9pt;	
 }
 
 .footer a {
@@ -194,7 +204,6 @@ textarea {
 .content {	
 	padding				: 45px 280px 45px 45px;		
 }
-
 
 /* CONTENTS */
 
@@ -225,8 +234,8 @@ ul.menu li a:hover {
 	text-decoration		: underline;
 }
 
-.login, .langs, .search {	
-	font-size			: 9pt;
+.login, .langs, .search, .links {	
+	font-size			: 10pt;
 	width				: 164px;		
 	position			: absolute;		
 	margin-left			: 740px;
@@ -236,7 +245,7 @@ ul.menu li a:hover {
 	margin-top			: 45px;		
 }
 
-.login h1, .langs h1, .search h1 {
+.login h1, .langs h1, .search h1, .links h1 {
 	color				: #4381a7;	
 	font-size			: 11pt;	
 	border-bottom		: 2px solid #d4ebf9;
@@ -252,9 +261,14 @@ ul.menu li a:hover {
 	text-align			: right;
 }
 
-.login input.field, .search input.field {	
+.login input.field {
+	width				: 120px;
+	margin-bottom		: 2px;
+} 
+
+.search input.field {	
 	width				: 100px;
-	margin-bottom		: 2px;	
+	margin-bottom		: 2px;
 }
 
 .login input.button, .search input.button {
@@ -268,29 +282,18 @@ ul.menu li a:hover {
 	background-image	: url('/img/haxe/buttons/button_ok_hover.png');
 }
 
-.langs {
-	margin-top			: 275px;	
+.links {
+	margin-top			: 205px;	
 }
 
-.langs ul li {
-	margin-top			: 6px;
-}
-
-.langs ul a {
-	text-decoration		: none;	
-}
-
-.langs ul img {
-	border				: 1px solid #09598a;
-	-moz-border-radius	: 2px;
-}
-
-.langs span {
-	text-decoration		: underline;	
+.links li {
+	background			: transparent url('/img/haxe/items/ul_spot3.gif') no-repeat left center;
+	margin-bottom		: 5px;	
+	padding-left		: 15px;
 }
 
 .search {
-	margin-top			: 205px;	
+	margin-top			: 305px;	
 }
 
 .search form {
@@ -306,33 +309,56 @@ ul.menu li a:hover {
 	width				: 110px;	
 }
 
-.version {
+.langs {
+	margin-top			: 370px;		
+}
+
+.langs ul li {
+	margin-top			: 6px;	
+}
+
+.langs ul a {
+	text-decoration		: none;	
+}
+
+.langs ul img {
+	border-style		: none;	
+}
+
+.langs span {
+	text-decoration		: underline;	
+}
+
+.version, .hierarchy {
 	color				: #8a8a8a;	
 	font-size			: 9pt;
 	text-align			: right;
 }
 
-ul.links {
-	padding				: 0px 280px 0px 45px;
-	margin-bottom		: 60px;
+ul.buttons {	
+	height				: 25px;
+	margin-top			: 20px;	
 }
 
-ul.links li {
+ul.buttons li {	
 	float				: left;
-	margin-right		: 30px;		
+	margin-right		: 20px;	
 }
 
-ul.links li a {	
-	background			: #daeefa url('/img/haxe/items/button0.gif') repeat-x bottom left;
-	padding				: 5px;
-	border				: 1px solid #bde1f6; /*#81bcdf;*/
+ul.buttons li a {
+	background			: #f4fafd url('/img/haxe/buttons/button0.gif') repeat-x bottom left;
+	padding				: 2px 4px;
+	border				: 1px solid #bde1f6;
 	-moz-border-radius	: 3px;
 	font-size			: 9pt;
 	text-decoration		: none;
 }
 
+ul.buttons li a:hover {
+	background			: #f8fcfe url('/img/haxe/buttons/button0_hover.gif');	
+}	
 
-/* BUTTONS LINKS */
+/* SPECIAL 'A' BUTTONS */
 
 a.button1, a.button2 {
 	display				: block;
@@ -345,18 +371,31 @@ a.button1, a.button2 {
 }
 
 a.button1 {
-	background			: transparent url('/img/haxe/items/button1.png') top left no-repeat;	
+	background			: transparent url('/img/haxe/buttons/button1.png') top left no-repeat;	
 }
 
 a.button1:hover {
-	background			: transparent url('/img/haxe/items/button1_hover.png') top left no-repeat;	
+	background			: transparent url('/img/haxe/buttons/button1_hover.png') top left no-repeat;	
 }
 
 a.button2 {	
-	background			: transparent url('/img/haxe/items/button2.png') top left no-repeat;
+	background			: transparent url('/img/haxe/buttons/button2.png') top left no-repeat;
 	color				: #c35700;
 }
 
 a.button2:hover {
-	background			: transparent url('/img/haxe/items/button2_hover.png') top left no-repeat;	
+	background			: transparent url('/img/haxe/buttons/button2_hover.png') top left no-repeat;	
+}
+
+/* EDITOR */
+
+.editor .tfield {
+	font-size			: 13.5pt;
+	vertical-align		: middle;
+}
+
+.editor .field {
+	width				: 350px;	
+	font-size			: 13.5pt;
+	padding-bottom		: 4px;
 }
