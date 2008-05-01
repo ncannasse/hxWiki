@@ -28,14 +28,10 @@ h2 {
 }
 
 p {
+	margin-top			: 3px;
 	margin-bottom		: 15px;
 	text-align			: justify;
 }
-
-.content {	
-	padding				: 45px 280px 45px 45px;		
-}
-
 
 /* BASIC INPUTS */
 
@@ -77,7 +73,11 @@ input.field {
 	height				: 102px;	
 	background-image	: url('/img/haxe/logo_haxe.gif');
 	width				: 1021px;	
-}			
+}	
+
+.header a {
+	display				: none;	
+}		
 
 .site {
 	width				: 963px; 
@@ -96,6 +96,11 @@ input.field {
 	color				: #c35700;
 	font-size			: 9pt;
 }
+
+.content {	
+	padding				: 45px 280px 45px 45px;		
+}
+
 
 /* CONTENTS */
 
@@ -165,8 +170,12 @@ ul.menu li a:hover {
 	color				: #09598a;	
 }
 
+.login input.button:hover, .search input.button:hover {
+	background-image	: url('/img/haxe/buttons/button_ok_hover.png');
+}
+
 .langs {
-	margin-top			: 205px;	
+	margin-top			: 305px;	
 }
 
 .langs ul {
@@ -191,7 +200,7 @@ ul.menu li a:hover {
 }
 
 .search {
-	margin-top			: 340px;	
+	margin-top			: 205px;	
 }
 
 .search form {
