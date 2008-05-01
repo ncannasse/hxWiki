@@ -309,7 +309,8 @@ class Editor {
 		t = ~/===== ?(.*?) ?=====/g.replace(t,"<h2>$1</h2>");
 		t = ~/==== ?(.*?) ?====/g.replace(t,"<h3>$1</h3>");
 		// links
-		t = ~/\[\[(https?:[^\]]*?)\|(.*?)\]\]/g.replace(t,'<a href="$1" class="extern">$2</a>');
+		t = ~/\[\[(https?:[^\]"]*?)\|(.*?)\]\]/g.replace(t,'<a href="$1" class="extern">$2</a>');
+		t = ~/\[\[(https?:[^\]"]*?)\]\]/g.replace(t,'<a href="$1" class="extern">$1</a>');
 		t = ~/\[\[([^\]]*?)\]\]/.customReplace(t,function(r) {
 			var link = r.matched(1);
 			if( link.substr(link.length-2,2) == "/*" ) {
@@ -369,7 +370,7 @@ class Editor {
 		var me = this;
 		var b = new StringBuf();
 		var codes = new Array();
-		t = ~/<code( [a-zA-Z0-9]+)?>((.|\n)*?)<\/code>/.customReplace(t,function(r) {
+		t = ~/<code( [a-zA-Z0-9]+)?>([^\0]*?)<\/code>/.customReplace(t,function(r) {
 			var style = r.matched(1);
 			var code = me.code(r.matched(2),(style == null)?null:style.substr(1));
 			codes.push(code);
