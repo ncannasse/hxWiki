@@ -9,7 +9,7 @@ body {
 	font-size			: 10.5pt;
 }
 
-a, strong {
+a, strong, b {
 	color				: #09598a;
 }
 
@@ -33,13 +33,13 @@ em {
 
 h1 {
 	color				: #c35700;
-	font-size			: 14pt;		
+	font-size			: 17pt;
 	margin-top			: -6px;
 }
 
 h2 {
 	color				: #09598a;	
-	font-size			: 11pt;	
+	font-size			: 14pt;	
 }
 
 p {
@@ -111,17 +111,37 @@ pre.haxe span.op {
 
 /* BASIC INPUTS */
 
-input, textarea {
-	font-family			: "trebuchet ms", sans-serif;	
-	background-color	: #fff;
-	border				: 1px solid #97cbeb;	
+input, textarea {	
+	background-color	: #fff;	
+	border-style		: none;
 }
 
 input {
 	font-size			: 10pt;	
 }	
 
-input.button {
+input.button:hover {
+	cursor				: pointer;	
+}
+
+input.field {	
+	height				: 18px;	
+	vertical-align		: middle;
+	padding				: 2px;
+	border				: 1px solid #97cbeb;	
+}
+
+textarea {
+	font-family			: "trebuchet ms", sans-serif;	
+	font-size			: 9pt;
+	width				: 640px;
+	height				: 300px;
+	background-color	: #eef7fd;
+	padding				: 5px;
+	border				: 1px solid #97cbeb;	
+}
+
+.view input.button, .editor input.button {
 	border-style		: none;
 	width				: 110px;
 	height				: 34px;
@@ -134,24 +154,10 @@ input.button {
 	margin				: 5px 0px 15px 0px;	
 }
 
-input.button:hover {
-	cursor				: pointer;
+.view input.button:hover, .editor input.button:hover {	
 	background-image	: url('/img/haxe/buttons/button1_hover.png');
 }
 
-input.field {	
-	height				: 18px;
-	vertical-align		: middle;
-	padding				: 2px;
-}
-
-textarea {
-	font-size			: 9pt;
-	width				: 640px;
-	height				: 300px;
-	background-color	: #eef7fd;
-	padding				: 5px;
-}
 
 /* LAYOUT STRUCTURE */
 
@@ -183,7 +189,8 @@ textarea {
 	width				: 963px; 
 	min-height			: 720px; /* repasar ie6 */
 	background-image	: url('/img/haxe/bg_content.png');
-	background-position	: center top;			
+	background-position	: center top;
+	padding-top			: 1px; /* ffox bug with notification */
 }				
 
 .footer {	
@@ -201,8 +208,17 @@ textarea {
 	color				: #c35700;	
 }
 
-.content {	
+.content  {	
 	padding				: 45px 280px 45px 45px;		
+}
+
+.notification {	
+	margin				: 45px 280px -20px 45px;
+	padding				: 10px 10px 10px 40px;		
+	background			: #ffefa3 url('/img/haxe/items/notification_bg.gif') bottom left repeat-x;	
+	border				: 1px solid #d85700;
+	-moz-border-radius	: 5px;
+	color				: #bf4d00;
 }
 
 /* CONTENTS */
@@ -235,7 +251,7 @@ ul.menu li a:hover {
 }
 
 .login, .langs, .search, .links {	
-	font-size			: 10pt;
+	font-size			: 9pt;
 	width				: 164px;		
 	position			: absolute;		
 	margin-left			: 740px;
@@ -262,7 +278,7 @@ ul.menu li a:hover {
 }
 
 .login input.field {
-	width				: 120px;
+	width				: 100px;
 	margin-bottom		: 2px;
 } 
 
@@ -293,7 +309,7 @@ ul.menu li a:hover {
 }
 
 .search {
-	margin-top			: 305px;	
+	margin-top			: 315px;	
 }
 
 .search form {
@@ -310,7 +326,7 @@ ul.menu li a:hover {
 }
 
 .langs {
-	margin-top			: 370px;		
+	margin-top			: 400px;
 }
 
 .langs ul li {
@@ -399,3 +415,6 @@ a.button2:hover {
 	font-size			: 13.5pt;
 	padding-bottom		: 4px;
 }
+
+/* */
+
