@@ -7,29 +7,19 @@
 		<script type="text/javascript" src="/wiki.js"></script>
 	</head>
 
-	<body>		
+	<body>
 		<div class="all">
 			<div class="header">
-				<!--<a href="/">::config.title::</a>-->			
+				<a href="/">::config.title::</a>
 			</div>
-			<div class="site">		
-				
+			<div class="site">
+
 				<ul class="menu">
 					::foreach l links(0)::
 					<li><a href="::l.url::">::l.title::</a></li>
-					::end::					
+					::end::
 				</ul>
-				
-				<ul class="menu">
-					<li><a href="#">Home</a></li>
-					<li><a href="#">Intro</a></li>
-					<li><a href="#">Tutorial</a></li>
-					<li><a href="#">Reference</a></li>
-					<li><a href="#">Download</a></li>
-					<li><a href="#">Projects</a></li>
-					<li><a href="#">Blog</a></li>
-				</ul>
-		
+
 				<div class="login">
 					::if user == null::
 						<h1>Login</h1>
@@ -47,7 +37,7 @@
 						<a href="/wiki/logout?url=::uri::" $$confirm()>Logout</a>
 					::end::
 				</div>
-		
+
 				<div class="langs">
 					<h1>Langs</h1>
 					<ul ::attr class if( user != null ) 'logged'::>
@@ -56,7 +46,7 @@
 					::end::
 					</ul>
 				</div>
-		
+
 				<div class="search">
 					<h1>Search</h1>
 					<form action="/wiki/search">
@@ -64,15 +54,15 @@
 						<input type="submit" value="Search" class="button"/>
 					</form>
 				</div>
-		
+
 				<div id="notification" ::cond notification:: ::attr class if( notification.error ) 'error'::>
 					::raw notification.text::
 				</div>
-								
-				<div class="content">					
+
+				<div class="content">
 					::raw __content__::
-				</div>				
-		
+				</div>
+
 				<ul class="links">
 					<li ::cond dbAccess::><a href="/db">Database</a></li>
 					<li><a href="/wiki/map">Wiki Map</a></li>
@@ -80,7 +70,7 @@
 					::foreach l links(1)::
 					<li><a href="::l.url::">::l.title::</a></li>
 					::end::
-				</ul>				
+				</ul>
 		</div>
 		<div class="footer">
 			&copy; 2007-2008 Nicolas Cannasse · Powered by <a href="http://haxe.org">haXe</a>
