@@ -53,9 +53,10 @@ class Main extends Handler<Void> {
 		free("restore",doRestore);
 		free("logout",doLogout);
 		free("search","search.mtt",doSearch);
+		free("remoting",doRemoting);
 	}
 
-	function encodePass( p : String ) {
+	public static function encodePass( p : String ) {
 		return haxe.Md5.encode("some salt with "+p+" and "+p);
 	}
 
@@ -79,7 +80,7 @@ class Main extends Handler<Void> {
 		return request.get("path","").split("/");
 	}
 
-	function getEntry( path, lang ) {
+	public function getEntry( path, lang ) {
 		return db.Entry.get(Lambda.map(path,Editor.normalize),lang);
 	}
 
@@ -96,7 +97,7 @@ class Main extends Handler<Void> {
 		return entries;
 	}
 
-	function getRights( entry : db.Entry ) {
+	public function getRights( entry : db.Entry ) {
 		var p = (entry == null) ? [] : entry.get_path().split("/");
 		while( true ) {
 			var r = db.GroupRights.manager.getWithKeys({ gid : group.id, path : p.join("/") },false);
@@ -234,7 +235,7 @@ class Main extends Handler<Void> {
 		App.context.params = params;
 	}
 
-	function createEditor( entry : db.Entry, cache : Bool ) {
+	public function createEditor( entry : db.Entry, cache : Bool ) {
 		var lang = entry.lang;
 		var config = {
 			buttons : new Array(),
@@ -308,18 +309,21 @@ class Main extends Handler<Void> {
 
 		// check rights for create/edit
 		var r = getRights(entry);
-		if( !r.canEdit || (entry.id == null && !r.canCreate) )
+		if( !r.canEdit || (!entry.hasContent() && !r.canCreate) )
 			throw Action.Error(entry.getURL(),Text.get.err_cant_edit);
 		App.context.rights = r;
 		App.context.group = group;
 
 		if( !submit )
 			return;
-		// edit
-		var content = request.get(editor.content);
+		processEdit(entry,editor,request.get("title",entry.name),request.get(editor.content));
+		throw Action.Done(entry.getURL(),Text.get.entry_modified);
+	}
+
+	public function processEdit( entry : db.Entry, editor : Editor, title : String, content : String ) {
 		var entry = if( entry.id == null ) { entry.insert(); entry; } else db.Entry.manager.get(entry.id);
 		var oldTitle = entry.title;
-		entry.title = StringTools.trim(request.get("title",entry.name));
+		entry.title = StringTools.trim(title);
 		if( entry.title == entry.name || entry.title == "" ) entry.title = null;
 		if( entry.title != oldTitle ) {
 			entry.update();
@@ -344,7 +348,6 @@ class Main extends Handler<Void> {
 			v.update();
 		}
 		entry.update();
-		throw Action.Done(entry.getURL(),Text.get.entry_modified);
 	}
 
 	function doDelete() {
@@ -650,6 +653,13 @@ class Main extends Handler<Void> {
 		u.pass = encodePass(Config.get("admin_password"));
 		u.group = gadmin;
 		u.insert();
+	}
+
+	function doRemoting() {
+		var serv = new neko.net.RemotingServer();
+		serv.addObject("api",new RemotingApi(this));
+		if( !serv.handleRequest() )
+			throw "Unknown remoting request";
 	}
 
 }

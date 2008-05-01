@@ -1,0 +1,34 @@
+2008-04-26
+	remoting api
+
+Base
+	title is separate
+	create/edit in hierarchy
+	allow rename
+	display sitemap (rec.tree in mtt ???)
+	rename / changing title versioning
+	rename : allow / for reparenting
+	skinable
+	custom syntax with realtime preview
+	links handling
+	cascade updates for referenced content/title
+	file upload
+	images insert
+	menu
+	swf insert
+	allow to list some directory content
+	dependency id-cache
+	directory list dependency
+	fill title cache on edit
+	custom span classes
+	restore deleted version
+	multilang
+	latest changes list
+	changes for all languages
+	rename should rename all langs
+	show diff in history
+	backlinks
+	user subscribe
+	user : infos + changes history
+	user group rights : global + per file/dir
+	search

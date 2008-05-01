@@ -3,7 +3,8 @@
 --override
 -D spod_rtti</output>
   <output name="JS" mode="js" out="www/wiki.js" class="Editor" lib="" cmd="" main="False" debug="False">-cp src</output>
-  <output name="" mode="swf9" out="www/upload.swf" class="Uploader" lib="" cmd="" main="True" debug="False">-cp src</output>
+  <output name="Upload" mode="swf9" out="www/upload.swf" class="Uploader" lib="" cmd="" main="True" debug="False">-cp src</output>
+  <output name="ApiSync" mode="neko" out="apisync.n" class="tools.ApiSync" lib="" cmd="" main="True" debug="False">-cp src</output>
   <files path="">
     <dir path="db">
       <file path="src\db\Dependency.hx" />
@@ -22,6 +23,10 @@
       <file path="src\handler\Action.hx" />
       <file path="src\handler\Handler.hx" />
       <file path="src\handler\Main.hx" />
+      <file path="src\handler\RemotingApi.hx" />
+    </dir>
+    <dir path="tools">
+      <file path="src\tools\ApiSync.hx" />
     </dir>
     <dir path="tpl">
       <file path="tpl\en\backlinks.mtt" />
@@ -40,10 +45,10 @@
       <file path="tpl\en\user.mtt" />
     </dir>
     <file path="src\App.hx" />
+    <file path="CHANGES.txt" />
     <file path="src\Config.hx" />
     <file path="src\Editor.hx" />
     <file path="src\Text.hx" />
-    <file path="TODO.txt" />
     <file path="src\Uploader.hx" />
   </files>
 </haxe>

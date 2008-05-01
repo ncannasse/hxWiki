@@ -12,8 +12,14 @@ Editor
 -cp src
 
 --next
-# 
+# Upload
 -swf www/upload.swf
 -swf-version 9
 -main Uploader
+-cp src
+
+--next
+# ApiSync
+-neko apisync.n
+-main tools.ApiSync
 -cp src
