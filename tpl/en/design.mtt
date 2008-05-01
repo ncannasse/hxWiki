@@ -33,14 +33,16 @@
 							<input type="submit" value="OK" class="button"/>
 						</form>
 					::else::
-						<strong>::user.name::</strong>
-						<a href="/wiki/logout?url=::uri::" $$confirm()>Logout</a>
+						<h1>Logged</h1>
+						<p>
+							You are logged under the username <strong>::user.name::</strong>, you can <a href="/wiki/logout?url=::uri::" $$confirm()>logout</a> if you need.
+						</p>
 					::end::
 				</div>
 
 				<div class="langs">
 					<h1>Langs</h1>
-					<ul ::attr class if( user != null ) 'logged'::>
+					<ul>
 					::foreach l langs::
 					<li><a href="/wiki/setlang?url=::uri::;lang=::l.code::" class="::lang_classes(l)::"><img src="/img/haxe/flags/flag_::l.code::.gif" alt="::l.name::"/> <span class="name">::l.name::</span></a></li>
 					::end::
