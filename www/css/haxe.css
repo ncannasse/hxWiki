@@ -14,7 +14,7 @@ a, strong {
 }
 
 a.broken {
-	color				: #85CDF8;	
+	color				: #e10005;	
 }
 
 a.extern {
@@ -307,7 +307,7 @@ ul.menu li a:hover {
 }
 
 .version {
-	color				: #8A8A8A;	
+	color				: #8a8a8a;	
 	font-size			: 9pt;
 	text-align			: right;
 }
@@ -322,18 +322,41 @@ ul.links li {
 	margin-right		: 30px;		
 }
 
-ul.links li a {
+ul.links li a {	
+	background			: #daeefa url('/img/haxe/items/button0.gif') repeat-x bottom left;
+	padding				: 5px;
+	border				: 1px solid #bde1f6; /*#81bcdf;*/
+	-moz-border-radius	: 3px;
+	font-size			: 9pt;
+	text-decoration		: none;
+}
+
+
+/* BUTTONS LINKS */
+
+a.button1, a.button2 {
 	display				: block;
 	width				: 110px;
 	height				: 28px;
-	background			: transparent url('/img/haxe/items/button_1.png') top left no-repeat;	
 	text-align			: center;
 	padding-top			: 6px;
 	text-decoration		: none;
-	font-size			: 10pt;
-	
+	font-size			: 10pt;	
 }
 
-ul.links li a:hover {
-	background			: transparent url('/img/haxe/items/button_1_hover.png') top left no-repeat;	
+a.button1 {
+	background			: transparent url('/img/haxe/items/button1.png') top left no-repeat;	
+}
+
+a.button1:hover {
+	background			: transparent url('/img/haxe/items/button1_hover.png') top left no-repeat;	
+}
+
+a.button2 {	
+	background			: transparent url('/img/haxe/items/button2.png') top left no-repeat;
+	color				: #c35700;
+}
+
+a.button2:hover {
+	background			: transparent url('/img/haxe/items/button2_hover.png') top left no-repeat;	
 }
