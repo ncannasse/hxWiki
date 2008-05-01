@@ -1,0 +1,157 @@
+* {
+	margin				: 0px;
+	padding				: 0px;
+}
+
+body {
+	background-color	: #fec736;
+	font-family			: "trebuchet ms", sans-serif;
+	font-size			: 10.5pt;
+}
+
+a, strong {
+	color				: #09598a;
+}
+
+a:visited, em {
+	color				: #c35700;	
+}
+
+.all {
+	background			: #fff url('/img/haxe/bg_main.gif') top left repeat-x;		
+}
+
+.site, .header {	
+	margin				: 0px auto;	
+}				
+
+.header, .site, .footer {
+	background-position	: top left;
+	background-repeat	: no-repeat;				
+}
+
+.header {							
+	margin-bottom		: -8px;				
+	height				: 102px;	
+	background-image	: url('/img/haxe/logo_haxe.gif');
+	width				: 1021px;	
+}			
+
+.site {
+	width				: 963px; 
+	min-height			: 720px; /* repasar ie6 */
+	background-image	: url('/img/haxe/bg_content.png');
+	background-position	: center top;		
+}				
+
+.footer {	
+	background-color	: #fec736;
+	height				: 67px;
+	text-align			: center;												
+	padding-top			: 15px;	
+	background-image	: url('/img/haxe/bg_bottom.png');
+	background-repeat	: repeat-x;	
+	color				: #c35700;
+	font-size			: 9pt;
+}
+
+h1 {
+	color				: #c35700;
+	font-size			: 14pt;	
+}
+
+h2 {
+	color				: #09598a;	
+	font-size			: 11pt;	
+}
+
+p {
+	margin-bottom		: 15px;
+	text-align			: justify;
+}
+
+.content {	
+	padding				: 45px 280px 45px 45px;		
+}
+
+
+ul.menu {
+	display				: inline;	
+}
+
+ul.menu {
+	position			: absolute;
+	margin-top			: -22px;
+	margin-left			: 300px;
+	list-style			: none;
+}
+
+ul.menu li {
+	float				: left;
+	position			: relative;
+	margin-left			: 35px;		
+}
+
+ul.menu li a {
+	font-size			: 12pt;
+	color				: #c35700;
+	font-weight			: bold;
+	text-decoration		: none;
+}
+
+ul.menu li a:hover {
+	text-decoration		: underline;
+}
+
+.login, .langs {	
+	width				: 164px;		
+	position			: absolute;	
+	margin-left			: 740px;
+	margin-top			: 45px;
+	font-size			: 9pt;
+}
+
+.login h1, .langs h1 {
+	color				: #4381a7;	
+	font-size			: 11pt;	
+	border-bottom		: 2px solid #d4ebf9;
+	line-height			: 18pt;
+}
+
+.login p {
+	margin				: 0px;	
+}
+
+.login form {
+	text-align			: right;
+}
+
+.login input.field {
+	background-color	: #fff;
+	border				: 1px solid #97cbeb;
+	padding				: 2px;
+	width				: 100px;
+	margin-bottom		: 2px;	
+}
+
+input.button {
+	border-style		: none;
+	font-family			: "trebuchet ms", sans-serif;
+	font-size			: 9pt;	
+}
+
+input.button:hover {
+	cursor				: pointer;	
+}
+
+.login input.button {
+	background-image	: url('/img/haxe/buttons/button_ok.png');
+	width				: 40px;
+	height				: 25px;
+	color				: #09598a;
+	
+}
+
+ul, .langs, .search, #notification, .links {display:none;}
+
+
