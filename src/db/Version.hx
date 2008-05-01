@@ -61,7 +61,7 @@ class VersionManager extends neko.db.Manager<Version> {
 
 	public function previous( v : Version ) {
 		var r = result("SELECT MAX(id) as id FROM Version WHERE eid = "+v.entry.id+" AND id < "+v.id+" AND code IN (0,4)");
-		if( r == null )
+		if( r == null || r.id == null )
 			return null;
 		var v = get(r.id,false);
 		// retrieve content of restored version

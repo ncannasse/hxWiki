@@ -216,7 +216,7 @@ class Main extends Handler<Void> {
 			throw Action.Error("/wiki/register",Text.get.err_cant_view);
 		if( request.exists("diff") ) {
 			var v = db.Version.manager.get(request.getInt("diff"),false);
-			if( v != null && v.getChange() == VContent && v.entry == entry ) {
+			if( v != null && v.getChange() == VContent && getRights(v.entry).canView ) {
 				var v2 = db.Version.manager.previous(v);
 				App.context.diff = {
 					v1 : if( v2 == null ) null else v2.id,
