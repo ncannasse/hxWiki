@@ -7,77 +7,84 @@
 		<script type="text/javascript" src="/wiki.js"></script>
 	</head>
 
-	<body>
-	<div class="all">
-	<div class="site">
-
-		<div class="header">
-			<a href="/">::config.title::</a>
+	<body>		
+		<div class="all">
+			<div class="header">
+				<!--<a href="/">::config.title::</a>-->			
+			</div>
+			<div class="site">		
+				
+				<ul class="menu">
+					::foreach l links(0)::
+					<li><a href="::l.url::">::l.title::</a></li>
+					::end::					
+				</ul>
+				
+				<ul class="menu">
+					<li><a href="#">Home</a></li>
+					<li><a href="#">Intro</a></li>
+					<li><a href="#">Tutorial</a></li>
+					<li><a href="#">Reference</a></li>
+					<li><a href="#">Download</a></li>
+					<li><a href="#">Projects</a></li>
+					<li><a href="#">Blog</a></li>
+				</ul>
+		
+				<div class="login">
+					::if user == null::
+						<h1>Login</h1>
+						<p>
+							You can <a href="/wiki/register">register</a> to create an account and edit the pages of the Wiki.
+						</p>
+						<form action="/wiki/login" method="POST">
+							<span class="group"><span class="tfield">User :</span> <input name="user" class="field"/></span>
+							<span class="group"><span class="tfield">Pass :</span> <input type="password" name="pass" class="field"/></span>
+							<input type="hidden" name="url" value="::uri::"/>
+							<input type="submit" value="OK" class="button"/>
+						</form>
+					::else::
+						<strong>::user.name::</strong>
+						<a href="/wiki/logout?url=::uri::" $$confirm()>Logout</a>
+					::end::
+				</div>
+		
+				<div class="langs">
+					<h1>Langs</h1>
+					<ul ::attr class if( user != null ) 'logged'::>
+					::foreach l langs::
+					<li><a href="/wiki/setlang?url=::uri::;lang=::l.code::" class="::lang_classes(l)::"><img src="/file/flag_::l.code::.gif" alt="::l.name::"/></a></li>
+					::end::
+					</ul>
+				</div>
+		
+				<div class="search">
+					<h1>Search</h1>
+					<form action="/wiki/search">
+						<input name="s" class="field"/>
+						<input type="submit" value="Search" class="button"/>
+					</form>
+				</div>
+		
+				<div id="notification" ::cond notification:: ::attr class if( notification.error ) 'error'::>
+					::raw notification.text::
+				</div>
+								
+				<div class="content">					
+					::raw __content__::
+				</div>				
+		
+				<ul class="links">
+					<li ::cond dbAccess::><a href="/db">Database</a></li>
+					<li><a href="/wiki/map">Wiki Map</a></li>
+					<li><a href="/wiki/history">Latest Changes</a></li>
+					::foreach l links(1)::
+					<li><a href="::l.url::">::l.title::</a></li>
+					::end::
+				</ul>				
 		</div>
-
-		<ul class="menu">
-			::foreach l links(0)::
-			<li><a href="::l.url::">::l.title::</a></li>
-			::end::
-		</ul>
-
-		<div class="login">
-			::if user == null::
-				<h1>Login</h1>
-				<p>
-					You can <a href="/wiki/register">register</a> to create an account and edit the pages of the Wiki.
-				</p>
-				<form action="/wiki/login" method="POST">
-					<span class="group"><span class="tfield">User :</span> <input name="user" class="field"/></span>
-					<span class="group"><span class="tfield">Pass :</span> <input type="password" name="pass" class="field"/></span>
-					<input type="hidden" name="url" value="::uri::"/>
-					<input type="submit" value="OK" class="button"/>
-				</form>
-			::else::
-				<strong>::user.name::</strong>
-				<a href="/wiki/logout?url=::uri::" $$confirm()>Logout</a>
-			::end::
-		</div>
-
-		<div class="langs">
-			<h1>Langs</h1>
-			<ul ::attr class if( user != null ) 'logged'::>
-			::foreach l langs::
-			<li><a href="/wiki/setlang?url=::uri::;lang=::l.code::" class="::lang_classes(l)::"><img src="/file/flag_::l.code::.gif" alt="::l.name::"/></a></li>
-			::end::
-			</ul>
-		</div>
-
-		<div class="search">
-			<h1>Search</h1>
-			<form action="/wiki/search">
-				<input name="s" class="field"/>
-				<input type="submit" value="Search" class="button"/>
-			</form>
-		</div>
-
-		<div id="notification" ::cond notification:: ::attr class if( notification.error ) 'error'::>
-			::raw notification.text::
-		</div>
-
-		<div class="content">
-			::raw __content__::
-		</div>
-
-		<ul class="links">
-			<li ::cond dbAccess::><a href="/db">Database</a></li>
-			<li><a href="/wiki/map">Wiki Map</a></li>
-			<li><a href="/wiki/history">Latest Changes</a></li>
-			::foreach l links(1)::
-			<li><a href="::l.url::">::l.title::</a></li>
-			::end::
-		</ul>
-
 		<div class="footer">
-			&copy; 2007-2008 Nicolas Cannasse | Powered by <a href="http://haxe.org">haXe</a>
+			&copy; 2007-2008 Nicolas Cannasse · Powered by <a href="http://haxe.org">haXe</a>
 		</div>
-
-	</div>
 	</div>
 	</body>
 </html>

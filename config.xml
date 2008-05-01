@@ -2,8 +2,9 @@
 	lang="en"
 	db="mysql://root:@slave:3306/hxwiki"
 	debug="1"
+	theme="haxe"
 	cache="0"
-	style="default"
+	style="haxe"
 	title="haXe Wiki"
 	admin_password="admin"
 />
