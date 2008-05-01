@@ -16,11 +16,11 @@
 	<li ::cond entry.id != null && rights.canDelete::><a href="/::entry._path::?lang=::entry._lang.code::;rename=1">rename</a></li>
 	<li ::cond entry._version != null && rights.canDelete::><a href="/wiki/delete?::eparams::" $$confirm()>delete</a></li>
 	::else::
-	<li><a href="/wiki/restore?::eparams::;version=::version.id::" $$confirm() ::cond rights.canEdit::>restore</a></li>
+	<li ::cond rights.canEdit::><a href="/wiki/restore?::eparams::;version=::version.id::" $$confirm()>restore</a></li>
 	::end::
 	<li><a href="/wiki/history?::eparams::">history</a></li>
 	<li><a href="/wiki/backlinks?::eparams::">backlinks</a></li>
-	<li><a href="/db/Entry/edit/::entry.id::" ::cond dbAccess && entry.id != null::>db</a></li>
+	<li ::cond dbAccess && entry.id != null::><a href="/db/Entry/edit/::entry.id::">db</a></li>
 </ul>
 
 
@@ -36,8 +36,8 @@
 			<li><a href="#" onclick="::editor.buttonAction(b)::">::b.label::</a></li>
 			::end::
 			<li><a href="#" onclick="::editor.config.name::.spanAction('Please choose CSS class :')">SPAN</a></li>
-			<li><a href="#" onclick="::editor.config.name::.initUpload('Image','::editor.extensions(extensions.images)::',true)" ::cond group.canUploadImage::>IMG</a></li>
-			<li><a href="#" onclick="::editor.config.name::.initUpload('All','::editor.extensions(extensions.files)::',false)" ::cond group.canUploadImage::>FILE</a></li>
+			<li ::cond group.canUploadImage::><a href="#" onclick="::editor.config.name::.initUpload('Image','::editor.extensions(extensions.images)::',true)">IMG</a></li>
+			<li ::cond group.canUploadImage::><a href="#" onclick="::editor.config.name::.initUpload('All','::editor.extensions(extensions.files)::',false)">FILE</a></li>
 		</ul>
 		<span class="tfield">Content :</span>
 		<textarea name="::editor.content::" onkeyup="::editor.config.name::.updatePreview()" onkeydown="return ::editor.config.name::.handleTab(event)">::if entry._version != null::::entry._version.content::::end::</textarea>
