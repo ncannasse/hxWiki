@@ -13,13 +13,28 @@ a, strong {
 	color				: #09598a;
 }
 
-a:visited, em {
+a.broken {
+	color				: #85CDF8;	
+}
+
+a.extern {
+	background			: transparent url('/img/haxe/items/extern.gif') center right no-repeat;
+	padding-right		: 15px;
+	
+}
+
+a.file {
+	color : #f80;
+}
+
+em {
 	color				: #c35700;	
 }
 
 h1 {
 	color				: #c35700;
-	font-size			: 14pt;	
+	font-size			: 14pt;		
+	margin-top			: -6px;
 }
 
 h2 {
@@ -33,24 +48,99 @@ p {
 	text-align			: justify;
 }
 
+ul {
+	list-style			: none;	
+}
+
+.content ul {
+	list-style-image	: url('/img/haxe/items/ul_spot.gif');
+	list-style-position	: inside;
+	margin				: 5px 0px 25px 10px;	
+}
+
+.content ul li {
+	margin-bottom		: 1px;	
+}
+
+.view .biglist ul{	
+	list-style			: none;	
+	margin-left			: 10px;
+}
+
+.view .biglist li {
+	background-image	: url('/img/haxe/items/ul_spot2.gif');
+	background-position	: 0px 2px;
+	background-repeat	: no-repeat;
+	padding-left		: 24px;
+	margin-bottom		: 20px;
+	text-align			: justify;
+}
+
+pre {
+	background-color : #f7f7f7;
+	border : 1px dashed #aaa;
+	padding : 5px;
+	margin : 10px;
+}
+
+pre.xml span {
+	color : #009;
+}
+
+pre.xml span.comment, pre.xml span.string, pre.haxe span.comment {
+	color : #090;
+}
+
+pre.haxe span.kwd {
+	color : #009;
+	font-weight : bold;
+}
+
+pre.haxe span.type, pre.haxe span.number {
+	color : #557;
+}
+
+pre.haxe span.string {
+	color : red;
+}
+
+pre.haxe span.op {
+	font-weight : bold;
+}
+
+
 /* BASIC INPUTS */
 
+input, textarea {
+	font-family			: "trebuchet ms", sans-serif;	
+	background-color	: #fff;
+	border				: 1px solid #97cbeb;	
+}
+
+input {
+	font-size			: 10pt;	
+}	
+
 input.button {
-	border-style		: none;
-	font-family			: "trebuchet ms", sans-serif;
-	font-size			: 9pt;	
+	border-style		: none;	
 }
 
 input.button:hover {
 	cursor				: pointer;	
 }
 
-input.field {
-	background-color	: #fff;
-	border				: 1px solid #97cbeb;	
-	margin-bottom		: 2px;	
-	height				: 20px;
+input.field {	
+	height				: 18px;
 	vertical-align		: middle;
+	padding				: 2px;
+}
+
+textarea {
+	font-size			: 9pt;
+	width				: 640px;
+	height				: 600px;
+	background-color	: #eef7fd;
+	padding				: 5px;
 }
 
 /* LAYOUT STRUCTURE */
@@ -97,6 +187,10 @@ input.field {
 	font-size			: 9pt;
 }
 
+.footer a {
+	color				: #c35700;	
+}
+
 .content {	
 	padding				: 45px 280px 45px 45px;		
 }
@@ -111,8 +205,7 @@ ul.menu {
 ul.menu {
 	position			: absolute;
 	margin-top			: -22px;
-	margin-left			: 300px;
-	list-style			: none;
+	margin-left			: 300px;	
 }
 
 ul.menu li {
@@ -148,6 +241,7 @@ ul.menu li a:hover {
 	font-size			: 11pt;	
 	border-bottom		: 2px solid #d4ebf9;
 	line-height			: 18pt;
+	margin-top			: 0px;
 }
 
 .login p {
@@ -175,11 +269,7 @@ ul.menu li a:hover {
 }
 
 .langs {
-	margin-top			: 305px;	
-}
-
-.langs ul {
-	list-style			: none;
+	margin-top			: 275px;	
 }
 
 .langs ul li {
@@ -208,10 +298,42 @@ ul.menu li a:hover {
 }
 
 .search form input {
-	vertical-align		: top;	
+	vertical-align		: middle;	
 }
 
 .search input.field {
 	margin-top			: 1px;
-	width				: 160px;
+	width				: 110px;	
+}
+
+.version {
+	color				: #8A8A8A;	
+	font-size			: 9pt;
+	text-align			: right;
+}
+
+ul.links {
+	padding				: 0px 280px 0px 45px;
+	margin-bottom		: 60px;
+}
+
+ul.links li {
+	float				: left;
+	margin-right		: 30px;		
+}
+
+ul.links li a {
+	display				: block;
+	width				: 110px;
+	height				: 28px;
+	background			: transparent url('/img/haxe/items/button_1.png') top left no-repeat;	
+	text-align			: center;
+	padding-top			: 6px;
+	text-decoration		: none;
+	font-size			: 10pt;
+	
+}
+
+ul.links li a:hover {
+	background			: transparent url('/img/haxe/items/button_1_hover.png') top left no-repeat;	
 }
