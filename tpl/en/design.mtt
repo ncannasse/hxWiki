@@ -44,7 +44,7 @@
 					<h1>Langs</h1>
 					<ul>
 					::foreach l langs::
-					<li><a href="/wiki/setlang?url=::uri::;lang=::l.code::" class="::lang_classes(l)::"><img src="/img/haxe/flags/flag_::l.code::.gif" alt="::l.name::"/> <span class="name">::l.name::</span></a></li>
+					<li><a href="/wiki/setlang?url=::uri::;lang=::l.code::" class="::lang_classes(l)::"><img src="/img/::config.style::/flags/flag_::l.code::.gif" alt="::l.name::"/> <span class="name">::l.name::</span></a></li>
 					::end::
 					</ul>
 				</div>
