@@ -104,11 +104,14 @@ ul.menu li a:hover {
 }
 
 .login, .langs {	
-	width				: 164px;		
-	position			: absolute;	
-	margin-left			: 740px;
-	margin-top			: 45px;
 	font-size			: 9pt;
+	width				: 164px;		
+	position			: absolute;		
+	margin-left			: 740px;
+}
+
+.login {	
+	margin-top			: 45px;		
 }
 
 .login h1, .langs h1 {
@@ -134,6 +137,43 @@ ul.menu li a:hover {
 	margin-bottom		: 2px;	
 }
 
+.login input.button {
+	background-image	: url('/img/haxe/buttons/button_ok.png');
+	width				: 40px;
+	height				: 25px;
+	color				: #09598a;
+	
+}
+
+.langs {
+	margin-top			: 205px;	
+}
+
+
+.langs ul {
+	list-style			: none;
+}
+
+.langs ul li {
+	margin-top			: 6px;
+}
+
+.langs ul a {
+	text-decoration		: none;	
+}
+
+.langs ul img {
+	border				: 1px solid #09598a;
+	-moz-border-radius	: 3px;
+}
+
+.langs span {
+	text-decoration		: underline;	
+}
+
+
+/* INPUTS */
+
 input.button {
 	border-style		: none;
 	font-family			: "trebuchet ms", sans-serif;
@@ -143,15 +183,3 @@ input.button {
 input.button:hover {
 	cursor				: pointer;	
 }
-
-.login input.button {
-	background-image	: url('/img/haxe/buttons/button_ok.png');
-	width				: 40px;
-	height				: 25px;
-	color				: #09598a;
-	
-}
-
-ul, .langs, .search, #notification, .links {display:none;}
-
-
