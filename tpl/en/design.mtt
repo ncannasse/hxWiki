@@ -42,7 +42,7 @@
 					<h1>Langs</h1>
 					<ul ::attr class if( user != null ) 'logged'::>
 					::foreach l langs::
-					<li><a href="/wiki/setlang?url=::uri::;lang=::l.code::" class="::lang_classes(l)::"><img src="/file/flag_::l.code::.gif" alt="::l.name::"/></a></li>
+					<li><a href="/wiki/setlang?url=::uri::;lang=::l.code::" class="::lang_classes(l)::"><span class="name">::l.name::</span><img src="/file/flag_::l.code::.gif" alt="::l.name::"/></a></li>
 					::end::
 					</ul>
 				</div>
