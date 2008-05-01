@@ -51,7 +51,7 @@
 					<h1>Search</h1>
 					<form action="/wiki/search">
 						<input name="s" class="field"/>
-						<input type="submit" value="Search" class="button"/>
+						<input type="submit" value="OK" class="button"/>
 					</form>
 				</div>
 

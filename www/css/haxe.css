@@ -17,6 +17,48 @@ a:visited, em {
 	color				: #c35700;	
 }
 
+h1 {
+	color				: #c35700;
+	font-size			: 14pt;	
+}
+
+h2 {
+	color				: #09598a;	
+	font-size			: 11pt;	
+}
+
+p {
+	margin-bottom		: 15px;
+	text-align			: justify;
+}
+
+.content {	
+	padding				: 45px 280px 45px 45px;		
+}
+
+
+/* BASIC INPUTS */
+
+input.button {
+	border-style		: none;
+	font-family			: "trebuchet ms", sans-serif;
+	font-size			: 9pt;	
+}
+
+input.button:hover {
+	cursor				: pointer;	
+}
+
+input.field {
+	background-color	: #fff;
+	border				: 1px solid #97cbeb;	
+	margin-bottom		: 2px;	
+	height				: 20px;
+	vertical-align		: middle;
+}
+
+/* LAYOUT STRUCTURE */
+
 .all {
 	background			: #fff url('/img/haxe/bg_main.gif') top left repeat-x;		
 }
@@ -55,25 +97,7 @@ a:visited, em {
 	font-size			: 9pt;
 }
 
-h1 {
-	color				: #c35700;
-	font-size			: 14pt;	
-}
-
-h2 {
-	color				: #09598a;	
-	font-size			: 11pt;	
-}
-
-p {
-	margin-bottom		: 15px;
-	text-align			: justify;
-}
-
-.content {	
-	padding				: 45px 280px 45px 45px;		
-}
-
+/* CONTENTS */
 
 ul.menu {
 	display				: inline;	
@@ -103,7 +127,7 @@ ul.menu li a:hover {
 	text-decoration		: underline;
 }
 
-.login, .langs {	
+.login, .langs, .search {	
 	font-size			: 9pt;
 	width				: 164px;		
 	position			: absolute;		
@@ -114,7 +138,7 @@ ul.menu li a:hover {
 	margin-top			: 45px;		
 }
 
-.login h1, .langs h1 {
+.login h1, .langs h1, .search h1 {
 	color				: #4381a7;	
 	font-size			: 11pt;	
 	border-bottom		: 2px solid #d4ebf9;
@@ -125,30 +149,25 @@ ul.menu li a:hover {
 	margin				: 0px;	
 }
 
-.login form {
+.login form, .search form {
 	text-align			: right;
 }
 
-.login input.field {
-	background-color	: #fff;
-	border				: 1px solid #97cbeb;
-	padding				: 2px;
+.login input.field, .search input.field {	
 	width				: 100px;
 	margin-bottom		: 2px;	
 }
 
-.login input.button {
+.login input.button, .search input.button {
 	background-image	: url('/img/haxe/buttons/button_ok.png');
 	width				: 40px;
 	height				: 25px;
-	color				: #09598a;
-	
+	color				: #09598a;	
 }
 
 .langs {
 	margin-top			: 205px;	
 }
-
 
 .langs ul {
 	list-style			: none;
@@ -164,22 +183,26 @@ ul.menu li a:hover {
 
 .langs ul img {
 	border				: 1px solid #09598a;
-	-moz-border-radius	: 3px;
+	-moz-border-radius	: 2px;
 }
 
 .langs span {
 	text-decoration		: underline;	
 }
 
-
-/* INPUTS */
-
-input.button {
-	border-style		: none;
-	font-family			: "trebuchet ms", sans-serif;
-	font-size			: 9pt;	
+.search {
+	margin-top			: 340px;	
 }
 
-input.button:hover {
-	cursor				: pointer;	
+.search form {
+	margin-top			: 4px;	
+}
+
+.search form input {
+	vertical-align		: top;	
+}
+
+.search input.field {
+	margin-top			: 1px;
+	width				: 160px;
 }
