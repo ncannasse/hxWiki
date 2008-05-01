@@ -375,15 +375,23 @@ class Editor {
 			codes.push(code);
 			return "##CODE"+(codes.length-1)+"##";
 		});
+		var div_open = ~/^\[([A-Za-z0-9]+)\]$/;
+		var div_close = ~/^\[\/([A-Za-z0-9]+)\]$/;
 		for( t in ~/\n[ \t]*\n/g.split(t) ) {
 			var p = paragraph(t);
 			switch( p.substr(0,3) ) {
 			case "<h1","<h2","<h3","<ul","<pr","##C","<sp":
 				b.add(p);
 			default:
-				b.add("<p>");
-				b.add(p);
-				b.add("</p>");
+				if( div_open.match(p) )
+					b.add('<div class="'+div_open.matched(1)+'">');
+				else if( div_close.match(p) )
+					b.add('</div>');
+				else {
+					b.add("<p>");
+					b.add(p);
+					b.add("</p>");
+				}
 			}
 			b.add("\n");
 		}
