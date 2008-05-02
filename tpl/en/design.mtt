@@ -71,7 +71,7 @@
 
 				<div id="notification" ::cond notification:: ::attr class if( notification.error ) 'error'::>
 					::raw notification.text::
-				</div>
+				</div>				
 
 				<div class="content">
 					::raw __content__::
