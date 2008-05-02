@@ -513,7 +513,7 @@ class Main extends Handler<Void> {
 				throw "No filename defined";
 			if( !~/^[ A-Za-z0-9._-]+$/.match(filename) )
 				throw "Invalid filename "+filename;
-			var ext = filename.split(".")[1].toLowerCase();
+			var ext = filename.split(".").pop().toLowerCase();
 			if( !Lambda.exists(getExtensions(group).files,function(x) return ext == x) )
 				throw "Unsupported file extension "+ext;
 			var f = db.File.manager.search({ name : filename },false).first();

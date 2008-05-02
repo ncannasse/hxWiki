@@ -3,7 +3,6 @@ import mt.db.Types;
 
 class File extends neko.db.Object {
 
-	static var INDEXES = [["name",true]];
 	static function RELATIONS() {
 		return [{ prop : "user", key : "uid", manager : User.manager, lock : false }];
 	}
