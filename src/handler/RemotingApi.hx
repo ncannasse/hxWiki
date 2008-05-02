@@ -43,14 +43,14 @@ class RemotingApi {
 		return { title : e.get_title(), content : e.version.content };
 	}
 
-	public function write( path : Array<String>, lang : String, title : String, content : String ) : Void {
+	public function write( path : Array<String>, lang : String, title : String, content : String ) : Bool {
 		var e = main.getEntry(path,getLang(lang));
 		var r = main.getRights(e);
 		if( !e.hasContent() && !r.canCreate )
 			throw "You can't create this content";
 		if( !r.canEdit )
 			throw "You can't edit this content";
-		main.processEdit(e,main.createEditor(e,false),title,content);
+		return main.processEdit(e,main.createEditor(e,false),title,content);
 	}
 
 }

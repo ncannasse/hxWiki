@@ -17,6 +17,8 @@ class Editor {
 		return ~/[^a-z0-9.]+/g.replace(name.toLowerCase(),"_");
 	}
 
+	static inline var EMPTY = #if neko "" #else true null #end;
+
 	public var content(default,null) : String;
 	public var preview(default,null) : String;
 	var config : {
@@ -32,14 +34,14 @@ class Editor {
 	var subcache : Hash<Array<{ title : String, url : String }>>;
 	#if js
 	var uploadImage : Bool;
-	var refresh : { last : Float, time : Float, pending : Bool };
+	var refresh : { latest : String, timestamp : Float, auto : Bool, changed : Bool };
 	#end
 
 
 	public function new(data) {
 		#if js
 		config = haxe.Unserializer.run(data);
-		refresh = { last : 0., time : 0., pending : false };
+		refresh = { latest : null, timestamp : 0., auto : true, changed : false };
 		#else true
 		config = data;
 		#end
@@ -50,6 +52,13 @@ class Editor {
 
 	#if js
 
+	public static function toggle( id : String ) {
+		var e = js.Lib.document.getElementById(id);
+		if( e != null )
+			e.style.display = (e.style.display == "none") ? "" : "none";
+		return false;
+	}
+
 	public function getDocument() : Textarea {
 		return cast js.Lib.document.getElementsByName(content)[0];
 	}
@@ -57,35 +66,35 @@ class Editor {
 	public function updatePreview() {
 		var prev = js.Lib.document.getElementById(preview);
 		var start = haxe.Timer.stamp();
-		if( refresh.time > 0.1 && start - refresh.last < refresh.time * 5 ) {
-			haxe.Firebug.trace("dt="+refresh.time+" t="+(start-refresh.last));
-			if( !refresh.pending ) {
-				refresh.pending = true;
-				var t = new haxe.Timer(1000);
-				var me = this;
-				t.run = function() {
-					t.stop();
-					me.refresh.pending = false;
-					me.updatePreview();
-				};
-			}
+		var data = getDocument().value;
+		if( data == refresh.latest )
+			return false;
+		if( !refresh.auto && start - refresh.timestamp < .5 ) {
+			refresh.timestamp = start;
+			if( refresh.changed )
+				return false;
+			var me = this;
+			refresh.changed = true;
+			haxe.Timer.queue(function() { me.refresh.changed = false; me.updatePreview(); },1000);
 			return false;
 		}
-		prev.innerHTML = format(getDocument().value);
+		refresh.changed = false;
+		refresh.latest = data;
+		prev.innerHTML = format(data);
+		if( haxe.Timer.stamp() - start > 0.15 )
+			refresh.auto = false;
 		// execute generate JS scripts
 		for( i in 1...uniqueId ) {
 			var e = js.Lib.document.getElementById("js_"+i);
 			if( e != null )
 				js.Lib.eval(e.innerHTML);
 		}
-		if( refresh.last > 0 )
-			refresh.time = refresh.last - start;
-		refresh.last = haxe.Timer.stamp();
+		refresh.timestamp = haxe.Timer.stamp();
 		return false;
 	}
 
 	public function handleTab(e:Event) {
-		if( e.keyCode != 9 )
+		if( e.keyCode != 9 || e.altKey || e.ctrlKey || e.shiftKey )
 			return true;
 		var sel = new js.Selection(getDocument());
 		sel.insert("\t","","");
@@ -221,21 +230,19 @@ class Editor {
 	}
 
 	function list( t : String ) : String {
-		var me = this;
-		return ~/(^|<br\/>)(( +)\* (.*?)(<br\/>|$))+/.customReplace(t,function(r) {
-			var b = new StringBuf();
-			var rspaces = ~/(^|<br\/>)( +)/;
-			rspaces.match(t);
-			var spaces = rspaces.matched(2);
-			var pos = rspaces.matchedPos();
-			t = t.substr(pos.len + pos.pos + 2);
-			var b = new StringBuf();
-			b.add("<ul>");
-			for( x in new EReg("<br/>"+spaces+"\\* ","g").split(t) )
-				b.add("<li>"+me.list(x)+"</li>");
-			b.add("</ul>");
-			return b.toString();
-		});
+		var r = ~/(^|<br\/>)([ \t]+)\* /;
+		if( !r.match(t) )
+			return t;
+		var b = new StringBuf();
+		var spaces = r.matched(2);
+		var pos = r.matchedPos();
+		b.addSub(t,0,pos.pos);
+		t = t.substr(pos.pos + pos.len);
+		b.add("<ul>");
+		for( x in new EReg("<br/>"+spaces+"\\* ","g").split(t) )
+			b.add("<li>"+list(x)+"</li>");
+		b.add("</ul>");
+		return b.toString();
 	}
 
 	function code( t : String, ?style : String ) : String {
@@ -291,7 +298,7 @@ class Editor {
 	}
 
 	static function makeSpans( t : String ) : String {
-		return ~/\n*\[([A-Za-z0-9_]+)\]\n*([^<>]*?)\n*\[\/\1\]\n*/.customReplace(t,function(r) {
+		return ~/\n*\[([A-Za-z0-9_ ]+)\]\n*([^<>]*?)\n*\[\/\1\]\n*/.customReplace(t,function(r) {
 			return '<span class="'+r.matched(1)+'">'+makeSpans(r.matched(2))+'</span>';
 		});
 	}
@@ -336,7 +343,7 @@ class Editor {
 			var link = r.matched(1);
 			var ext = link.split(".").pop();
 			var title = r.matched(2);
-			if( title == "" || title == null ) title = link else title = title.substr(1);
+			if( title == EMPTY ) title = link else title = title.substr(1);
 			return '<a href="/file/'+link+'" class="file file_'+ext+'">'+title+'</a>';
 		});
 		t = ~/@([ A-Za-z0-9._-]+\.swf):([0-9]+)x([0-9]+)(:[^@]+)?@/.customReplace(t,function(r) {
@@ -345,7 +352,7 @@ class Editor {
 			str += '<script type="text/javascript" id="js_'+id+'">';
 			str += "var o = new js.SWFObject('/file/"+r.matched(1)+"','swfobj_"+id+"',"+r.matched(2)+","+r.matched(3)+",'9','#FFFFFF');";
 			var params = r.matched(4);
-			if( params != null ) {
+			if( params != EMPTY ) {
 				params = Lambda.map(params.substr(1).split("&amp;"),function(p) return Lambda.map(p.split("="),StringTools.urlEncode).join("=")).join("&");
 				str += "o.addParam('FlashVars','"+params+"');";
 			}
@@ -366,18 +373,18 @@ class Editor {
 
 	public function format( t : String ) : String {
 		uniqueId = 1;
-		t = StringTools.replace(t,"\r\n","\n");
+		t = ~/\r\n?/g.replace(t,"\n");
 		var me = this;
 		var b = new StringBuf();
 		var codes = new Array();
 		t = ~/<code( [a-zA-Z0-9]+)?>([^\0]*?)<\/code>/.customReplace(t,function(r) {
 			var style = r.matched(1);
-			var code = me.code(r.matched(2),(style == null)?null:style.substr(1));
+			var code = me.code(r.matched(2),(style == EMPTY)?null:style.substr(1));
 			codes.push(code);
 			return "##CODE"+(codes.length-1)+"##";
 		});
-		var div_open = ~/^\[([A-Za-z0-9]+)\]$/;
-		var div_close = ~/^\[\/([A-Za-z0-9]+)\]$/;
+		var div_open = ~/^\[([A-Za-z0-9_ ]+)\]$/;
+		var div_close = ~/^\[\/([A-Za-z0-9_ ]+)\]$/;
 		for( t in ~/\n[ \t]*\n/g.split(t) ) {
 			var p = paragraph(t);
 			switch( p.substr(0,3) ) {
@@ -397,6 +404,33 @@ class Editor {
 			b.add("\n");
 		}
 		t = b.toString();
+		// custom scripts
+		var r = ~/(<ul>)?(<li>)?\[\$([a-z]+):([a-zA-Z0-9_]+)\]([^\0]*?)\[\/\$\3:\4\](<\/li>)?(<\/ul>)?/;
+		while( r.match(t) ) {
+			var tag = r.matched(4);
+			var content = r.matched(5);
+			// this is an ugly hack to extract script in first and last position of a list
+			var pre = { ul : r.matched(1) != EMPTY, li : r.matched(2) != EMPTY };
+			var post = { ul : r.matched(7) != EMPTY, li : r.matched(6) != EMPTY };
+			var before = (pre.ul?"<ul>":"") + (pre.li?"<li>":"");
+			var after = (post.li?"</li>":"") + (post.ul?"</ul>":"");
+			if( pre.ul && pre.li && post.ul && post.li && StringTools.startsWith(content,"</li>") && StringTools.endsWith(content,"<li>") ) {
+				before = "";
+				after = "";
+				content = "<ul>"+content.substr(5,content.length - 9)+"</ul>";
+			}
+			// end-of-hack
+			var content = switch( r.matched(3) ) {
+			case "clic":
+				'<a href="#" onclick="return Editor.toggle(\''+tag+'\')">'+content+'</a>';
+			case "id":
+				'<div id="'+tag+'" style="display : none">'+content+'</div>';
+			default:
+				"Unknown script "+r.matched(3);
+			}
+			t = r.matchedLeft() + before + content + after + r.matchedRight();
+		}
+		// replace unformated code parts
 		for( i in 0...codes.length )
 			t = StringTools.replace(t,"##CODE"+i+"##",codes[i]);
 		// cleanup

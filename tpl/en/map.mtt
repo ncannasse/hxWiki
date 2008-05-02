@@ -2,6 +2,10 @@
 
 <h1>Wiki Map</h1>
 
+<p>
+	This is the ::lang.name:: wiki map. You can select another language to view its own wiki map.
+</p>
+
 <ul class="map">
 	::foreach e roots::
 	::use 'map_tree.mtt'::::end::

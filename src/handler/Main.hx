@@ -323,21 +323,26 @@ class Main extends Handler<Void> {
 	public function processEdit( entry : db.Entry, editor : Editor, title : String, content : String ) {
 		var entry = if( entry.id == null ) { entry.insert(); entry; } else db.Entry.manager.get(entry.id);
 		var oldTitle = entry.title;
+		var changes = false;
 		entry.title = StringTools.trim(title);
+		content = ~/\r\n?/g.replace(content,"\n");
 		if( entry.title == entry.name || entry.title == "" ) entry.title = null;
 		if( entry.title != oldTitle ) {
 			entry.update();
 			var v = new db.Version(entry,App.user);
 			v.setChange(VTitle,oldTitle,entry.title);
 			v.insert();
+			changes = true;
 		}
 		var v = null;
-		if( StringTools.trim(content).length == 0 )
+		if( StringTools.trim(content).length == 0 ) {
 			entry.markDeleted(App.user);
-		else if( entry.version == null || entry.version.content != content ) {
+			changes = true;
+		} else if( entry.version == null || entry.version.content != content ) {
 			v = new db.Version(entry,App.user);
 			v.setChange(VContent,content,null);
 			v.insert();
+			changes = true;
 			entry.version = v;
 			db.Entry.manager.updateSearchContent(entry);
 		} else if( entry.vid != null )
@@ -348,6 +353,7 @@ class Main extends Handler<Void> {
 			v.update();
 		}
 		entry.update();
+		return changes;
 	}
 
 	function doDelete() {
@@ -418,6 +424,7 @@ class Main extends Handler<Void> {
 	function doMap() {
 		var lang = getLang();
 		App.langSelected = lang;
+		App.context.lang = lang;
 		App.context.roots = db.Entry.manager.getRoots(lang);
 	}
 

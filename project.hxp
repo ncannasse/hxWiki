@@ -4,7 +4,8 @@
 -D spod_rtti</output>
   <output name="JS" mode="js" out="www/wiki.js" class="Editor" lib="" cmd="" main="False" debug="False">-cp src</output>
   <output name="Upload" mode="swf9" out="www/upload.swf" class="Uploader" lib="" cmd="" main="True" debug="False">-cp src</output>
-  <output name="ApiSync" mode="neko" out="apisync.n" class="tools.ApiSync" lib="" cmd="" main="True" debug="False">-cp src</output>
+  <output name="ApiSync" mode="neko" out="apisync.n" class="tools.ApiSync" lib="" cmd="" main="True" debug="False">-cp src
+-D no_remoting_shutdown</output>
   <files path="">
     <dir path="db">
       <file path="src\db\Dependency.hx" />

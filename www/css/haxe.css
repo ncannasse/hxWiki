@@ -128,6 +128,18 @@ ul {
 	text-align			: justify;
 }
 
+.view ul ul {
+	margin-top : 5px;
+	margin-bottom : 5px;
+}
+
+.view .biglist ul ul li {
+	list-style-image : url('/img/haxe/items/ul_spot.gif');
+	background : none;
+	padding-left : 0px;
+}
+
+
 pre {
 	background-color	: #f7fbfe;
 	border 				: 1px dashed #c2d9e6;
@@ -182,7 +194,6 @@ input.field {
 	padding				: 2px;
 	border				: 1px solid #97cbeb;
 	color				: #09598a;	
-	background-color	: #eef7fd;	
 }
 
 textarea {
@@ -195,9 +206,7 @@ textarea {
 	border				: 1px solid #97cbeb;
 }
 
-input.field:focus, textarea:focus {
-	border				: 1px dashed #97cbeb;
-	background-color	: #F4FAFD;
+input.field:focus, textarea:focus {	
 }
 
 .view input.button, .editor input.button {
@@ -417,19 +426,18 @@ ul.menu li a:hover {
 	border-style		: none;	
 }
 
-.langs span {
-	text-decoration		: underline;	
-}
-
 .langs a.off {
 	font-style			: italic;	
 	color				: #59AEE1;
 }
 
 .langs a.on {
-	font-weight			: bold;
 	font-size			: 10pt;	
 	font-variant		: small-caps;
+}
+
+.langs a.current {
+	font-weight			: bold;
 }
 
 .version, .hierarchy {
@@ -573,5 +581,51 @@ ul.map li.has_content {
 
 p.browse {
 	text-align			: center;	
+}
+
+
+/* API */
+
+.api_index ul {
+	margin-top : 0px;
+	margin-bottom : 0px;
+}
+
+.api_index ul li {
+	list-style : disc;
+}
+
+.api_index a, .api a {
+	text-decoration : none;
+}
+
+.api_index .pack {
+	font-weight : bold;
+}
+
+.api .name {
+	display : block;
+	font-size : 16pt;
+}
+
+.api .pf {
+	color : #888;
+	display : block;
+}
+
+.api .kwd {
+	color : #009;
+	font-weight : bold;
+}
+
+.api .field, .api .construct {
+	display : block;
+	margin-top : 10px;
+}
+
+.api .doc {
+	padding : 5px;
+	display : block;
+	margin-left : 10px;
 }
 
