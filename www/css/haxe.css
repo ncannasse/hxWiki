@@ -17,14 +17,20 @@ a.broken {
 	color				: #e10005;	
 }
 
-a.extern {
-	background			: transparent url('/img/haxe/items/extern.gif') center right no-repeat;
-	padding-right		: 15px;
-	
+a.file, a.extern {
+	background-color	: transparent;
+	background-image	: center right;
+	background-repeat	: no-repeat;
 }
 
-a.file {
-	color : #f80;
+a.file .file_zip {
+	background-image	: url('/img/haxe/items/pdf.gif');
+	padding-right		: 15px;	
+}
+
+a.extern {
+	background-image	: url('/img/haxe/items/extern.gif');
+	padding-right		: 15px;	
 }
 
 em {
@@ -77,10 +83,10 @@ ul {
 }
 
 pre {
-	background-color : #f7f7f7;
-	border : 1px dashed #aaa;
-	padding : 5px;
-	margin : 10px;
+	background-color	: #f7fbfe;
+	border 				: 1px dashed #c2d9e6;
+	padding 			: 5px;
+	margin 				: 10px;
 }
 
 pre.xml span {
@@ -112,13 +118,9 @@ pre.haxe span.op {
 /* BASIC INPUTS */
 
 input, textarea {	
-	background-color	: #fff;	
+	background-color	: #fff;
 	border-style		: none;
 }
-
-input {
-	font-size			: 10pt;	
-}	
 
 input.button:hover {
 	cursor				: pointer;	
@@ -146,7 +148,7 @@ textarea {
 	width				: 110px;
 	height				: 34px;
 	background			: transparent url('/img/haxe/buttons/button1.png') top left no-repeat;
-	font-size			: 11pt;	
+	font-size			: 9.5pt;	
 	color				: #09598a;
 	font-weight			: bold;
 	font-variant		: small-caps;
@@ -209,7 +211,7 @@ textarea {
 }
 
 .content  {	
-	padding				: 45px 280px 45px 45px;		
+	padding				: 45px 275px 45px 45px;		
 }
 
 .notification {	
@@ -416,5 +418,67 @@ a.button2:hover {
 	padding-bottom		: 4px;
 }
 
-/* */
+/* TABLE HISTORY */
+
+table.history {
+	margin-top			: 10px;
+	border				: 1px solid #c2d9e6;
+	border-collapse		: separate;
+	border-spacing		: 1px;
+	-moz-border-radius	: 5px;	
+	width				: 100%;	
+}
+
+table.history th {	
+	color 				: #4381a7;
+	font-variant		: small-caps;
+	font-size			: 12pt
+	height				: 30px;
+	background			: #c8e3f9 url('/img/haxe/buttons/but ton0.gif') top left repeat-x;	
+}
+
+table.history td, table.history th {
+	text-align			: center;
+	padding				: 5px 5px;	
+}
+
+table.history tr {
+	background-color	: #f1f8fd;
+}
+
+table.history tr.even {
+	background-color 	: #e4f2fc;
+}
+
+table.history tr:hover {	
+	background-color	: #ffeec1;
+}
+
+table.history td {
+	font-size			: 9pt;
+	border-color		: #fff #c2d9e6 #c2d9e6 transparent;
+	border-style		: solid;
+	border-width		: 1px;
+}
+
+/* WIKI MAP */
+
+ul.map {
+	list-style-image	: url('/img/haxe/items/ul_spot.gif');
+	list-style-position	: inside;	
+}
+
+ul.map li {
+	margin				: 5px;
+}
+
+ul.map li.has_content {
+	
+}
+
+/* BROWSE */
+
+p.browse {
+	text-align			: center;	
+}
 
