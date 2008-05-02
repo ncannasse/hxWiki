@@ -254,15 +254,24 @@ class Editor {
 		switch( style ) {
 		case "xml":
 			var me = this;
-			t = ~/(&lt;\/?)([a-zA-Z0-9:]+)([^&]*?)(\/?&gt;)/.customReplace(t,function(r) {
+			t = ~/(&lt;\/?)([a-zA-Z0-9:_]+)([^&]*?)(\/?&gt;)/.customReplace(t,function(r) {
 				var tag = r.matched(2);
-				var attr = ~/([a-zA-Z0-9:]+)="(.*?)"/g.replace(r.matched(3),'<span class="att">$1</span><span class="kwd">=</span><span class="string">"$2"</span>');
+				var attr = ~/([a-zA-Z0-9:_]+)="(.*?)"/g.replace(r.matched(3),'<span class="att">$1</span><span class="kwd">=</span><span class="string">"$2"</span>');
 				return '<span class="kwd">'+r.matched(1)+'</span><span class="tag">'+tag+'</span>'+attr+'<span class="kwd">'+r.matched(4)+'</span>';
 			});
 			t = ~/(&lt;!--(.*?)--&gt;)/g.replace(t,'<span class="comment">$1</span>');
 		case "haxe":
 			var tags = new Array();
-			var tag = function(c,s) { tags.push('<span class="'+c+'">'+s+'</span>'); return "##TAG"+(tags.length-1)+"##"; };
+			var untag = function(s,html) {
+				return ~/##TAG([0-9]+)##/.customReplace(s,function(r) {
+					var t = tags[Std.parseInt(r.matched(1))];
+					return html ? t.html : t.old;
+				});
+			}
+			var tag = function(c,s) {
+				tags.push({ old : s, html : '<span class="'+c+'">'+untag(s,false)+'</span>' });
+				return "##TAG"+(tags.length-1)+"##";
+			};
 			t = ~/\/\*((.|\n)*?)\*\//.customReplace(t,function(r) {
 				return tag("comment",r.matched(0));
 			});
@@ -290,8 +299,7 @@ class Editor {
 			t = new EReg("\\b("+types.join("|")+")\\b","g").replace(t,'<span class="type">$1</span>');
 			t = ~/\b([0-9.]+)\b/g.replace(t,'<span class="number">$1</span>');
 			t = ~/([{}\[\]()])/g.replace(t,'<span class="op">$1</span>');
-			for( i in 0...tags.length )
-				t = StringTools.replace(t,"##TAG"+i+"##",tags[i]);
+			t = untag(t,true);
 		default:
 		}
 		return '<pre'+cl+'>'+t+"</pre>";
