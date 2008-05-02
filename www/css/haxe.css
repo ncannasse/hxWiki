@@ -44,6 +44,26 @@ a.file, a.extern {
 	padding-right		: 16px;
 }
 
+.file_txt {
+	background-image	: url('/img/haxe/items/txt.gif');	
+	padding-right		: 18px;
+}
+
+.file_swf {
+	background-image	: url('/img/haxe/items/swf.gif');
+	padding-right		: 20px;
+}
+
+.file_xml {
+	background-image	: url('/img/haxe/items/xml.gif');
+	padding-right		: 20px;
+}
+
+.file_undefined {
+	background-image	: url('/img/haxe/items/undefined_file.gif');
+	padding-right		: 20px;
+}
+
 a.extern {
 	background-image	: url('/img/haxe/items/extern.gif');	
 	padding-right		: 16px;	
@@ -112,7 +132,12 @@ pre {
 	background-color	: #f7fbfe;
 	border 				: 1px dashed #c2d9e6;
 	padding 			: 5px;
-	margin 				: 10px;
+	margin 				: 10px 10px 30px 10px;	
+	overflow			: visible;
+}
+
+.diff pre {
+	overflow			: scroll;
 }
 
 pre.xml span {
@@ -152,11 +177,12 @@ input.button:hover {
 	cursor				: pointer;	
 }
 
-input.field {	
-	height				: 18px;	
+input.field {		
 	vertical-align		: middle;
 	padding				: 2px;
-	border				: 1px solid #97cbeb;	
+	border				: 1px solid #97cbeb;
+	color				: #09598a;	
+	background-color	: #eef7fd;	
 }
 
 textarea {
@@ -167,6 +193,11 @@ textarea {
 	background-color	: #eef7fd;
 	padding				: 5px 0px 0px 5px;
 	border				: 1px solid #97cbeb;
+}
+
+input.field:focus, textarea:focus {
+	border				: 1px dashed #97cbeb;
+	background-color	: #F4FAFD;
 }
 
 .view input.button, .editor input.button {
@@ -390,10 +421,26 @@ ul.menu li a:hover {
 	text-decoration		: underline;	
 }
 
+.langs a.off {
+	font-style			: italic;	
+	color				: #59AEE1;
+}
+
+.langs a.on {
+	font-weight			: bold;
+	font-size			: 10pt;	
+	font-variant		: small-caps;
+}
+
 .version, .hierarchy {
 	color				: #8a8a8a;	
 	font-size			: 9pt;
 	text-align			: right;
+}
+
+.hierarchy {
+	margin-top			: -5px;	
+	margin-bottom		: 10px;
 }
 
 ul.buttons {	
@@ -403,20 +450,23 @@ ul.buttons {
 
 ul.buttons li {	
 	float				: left;
-	margin-right		: 20px;	
-}
-
-ul.buttons li a {
-	background			: #f4fafd url('/img/haxe/buttons/button0.gif') repeat-x bottom left;
-	padding				: 2px 4px;
-	border				: 1px solid #bde1f6;
-	-moz-border-radius	: 3px;
+	margin-right		: 10px;	
+	padding				: 2px 0px;
+	background			: #f4fafd url('/img/haxe/buttons/button0.gif') repeat-x bottom left;	
+	border				: 1px solid #bde1f6;	
 	font-size			: 9pt;
-	text-decoration		: none;
+	min-width			: 20px;
+	text-align			: center;		
 }
 
-ul.buttons li a:hover {
-	background			: #f8fcfe url('/img/haxe/buttons/button0_hover.gif');	
+ul.buttons li a {	
+	text-decoration		: none;
+	padding				: 0px 10px;
+}
+
+ul.buttons li:hover {
+	background			: #f8fcfe url('/img/haxe/buttons/button0_hover.gif');
+	border-color		: #70BDEB;
 }	
 
 /* SPECIAL 'A' BUTTONS */
