@@ -526,7 +526,7 @@ class Main extends Handler<Void> {
 			var f = db.File.manager.search({ name : filename },false).first();
 			var content = datas.get("file");
 			if( f != null ) {
-				if( !request.exists("rewrite") && content != f.content )
+				if( content != f.content && !group.canUploadOverwrite )
 					throw "File "+filename+" already exists with different content";
 				f = db.File.manager.get(f.id,true);
 			} else {
@@ -632,6 +632,7 @@ class Main extends Handler<Void> {
 		g.allowedFiles = "zip|gz|tgz|dmg|exe|swf|txt|xml|pdf";
 		g.canUploadImage = true;
 		g.canUploadSWF = true;
+		g.canUploadOverwrite = true;
 		g.maxUploadSize = 10000000;
 		g.insert();
 		var r = new db.GroupRights(g,"");
