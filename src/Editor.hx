@@ -351,7 +351,7 @@ class Editor {
 			var link = r.matched(1);
 			var ext = link.split(".").pop();
 			var title = r.matched(2);
-			if( title == EMPTY ) title = link else title = title.substr(1);
+			if( title == null || title == "" ) title = link else title = title.substr(1);
 			return '<a href="/file/'+link+'" class="file file_'+ext+'">'+title+'</a>';
 		});
 		t = ~/@([ A-Za-z0-9._-]+\.swf):([0-9]+)x([0-9]+)(:[^@]+)?@/.customReplace(t,function(r) {
