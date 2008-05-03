@@ -1,7 +1,7 @@
-<li ::attr class if( e.vid != null ) 'has_content'::>
+<li>
 	::set childs = e.childs()::
 	<a href="#" onclick="return Editor.toggle('map_::e.id::')" ::attr class if( childs.length > 0 ) 'browse' else 'no_content'::></a>
-	<a href="::e.getURL()::">::e._title::</a>
+	<a href="::e.getURL()::" ::attr class if( e.vid != null ) 'has_content'::>::e._title::</a>
 	<ul class="map" id="map_::e.id::" style="display : none">
 	::foreach e childs::
 		::use 'map_tree.mtt'::::end::

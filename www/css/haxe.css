@@ -593,7 +593,7 @@ ul.map li a {
 	font-style : italic;
 }
 
-ul.map li.has_content a {
+ul.map li a.has_content {
 	font-style : normal;
 }
 
