@@ -620,6 +620,7 @@ class Main extends Handler<Void> {
 	public function setupDatabase() {
 		// create structure
 		mt.db.Admin.initializeDatabase();
+		db.Entry.manager.createSearchTable();
 		// default lang
 		var l = new db.Lang();
 		l.code = Config.LANG;
