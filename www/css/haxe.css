@@ -163,35 +163,35 @@ pre {
 	border 				: 1px dashed #c2d9e6;
 	padding 			: 5px;
 	margin 				: 10px 10px 30px 10px;	
-	overflow			: visible;
+	overflow			: auto;
 }
 
 .diff pre {
-	overflow			: scroll;
+	overflow			: auto;
 }
 
-pre.xml span {
+pre.xml span, pre.html span {
 	color : #009;
 }
 
-pre.xml span.comment, pre.xml span.string, pre.haxe span.comment {
+pre.xml .comment, pre.xml .string, pre.html .comment, pre.html .string, pre.haxe .comment {
 	color : #090;
 }
 
-pre.haxe span.kwd {
+pre.haxe .kwd {
 	color : #009;
 	font-weight : bold;
 }
 
-pre.haxe span.type, pre.haxe span.number {
+pre.haxe .type, pre.haxe .number {
 	color : #557;
 }
 
-pre.haxe span.string {
+pre.haxe .string {
 	color : red;
 }
 
-pre.haxe span.op {
+pre.haxe .op {
 	font-weight : bold;
 }
 

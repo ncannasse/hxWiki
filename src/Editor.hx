@@ -252,11 +252,11 @@ class Editor {
 		t = StringTools.replace(t,"\t","    ");
 		t = StringTools.htmlEscape(t);
 		switch( style ) {
-		case "xml":
+		case "xml", "html":
 			var me = this;
 			t = ~/(&lt;\/?)([a-zA-Z0-9:_]+)([^&]*?)(\/?&gt;)/.customReplace(t,function(r) {
 				var tag = r.matched(2);
-				var attr = ~/([a-zA-Z0-9:_]+)="(.*?)"/g.replace(r.matched(3),'<span class="att">$1</span><span class="kwd">=</span><span class="string">"$2"</span>');
+				var attr = ~/([a-zA-Z0-9:_]+)="([^"]*?)"/g.replace(r.matched(3),'<span class="att">$1</span><span class="kwd">=</span><span class="string">"$2"</span>');
 				return '<span class="kwd">'+r.matched(1)+'</span><span class="tag">'+tag+'</span>'+attr+'<span class="kwd">'+r.matched(4)+'</span>';
 			});
 			t = ~/(&lt;!--(.*?)--&gt;)/g.replace(t,'<span class="comment">$1</span>');
