@@ -583,16 +583,28 @@ table.history td {
 /* WIKI MAP */
 
 ul.map {
-	list-style-image	: url('/img/haxe/items/ul_spot.gif');
-	list-style-position	: inside;	
 }
 
-ul.map li {
-	margin				: 5px;
+ul.map li li {
+	margin-left : 30px;	
 }
 
-ul.map li.has_content {
-	
+ul.map li a {
+	font-style : italic;
+}
+
+ul.map li.has_content a {
+	font-style : normal;
+}
+
+ul.map a.no_content {
+	padding-left : 10px;
+	cursor : default;
+}
+
+ul.map a.browse {
+	padding-left : 10px;
+	background : url('/img/haxe/items/ul_spot.gif') no-repeat left center;	
 }
 
 /* BROWSE */
