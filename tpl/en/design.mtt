@@ -73,7 +73,7 @@
 					::raw notification.text::
 				</div>				
 
-				<div class="content">					
+				<div class="content">
 					::raw __content__::
 				</div>				
 		</div>
