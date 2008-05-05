@@ -24,6 +24,16 @@ a.file, a.extern {
 	margin-right		: 2px;
 }
 
+.file {
+	background-image	: url('/img/haxe/items/undefined_file.gif');
+	padding-right		: 20px;
+}
+
+a.extern {
+	background-image	: url('/img/haxe/items/extern.gif');	
+	padding-right		: 16px;	
+}
+
 .file_zip, .file_tgz, .file_gz {
 	background-image	: url('/img/haxe/items/zip.gif');
 	padding-right		: 17px;	
@@ -57,16 +67,6 @@ a.file, a.extern {
 .file_xml {
 	background-image	: url('/img/haxe/items/xml.gif');
 	padding-right		: 20px;
-}
-
-.file_undefined {
-	background-image	: url('/img/haxe/items/undefined_file.gif');
-	padding-right		: 20px;
-}
-
-a.extern {
-	background-image	: url('/img/haxe/items/extern.gif');	
-	padding-right		: 16px;	
 }
 
 em {
@@ -159,7 +159,7 @@ ul {
 }
 
 pre {
-	background-color	: #f7fbfe;
+	background-color	: #eff8fd;
 	border 				: 1px dashed #c2d9e6;
 	padding 			: 5px;
 	margin 				: 10px 10px 30px 10px;	
@@ -224,9 +224,6 @@ textarea {
 	border				: 1px solid #97cbeb;
 }
 
-input.field:focus, textarea:focus {	
-}
-
 .view input.button, .editor input.button {
 	border-style		: none;
 	width				: 110px;
@@ -243,7 +240,6 @@ input.field:focus, textarea:focus {
 .view input.button:hover, .editor input.button:hover {	
 	background-image	: url('/img/haxe/buttons/button1_hover.png');
 }
-
 
 /* LAYOUT STRUCTURE */
 
@@ -297,6 +293,8 @@ input.field:focus, textarea:focus {
 .content  {	
 	padding				: 45px 275px 45px 45px;		
 }
+
+/* NOTIFICATIONS */
 
 #notification, .error, #notification.error {	
 	margin				: 45px 280px -20px 45px;
@@ -582,29 +580,45 @@ table.history td {
 
 /* WIKI MAP */
 
-ul.map {
+ul.map li {
+	-moz-border-radius	: 10px;
+}
+
+ul.map li:hover {
+	background-color	: #f2f9fd;
+}
+
+ul.map li ul.map {
+	margin-left			: 8px;
+	border-left			: 1px solid #c2d9e6;	
 }
 
 ul.map li li {
-	margin-left : 30px;	
+	margin-left	 		: 30px;	
 }
 
-ul.map li a {
-	font-style : italic;
+ul.map a {
+	text-decoration		: none;	
 }
 
-ul.map li a.has_content {
-	font-style : normal;
+ul.map a {
+	font-style 			: italic;
 }
 
-ul.map a.no_content {
-	padding-left : 10px;
-	cursor : default;
+ul.map a.has_content {
+	font-style 			: normal;
 }
 
-ul.map a.browse {
-	padding-left : 10px;
-	background : url('/img/haxe/items/ul_spot.gif') no-repeat left center;	
+ul.map a.no_content, ul.map a.browse {
+	padding-left 		: 20px;	
+}
+
+ul.map a.browse {	
+	background 			: url('/img/haxe/items/plus.gif') no-repeat left center;	
+}
+
+ul.map a.no_content {	
+	background 			: url('/img/haxe/items/txt2.gif') no-repeat left center;	
 }
 
 /* BROWSE */
@@ -613,49 +627,44 @@ p.browse {
 	text-align			: center;	
 }
 
-
 /* API */
 
+.api_index a {
+	text-decoration		: none;
+}
+
+.api_index ul li div {
+  border-left			: 1px solid #c2d9e6;
+  padding				: 2px 0px 0px 4px;
+  margin-left			: 8px;
+}
+
 .api_index ul {
-	margin-top : 0px;
-	margin-bottom : 0px;
+  margin				: 0;
+}
+
+.api_index ul ul {
+  margin				: 0 0 0 4px;
 }
 
 .api_index ul li {
-	list-style : disc;
+  margin				: 0;
+  list-style			: none;
+  -moz-border-radius	: 10px;
 }
 
-.api_index a, .api a {
-	text-decoration : none;
+.api_index ul li:hover {
+	background-color	: #f2f9fd;
 }
 
-.api_index .pack {
-	font-weight : bold;
+.api_index ul li span.pack {
+	padding-left		: 20px;
+	background-image	: url('/img/haxe/items/plus.gif');
+	background-repeat	: no-repeat;
 }
 
-.api .name {
-	display : block;
-	font-size : 16pt;
+.api_index ul li a.intern {
+	padding-left		: 20px;
+	background-image	: url('/img/haxe/items/txt2.gif');
+	background-repeat	: no-repeat;
 }
-
-.api .pf {
-	color : #888;
-	display : block;
-}
-
-.api .kwd {
-	color : #009;
-	font-weight : bold;
-}
-
-.api .field, .api .construct {
-	display : block;
-	margin-top : 10px;
-}
-
-.api .doc {
-	padding : 5px;
-	display : block;
-	margin-left : 10px;
-}
-
