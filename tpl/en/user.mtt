@@ -18,7 +18,7 @@
 </dl>
 
 <p>
-	<a href="/wiki/history?user=::u.id::">See latest changes</a>
+	<a href="/wiki/history?user=::u.id::" class="button2">See latest changes</a>
 </p>
 
 ::end::

@@ -224,7 +224,7 @@ textarea {
 	border				: 1px solid #97cbeb;
 }
 
-.view input.button, .editor input.button {
+.content .button, .view input.button, .editor input.button {
 	border-style		: none;
 	width				: 110px;
 	height				: 34px;
@@ -234,10 +234,10 @@ textarea {
 	font-weight			: bold;
 	font-variant		: small-caps;
 	padding-bottom		: 3px;
-	margin				: 5px 0px 15px 0px;	
+	margin				: 5px 0px 15px 0px;		
 }
 
-.view input.button:hover, .editor input.button:hover {	
+.content .button:hover, .view input.button:hover, .editor input.button:hover {	
 	background-image	: url('/img/haxe/buttons/button1_hover.png');
 }
 
@@ -500,9 +500,9 @@ a.button1, a.button2 {
 	width				: 110px;
 	height				: 28px;
 	text-align			: center;
-	padding-top			: 6px;
+	padding-top			: 7px;
 	text-decoration		: none;
-	font-size			: 10pt;	
+	font-size			: 8pt;	
 }
 
 a.button1 {
@@ -515,7 +515,7 @@ a.button1:hover {
 
 a.button2 {	
 	background			: transparent url('/img/haxe/buttons/button2.png') top left no-repeat;
-	color				: #c35700;
+	color				: #9d4700;
 }
 
 a.button2:hover {
@@ -551,7 +551,7 @@ table.history th {
 	font-variant		: small-caps;
 	font-size			: 12pt
 	height				: 30px;
-	background			: #c8e3f9 url('/img/haxe/buttons/but ton0.gif') top left repeat-x;	
+	background			: #c8e3f9 url('/img/haxe/items/bg_th1.gif') top left repeat-x;	
 }
 
 table.history td, table.history th {
@@ -667,4 +667,72 @@ p.browse {
 	padding-left		: 20px;
 	background-image	: url('/img/haxe/items/txt2.gif');
 	background-repeat	: no-repeat;
+}
+
+/* SEARCH */
+
+ul.results li {
+	padding				: 3px 0px 3px 20px;
+	background-image	: url('/img/haxe/items/ul_spot4.gif');
+	background-position	: 5px 10px;
+	background-repeat	: no-repeat;
+	margin-bottom		: 5px;
+	-moz-border-radius	: 10px;	
+}
+
+ul.results li:hover {
+	background-color	: #ffeec1;
+}
+
+/* REGISTER */
+
+form.register {
+	margin:0px;	
+}
+
+form.register span.group {
+	display				: block;
+	width				: 235px;
+	margin				: 0px auto 5px auto;
+}
+
+form.register span.tfield, form.register input.tfield {
+	width				: 150px;
+	display				: block;	
+	float				: left;
+	position			: relative;
+}
+
+form.register span.tfield {
+	width				: 80px;
+	text-align			: right;	
+	margin-right		: 3px;
+	padding-top			: 2px;
+}
+
+form.register input.button {
+	display				: block;
+	margin				: auto;
+}
+
+/* USER SHEET */
+
+dl.user {	
+	padding				: 5px;
+	-moz-border-radius	: 5px;
+	border				: 1px solid #c2d9e6;
+	background			: #e7f4fc url('/img/haxe/items/bg_box1.gif') bottom left repeat-x;	
+	color				: #09598a;
+	min-height			: 100px;
+	width				: 300px;	
+}
+
+dl.user dt {
+	margin-left			: 10px;	
+	font-weight			: bold;
+}
+
+dl.user dd {
+	margin-left			: 30px;
+	margin-bottom		: 5px;
 }
