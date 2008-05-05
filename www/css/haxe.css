@@ -224,21 +224,45 @@ textarea {
 	border				: 1px solid #97cbeb;
 }
 
-.content .button, .view input.button, .editor input.button {
+.content input.button, span.button a, span.button2 a {
 	border-style		: none;
 	width				: 110px;
-	height				: 34px;
-	background			: transparent url('/img/haxe/buttons/button1.png') top left no-repeat;
-	font-size			: 9.5pt;	
-	color				: #09598a;
-	font-weight			: bold;
-	font-variant		: small-caps;
-	padding-bottom		: 3px;
-	margin				: 5px 0px 15px 0px;		
+	height				: 34px;	
+	margin				: 5px 0px 15px 0px;	
+	font-variant		: small-caps;	
 }
 
-.content .button:hover, .view input.button:hover, .editor input.button:hover {	
-	background-image	: url('/img/haxe/buttons/button1_hover.png');
+.content input.button, span.button a {
+	background			: transparent url('/img/haxe/buttons/button1.png') top left no-repeat;
+	color				: #09598a;
+}
+
+span.button2 a {
+	background			: transparent url('/img/haxe/buttons/button2.png') top left no-repeat;
+	color				: #9d4700;	
+}
+
+.content input.button {	
+	padding-bottom		: 3px;	
+	font-weight			: bold;	
+	font-size			: 9.5pt;	
+}
+
+span.button a, span.button2 a {	
+	display				: block;	
+	text-align			: center;
+	height				: 28px;
+	font-size			: 10pt;
+	padding-top			: 6px;	
+	text-decoration		: none;
+}
+
+.content input.button:hover, span.button a:hover{	
+	background-image	: url('/img/haxe/buttons/button1_hover.png');	
+}
+
+span.button2 a:hover {	
+	background-image	: url('/img/haxe/buttons/button2_hover.png');	
 }
 
 /* LAYOUT STRUCTURE */
@@ -490,37 +514,8 @@ ul.buttons li a {
 
 ul.buttons li:hover {
 	background			: #f8fcfe url('/img/haxe/buttons/button0_hover.gif');
-	border-color		: #70BDEB;
+	border-color		: #70bdeb;
 }	
-
-/* SPECIAL 'A' BUTTONS */
-
-a.button1, a.button2 {
-	display				: block;
-	width				: 110px;
-	height				: 28px;
-	text-align			: center;
-	padding-top			: 7px;
-	text-decoration		: none;
-	font-size			: 8pt;	
-}
-
-a.button1 {
-	background			: transparent url('/img/haxe/buttons/button1.png') top left no-repeat;	
-}
-
-a.button1:hover {
-	background			: transparent url('/img/haxe/buttons/button1_hover.png') top left no-repeat;	
-}
-
-a.button2 {	
-	background			: transparent url('/img/haxe/buttons/button2.png') top left no-repeat;
-	color				: #9d4700;
-}
-
-a.button2:hover {
-	background			: transparent url('/img/haxe/buttons/button2_hover.png') top left no-repeat;	
-}
 
 /* EDITOR */
 
@@ -681,7 +676,7 @@ p.browse {
 }
 
 .api .kwd {
-	color 				: #09598A;
+	color 				: #09598a;
 	font-weight 		: bold;
 }
 
@@ -763,3 +758,25 @@ dl.user dd {
 	margin-left			: 30px;
 	margin-bottom		: 5px;
 }
+
+/* BOXES */ /* span class '.name' */
+
+.box1, .box2 {
+	margin				: 10px;
+	padding				: 10px;	
+	display				: block;	
+	-moz-border-radius	: 5px;	
+}
+
+.box1 { /* blue */
+	background			: transparent url('/img/haxe/items/bg_box1.gif') top left repeat-x;	
+	border				: 4px solid #e8f5fc;
+	color				: #09598a;
+}
+
+.box2 { /* orange */
+	background			: transparent url('/img/haxe/items/bg_box2.gif') top left repeat-x;	
+	border				: 4px solid #ffefa3;
+	color				: #c35700;
+}
+
