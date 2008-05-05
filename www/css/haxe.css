@@ -661,12 +661,39 @@ p.browse {
 	padding-left		: 20px;
 	background-image	: url('/img/haxe/items/plus.gif');
 	background-repeat	: no-repeat;
+	font-weight			: bold;
 }
 
 .api_index ul li a.intern {
 	padding-left		: 20px;
 	background-image	: url('/img/haxe/items/txt2.gif');
 	background-repeat	: no-repeat;
+}
+
+.api .name {
+	display 			: block;
+	font-size 			: 16pt;
+}
+
+.api .pf {
+	color 				: #888;
+	display 			: block;
+}
+
+.api .kwd {
+	color 				: #09598A;
+	font-weight 		: bold;
+}
+
+.api .field, .api .construct {
+	display 			: block;
+	margin-top 			: 10px;
+}
+
+.api .doc {
+	padding 			: 5px;
+	display 			: block;
+	margin-left 		: 10px;
 }
 
 /* SEARCH */
