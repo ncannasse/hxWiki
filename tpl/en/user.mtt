@@ -17,8 +17,8 @@
 	<dd>::u._group.name::</dd>
 </dl>
 
-<p>
-	<a href="/wiki/history?user=::u.id::" class="button2">See latest changes</a>
+<p class="user">
+	<a href="/wiki/history?user=::u.id::">See latest changes</a>
 </p>
 
 ::end::
