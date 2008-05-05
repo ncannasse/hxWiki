@@ -618,7 +618,7 @@ ul.map a.browse {
 }
 
 ul.map a.no_content {	
-	background 			: url('/img/haxe/items/txt2.gif') no-repeat left center;	
+	background 			: url('/img/haxe/items/txt2.gif') no-repeat 1px center;	
 }
 
 /* BROWSE */
