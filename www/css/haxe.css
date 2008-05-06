@@ -867,11 +867,3 @@ dl.user dd {
 	display				: block;
 	color				: #09598a;
 }
-
-.box_intro .desc a {
-	text-decoration		: none;	
-}
-
-.box_intro .desc a:hover {
-	text-decoration		: underline;	
-}
