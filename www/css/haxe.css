@@ -273,8 +273,9 @@ span.button2 a:hover {
 
 /* LAYOUT STRUCTURE */
 
-.all {
-	background			: #fff url('/img/haxe/bg_main.gif') top left repeat-x;		
+.all { /* haxe_ie6.css */
+	background			: #fff url('/img/haxe/bg_main.gif') top left repeat-x;
+	background-position	: 0px 0px;	
 }
 
 .site, .header {	
@@ -299,10 +300,11 @@ span.button2 a:hover {
 
 .site {
 	width				: 963px; 
-	min-height			: 720px; /* repasar ie6 */
-	background-image	: url('/img/haxe/bg_content.png');
+	min-height			: 720px; /* haxe_ie6.css */
+	background-image	: url('/img/haxe/bg_content.png'); /* haxe_ie6.css */
 	background-position	: center top;
 	padding-top			: 1px; /* ffox bug with notification */
+	
 }				
 
 .footer {	
@@ -320,8 +322,9 @@ span.button2 a:hover {
 	color				: #c35700;	
 }
 
-.content  {	
-	padding				: 45px 275px 45px 45px;		
+.content  {
+	padding				: 45px 45px 45px 45px;
+	width				: 635px;
 }
 
 /* NOTIFICATIONS */
@@ -810,6 +813,7 @@ dl.user dd {
 	margin-left			: 85px;
 	margin-top			: 20px;	
 	display				: block;
+	position			: absolute;
 }
 
 .box_intro .title a {
@@ -860,7 +864,7 @@ dl.user dd {
 	font-size			: 9pt;
 	width				: 185px;
 	margin-left			: 85px;
-	margin-top			: 2px;
+	margin-top			: 50px;
 	position			: absolute;
 	z-index				: 1;
 	text-align			: left;

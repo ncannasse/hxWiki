@@ -1,1 +1,13 @@
-body {}
+.all {
+	height				: 100%;
+}
+
+.header {
+	height				: 101px;
+}
+
+
+.site {
+	height				: 720px;
+	background-image	: url('/img/haxe/bg_content_ie6.gif');
+}

@@ -16,7 +16,6 @@
 				<a href="/">::config.title::</a>
 			</div>
 			<div class="site">
-
 				<ul class="menu">
 					::foreach l links(0)::
 					<li><a href="::l.url::">::l.title::</a></li>
