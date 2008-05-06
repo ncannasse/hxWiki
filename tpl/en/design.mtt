@@ -41,7 +41,7 @@
 						</p>
 					::end::
 				</div>
-				
+
 				<div class="search">
 					<h1>Search</h1>
 					<form action="/wiki/search">
@@ -49,7 +49,7 @@
 						<input type="submit" value="OK" class="button"/>
 					</form>
 				</div>
-				
+
 				<div class="links">
 					<h1>Options</h1>
 					<ul>
@@ -66,18 +66,18 @@
 					<h1>Langs</h1>
 					<ul>
 					::foreach l langs::
-					<li><a href="/wiki/setlang?url=::uri::;lang=::l.code::" class="::lang_classes(l)::"><img src="/img/::config.style::/flags/flag_::l.code::.gif" alt="::l.name::"/> <span class="name">::l.name::</span></a></li>
+					<li><a href="/wiki/setlang?url=::uri::;lang=::l.code::" class="::lang_classes(l)::"><img src="/img/::config.style::/flags/flag_::l.code::.gif" alt="::l.code::"/> <span class="name">::l.name::</span></a></li>
 					::end::
 					</ul>
-				</div>				
+				</div>
 
 				<div id="notification" ::cond notification:: ::attr class if( notification.error ) 'error'::>
 					::raw notification.text::
-				</div>				
+				</div>
 
 				<div class="content">
 					::raw __content__::
-				</div>				
+				</div>
 		</div>
 		<div class="footer">
 			(c) 2007-2008 <a href="http://www.motion-twin.com" target="_blank">Motion-Twin</a> · Powered by <a href="http://haxe.org">haXe</a>
