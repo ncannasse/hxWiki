@@ -109,6 +109,12 @@ ul {
 	margin				: 5px 0px 25px 22px;	
 }
 
+.view ul ul {
+	list-style-image	: url('/img/haxe/items/ul_spot4.gif');
+	list-style-position	: outside;	
+	margin				: 0px 0px 25px 22px;	
+}
+
 .view ul li {
 	margin-bottom		: 1px;
 	text-align			: justify;
@@ -784,12 +790,88 @@ dl.user dd {
 
 .box_intro {
 	width				: 281px;
-	height				: 170px;
-	background			: transparent url('/img/haxe/items/box_intro.png') top left no-repeat;
+	height				: 141px;
+	display				: block;
+	background			: transparent url('/img/haxe/items/box_intro.gif') top left no-repeat;
+	padding-top			: 1px; /* ff bug */
+	float				: left;
+	position			: relative;
+	margin-right		: 15px;
+	margin-left			: 10px;	
+	margin-bottom		: 20px;
 }
 
-.box_intro h1 {
-	color	
+.box_intro .title:first-letter {
+	font-size			: 11pt;
 }
 
+.box_intro .title {
+	color				: #ec7a01;
+	margin-left			: 85px;
+	margin-top			: 20px;	
+	display				: block;
+}
 
+.box_intro .title a {
+	color				: #ec7a01;
+	font-size			: 16pt;
+	font-weight			: bold;
+}
+
+.box_intro .img1, .box_intro .img2, .box_intro .img3, .box_intro .img4 {
+	background-position	: top left;
+	background-repeat	: no-repeat;
+	position			: absolute;	
+}
+
+.box_intro .img1 {
+	background-image	: url('/img/haxe/items/intro/intro1.gif');
+	width				: 75px;
+	height				: 56px;
+	margin-left			: 18px;
+	margin-top			: 45px;	
+}
+
+.box_intro .img2 {
+	background-image	: url('/img/haxe/items/intro/intro2.gif');
+	width				: 87px;
+	height				: 57px;
+	margin-left			: 9px;
+	margin-top			: 45px;	
+}
+
+.box_intro .img3 {
+	background-image	: url('/img/haxe/items/intro/intro3.gif');
+	width				: 81px;
+	height				: 47px;
+	margin-left			: 14px;
+	margin-top			: 45px;	
+}
+
+.box_intro .img4 {
+	background-image	: url('/img/haxe/items/intro/intro4.gif');
+	width				: 74px;
+	height				: 51px;
+	margin-left			: 17px;
+	margin-top			: 45px;	
+}
+
+.box_intro .desc {	
+	font-size			: 9pt;
+	width				: 185px;
+	margin-left			: 85px;
+	margin-top			: 2px;
+	position			: absolute;
+	z-index				: 1;
+	text-align			: left;
+	display				: block;
+	color				: #09598a;
+}
+
+.box_intro .desc a {
+	text-decoration		: none;	
+}
+
+.box_intro .desc a:hover {
+	text-decoration		: underline;	
+}
