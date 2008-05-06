@@ -780,3 +780,16 @@ dl.user dd {
 	color				: #c35700;
 }
 
+/* INTRO */
+
+.box_intro {
+	width				: 281px;
+	height				: 170px;
+	background			: transparent url('/img/haxe/items/box_intro.png') top left no-repeat;
+}
+
+.box_intro h1 {
+	color	
+}
+
+
