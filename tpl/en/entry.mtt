@@ -2,6 +2,10 @@
 
 <h1><a href="/::entry._path::">::entry._title::</a></h1>
 
+<script type="text/javascript">
+	document.title = '::config.title:: - ::entry._title::';
+</script>
+
 <div class="hierarchy">
 	::foreach e entry.list()::
 	::if !repeat.e.first:: &gt;::end:: <a href="/::e._path::">::e._title::</a>
