@@ -684,6 +684,10 @@ p.browse {
 	display 			: block;
 }
 
+.api .oop, .api .mod {
+	display 			: block;
+}
+
 .api .kwd {
 	color 				: #09598a;
 	font-weight 		: bold;
