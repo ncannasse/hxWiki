@@ -365,9 +365,9 @@ class ApiSync {
 		keyword("typedef");
 		print(formatPath(t.path));
 		if( t.params.length != 0 ) {
-			print("&lt;");
+			print("<");
 			print(t.params.join(", "));
-			print("&gt;");
+			print(">");
 		}
 		print('[/name]\n');
 		processInfos(t);
