@@ -95,6 +95,10 @@ class Main extends Handler<Void> {
 		return l;
 	}
 
+	function getDefLang() {
+		return db.Lang.manager.byCode(Config.LANG);
+	}
+
 	function getEntries( path ) {
 		var entries = new List();
 		for( l in db.Lang.manager.all(false) )
@@ -123,11 +127,13 @@ class Main extends Handler<Void> {
 	}
 
 	function contentChanged( entry : db.Entry ) {
+		var defLang = getDefLang();
 		for( d in db.Dependency.manager.search({ eid : entry.id },false) ) {
 			var e2 = d.target;
-			if( e2 == null ) e2 = getEntry(d.path.split("/"),entry.lang);
+			var path = d.path.split("/");
+			if( e2 == null ) e2 = getEntry(path,entry.lang);
 			if( d.subs != null ) {
-				var s = db.Dependency.manager.subSignature(e2);
+				var s = db.Dependency.manager.subSignature(e2,if( e2.lid == defLang.id ) e2 else getEntry(path,defLang));
 				if( s != d.subs )
 					return true;
 			} else if( (e2.hasContent() ? e2.get_title() : null) != d.title )
@@ -242,6 +248,7 @@ class Main extends Handler<Void> {
 
 	public function createEditor( entry : db.Entry, cache : Bool ) {
 		var lang = entry.lang;
+		var defaultLang = getDefLang();
 		var config = {
 			buttons : new Array(),
 			text : Text.get.empty_text,
@@ -255,7 +262,12 @@ class Main extends Handler<Void> {
 		if( cache )
 			for( d in db.Dependency.manager.search({ eid : entry.id },false) ) {
 				var e = d.target;
-				if( e == null ) e = getEntry(d.path.split("/"),lang);
+				if( e == null ) {
+					e = getEntry(d.path.split("/"),lang);
+					// if lang-specific one is not found, use default one
+					if( e.id == null && defaultLang != lang )
+						e = getEntry(d.path.split("/"),defaultLang);
+				}
 				config.titles.set(d.path,{ title : e.get_title(), exists : e.hasContent() });
 			}
 
@@ -271,6 +283,9 @@ class Main extends Handler<Void> {
 		var me = this;
 		e.getTitle = function(path:Array<String>) {
 			var entry2 = me.getEntry(path,lang);
+			// if lang-specific one is not found, use default one
+			if( entry2.id == null && defaultLang != lang )
+				entry2 = me.getEntry(path,defaultLang);
 			var dep = new db.Dependency();
 			dep.entry = entry;
 			dep.target = entry2;
@@ -281,13 +296,14 @@ class Main extends Handler<Void> {
 		}
 		e.getSubLinks = function(path) {
 			var entry2 = me.getEntry(path,lang);
+			var e2def = if( entry2.lid == defaultLang.id ) entry2 else me.getEntry(path,defaultLang);
 			var dep = new db.Dependency();
 			dep.entry = entry;
 			dep.target = entry2;
 			dep.path = path.join("/");
-			dep.subs = db.Dependency.manager.subSignature(entry2);
+			dep.subs = db.Dependency.manager.subSignature(entry2,e2def);
 			dep.insert();
-			return me.getSubLinks(entry2);
+			return me.getSubLinks(entry2,e2def);
 		}
 		return e;
 	}
@@ -347,6 +363,8 @@ class Main extends Handler<Void> {
 			v = new db.Version(entry,App.user);
 			v.setChange(VContent,content,null);
 			v.insert();
+			if( entry.version == null && entry.lang != getDefLang() )
+				db.Dependency.manager.translate(entry);
 			changes = true;
 			entry.version = v;
 			db.Entry.manager.updateSearchContent(entry);
@@ -440,14 +458,18 @@ class Main extends Handler<Void> {
 	}
 
 	function doSubList() {
-		var a = getSubLinks(getEntry(getPath(),getLang()));
+		var path = getPath();
+		var e = getEntry(path,getLang());
+		var defLang = getDefLang();
+		var edef = if( e.lid == defLang.id ) e else getEntry(path,defLang);
+		var a = getSubLinks(e,edef);
 		neko.Lib.print(haxe.Serializer.run(a));
 	}
 
-	function getSubLinks( e : db.Entry ) {
-		if( e.id == null )
+	function getSubLinks( e : db.Entry, edef : db.Entry ) {
+		if( e.id == null && edef.id == null )
 			return [];
-		return Lambda.array(db.Entry.manager.search({ pid : e.id },false).map(function(e) return { url : "/"+e.get_path(), title : e.get_title() }));
+		return Lambda.array(db.Entry.manager.getChildsDef(e,edef).map(function(e) return { url : "/"+e.get_path(), title : e.get_title() }));
 	}
 
 	function doFile( fname : String ) {

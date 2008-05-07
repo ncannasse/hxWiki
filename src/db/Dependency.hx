@@ -26,12 +26,16 @@ class DependencyManager extends neko.db.Manager<Dependency> {
 		execute("DELETE FROM Dependency WHERE eid = "+e.id);
 	}
 
-	public function subSignature( e : Entry ) {
-		return execute("SELECT MD5(GROUP_CONCAT(CONCAT(name,'#',IFNULL(title,'')))) FROM Entry WHERE pid = "+e.id).getResult(0);
+	public function subSignature( e : Entry, edefault : Entry ) {
+		return execute("SELECT MD5(GROUP_CONCAT(CONCAT(name,'#',IFNULL(title,'')))) FROM Entry WHERE pid IN ("+e.id+","+edefault.id+")").getResult(0);
 	}
 
 	public function renamed( e : Entry ) {
 		execute("UPDATE Dependency SET tid = NULL WHERE tid = "+e.id);
+	}
+
+	public function translate( e : Entry ) {
+		execute("UPDATE Dependency, Entry SET tid = "+e.id+" WHERE path = "+quote(e.get_path())+" AND Entry.lid = "+e.lang.id);
 	}
 
 	public function getBackLinks( e : Entry ) {

@@ -1,3 +1,6 @@
+2008-05-07
+	fixed translated links : use default lang
+
 2008-05-02
 	added tools.ApiSync
 	added scriptable nodes (clic and id)

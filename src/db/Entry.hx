@@ -110,6 +110,17 @@ class EntryManager extends neko.db.Manager<Entry> {
 		return objects("SELECT * FROM Entry WHERE pid = "+e.id+" ORDER BY name",false);
 	}
 
+	public function getChildsDef( e : Entry, edef : Entry ) {
+		if( e == edef )
+			return getChilds(e);
+		var list = objects("SELECT * FROM Entry WHERE pid = "+e.id+" UNION SELECT * FROM Entry WHERE pid = "+edef.id,false);
+		var h = new Hash();
+		list = list.filter(function(e) if( h.exists(e.name) ) return false else { h.set(e.name,true); return true; });
+		var a = Lambda.array(list);
+		a.sort(function(e1,e2) return Reflect.compare(e1.name,e2.name));
+		return Lambda.list(a);
+	}
+
 	public function getRoots( l : Lang ) {
 		return objects("SELECT * FROM Entry WHERE pid IS NULL AND lid = "+l.id+" ORDER BY name",false);
 	}
