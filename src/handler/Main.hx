@@ -22,6 +22,10 @@ class Main extends Handler<Void> {
 		case "file":
 			doFile(request.getPathInfoPart(level++));
 			return;
+		// small hack for haxe installer : it should use /wiki/latest instead
+		case "latest.n":
+			doLatest();
+			return;
 		case "":
 			part = "index";
 		default:
@@ -54,6 +58,7 @@ class Main extends Handler<Void> {
 		free("logout",doLogout);
 		free("search","search.mtt",doSearch);
 		free("remoting",doRemoting);
+		free("latest",doLatest);
 	}
 
 	public static function encodePass( p : String ) {
@@ -669,6 +674,12 @@ class Main extends Handler<Void> {
 		serv.addObject("api",new RemotingApi(this));
 		if( !serv.handleRequest() )
 			throw "Unknown remoting request";
+	}
+
+	function doLatest() {
+		var files = db.File.manager.latest();
+		for( f in files )
+			neko.Lib.println(f.name);
 	}
 
 }
