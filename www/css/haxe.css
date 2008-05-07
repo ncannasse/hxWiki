@@ -6,11 +6,11 @@
 body {
 	background-color	: #fec736;
 	font-family			: "trebuchet ms", sans-serif;
-	font-size			: 10.5pt;
+	font-size			: 10.5pt;	
 }
 
 a, strong, b {
-	color				: #09598a;
+	color				: #09598a;	
 }
 
 a.broken {
@@ -96,7 +96,7 @@ h2 {
 p {
 	margin-top			: 3px;
 	margin-bottom		: 15px;
-	text-align			: justify;
+	text-align			: justify;	
 }
 
 ul {
@@ -409,6 +409,7 @@ ul.menu li a:hover {
 }
 
 .login form, .search form {
+	margin-top			: 5px;
 	text-align			: right;
 }
 
@@ -445,10 +446,6 @@ ul.menu li a:hover {
 
 .search {
 	margin-top			: 315px;	
-}
-
-.search form {
-	margin-top			: 4px;	
 }
 
 .search form input {
