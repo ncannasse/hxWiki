@@ -157,8 +157,8 @@ class App {
 			context.notification = session.notification;
 			session.notification = null;
 		}
-		context.beginIE6 = "<!--[if IE 6]>";
-		context.endIE6 = "<![endif]-->";
+		context.beginComment = "<!--";
+		context.endIf = "<![endif]-->";
 	}
 
 	static function errorHandler( e : Dynamic ) {

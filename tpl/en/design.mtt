@@ -4,9 +4,12 @@
 		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
 		<title>::config.title::</title>
 		<link rel="stylesheet" type="text/css" href="/css/::config.style::.css"/>
-		::raw beginIE6::
+		::raw beginComment::[if IE6]>
 		<link rel="stylesheet" type="text/css" href="/css/::config.style::_ie6.css"/>
-		::raw endIE6::
+		::raw endIf::
+		::raw beginComment::[if IE7]>
+		<link rel="stylesheet" type="text/css" href="/css/::config.style::_ie7.css"/>
+		::raw endIf::
 		<script type="text/javascript" src="/wiki.js"></script>
 	</head>
 
