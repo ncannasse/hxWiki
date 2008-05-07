@@ -1,3 +1,5 @@
+/* LAYOUT STRUCTURE */
+
 .all {
 	height				: 100%;
 }
@@ -5,14 +7,17 @@
 .header {
 	height				: 101px;
 }
-
+/* LAYOUT STRUCTURE */
 
 .site {
 	height				: 720px;
 	background-image	: url('/img/haxe/bg_content_ie.gif');	
 }
 
-#notification, .error, #notification.error {	
+
+/* */ 
+
+#notification, #notification.error {	
 	position			: absolute;
 	margin				: 15px 0px 0px 45px;
 	padding				: 3px;	
@@ -20,3 +25,19 @@
 	background-image	: none;		
 }
 
+/* REGISTER */
+
+form.register input.field {
+	display				: block;	
+	width				: 150px;
+}
+
+form.register span.group {
+	display				: inline;
+	width				: auto;		
+}
+
+form.register input.button {
+	margin-top			: 10px;
+	margin-left			: 90px;	
+}

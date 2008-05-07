@@ -738,13 +738,13 @@ form.register {
 	margin				: 0px;	
 }
 
-form.register span.group {
+form.register span.group { /* haxe_ie6.css, haxe_ie7.css */
 	display				: block;
 	width				: 235px;
 	margin				: 0px auto 5px auto;
 }
 
-form.register span.tfield, form.register input.tfield {
+form.register span.tfield, form.register input.tfield { /* haxe_ie6.css, haxe_ie7.css */
 	width				: 150px;
 	display				: block;	
 	float				: left;
@@ -758,7 +758,7 @@ form.register span.tfield {
 	padding-top			: 2px;
 }
 
-form.register input.button {
+form.register input.button { /* haxe_ie6.css, haxe_ie7.css */
 	display				: block;
 	margin				: auto;
 }
