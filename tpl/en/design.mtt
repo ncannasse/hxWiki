@@ -4,10 +4,10 @@
 		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
 		<title>::config.title::</title>
 		<link rel="stylesheet" type="text/css" href="/css/::config.style::.css"/>
-		::raw beginComment::[if IE6]>
+		::raw beginComment::[if IE 6]>
 		<link rel="stylesheet" type="text/css" href="/css/::config.style::_ie6.css"/>
 		::raw endIf::
-		::raw beginComment::[if IE7]>
+		::raw beginComment::[if IE 7]>
 		<link rel="stylesheet" type="text/css" href="/css/::config.style::_ie7.css"/>
 		::raw endIf::
 		<script type="text/javascript" src="/wiki.js"></script>
