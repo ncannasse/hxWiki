@@ -111,12 +111,11 @@ ul {
 
 .view ul ul {
 	list-style-image	: url('/img/haxe/items/ul_spot4.gif');
-	list-style-position	: outside;	
-	margin				: 0px 0px 25px 22px;	
+	margin				: 5px 0px 5px 0px;	
 }
 
 .view ul li {
-	margin-bottom		: 1px;
+	margin-bottom		: 5px;
 	text-align			: justify;
 }
 
@@ -133,36 +132,31 @@ ul {
 	margin-bottom		: 20px;
 	text-align			: justify;
 }
-
-.view ul ul {
-	margin-top : 5px;
-	margin-bottom : 5px;
-}
-
 .view .biglist ul ul li {
-	list-style-image : url('/img/haxe/items/ul_spot.gif');
-	background : none;
-	padding-left : 0px;
-	margin-bottom : 1px;
+	list-style-image 	: url('/img/haxe/items/ul_spot.gif');
+	background 			: none;
+	padding-left 		: 0px;
+	margin-bottom 		: 1px;
 }
 
 .view img {
-	border : 1px solid black;
+	border 				: 1px solid #0079b9;
+	padding				: 1px;
 }
 
 .view .align_left {
-	float : left;
-	margin-right : 10px;
+	float 				: left;
+	margin-right 		: 10px;
 }
 
 .view .align_right {
-	float : right;
-	margin-left : 10px;
+	float 				: right;
+	margin-left 		: 10px;
 }
 
 .view .align_clear {
-	display : block;
-	clear : both;
+	display 			: block;
+	clear 				: both;
 }
 
 pre {
