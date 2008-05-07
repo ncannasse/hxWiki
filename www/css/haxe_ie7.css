@@ -1,0 +1,11 @@
+#notification, .error, #notification.error {	
+	position			: absolute;
+	margin				: 15px 0px 0px 45px;
+	padding				: 3px;	
+	text-align			: center;
+	background-image	: none;		
+}
+
+.site {	
+	background-image	: url('/img/haxe/bg_content_ie.gif');	
+}

@@ -301,7 +301,7 @@ span.button2 a:hover {
 .site {
 	width				: 963px; 
 	min-height			: 720px; /* haxe_ie6.css */
-	background-image	: url('/img/haxe/bg_content.png'); /* haxe_ie6.css */
+	background-image	: url('/img/haxe/bg_content.png'); /* haxe_ie6.css, haxe_ie7.css */
 	background-position	: center top;
 	padding-top			: 1px; /* ffox bug with notification */
 	
@@ -329,9 +329,10 @@ span.button2 a:hover {
 
 /* NOTIFICATIONS */
 
-#notification, .error, #notification.error {	
-	margin				: 45px 280px -20px 45px;
-	padding				: 10px 10px 10px 55px;		
+#notification, .error, #notification.error {	/* haxe_ie6.css, haxe_ie7.css */
+	margin				: 45px 0px -20px 45px;
+	padding				: 10px 10px 10px 55px;	
+	width				: 570px;
 	background-position	: top left;
 	background-repeat	: no-repeat;	
 	-moz-border-radius	: 5px;
@@ -357,9 +358,9 @@ span.button2 a:hover {
 
 /* CONTENTS */
 
-ul.menu {
+/*ul.menu {
 	display				: inline;	
-}
+}*/
 
 ul.menu {
 	position			: absolute;
@@ -638,17 +639,19 @@ p.browse {
 }
 
 .api_index ul li div {
-  border-left			: 1px solid #c2d9e6;
-  padding				: 2px 0px 0px 4px;
-  margin-left			: 8px;
+	border-left			: 1px solid #c2d9e6;
+	padding				: 2px 0px 0px 4px;
+	margin-left			: 8px;
 }
 
 .api_index ul {
-  margin				: 0;
+	margin				: 0;
+	list-style-image	: none;
 }
 
 .api_index ul ul {
-  margin				: 0 0 0 4px;
+	margin				: 0 0 0 4px;
+	list-style-image	: none;
 }
 
 .api_index ul li {
@@ -658,7 +661,15 @@ p.browse {
 }
 
 .api_index ul li:hover {
+	background-color	: #e6f3fb;
+}
+
+.api_index ul ul li:hover {
 	background-color	: #f2f9fd;
+}
+
+.api_index ul ul ul li:hover {
+	background-color	: #fff;
 }
 
 .api_index ul li span.pack {
@@ -673,6 +684,8 @@ p.browse {
 	background-image	: url('/img/haxe/items/txt2.gif');
 	background-repeat	: no-repeat;
 }
+
+.api_index ul li
 
 .api .name {
 	display 			: block;
@@ -722,7 +735,7 @@ ul.results li:hover {
 /* REGISTER */
 
 form.register {
-	margin:0px;	
+	margin				: 0px;	
 }
 
 form.register span.group {
@@ -756,7 +769,7 @@ dl.user {
 	padding				: 5px;
 	-moz-border-radius	: 5px;
 	border				: 1px solid #c2d9e6;
-	background			: #e7f4fc url('/img/haxe/items/bg_box1.gif') bottom left repeat-x;	
+	background			: #e7f4fc url('/img/haxe/items/bg_box1.gif') top left repeat-x;	
 	color				: #09598a;
 	min-height			: 100px;
 	width				: 300px;	
@@ -782,13 +795,13 @@ dl.user dd {
 }
 
 .box1 { /* blue */
-	background			: transparent url('/img/haxe/items/bg_box1.gif') top left repeat-x;	
+	background			: #e8f5fc url('/img/haxe/items/bg_box1.gif') top left repeat-x;	
 	border				: 4px solid #e8f5fc;
 	color				: #09598a;
 }
 
 .box2 { /* orange */
-	background			: transparent url('/img/haxe/items/bg_box2.gif') top left repeat-x;	
+	background			: #ffefa3 url('/img/haxe/items/bg_box2.gif') top left repeat-x;	
 	border				: 4px solid #ffefa3;
 	color				: #c35700;
 }

@@ -72,7 +72,7 @@
 					<li><a href="/wiki/setlang?url=::uri::;lang=::l.code::" class="::lang_classes(l)::"><img src="/img/::config.style::/flags/flag_::l.code::.gif" alt="::l.code::"/> <span class="name">::l.name::</span></a></li>
 					::end::
 					</ul>
-				</div>
+				</div>			
 
 				<div id="notification" ::cond notification:: ::attr class if( notification.error ) 'error'::>
 					::raw notification.text::
