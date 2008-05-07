@@ -143,6 +143,7 @@ ul {
 	list-style-image : url('/img/haxe/items/ul_spot.gif');
 	background : none;
 	padding-left : 0px;
+	margin-bottom : 1px;
 }
 
 .view img {
