@@ -47,3 +47,15 @@ form.register input.button {
 table.history {
 	border-collapse	: collapse;
 }
+
+/* API */
+
+.api_index ul li {
+	font-size		: 0pt;
+	line-height		: 0pt;	
+}
+
+.api_index ul a {
+	font-size		: 10.5pt;	
+	line-height		: 13pt;
+}

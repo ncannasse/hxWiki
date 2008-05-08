@@ -630,6 +630,10 @@ p.browse {
 	text-decoration		: none;
 }
 
+.api_index ul a {
+	display				: block;	
+}
+
 .api_index ul li div {
 	border-left			: 1px solid #c2d9e6;
 	padding				: 2px 0px 0px 4px;
