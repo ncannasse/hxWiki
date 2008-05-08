@@ -3,19 +3,23 @@
 [Open Files]
 Active File Display Mode=3
 Active File Index=0
-Open File Line0=12617
-Open File Line1=0
+Open File Line0=2432
+Open File Line1=23
 Open File Line2=0
-Open File Pos0=13460
-Open File Pos1=375
-Open File Pos2=511
+Open File Line3=2
+Open File Pos0=2580
+Open File Pos1=666
+Open File Pos2=505
+Open File Pos3=1456
 Open File Window Pos0=2,3,-1,-1,-4,-23,198,198,962,745
 Open File Window Pos1=0,1,-1,-1,-4,-23,0,0,764,547
 Open File Window Pos2=0,1,-1,-1,-4,-23,22,22,786,569
+Open File Window Pos3=0,1,-1,-1,-4,-23,88,88,852,635
 Open File0=C:\Motion-Twin\haxe\www\css\haxe.css
 Open File1=C:\Motion-Twin\haxe\www\css\haxe_ie6.css
 Open File2=C:\Motion-Twin\haxe\www\css\haxe_ie7.css
-Open File3=
+Open File3=C:\Motion-Twin\haxe\tpl\en\design.mtt
+Open File4=
 [Project Information]
 Use Relative Directory=1
 Relative to Project File=1
@@ -26,7 +30,7 @@ Project Wordfile=
 Filter=
 Create Tagfile=0
 Project Directory=C:\Motion-Twin\haxe\
-Working Time=111059
+Working Time=124237
 [Folders]
 .\=1
 .\ - css=1

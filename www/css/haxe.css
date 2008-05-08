@@ -139,10 +139,10 @@ ul {
 	margin-bottom 		: 1px;
 }
 
-.view img {
+.view img, #swf_1 {
 	border 				: 1px solid #0079b9;
 	padding				: 1px;
-}
+} 
 
 .view .align_left {
 	float 				: left;
