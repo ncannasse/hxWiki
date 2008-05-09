@@ -111,7 +111,7 @@ ul {
 
 .view ul ul {
 	list-style-image	: url('/img/haxe/items/ul_spot4.gif');
-	margin				: 5px 0px 5px 25px;	
+	margin				: 5px 0px 5px 25px;
 }
 
 .view ul li {
@@ -142,7 +142,7 @@ ul {
 .view img, #swf_1 {
 	border 				: 1px solid #0079b9;
 	padding				: 1px;
-} 
+}
 
 .view .align_left {
 	float 				: left;
@@ -631,7 +631,7 @@ p.browse {
 }
 
 .api_index ul a {
-	display				: block;	
+	display				: block;
 }
 
 .api_index ul li div {
@@ -681,7 +681,13 @@ p.browse {
 	background-repeat	: no-repeat;
 }
 
-.api_index ul li
+.api a {
+	text-decoration		: none;
+}
+
+.api a:hover {
+	text-decoration		: underline;
+}
 
 .api .name {
 	display 			: block;
