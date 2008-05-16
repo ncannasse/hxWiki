@@ -106,13 +106,17 @@ class ApiSync {
 			}
 			processTypeFun(ret,false);
 		case TAnonymous(fields):
+			if( fields.isEmpty() ) {
+				print("{}");
+				return;
+			}
 			print("{ ");
 			var me = this;
 			display(fields,function(f) {
 				me.print(f.name+" : ");
 				me.processType(f.t);
 			},", ");
-			print("}");
+			print(" }");
 		case TDynamic(t):
 			if( t == null )
 				processPath("Dynamic");
