@@ -60,7 +60,7 @@ class App {
 	static function mainLoop() {
 		// init
 		request = new mtwin.web.Request();
-		context = Reflect.empty();
+		context = {};
 		var sid = request.get("sid");
 		if( sid == null ) sid = neko.Web.getCookies().get("sid");
 		session = db.Session.initialize(sid);
@@ -164,7 +164,7 @@ class App {
 	static function errorHandler( e : Dynamic ) {
 		try {
 			prepareTemplate("error.mtt");
-			context = Reflect.empty();
+			context = {};
 			initContext();
 			context.error = Std.string(e);
 			context.stack = haxe.Stack.toString(haxe.Stack.exceptionStack());

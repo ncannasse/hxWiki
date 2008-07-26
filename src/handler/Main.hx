@@ -487,23 +487,23 @@ class Main extends Handler<Void> {
 			neko.Web.redirect(neko.Web.getURI()+"?retry="+Std.random(1000));
 			return;
 		}
-		ch.write(f.content);
+		ch.writeString(f.content);
 		ch.close();
 		neko.Web.redirect(neko.Web.getURI()+"?reload=1");
 	}
 
-	static function readBits( s : String, pos : Int, nbits : Int ) {
+	static function readBits( s : haxe.io.Bytes, pos : Int, nbits : Int ) {
 		var base = pos >> 3;
 		var n = 8 - (pos - (base << 3)); // number of bits to keep
 		nbits -= n;
-		var k = s.charCodeAt(base) & ((1 << n) - 1);
+		var k = s.get(base) & ((1 << n) - 1);
 		if( nbits < 0 ) {
 			k >>= -nbits;
 			nbits = 0;
 			return k;
 		}
 		while( nbits > 0 ) {
-			var c = s.charCodeAt(++base);
+			var c = s.get(++base);
 			if( nbits >= 8 ) {
 				k = (k << 8) | c;
 				nbits -= 8;
@@ -515,8 +515,8 @@ class Main extends Handler<Void> {
 		return k;
 	}
 
-	static function getSWFHeader( content : String ) {
-		var compressed = switch( content.substr(0,3) ) {
+	static function getSWFHeader( content : haxe.io.Bytes ) {
+		var compressed = switch( content.readString(0,3) ) {
 		case "CWS": true;
 		case "FWS": false;
 		default: throw "Invalid SWF";
@@ -524,7 +524,7 @@ class Main extends Handler<Void> {
 		var buf;
 		if( compressed ) {
 			// uncompress a small amount of data
-			buf = neko.Lib.makeString(64);
+			buf = haxe.io.Bytes.alloc(64);
 			var bytes = new neko.zip.Uncompress(15);
 			bytes.run(content,8,buf,8);
 			bytes.close();
@@ -536,7 +536,7 @@ class Main extends Handler<Void> {
 		var width = readBits(buf,base,nbits);
 		base += nbits * 2;
 		var height = readBits(buf,base,nbits);
-		return { version : content.charCodeAt(4), width : Math.round(width / 20), height : Math.round(height / 20) };
+		return { version : content.get(4), width : Math.round(width / 20), height : Math.round(height / 20) };
 	}
 
 	function doUpload() {
@@ -567,7 +567,7 @@ class Main extends Handler<Void> {
 			neko.db.Manager.cnx.commit();
 			try neko.FileSystem.deleteFile(neko.Web.getCwd()+"/file/"+filename) catch( e : Dynamic ) {};
 			if( ext == "swf" ) {
-				var h = getSWFHeader(content);
+				var h = getSWFHeader(haxe.io.Bytes.ofString(content));
 				filename += ":"+h.width+"x"+h.height;
 			}
 			neko.Lib.print(haxe.Serializer.run(filename));
@@ -692,9 +692,9 @@ class Main extends Handler<Void> {
 	}
 
 	function doRemoting() {
-		var serv = new neko.net.RemotingServer();
-		serv.addObject("api",new RemotingApi(this));
-		if( !serv.handleRequest() )
+		var ctx = new haxe.remoting.Context();
+		ctx.addObject("api",new RemotingApi(this));
+		if( !haxe.remoting.HttpConnection.handleRequest(ctx) )
 			throw "Unknown remoting request";
 	}
 

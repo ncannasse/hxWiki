@@ -11,7 +11,7 @@ class Uploader {
 		flash.Lib.current.stage.scaleMode = flash.display.StageScaleMode.NO_SCALE;
 		params = flash.Lib.current.loaderInfo.parameters;
 		try {
-			cnx = haxe.remoting.Connection.jsConnect().__resolve(params.object);
+			cnx = haxe.remoting.ExternalConnection.jsConnect(params.object,null);
 		} catch( e : Dynamic ) {
 			trace(e);
 		}
@@ -52,13 +52,13 @@ class Uploader {
 		try {
 			url = haxe.Unserializer.run(e.data);
 			flash.Lib.current.graphics.clear();
-			cnx.uploadResult.call([url]);
+			cnx.api.uploadResult.call([url]);
 		} catch( err : Dynamic ) {
 			var estr = Std.string(err);
 			var m = "Invalid char";
 			if( estr.substr(0,m.length) == m )
 				estr += " in "+e.data;
-			cnx.uploadError.call([estr]);
+			cnx.api.uploadError.call([estr]);
 		}
 	}
 

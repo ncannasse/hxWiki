@@ -2,7 +2,6 @@
 -neko www/index.n
 -main App
 -cp src
---override
 -D spod_rtti
 
 --next

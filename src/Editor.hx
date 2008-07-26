@@ -17,7 +17,7 @@ class Editor {
 		return ~/[^a-z0-9.]+/g.replace(name.toLowerCase(),"_");
 	}
 
-	static inline var EMPTY = #if neko "" #else true null #end;
+	static inline var EMPTY = #if neko "" #else null #end;
 
 	public var content(default,null) : String;
 	public var preview(default,null) : String;
@@ -34,6 +34,7 @@ class Editor {
 	var subcache : Hash<Array<{ title : String, url : String }>>;
 	#if js
 	var uploadImage : Bool;
+	var tqueue : haxe.TimerQueue;
 	var refresh : { latest : String, timestamp : Float, auto : Bool, changed : Bool };
 	#end
 
@@ -42,7 +43,8 @@ class Editor {
 		#if js
 		config = haxe.Unserializer.run(data);
 		refresh = { latest : null, timestamp : 0., auto : true, changed : false };
-		#else true
+		tqueue = new haxe.TimerQueue(1000);
+		#else
 		config = data;
 		#end
 		subcache = new Hash();
@@ -75,7 +77,7 @@ class Editor {
 				return false;
 			var me = this;
 			refresh.changed = true;
-			haxe.Timer.queue(function() { me.refresh.changed = false; me.updatePreview(); },1000);
+			tqueue.add(function() { me.refresh.changed = false; me.updatePreview(); });
 			return false;
 		}
 		refresh.changed = false;
@@ -102,7 +104,6 @@ class Editor {
 	}
 
 	public function initUpload( title, pattern, img ) {
-		var _ = haxe.remoting.Connection;
 		var params = {
 			title : title,
 			pattern : pattern,
@@ -120,6 +121,10 @@ class Editor {
 		swf.addParam("FlashVars",params.join("&"));
 		swf.write("upload");
 		uploadImage = img;
+		// init incoming connection
+		var ctx = new haxe.remoting.Context();
+		ctx.addObject("api",{ uploadResult : uploadResult, uploadError : uploadError });
+		haxe.remoting.ExternalConnection.flashConnect(config.name,"upload",ctx);
 	}
 
 	public function spanAction( title ) {
@@ -145,7 +150,7 @@ class Editor {
 		updatePreview();
 	}
 
-	#else true
+	#else
 
 	public function extensions( l : Iterable<String> ) {
 		return Lambda.map(l,function(e) return "*."+e).join(";");
@@ -170,20 +175,20 @@ class Editor {
 		sel.insert(b.left,text,b.right);
 		updatePreview();
 		return false;
-		#else true
+		#else
 		return 'return '+config.name+'.buttonAction('+config.name+'.config.buttons['+b.id+'])';
 		#end
 	}
 
 	// ---------------- FORMAT ----------------
 
-	public function getTitle( path : Array<String> ) {
+	public dynamic function getTitle( path : Array<String> ) {
 		#if js
 		var data = haxe.Http.request("/wiki/title?path="+path.join("/")+";lang="+config.lang);
 		if( data == "" )
 			return null;
 		return StringTools.htmlEscape(data);
-		#else true
+		#else
 		return null;
 		#end
 	}
@@ -221,10 +226,10 @@ class Editor {
 		};
 	}
 
-	public function getSubLinks( path : Array<String> ) : Array<{ url : String, title : String }> {
+	public dynamic function getSubLinks( path : Array<String> ) : Array<{ url : String, title : String }> {
 		#if js
 		return haxe.Unserializer.run( haxe.Http.request("/wiki/sublist?path="+path.join("/")+";lang="+config.lang) );
-		#else true
+		#else
 		return null;
 		#end
 	}

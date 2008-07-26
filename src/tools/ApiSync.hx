@@ -1,5 +1,5 @@
 package tools;
-import haxe.rtti.Type;
+import haxe.rtti.CType;
 
 class Proxy extends haxe.remoting.Proxy<handler.RemotingApi> {
 }
@@ -60,7 +60,7 @@ class ApiSync {
 		}
 	}
 
-	function processPath( path : Path, ?params : List<Type> ) {
+	function processPath( path : Path, ?params : List<CType> ) {
 		print(makePath(path));
 		if( params != null && !params.isEmpty() ) {
 			print("<");
@@ -81,17 +81,17 @@ class ApiSync {
 		}
 	}
 
-	function processType( t : Type ) {
+	function processType( t : CType ) {
 		switch( t ) {
-		case TUnknown:
+		case CUnknown:
 			print("Unknown");
-		case TEnum(path,params):
+		case CEnum(path,params):
 			processPath(path,params);
-		case TClass(path,params):
+		case CClass(path,params):
 			processPath(path,params);
-		case TTypedef(path,params):
+		case CTypedef(path,params):
 			processPath(path,params);
-		case TFunction(args,ret):
+		case CFunction(args,ret):
 			if( args.isEmpty() ) {
 				processPath("Void");
 				print(" -> ");
@@ -105,7 +105,7 @@ class ApiSync {
 				print(" -> ");
 			}
 			processTypeFun(ret,false);
-		case TAnonymous(fields):
+		case CAnonymous(fields):
 			if( fields.isEmpty() ) {
 				print("{}");
 				return;
@@ -117,7 +117,7 @@ class ApiSync {
 				me.processType(f.t);
 			},", ");
 			print(" }");
-		case TDynamic(t):
+		case CDynamic(t):
 			if( t == null )
 				processPath("Dynamic");
 			else {
@@ -128,8 +128,8 @@ class ApiSync {
 		}
 	}
 
-	function processTypeFun( t : Type, isArg ) {
-		var parent =  switch( t ) { case TFunction(_,_): true; case TEnum(n,_): isArg && n == "Void"; default : false; };
+	function processTypeFun( t : CType, isArg ) {
+		var parent =  switch( t ) { case CFunction(_,_): true; case CEnum(n,_): isArg && n == "Void"; default : false; };
 		if( parent )
 			print("(");
 		processType(t);
@@ -250,9 +250,9 @@ class ApiSync {
 			processPath(i.path,i.params);
 			print("[/oop]\n");
 		}
-		if( c.dynamic != null ) {
+		if( c.tdynamic != null ) {
 			var d = new List();
-			d.add(c.dynamic);
+			d.add(c.tdynamic);
 			print("[oop]implements ");
 			processPath("Dynamic",d);
 			print("[/oop]\n");
@@ -276,7 +276,7 @@ class ApiSync {
 		if( stat ) keyword("static");
 		var isMethod = false;
 		switch( f.type ) {
-		case TFunction(args,ret):
+		case CFunction(args,ret):
 			if( f.get == RNormal && (f.set == RNormal || f.set == RF9Dynamic) ) {
 				isMethod = true;
 				if( f.set == RF9Dynamic )
@@ -398,7 +398,7 @@ class ApiSync {
 
 	function processTypedefType(t,all,platforms) {
 		switch( t ) {
-		case TAnonymous(fields):
+		case CAnonymous(fields):
 			print('[anon]\n\n');
 			for( f in fields ) {
 				processClassField(all,{
@@ -477,11 +477,11 @@ class ApiSync {
 			pass : input("Pass",args[2]),
 		};
 		var url = "http://"+config.host+":"+config.port+"/wiki/remoting";
-		var cnx = haxe.remoting.Connection.urlConnect(url);
+		var cnx = haxe.remoting.HttpConnection.urlConnect(url);
 		var api = new Proxy(cnx.api);
 		if( config.user != null ) {
 			var inf = api.login(config.user,config.pass);
-			cnx = haxe.remoting.Connection.urlConnect(url+"?sid="+inf.sid);
+			cnx = haxe.remoting.HttpConnection.urlConnect(url+"?sid="+inf.sid);
 			api = new Proxy(cnx.api);
 		}
 		var s = new ApiSync(api);

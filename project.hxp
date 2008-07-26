@@ -1,6 +1,5 @@
 ﻿<haxe selected="0">
   <output name="Web" mode="neko" out="www/index.n" class="App" lib="" cmd="http://dev.hxwiki.com" main="True" debug="False">-cp src
---override
 -D spod_rtti</output>
   <output name="JS" mode="js" out="www/wiki.js" class="Editor" lib="" cmd="" main="False" debug="False">-cp src</output>
   <output name="Upload" mode="swf9" out="www/upload.swf" class="Uploader" lib="" cmd="" main="True" debug="False">-cp src</output>
