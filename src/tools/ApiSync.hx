@@ -8,8 +8,10 @@ class ApiSync {
 
 	static var FILES = [
 		{ file : "flash.xml", platform : "flash" },
+		{ file : "flash9.xml", platform : "flash9" },
 		{ file : "neko.xml", platform : "neko" },
 		{ file : "js.xml", platform : "js" },
+		{ file : "php.xml", platform : "php" },
 	];
 
 	var api : Proxy;
@@ -149,29 +151,42 @@ class ApiSync {
 		return makeLink(path);
 	}
 
-	function processIndex( buf : StringBuf, t : TypeTree, depth : String ) {
+	function processIndex( t : TypeTree, depth : String ) {
 		switch( t ) {
 		case TPackage(name,full,subs):
 			var isPrivate = name.charAt(0) == "_";
 			if( isPrivate || name == "Remoting" ) return;
 			var uid = "pack"+(id++);
-			buf.add(depth+"[$clic:"+uid+"][pack]"+name+"[/pack][/$clic:"+uid+"] \n");
+			print(depth+"[$clic:"+uid+"][pack]"+name+"[/pack][/$clic:"+uid+"] \n");
 			depth = "  "+depth;
-			buf.add(depth+"[$id:"+uid+"]\n");
+			print(depth+"[$id:"+uid+"]\n");
 			for( x in subs )
-				processIndex(buf,x,depth);
-			buf.add(depth+"[/$id:"+uid+"]\n");
+				processIndex(x,depth);
+			print(depth+"[/$id:"+uid+"]\n");
 		default:
 			var i = TypeApi.typeInfos(t);
 			if( i.isPrivate || i.path == "@Main" || StringTools.endsWith(i.path,"__") )
 				return;
-			buf.add(depth+makeLink(i.path)+"\n");
+			print(depth+makeLink(i.path)+"\n");
 		}
 	}
 
 	function process( t : TypeTree, lang : String ) {
 		switch( t ) {
-		case TPackage(_,full,subs):
+		case TPackage(name,full,subs):
+			var path = full.split(".");
+			if( full == "" ) path = [];
+			path.unshift("api");
+			current = new StringBuf();
+			current.add("[api_index]\n\n");
+			for( x in subs )
+				processIndex(x,"  * ");
+			current.add("\n[/api_index]");
+			if( api.write(path,lang,(name == "" ? "haXe API" : name),current.toString()) )
+				log("Updating "+full+" ["+lang+"]");
+			else
+				log("Skipping "+full+" ["+lang+"]",true);
+			// recurse
 			var old = curPackage;
 			curPackage = full;
 			for( x in subs )
@@ -463,8 +478,22 @@ class ApiSync {
 		return neko.io.File.stdin().readLine();
 	}
 
-	static function log( msg ) {
-		neko.Lib.println(msg+"...");
+	static function log( msg, ?cr ) {
+		while( msg.length < 70 )
+			msg += " ";
+		neko.Lib.print(msg + (cr ? "\r" : "\n"));
+	}
+
+	static function transformPackage( x : Xml ) {
+		switch( x.nodeType ) {
+		case Xml.Element:
+			var p = x.get("path");
+			if( p != null && p.substr(0,6) == "flash." )
+				x.set("path","flash9." + p.substr(6));
+			for( x in x.elements() )
+				transformPackage(x);
+		default:
+		}
 	}
 
 	public static function main() {
@@ -490,24 +519,16 @@ class ApiSync {
 		for( f in FILES ) {
 			var data = neko.io.File.getContent(f.file);
 			var x = Xml.parse(data).firstElement();
+			if( f.platform == "flash9" )
+				transformPackage(x);
 			parser.process(x,f.platform);
 		}
 		parser.sort();
-		log("Building index");
-		var buf = new StringBuf();
-		buf.add("[api_index]\n\n");
-		for( x in parser.root )
-			s.processIndex(buf,x,"  * ");
-		buf.add("\n[/api_index]");
-		log("Writing index");
-		var index = buf.toString();
+		log("Generating");
 		var langs = api.getLangs(["api"]);
 		for( l in langs )
-			api.write(["api"],l,"haXe API",index);
-		for( l in langs )
-			for( x in parser.root )
-				s.process(x,l);
-		log("\nDone");
+			s.process(TPackage("","",parser.root),l);
+		log("Done");
 	}
 
 }
