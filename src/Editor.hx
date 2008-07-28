@@ -122,8 +122,9 @@ class Editor {
 		swf.write("upload");
 		uploadImage = img;
 		// init incoming connection
+		var me = this;
 		var ctx = new haxe.remoting.Context();
-		ctx.addObject("api",{ uploadResult : uploadResult, uploadError : uploadError });
+		ctx.addObject("api",{ uploadResult : function(url) haxe.Timer.delay(callback(me.uploadResult,url),1), uploadError : uploadError });
 		haxe.remoting.ExternalConnection.flashConnect(config.name,"upload",ctx);
 	}
 

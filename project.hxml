@@ -12,8 +12,7 @@ Editor
 
 --next
 # Upload
--swf www/upload.swf
--swf-version 9
+-swf9 www/upload.swf
 -main Uploader
 -cp src
 
