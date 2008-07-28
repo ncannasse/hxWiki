@@ -171,7 +171,16 @@ class ApiSync {
 		}
 	}
 
-	function process( t : TypeTree, lang : String ) {
+	function process( t, lang ) {
+		try {
+			processRun(t,lang);
+		} catch( e : Dynamic ) {
+			log("Error ("+Std.string(e)+"), retrying...");
+			process(t,lang);
+		}
+	}
+
+	function processRun( t : TypeTree, lang : String ) {
 		switch( t ) {
 		case TPackage(name,full,subs):
 			var path = full.split(".");
@@ -218,9 +227,9 @@ class ApiSync {
 			print("[/api]");
 			// save
 			if( api.write(path,lang,name,current.toString()) )
-				neko.Lib.println("Updating "+i.path+" ["+lang+"]");
+				log("Updating "+i.path+" ["+lang+"]");
 			else
-				neko.Lib.print("Skipping "+i.path+" ["+lang+"]\t\t\r");
+				log("Skipping "+i.path+" ["+lang+"]",true);
 		}
 	}
 
