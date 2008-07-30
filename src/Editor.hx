@@ -17,7 +17,10 @@ class Editor {
 		return ~/[^a-z0-9.]+/g.replace(name.toLowerCase(),"_");
 	}
 
-	static inline var EMPTY = #if neko "" #else null #end;
+	static inline function EMPTY(s) {
+		// empty string is for neko <= 1.7.0 compatibility
+		return #if neko s == "" || s == null #else s == null #end;
+	}
 
 	public var content(default,null) : String;
 	public var preview(default,null) : String;
@@ -366,7 +369,7 @@ class Editor {
 			str += '<script type="text/javascript" id="js_'+id+'">';
 			str += "var o = new js.SWFObject('/file/"+r.matched(1)+"','swfobj_"+id+"',"+r.matched(2)+","+r.matched(3)+",'9','#FFFFFF');";
 			var params = r.matched(4);
-			if( params != EMPTY ) {
+			if( !EMPTY(params) ) {
 				params = Lambda.map(params.substr(1).split("&amp;"),function(p) return Lambda.map(p.split("="),StringTools.urlEncode).join("=")).join("&");
 				str += "o.addParam('FlashVars','"+params+"');";
 			}
@@ -393,7 +396,7 @@ class Editor {
 		var codes = new Array();
 		t = ~/<code( [a-zA-Z0-9]+)?>([^\0]*?)<\/code>/.customReplace(t,function(r) {
 			var style = r.matched(1);
-			var code = me.code(r.matched(2),(style == EMPTY)?null:style.substr(1));
+			var code = me.code(r.matched(2),EMPTY(style)?null:style.substr(1));
 			codes.push(code);
 			return "##CODE"+(codes.length-1)+"##";
 		});
@@ -424,8 +427,8 @@ class Editor {
 			var tag = r.matched(4);
 			var content = r.matched(5);
 			// this is an ugly hack to extract script in first and last position of a list
-			var pre = { ul : r.matched(1) != EMPTY, li : r.matched(2) != EMPTY };
-			var post = { ul : r.matched(7) != EMPTY, li : r.matched(6) != EMPTY };
+			var pre = { ul : !EMPTY(r.matched(1)), li : !EMPTY(r.matched(2)) };
+			var post = { ul : !EMPTY(r.matched(7)), li : !EMPTY(r.matched(6)) };
 			var before = (pre.ul?"<ul>":"") + (pre.li?"<li>":"");
 			var after = (post.li?"</li>":"") + (post.ul?"</ul>":"");
 			if( pre.ul && pre.li && post.ul && post.li && StringTools.startsWith(content,"</li>") && StringTools.endsWith(content,"<li>") ) {

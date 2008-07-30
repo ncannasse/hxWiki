@@ -51,7 +51,9 @@ class App {
 		ldata.push(Config.LANG);
 		for( l in ldata ) {
 			if( !r.match(l) ) continue;
-			var l = db.Lang.manager.byCode(r.matched(1));
+			var code = r.matched(1);
+			if( code == null ) continue;
+			var l = db.Lang.manager.byCode(code);
 			if( l != null ) return l.id;
 		}
 		return null;
