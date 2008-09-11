@@ -474,7 +474,7 @@ class Main extends Handler<Void> {
 
 	function doFile( fname : String ) {
 		var f = db.File.manager.search({ name : fname },false).first();
-		if( f == null ) {
+		if( f == null || f.name != fname ) {
 			neko.Web.setReturnCode(404);
 			neko.Lib.print("404 - File not found '"+fname+"'");
 			return;
