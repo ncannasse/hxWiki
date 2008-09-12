@@ -9,6 +9,7 @@ class Group extends neko.db.Object {
 	public var id : SId;
 	public var name : SString<32>;
 
+	public var canRegister : SBool;
 	public var canUploadImage : SBool;
 	public var canUploadSWF : SBool;
 	public var canUploadOverwrite : SBool;

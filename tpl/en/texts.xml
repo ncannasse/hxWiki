@@ -26,6 +26,7 @@
 	<t id="err_cant_view">You are not allowed to view this content, please login or register</t>
 	<t id="err_cant_edit">You are not allowed to edit this page</t>
 	<t id="err_cant_delete">You are not allowed to delete this page</t>
+	<t id="err_cant_register">You are not allowed to register an account</t>
 
 	<!-- editor -->
 

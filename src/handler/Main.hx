@@ -616,6 +616,8 @@ class Main extends Handler<Void> {
 		var login = request.get("login");
 		if( login == null )
 			return;
+		if( !group.canRegister )
+			throw Action.Error("/wiki/register",Text.get.err_cant_register);
 		if( db.User.manager.count({ name : login }) > 0 || !~/^[A-Za-z0-9_]+$/.match(login) )
 			throw Action.Error("/wiki/register",Text.get.err_user_invalid);
 		var u = new db.User();
@@ -657,6 +659,7 @@ class Main extends Handler<Void> {
 		// admin group
 		var g = new db.Group("admin");
 		var gadmin = g;
+		g.canRegister = true;
 		g.canAccessDB = true;
 		g.allowedFiles = "zip|gz|tgz|dmg|exe|swf|txt|xml|pdf";
 		g.canUploadImage = true;
@@ -672,6 +675,7 @@ class Main extends Handler<Void> {
 		r.insert();
 		// user group
 		var g = new db.Group("user");
+		g.canRegister = true;
 		g.insert();
 		var r = new db.GroupRights(g,"");
 		r.canView = true;
@@ -679,6 +683,7 @@ class Main extends Handler<Void> {
 		r.insert();
 		// offline group
 		var g = new db.Group("offline");
+		g.canRegister = true;
 		g.insert();
 		var r = new db.GroupRights(g,"");
 		r.canView = true;

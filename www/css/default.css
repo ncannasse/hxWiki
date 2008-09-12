@@ -162,7 +162,7 @@ ul.links li {
 }
 
 .footer {
-	text-align : right;
+	text-align : center;
 	margin-top : 10px;
 	font-size : 14px;
 }
@@ -244,16 +244,29 @@ a.file {
 
 .langs {
 	position : absolute;
-	top : 130px;
+	top : 145px;
 	right : 0px;
+}
+
+.langs ul {
+	margin : 0px;
 }
 
 .langs li {
 	display : inline;
 }
 
+.langs a {
+	text-decoration : none;
+	margin-left : 5px;
+}
+
 .langs img {
 	border : 0px;
+}
+
+.langs .name {
+	display : none;
 }
 
 .langs a.off img {

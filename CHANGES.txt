@@ -1,3 +1,9 @@
+2008-09-12
+	fixed some redirection issues
+	switched to templo2
+	added Group.canRegister
+	some minor fixes in default.css
+	
 2008-05-07
 	fixed translated links : use default lang
 

@@ -3,7 +3,7 @@
 	db="mysql://root:@slave:3306/hxwiki"
 	debug="1"
 	cache="0"
-	style="haxe"
+	style="default"
 	title="haXe Wiki"
 	admin_password="admin"
 />
