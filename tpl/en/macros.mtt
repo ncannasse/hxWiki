@@ -1,5 +1,5 @@
 <macros>
 
-	<macro name="confirm()">onclick="return confirm('Please confirm this action.')"</macro>
+	<macro name="confirm()" onclick="return confirm('Please confirm this action.')"/>
 
 </macros>

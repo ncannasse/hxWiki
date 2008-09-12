@@ -10,7 +10,7 @@ class App {
 	public static var langFlags : db.Lang -> Bool;
 	public static var langSelected : db.Lang;
 
-	static var template : mtwin.templo.Loader;
+	static var template : templo.Loader;
 
 	static function sendNoCacheHeaders() {
 		try {
@@ -25,11 +25,12 @@ class App {
 	}
 
 	public static function prepareTemplate( t : String ) {
-		mtwin.templo.Loader.OPTIMIZED = Config.DEBUG == false;
-		mtwin.templo.Loader.BASE_DIR = Config.TPL;
-		mtwin.templo.Loader.TMP_DIR = Config.TPL + "../tmp/";
+		templo.Loader.OPTIMIZED = Config.DEBUG == false;
+		templo.Loader.BASE_DIR = Config.TPL;
+		templo.Loader.TMP_DIR = Config.TPL + "../tmp/";
+		templo.Loader.DEBUG = true;
 		sendNoCacheHeaders();
-		template = new mtwin.templo.Loader(t);
+		template = new templo.Loader(t);
 	}
 
 	static function executeTemplate() {
@@ -151,6 +152,8 @@ class App {
 			context.langs = db.Lang.manager.all(false);
 		}
 		context.uri = (request == null) ? "/" : request.getURI();
+		if( request.exists("path") )
+			context.uri += "?path="+request.get("path");
 		context.lang_classes = function(l) {
 			var f = if( langFlags == null ) true else langFlags(l);
 			return (f ? "on" : "off") + ((l == langSelected) ? " current" : "");
@@ -159,8 +162,6 @@ class App {
 			context.notification = session.notification;
 			session.notification = null;
 		}
-		context.beginComment = "<!--";
-		context.endIf = "<![endif]-->";
 	}
 
 	static function errorHandler( e : Dynamic ) {

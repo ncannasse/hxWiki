@@ -33,7 +33,7 @@
 		<span class="tfield">Content :</span>
 		<textarea name="::editor.content::" tabindex="2" onkeyup="::editor.config.name::.updatePreview()" onkeydown="return ::editor.config.name::.handleTab(event)">::if entry._version != null::::entry._version.content::::end::</textarea>
 		<input type="submit" value="Modify" class="button"/>
-		<input type="submit" value="Cancel" onclick="if( confirm('Cancel Changes ?') ) document.location = '/::e._path::'; return false" class="button"/>
+		<input type="submit" value="Cancel" onclick="if( confirm('Cancel Changes ?') ) document.location = '/::entry._path::'; return false" class="button"/>
 	</form>
 </div>
 

@@ -3,6 +3,7 @@
 -main App
 -cp src
 -D spod_rtti
+-lib templo
 
 --next
 # JS

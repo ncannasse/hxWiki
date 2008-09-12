@@ -579,11 +579,12 @@ class Main extends Handler<Void> {
 	}
 
 	function doSetLang() {
+		var url = request.get("url");
 		var lang = db.Lang.manager.search({ code : request.get("lang") },false).first();
 		if( lang == null )
-			throw Action.Error(request.get("url"),Text.get.err_no_such_lang);
+			throw Action.Error(url,Text.get.err_no_such_lang);
 		App.session.lang = lang.id;
-		throw Action.Goto(request.get("url")+"?lang="+lang.code);
+		throw Action.Goto(url + (url.indexOf("?") > 0 ? ";" : "?") + "lang="+lang.code);
 	}
 
 	function doRestore() {

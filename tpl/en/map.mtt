@@ -7,7 +7,8 @@
 </p>
 
 <ul class="map">
-	::foreach e roots::
+	::foreach r roots::
+	::set e = r::
 	::use 'map_tree.mtt'::::end::
 	::end::
 </ul>

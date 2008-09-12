@@ -4,12 +4,12 @@
 		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
 		<title>::config.title::</title>
 		<link rel="stylesheet" type="text/css" href="/css/::config.style::.css"/>
-		::raw beginComment::[if IE 6]>
+		::raw '<!--[if IE 6]>'::
 		<link rel="stylesheet" type="text/css" href="/css/::config.style::_ie6.css"/>
-		::raw endIf::
-		::raw beginComment::[if IE 7]>
+		::raw '<![endif]-->'::
+		::raw '<!--[if IE 7]>'::
 		<link rel="stylesheet" type="text/css" href="/css/::config.style::_ie7.css"/>
-		::raw endIf::
+		::raw '<![endif]-->'::
 		<script type="text/javascript" src="/wiki.js"></script>
 	</head>
 
@@ -18,7 +18,7 @@
 			<div class="header">
 				<a href="/">::config.title::</a>
 			</div>
-			<div class="site">				
+			<div class="site">
 				<ul class="menu">
 					::foreach l links(0)::
 					<li><a href="::l.url::">::l.title::</a></li>
@@ -72,7 +72,7 @@
 					<li><a href="/wiki/setlang?url=::uri::;lang=::l.code::" class="::lang_classes(l)::"><img src="/img/::config.style::/flags/flag_::l.code::.gif" alt="::l.code::"/> <span class="name">::l.name::</span></a></li>
 					::end::
 					</ul>
-				</div>			
+				</div>
 
 				<div id="notification" ::cond notification:: ::attr class if( notification.error ) 'error'::>
 					::raw notification.text::
