@@ -78,4 +78,8 @@
 	<li ::cond dbAccess && entry.id != null::><a href="/db/Entry/edit/::entry.id::">db</a></li>
 </ul>
 
+::if comments && version::
+	::use 'comments.mtt'::::end::
+::end::
+
 ::end::

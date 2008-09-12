@@ -59,6 +59,7 @@ class Main extends Handler<Void> {
 		free("search","search.mtt",doSearch);
 		free("remoting",doRemoting);
 		free("latest",doLatest);
+		free("comment",doComment);
 	}
 
 	public static function encodePass( p : String ) {
@@ -195,6 +196,17 @@ class Main extends Handler<Void> {
 		App.context.version = version;
 		App.context.entry = entry;
 		App.context.rename = request.exists("rename");
+
+		// add comments
+		if( r.canReadComments ) {
+			App.context.comments = db.Comment.manager.search({ eid : entry.id },false);
+			if( r.canComment ) {
+				App.context.group = group;
+				App.context.now = Date.now();
+				App.context.extensions = getExtensions(group);
+				App.context.editor = createEditor(entry,true);
+			}
+		}
 	}
 
 	function doHistory() {
@@ -708,6 +720,45 @@ class Main extends Handler<Void> {
 		var files = db.File.manager.latest();
 		for( f in files )
 			neko.Lib.println(f.name);
+	}
+
+	function doComment() {
+		try {
+			var entry = getEntry(getPath(),getLang());
+			if( entry.id == null )
+				throw "Entry "+entry.getURL()+"does not have content";
+			var editor = createEditor(entry,false);
+			var c = new db.Comment();
+			c.entry = entry;
+			c.date = Date.now();
+			c.user = App.user;
+			if( c.user == null ) {
+				c.userName = StringTools.trim(request.get("name",""));
+				c.userMail = StringTools.trim(request.get("email",""));
+				c.url = StringTools.trim(request.get("url",""));
+				if( c.userName.length < 2 )
+					throw Text.get.err_invalid_username;
+				if( !~/^[A-Za-z0-9_.-]+@[A-Za-z0-9_.-]+$/.match(c.userMail) )
+					throw Text.get.err_invalid_mail;
+				if( c.url == "" )
+					c.url = null;
+				else if( !~/^https?:\/\/[A-Za-z0-9_.\/-]+$/.match(c.url) )
+					throw Text.get.err_invalid_site;
+			} else
+				c.userName = c.user.name;
+			var vars = neko.Web.getPostData();
+			var check = haxe.Md5.encode(vars.substr(0,vars.length-32));
+			if( check != vars.substr(vars.length-32,32) )
+				throw Text.get.err_invalid_check;
+			c.content = request.get(editor.content,"");
+			c.htmlContent = editor.format(c.content);
+			c.insert();
+			neko.Lib.print(haxe.Serializer.run(entry.getURL()));
+		} catch( e : Dynamic ) {
+			var s = new haxe.Serializer();
+			s.serializeException(Std.string(e));
+			neko.Lib.print(s.toString());
+		}
 	}
 
 }

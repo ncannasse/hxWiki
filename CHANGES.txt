@@ -3,6 +3,7 @@
 	switched to templo2
 	added Group.canRegister
 	some minor fixes in default.css
+	added entry comments
 	
 2008-05-07
 	fixed translated links : use default lang

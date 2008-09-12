@@ -40,4 +40,11 @@
 	<t id="link">A</t>
 	<t id="external_link">URL</t>
 
+	<!-- comments -->
+
+	<t id="err_invalid_mail">Please enter a valid email address</t>
+	<t id="err_invalid_username">Please enter an user name</t>
+	<t id="err_invalid_site">Please enter a valid website (or leave empty)</t>
+	<t id="err_invalid_check">Spam check failure</t>
+
 </texts>

@@ -8,7 +8,7 @@
 --next
 # JS
 -js www/wiki.js
-Editor
+-main JsTools
 -cp src
 
 --next

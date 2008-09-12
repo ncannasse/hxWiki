@@ -323,3 +323,9 @@ dl.user dt {
 .search h1 {
 	display : none;
 }
+
+.edit_comments textarea {
+	display : block;
+	width : 50%;
+	height : 70px;
+}

@@ -36,6 +36,7 @@ class Editor {
 	var uniqueId : Int;
 	var subcache : Hash<Array<{ title : String, url : String }>>;
 	#if js
+	var previewBlock : String;
 	var uploadImage : Bool;
 	var tqueue : haxe.TimerQueue;
 	var refresh : { latest : String, timestamp : Float, auto : Bool, changed : Bool };
@@ -86,6 +87,11 @@ class Editor {
 		refresh.changed = false;
 		refresh.latest = data;
 		prev.innerHTML = format(data);
+
+		// in case we have a preview block to show/hide
+		if( previewBlock != null )
+			js.Lib.document.getElementById(previewBlock).style.display = StringTools.trim(data) == "" ? "none" : "";
+
 		if( haxe.Timer.stamp() - start > 0.15 )
 			refresh.auto = false;
 		// execute generate JS scripts

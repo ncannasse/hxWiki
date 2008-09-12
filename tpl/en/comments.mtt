@@ -1,0 +1,61 @@
+<h1 class="comments">::comments.length:: Comment::if comments.length != 1::s::end::</h1>
+
+<ul class="comments">
+	::foreach c comments::
+	<li>
+		<div class="user">
+			::if c.uid::
+				<a href="/wiki/user/::c._user.name::">::c._user.name::</a>
+			::elseif c.url::
+				<a href="::c.url::">::c.userName::</a>
+			::else::
+				::c.userName::
+			::end::
+		</div>
+		<div class="date">
+			::c.date::
+		</div>
+		<div class="comment">
+			::raw c.htmlContent::
+		</div>
+	</li>
+	::end::
+	::if editor::
+	<li id="comment_preview" style="display : none">
+		<div class="user">(you)</div>
+		<div class="date">::now::</div>
+		<div class="comment" id="::editor.preview::">
+		</div>
+	</li>
+	::end::
+</ul>
+
+<div class="editor edit_comments" ::cond editor::>
+	::raw editor.initJS()::
+	<div id="upload"></div>
+	<form method="POST" action="/wiki/comment" onsubmit="JsTools.submitForm(this); return false;">
+		<input type="hidden" name="path" value="::entry._path::"/>
+		<input type="hidden" name="lang" value="::entry._lang.code::"/>
+		::if user == null::
+			<span class="tfield">Name :</span> <input name="name" class="field" value="::request.get('name','')::" tabindex="1"/>
+			<span class="tfield">Email :</span> <input name="email" class="field" value="::request.get('email','')::" tabindex="2"/>
+			<span class="tfield">Website :</span> <input name="url" class="field" value="::request.get('url','')::" tabindex="3"/>
+		::end::
+		<ul class="buttons">
+			::foreach b editor.config.buttons::
+			<li><a href="#" onclick="::editor.buttonAction(b)::">::b.label::</a></li>
+			::end::
+			<li><a href="#" onclick="::editor.config.name::.spanAction('Please choose CSS class :')">SPAN</a></li>
+			<li ::cond group.canUploadImage::><a href="#" onclick="::editor.config.name::.initUpload('Image','::editor.extensions(extensions.images)::',true)">IMG</a></li>
+			<li ::cond group.canUploadImage::><a href="#" onclick="::editor.config.name::.initUpload('All','::editor.extensions(extensions.files)::',false)">FILE</a></li>
+		</ul>
+		<span class="tfield">Message :</span>
+		<textarea name="::editor.content::" tabindex="5" onkeyup="::editor.config.name::.updatePreview()" onkeydown="return ::editor.config.name::.handleTab(event)">::request.get(editor.content,'')::</textarea>
+		<input type="submit" value="Send" class="button"/>
+	</form>
+
+	<script type="text/javascript">
+		::editor.config.name::.previewBlock = 'comment_preview';
+		::editor.config.name::.updatePreview();
+	</script>
+</div>
