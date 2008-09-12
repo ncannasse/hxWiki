@@ -28,7 +28,6 @@ class App {
 		templo.Loader.OPTIMIZED = Config.DEBUG == false;
 		templo.Loader.BASE_DIR = Config.TPL;
 		templo.Loader.TMP_DIR = Config.TPL + "../tmp/";
-		templo.Loader.DEBUG = true;
 		sendNoCacheHeaders();
 		template = new templo.Loader(t);
 	}
