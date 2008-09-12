@@ -265,7 +265,7 @@ class Main extends Handler<Void> {
 				if( e == null ) {
 					e = getEntry(d.path.split("/"),lang);
 					// if lang-specific one is not found, use default one
-					if( e.id == null && defaultLang != lang )
+					if( !e.hasContent() && defaultLang != lang )
 						e = getEntry(d.path.split("/"),defaultLang);
 				}
 				config.titles.set(d.path,{ title : e.get_title(), exists : e.hasContent() });
@@ -284,7 +284,7 @@ class Main extends Handler<Void> {
 		e.getTitle = function(path:Array<String>) {
 			var entry2 = me.getEntry(path,lang);
 			// if lang-specific one is not found, use default one
-			if( entry2.id == null && defaultLang != lang )
+			if( !entry2.hasContent() && defaultLang != lang )
 				entry2 = me.getEntry(path,defaultLang);
 			var dep = new db.Dependency();
 			dep.entry = entry;
