@@ -1,0 +1,36 @@
+::use 'design.mtt'::
+<div class="blog main">
+
+<h1 class="title"><a href="/::entry._path::">::entry._title::</a></h1>
+
+<script type="text/javascript">
+	document.title = '::config.title:: - ::entry._title::';
+</script>
+
+<ul class="posts">
+	::foreach e entries::
+	<li>
+		::set version = e._version::
+		<div class="title">
+			<a href="/::e._path::">::e._title::</a>
+		</div>
+		<div class="date">
+			Posted on ::version.date:: by ::if version.uid::<a href="/wiki/user?name=::version._author.name::">::version._author.name::</a>::else::Anonymous::end::
+		</div>
+		<div class="view">
+			::raw version.htmlContent::
+		</div>
+		<div class="comments">
+			<a href="/::e._path::#comments">::e.countComments():: comment(s)</a>
+		</div>
+	</li>
+	::end::
+</ul>
+
+::if page != null::
+<div class="prev"><a href="/::entry._path::?page=::(page + 1)::">&lt;&lt; Previous</a></div>
+<div class="next" ::cond page > 0::><a href="/::entry._path::?page=::(page - 1)::">Next &gt;&gt;</a></div>
+::end::
+
+</div>
+::end::

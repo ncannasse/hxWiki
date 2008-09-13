@@ -18,6 +18,7 @@ class GroupRights extends neko.db.Object {
 	public var canDelete : SBool;
 	public var canReadComments : SBool;
 	public var canComment : SBool;
+	public var isBlog : SBool;
 
 	public function new( g, path ) {
 		super();

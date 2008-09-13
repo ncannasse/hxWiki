@@ -1,3 +1,6 @@
+2008-09-13
+	added blog mode
+
 2008-09-12
 	fixed some redirection issues
 	switched to templo2

@@ -1,0 +1,44 @@
+::use 'design.mtt'::
+<div class="blog post">
+
+<h1 class="title"><a href="/::entry._path::">::entry._title::</a></h1>
+
+<script type="text/javascript">
+	document.title = '::config.title:: - ::entry._title::';
+</script>
+
+::set eparams = 'path='+entry._path+';lang='+entry._lang.code::
+
+::if version == null::
+	<div class="error" ::cond edit != true && rename != true::>
+		This page does not currently exists, you can <a href="/wiki/edit?::eparams::">create</a> it.
+	</div>
+::else::
+	<div class="error" ::cond oldversion::>
+		You are viewing an old version of this entry, click <a href="/::entry._path::">here</a> to see latest version.
+	</div>
+	<div class="date">
+		Posted on ::version.date:: by ::if version.uid::<a href="/wiki/user?name=::version._author.name::">::version._author.name::</a>::else::Anonymous::end::
+	</div>
+	<div class="view">
+		::raw version.htmlContent::
+	</div>
+::end::
+
+<ul class="buttons">
+	::if oldversion == null::
+	<li ::cond rights.canEdit::><a href="/wiki/edit?::eparams::">edit</a></li>
+	<li ::cond entry.id != null && rights.canDelete::><a href="/::entry._path::?lang=::entry._lang.code::;rename=1">rename</a></li>
+	<li ::cond entry._version != null && rights.canDelete::><a href="/wiki/delete?::eparams::" $$confirm()>delete</a></li>
+	::else::
+	<li ::cond rights.canEdit::><a href="/wiki/restore?::eparams::;version=::version.id::" $$confirm()>restore</a></li>
+	::end::
+	<li ::cond dbAccess && entry.id != null::><a href="/db/Entry/edit/::entry.id::">db</a></li>
+</ul>
+
+::if comments && version::
+	::use 'comments.mtt'::::end::
+::end::
+
+</div>
+::end::

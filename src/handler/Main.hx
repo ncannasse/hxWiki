@@ -1,5 +1,6 @@
 package handler;
 import db.Version.VersionChange;
+import db.Entry.Selector;
 
 class Main extends Handler<Void> {
 
@@ -207,6 +208,25 @@ class Main extends Handler<Void> {
 				App.context.editor = createEditor(entry,true);
 			}
 		}
+
+		// display as blog
+		if( r.isBlog ) {
+			App.context.calendar = true;
+			if( entry.parent == null || !getRights(entry.parent).isBlog ) {
+				var selector;
+				if( request.exists("year") )
+					selector = SDate(request.getInt("year"),request.getInt("month"),request.getInt("day"));
+				else {
+					var page = request.getInt("page",0);
+					if( page < 0 ) page = 0;
+					selector = SPage(page,10);
+					App.context.page = page;
+				}
+				App.prepareTemplate("blog_main.mtt");
+				App.context.entries = db.Entry.manager.selectSubs(entry,selector);
+			} else
+				App.prepareTemplate("blog_post.mtt");
+		}
 	}
 
 	function doHistory() {
@@ -349,11 +369,11 @@ class Main extends Handler<Void> {
 
 		if( !submit )
 			return;
-		processEdit(entry,editor,request.get("title",entry.name),request.get(editor.content));
+		processEdit(entry,r,editor,request.get("title",entry.name),request.get(editor.content));
 		throw Action.Done(entry.getURL(),Text.get.entry_modified);
 	}
 
-	public function processEdit( entry : db.Entry, editor : Editor, title : String, content : String ) {
+	public function processEdit( entry : db.Entry, rights : db.GroupRights, editor : Editor, title : String, content : String ) {
 		var entry = if( entry.id == null ) { entry.insert(); entry; } else db.Entry.manager.get(entry.id);
 		var oldTitle = entry.title;
 		var changes = false;
@@ -372,9 +392,16 @@ class Main extends Handler<Void> {
 			entry.markDeleted(App.user);
 			changes = true;
 		} else if( entry.version == null || entry.version.content != content ) {
-			v = new db.Version(entry,App.user);
-			v.setChange(VContent,content,null);
-			v.insert();
+			// if blog, don't save history
+			if( rights.isBlog && entry.vid != null ) {
+				v = db.Version.manager.get(entry.vid);
+				v.setChange(VContent,content,null);
+				v.update();
+			} else {
+				v = new db.Version(entry,App.user);
+				v.setChange(VContent,content,null);
+				v.insert();
+			}
 			if( entry.version == null && entry.lang != getDefLang() )
 				db.Dependency.manager.translate(entry);
 			changes = true;

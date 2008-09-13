@@ -1,6 +1,6 @@
 ::use 'design.mtt'::
 
-<h1><a href="/::entry._path::">::entry._title::</a></h1>
+<h1 class="title"><a href="/::entry._path::">::entry._title::</a></h1>
 
 <script type="text/javascript">
 	document.title = '::config.title:: - ::entry._title::';

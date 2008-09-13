@@ -2,6 +2,11 @@ package db;
 import mt.db.Types;
 import db.Version.VersionChange;
 
+enum Selector {
+	SDate( year : Int, ?month : Int, ?day : Int );
+	SPage( page : Int, count : Int );
+}
+
 class Entry extends neko.db.Object {
 
 	static var INDEXES = [["pid","name",true]];
@@ -73,6 +78,10 @@ class Entry extends neko.db.Object {
 		if( db.Version.manager.count({ eid : id }) > 0 || manager.count({ pid : id }) > 0 ) return;
 		delete();
 		if( parent != null ) parent.cleanup();
+	}
+
+	public function countComments() {
+		return db.Comment.manager.count({ eid : id });
 	}
 
 	public override function insert() {
@@ -156,6 +165,22 @@ class EntryManager extends neko.db.Manager<Entry> {
 		// implying the insert of a new Entry : both the Search and the Entry auto_increment doesn't get
 		// rollbacked as part of the transaction
 		return objects("SELECT Entry.* FROM Search LEFT JOIN Entry ON Entry.id = Search.id WHERE Entry.id IS NOT NULL AND MATCH(data) AGAINST ("+quote(expr)+" IN BOOLEAN MODE) LIMIT "+pos+","+count,false);
+	}
+
+	public function selectSubs( entry : Entry, sel : Selector ) {
+		if( entry.id == null )
+			return new List();
+		switch( sel ) {
+		case SPage(n,c):
+			return objects("SELECT * FROM Entry WHERE pid = "+entry.id+" AND vid IS NOT NULL LIMIT "+(n*c)+","+c,false);
+		case SDate(y,m,d):
+			var cond = "YEAR(date) = "+y;
+			if( m != null )
+				cond += " AND MONTH(date) = "+m;
+			if( d != null )
+				cond += " AND DAYOFMONTH(date) = "+d;
+			return objects("SELECT Entry.* FROM Entry, Version WHERE pid = "+entry.id+" AND vid = Version.id AND "+cond,false);
+		}
 	}
 
 }

@@ -50,7 +50,7 @@ class RemotingApi {
 			throw "You can't create this content";
 		if( !r.canEdit )
 			throw "You can't edit this content";
-		return main.processEdit(e,main.createEditor(e,false),title,content);
+		return main.processEdit(e,r,main.createEditor(e,false),title,content);
 	}
 
 }
