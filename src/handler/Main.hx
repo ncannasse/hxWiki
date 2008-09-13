@@ -17,7 +17,9 @@ class Main extends Handler<Void> {
 			return;
 		case "db":
 			if( App.user != null && App.user.group.canAccessDB ) {
+				#if !php
 				mt.db.Admin.handler();
+				#end
 				return;
 			}
 		case "file":
@@ -123,7 +125,7 @@ class Main extends Handler<Void> {
 	function updateContent( entry : db.Entry ) {
 		var editor = createEditor(entry,false);
 		var v = db.Version.manager.get(entry.vid);
-		db.Dependency.manager.cleanup(entry);
+		db.Dependency.manager.doCleanup(entry);
 		v.htmlContent = editor.format(v.content);
 		v.update();
 	}
@@ -410,7 +412,7 @@ class Main extends Handler<Void> {
 		} else if( entry.vid != null )
 			v = db.Version.manager.get(entry.vid);
 		if( v != null ) {
-			db.Dependency.manager.cleanup(entry);
+			db.Dependency.manager.doCleanup(entry);
 			v.htmlContent = editor.format(content);
 			v.update();
 		}
@@ -430,7 +432,7 @@ class Main extends Handler<Void> {
 			e.markDeleted(App.user);
 			e.update();
 			db.Entry.manager.updateSearchContent(e);
-			db.Dependency.manager.cleanup(e);
+			db.Dependency.manager.doCleanup(e);
 		}
 		throw Action.Done("/"+path.join("/"),Text.get.entry_deleted);
 	}
@@ -562,11 +564,15 @@ class Main extends Handler<Void> {
 		}
 		var buf;
 		if( compressed ) {
+			#if php
+			throw "Compression not supported";
+			#else
 			// uncompress a small amount of data
 			buf = haxe.io.Bytes.alloc(64);
 			var bytes = new neko.zip.Uncompress(15);
 			bytes.run(content,8,buf,8);
 			bytes.close();
+			#end
 		} else
 			buf = content;
 		var base = 8 * 8;
@@ -688,7 +694,9 @@ class Main extends Handler<Void> {
 
 	public function setupDatabase() {
 		// create structure
+		#if !php
 		mt.db.Admin.initializeDatabase();
+		#end
 		db.Entry.manager.createSearchTable();
 		// default lang
 		var l = new db.Lang();

@@ -22,7 +22,7 @@ class Dependency extends neko.db.Object {
 
 class DependencyManager extends neko.db.Manager<Dependency> {
 
-	public function cleanup( e : Entry ) {
+	public function doCleanup( e : Entry ) {
 		execute("DELETE FROM Dependency WHERE eid = "+e.id);
 	}
 

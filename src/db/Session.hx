@@ -53,7 +53,6 @@ class Session extends SessionData {
 	static function loadExisting( sid ) {
 		if( sid == null )
 			return null;
-		var m : { private var class_proto : { prototype : Dynamic }; } = manager;
 		var s = manager.getWithKeys({ sid : sid },true);
 		if( s == null )
 			return null;
