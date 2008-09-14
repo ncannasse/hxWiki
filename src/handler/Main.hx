@@ -211,11 +211,12 @@ class Main extends Handler<Void> {
 
 		// display as blog
 		if( r.isBlog && !request.exists("rename") ) {
-			App.context.calendar = true;
+			var year = request.getInt("year");
+			var month = request.getInt("month");
 			if( entry.parent == null || !getRights(entry.parent).isBlog ) {
 				var selector;
-				if( request.exists("year") )
-					selector = SDate(request.getInt("year"),request.getInt("month"),request.getInt("day"));
+				if( year != null )
+					selector = SDate(year,month,request.getInt("day"));
 				else {
 					var page = request.getInt("page",0);
 					if( page < 0 ) page = 0;
@@ -224,8 +225,11 @@ class Main extends Handler<Void> {
 				}
 				App.prepareTemplate("blog_main.mtt");
 				App.context.entries = db.Entry.manager.selectSubs(entry,selector);
-			} else
+				App.context.calendar = new Calendar(entry,year,month);
+			} else {
 				App.prepareTemplate("blog_post.mtt");
+				App.context.calendar = new Calendar(entry.parent,year,month);
+			}
 		}
 	}
 

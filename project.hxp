@@ -54,6 +54,7 @@
       <file path="tpl\en\user.mtt" />
     </dir>
     <file path="src\App.hx" />
+    <file path="src\Calendar.hx" />
     <file path="CHANGES.txt" />
     <file path="src\Config.hx" />
     <file path="src\Editor.hx" />

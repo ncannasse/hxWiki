@@ -53,6 +53,32 @@
 					</form>
 				</div>
 
+				<div class="calendar" ::cond calendar::>
+					<h1>Calendar</h1>
+					<table summary="Days with entries">
+						<caption>::calendar.monthName:: ::calendar.year::</caption>
+						<thead>
+							<tr>
+								::foreach d calendar.shortDays::
+								<th>::raw d::</th>
+								::end::
+							</tr>
+						</thead>
+						<tfoot>
+							<tr>
+								<td colspan="3"><a href="/::calendar.entry._path::?::raw calendar.previous()::">&lt;&lt;</a></td>
+								<td></td>
+								<td colspan="3"><a href="/::calendar.entry._path::?::raw calendar.next()::">&gt;&gt;</a></td>
+							</tr>
+						</tfoot>
+						<tbody>
+							<tr ::repeat week calendar.getWeeks()::>
+								<td ::repeat d week:: ::attr class if( d == null ) 'no'::>::if d == null::::elseif d.n == 0::::d.day::::else::<a href="/::calendar.entry._path::?::raw calendar.gotoDate(d.day)::">::d.day::</a>::end::</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
 				<div class="links">
 					<h1>Options</h1>
 					<ul>
