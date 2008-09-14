@@ -20,6 +20,7 @@
 	<t id="err_user_invalid">This user already exists or your login contains invalid chars</t>
 	<t id="user_registered">Your account has been successfully created</t>
 	<t id="err_no_such_user">This user doesn't exists</t>
+	<t id="err_no_such_entry">No such entry</t>
 
 	<!-- rights -->
 
@@ -46,5 +47,6 @@
 	<t id="err_invalid_username">Please enter an user name</t>
 	<t id="err_invalid_site">Please enter a valid website (or leave empty)</t>
 	<t id="err_invalid_check">Spam check failure</t>
+	<t id="err_empty_content">Please enter some text in your comment</t>
 
 </texts>

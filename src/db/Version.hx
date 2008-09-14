@@ -48,6 +48,76 @@ class Version extends neko.db.Object {
 		return "v" + id + "#" + entry.get_path();
 	}
 
+	public function getPreview( maxSize : Int ) {
+		var x;
+		try {
+			x = Xml.parse(htmlContent);
+		} catch( e : Dynamic ) {
+			return { html : "Could not parse Version#"+id, broken : false };
+		}
+		var buf = new StringBuf();
+		var pos = [0];
+		var broken = false;
+		for( e in x ) {
+			printPreview(e,buf,pos,maxSize);
+			if( pos[0] >= maxSize ) {
+				broken = true;
+				break;
+			}
+		}
+		return { html : buf.toString(), broken : broken };
+	}
+
+	function printPreview( x : Xml, buf : StringBuf, pos : Array<Int>, max : Int ) {
+		var p = pos[0];
+		if( p >= max ) return;
+		switch( x.nodeType ) {
+		case Xml.PCData:
+			if( p + x.nodeValue.length > max ) {
+				buf.addSub(x.nodeValue,0,max - p);
+				pos[0] = max;
+			} else {
+				buf.add(x.nodeValue);
+				pos[0] += x.nodeValue.length;
+			}
+		case Xml.PCData:
+			buf.add("<![CDATA[");
+			if( p + x.nodeValue.length > max ) {
+				buf.addSub(x.nodeValue,0,max - p);
+				pos[0] = max;
+			} else {
+				buf.add(x.nodeValue);
+				pos[0] += x.nodeValue.length;
+			}
+			buf.add("]]>");
+		case Xml.Element:
+			buf.add("<");
+			buf.add(x.nodeName);
+			for( a in x.attributes() ) {
+				buf.add(" ");
+				buf.add(a);
+				buf.add("=\"");
+				buf.add(x.get(a));
+				buf.add("\"");
+			}
+			if( x.firstChild() == null ) {
+				buf.add("/>");
+				return;
+			}
+			buf.add(">");
+			for( e in x ) {
+				printPreview(e,buf,pos,max);
+				if( pos[0] >= max )
+					break;
+			}
+			buf.add("</");
+			buf.add(x.nodeName);
+			buf.add(">");
+		default:
+			buf.add(x.toString());
+		}
+	}
+
 }
 
 class VersionManager extends neko.db.Manager<Version> {

@@ -17,9 +17,7 @@ class Main extends Handler<Void> {
 			return;
 		case "db":
 			if( App.user != null && App.user.group.canAccessDB ) {
-				#if !php
 				mt.db.Admin.handler();
-				#end
 				return;
 			}
 		case "file":
@@ -212,7 +210,7 @@ class Main extends Handler<Void> {
 		}
 
 		// display as blog
-		if( r.isBlog ) {
+		if( r.isBlog && !request.exists("rename") ) {
 			App.context.calendar = true;
 			if( entry.parent == null || !getRights(entry.parent).isBlog ) {
 				var selector;
@@ -352,6 +350,8 @@ class Main extends Handler<Void> {
 	}
 
 	function doEdit() {
+		if( !request.exists("path") )
+			throw Action.Error("/",Text.get.err_no_such_entry);
 		var entry = getEntry(getPath(),getLang());
 		var submit = request.exists("submit");
 		var editor = createEditor(entry,!submit);
@@ -604,7 +604,8 @@ class Main extends Handler<Void> {
 			} else {
 				f = new db.File();
 				f.name = filename;
-				f.update = f.insert;
+				f.user = App.user;
+				f.insert();
 			}
 			f.user = App.user;
 			f.content = content;
@@ -694,9 +695,7 @@ class Main extends Handler<Void> {
 
 	public function setupDatabase() {
 		// create structure
-		#if !php
 		mt.db.Admin.initializeDatabase();
-		#end
 		db.Entry.manager.createSearchTable();
 		// default lang
 		var l = new db.Lang();
@@ -761,7 +760,7 @@ class Main extends Handler<Void> {
 		try {
 			var entry = getEntry(getPath(),getLang());
 			if( entry.id == null )
-				throw "Entry "+entry.getURL()+"does not have content";
+				throw "Entry '"+entry.get_path()+"' does not have content";
 			var editor = createEditor(entry,false);
 			var c = new db.Comment();
 			c.entry = entry;
@@ -785,7 +784,9 @@ class Main extends Handler<Void> {
 			var check = haxe.Md5.encode(vars.substr(0,vars.length-32));
 			if( check != vars.substr(vars.length-32,32) )
 				throw Text.get.err_invalid_check;
-			c.content = request.get(editor.content,"");
+			c.content = StringTools.trim(request.get(editor.content,""));
+			if( c.content == "" )
+				throw Text.get.err_empty_content;
 			c.htmlContent = editor.format(c.content);
 			c.insert();
 			neko.Lib.print(haxe.Serializer.run(entry.getURL()));

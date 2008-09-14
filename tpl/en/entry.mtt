@@ -7,7 +7,7 @@
 </script>
 
 <div class="hierarchy">
-	::foreach e entry.list()::
+	::foreach e entry.getList()::
 	::if !repeat.e.first:: &gt;::end:: <a href="/::e._path::">::e._title::</a>
 	::end::
 </div>
@@ -65,6 +65,8 @@
 	</div>
 ::end::
 
+::if !edit && !rename::
+
 <ul class="buttons">
 	::if oldversion == null::
 	<li ::cond rights.canEdit::><a href="/wiki/edit?::eparams::">edit</a></li>
@@ -80,6 +82,8 @@
 
 ::if comments && version::
 	::use 'comments.mtt'::::end::
+::end::
+
 ::end::
 
 ::end::

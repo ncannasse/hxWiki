@@ -33,7 +33,7 @@ class Entry extends neko.db.Object {
 		return db.Entry.manager.getChilds(this);
 	}
 
-	public function list() {
+	public function getList() {
 		var l = new List();
 		l.add(this);
 		var p = parent;
@@ -66,7 +66,7 @@ class Entry extends neko.db.Object {
 	}
 
 	public function get_path() {
-		return list().map(function(e) { return e.name; }).join("/");
+		return getList().map(function(e) { return e.name; }).join("/");
 	}
 
 	public function hasContent() {

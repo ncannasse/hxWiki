@@ -6,6 +6,10 @@
   <output name="Upload" mode="swf9" out="www/upload.swf" class="Uploader" lib="" cmd="" main="True" debug="False">-cp src</output>
   <output name="ApiSync" mode="neko" out="apisync.n" class="tools.ApiSync" lib="" cmd="" main="True" debug="False">-cp src
 -D no_remoting_shutdown</output>
+  <output name="Web PHP" mode="php" out="www" class="App" lib="" cmd="http://dev.hxwiki.com" main="True" debug="False" active="False">-cp src
+-D spod_rtti
+-lib templo
+--remap neko:php</output>
   <files path="">
     <dir path="db">
       <file path="src\db\Comment.hx" />

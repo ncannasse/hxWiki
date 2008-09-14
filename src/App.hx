@@ -147,13 +147,16 @@ class App {
 			context.links = function(_) return [];
 			context.langs = [];
 		} else {
-			context.links = db.Link.manager.list;
+			context.links = function(n) return db.Link.manager.list(n);
 			context.langs = db.Lang.manager.all(false);
 		}
 		context.uri = (request == null) ? "/" : request.getURI();
 		if( request.exists("path") )
 			context.uri += "?path="+request.get("path");
 		context.lang_classes = function(l) {
+			#if php
+			return "off";
+			#end
 			var f = if( langFlags == null ) true else langFlags(l);
 			return (f ? "on" : "off") + ((l == langSelected) ? " current" : "");
 		};
@@ -195,7 +198,7 @@ class App {
 			neko.Sys.setTimeLocale(Text.get.locale2);
 		try {
 			database = initDatabase(Config.get("db"));
-		} catch( e : Dynamic ) {
+		} catch( e : #if php Int #else Dynamic #end ) {
 			errorHandler(e);
 			cleanup();
 			return;

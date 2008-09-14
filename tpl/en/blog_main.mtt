@@ -18,7 +18,9 @@
 			Posted on ::version.date:: by ::if version.uid::<a href="/wiki/user?name=::version._author.name::">::version._author.name::</a>::else::Anonymous::end::
 		</div>
 		<div class="view">
-			::raw version.htmlContent::
+			::set prev = version.getPreview(300)::
+			::raw prev.html::
+			<a href="/::e._path::" class="more" ::cond prev.broken::>(more...)</a>
 		</div>
 		<div class="comments">
 			<a href="/::e._path::#comments">::e.countComments():: comment(s)</a>

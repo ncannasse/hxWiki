@@ -9,10 +9,13 @@ class JsTools {
 		var vars = "";
 		for( i in 0...f.elements.length ) {
 			var e = f.elements[i];
-			vars += StringTools.urlEncode(e.name)+"="+StringTools.urlEncode(e.value)+";";
+			if( e.name == "" )
+				continue;
+			vars += StringTools.urlEncode(e.name)+"="+StringTools.urlEncode(e.value)+"&";
 		}
 		vars += "chk=";
 		vars += haxe.Md5.encode(vars);
+		x.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
 		x.send(vars);
 		try {
 			var redirect = haxe.Unserializer.run(x.responseText);
