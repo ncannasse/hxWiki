@@ -14,6 +14,17 @@ class Session extends SessionData {
 	static var INDEXES = [["uid",true]];
 	static var UID_CHARS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 	static var manager = new neko.db.Manager<Session>(Session);
+	static var FIELDS = {
+		var fl = Type.getInstanceFields(SessionData);
+		for( x in Type.getInstanceFields(neko.db.Object) )
+			fl.remove(x);
+		#if php
+		fl.remove("get_user");
+		fl.remove("set_user");
+		#end
+		fl.remove("setUser");
+		fl;
+	}
 
 	public var sid : SString<32>;
 	public var uid : SNull<SInt>;
@@ -37,14 +48,11 @@ class Session extends SessionData {
 	}
 
 	public override function update() {
-		var old = { __cache__ : untyped this.__cache__, sid : sid, uid : uid, mtime : mtime, ctime : ctime, __user : user };
-		var oldData = this.data;
-		for( f in Reflect.fields(old) )
-			Reflect.deleteField(this,f);
-		Reflect.deleteField(this,"data");
-		data = neko.Lib.serialize(this);
-		for( f in Reflect.fields(old) )
-			Reflect.setField(this,f,Reflect.field(old,f));
+		var o = {};
+		for( f in FIELDS )
+			Reflect.setField(o,f,Reflect.field(this,f));
+		var oldData = data;
+		data = neko.Lib.serialize(o);
 		if( data != oldData )
 			mtime = Date.now();
 		super.update();
