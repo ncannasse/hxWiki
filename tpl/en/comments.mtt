@@ -7,7 +7,7 @@
 	<li>
 		<div class="user">
 			::if c.uid::
-				<a href="/wiki/user/::c._user.name::">::c._user.name::</a>
+				<a href="/wiki/user?name=::c._user.name::">::c._user.name::</a>
 			::elseif c.url::
 				<a href="::c.url::">::c.userName::</a>
 			::else::
