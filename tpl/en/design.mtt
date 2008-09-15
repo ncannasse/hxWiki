@@ -66,9 +66,9 @@
 						</thead>
 						<tfoot>
 							<tr>
-								<td colspan="3"><a href="/::calendar.entry._path::?::raw calendar.previous()::">&lt;&lt;</a></td>
+								<td colspan="3" class="prev"><a href="/::calendar.entry._path::?::raw calendar.previous()::">&lt;&lt;</a></td>
 								<td></td>
-								<td colspan="3"><a href="/::calendar.entry._path::?::raw calendar.next()::">&gt;&gt;</a></td>
+								<td colspan="3" class="next"><a href="/::calendar.entry._path::?::raw calendar.next()::">&gt;&gt;</a></td>
 							</tr>
 						</tfoot>
 						<tbody>
@@ -85,6 +85,7 @@
 						<li ::cond dbAccess::><a href="/db">Database</a></li>
 						<li><a href="/wiki/map">Wiki Map</a></li>
 						<li><a href="/wiki/history">Latest Changes</a></li>
+						<li ::cond user::><a href="/wiki/logout" $$confirm()>Logout</a></li>
 						::foreach l links(1)::
 						<li><a href="::l.url::">::l.title::</a></li>
 						::end::

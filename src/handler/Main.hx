@@ -28,7 +28,7 @@ class Main extends Handler<Void> {
 			doLatest();
 			return;
 		case "":
-			part = "index";
+			part = Config.get("home","index");
 		default:
 		}
 		var path = new List();
@@ -224,6 +224,7 @@ class Main extends Handler<Void> {
 					App.context.page = page;
 				}
 				App.prepareTemplate("blog_main.mtt");
+				App.context.canCreate = r.canCreate;
 				App.context.entries = db.Entry.manager.selectSubs(entry,selector);
 				App.context.calendar = new Calendar(entry,year,month);
 			} else {
@@ -358,6 +359,8 @@ class Main extends Handler<Void> {
 			throw Action.Error("/",Text.get.err_no_such_entry);
 		var entry = getEntry(getPath(),getLang());
 		var submit = request.exists("submit");
+		if( entry.id == null && !submit )
+			entry.title = request.get("title");
 		var editor = createEditor(entry,!submit);
 		App.context.edit = true;
 		App.context.entry = entry;

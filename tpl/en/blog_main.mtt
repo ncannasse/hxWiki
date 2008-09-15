@@ -7,6 +7,12 @@
 	document.title = '::config.title:: - ::entry._title::';
 </script>
 
+<form action="/wiki/edit" class="create" method="GET" ::cond request.exists("create")::>
+	<span class="tfield">Title :</span> <input name="title" class="field" onkeyup="document.getElementById('id_path').value = '::entry._path::/' + Editor.normalize(this.value)"/>
+	<span class="tfield">URL :</span> <input id="id_path" name="path" class="field"/>
+	<input type="submit" value="OK" class="button"/>
+</form>
+
 <ul class="posts">
 	::foreach e entries::
 	<li>
@@ -30,8 +36,9 @@
 </ul>
 
 ::if page != null::
-<div class="prev"><a href="/::entry._path::?page=::(page + 1)::">&lt;&lt; Previous</a></div>
-<div class="next" ::cond page > 0::><a href="/::entry._path::?page=::(page - 1)::">Next &gt;&gt;</a></div>
+<div class="link_prev"><a href="/::entry._path::?page=::(page + 1)::">&lt;&lt; Previous</a></div>
+<div class="link_create" ::cond canCreate::><a href="/::entry._path::?create=1">New Post</a></div>
+<div class="link_next" ::cond page > 0::><a href="/::entry._path::?page=::(page - 1)::">Next &gt;&gt;</a></div>
 ::end::
 
 </div>

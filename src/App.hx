@@ -150,9 +150,14 @@ class App {
 			context.links = function(n) return db.Link.manager.list(n);
 			context.langs = db.Lang.manager.all(false);
 		}
-		context.uri = (request == null) ? "/" : request.getURI();
-		if( request.exists("path") )
-			context.uri += "?path="+request.get("path");
+		if( request == null )
+			context.uri = "/";
+		else {
+			var uri = request.getURI();
+			if( request.exists("path") )
+				uri += "?path="+request.get("path");
+			context.uri = uri;
+		}
 		context.lang_classes = function(l) {
 			#if php
 			return "off";

@@ -1,4 +1,4 @@
-﻿<haxe selected="0">
+﻿<haxe selected="4">
   <output name="Web" mode="neko" out="www/index.n" class="App" lib="" cmd="http://dev.hxwiki.com" main="True" debug="False">-cp src
 -D spod_rtti
 -lib templo</output>

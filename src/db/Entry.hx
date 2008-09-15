@@ -20,7 +20,7 @@ class Entry extends neko.db.Object {
 	public static var manager = new EntryManager(Entry);
 
 	public var id : SId;
-	public var name : SString<32>;
+	public var name : SString<64>;
 	public var pid : SNull<SInt>;
 	public var parent(dynamic,dynamic) : SNull<Entry>;
 	public var title : SNull<STinyText>;
@@ -172,7 +172,7 @@ class EntryManager extends neko.db.Manager<Entry> {
 			return new List();
 		switch( sel ) {
 		case SPage(n,c):
-			return objects("SELECT * FROM Entry WHERE pid = "+entry.id+" AND vid IS NOT NULL LIMIT "+(n*c)+","+c,false);
+			return objects("SELECT Entry.* FROM Entry, Version WHERE pid = "+entry.id+" AND Version.id = vid ORDER BY Version.date DESC LIMIT "+(n*c)+","+c,false);
 		case SDate(y,m,d):
 			var cond = "YEAR(date) = "+y;
 			if( m != null )
@@ -187,6 +187,8 @@ class EntryManager extends neko.db.Manager<Entry> {
 		var entries = new Array();
 		for (i in 0...32 )
 			entries[i] = 0;
+		if( entry.id == null )
+			return entries;
 		var results = execute("SELECT DAYOFMONTH(date) AS day, COUNT(*) AS count FROM Entry, Version WHERE pid = "+entry.id+" AND vid = Version.id AND YEAR(date) = "+year+" AND MONTH(date) = "+month+" GROUP BY day");
 		for( r in results )
 			entries[r.day] = r.count;
