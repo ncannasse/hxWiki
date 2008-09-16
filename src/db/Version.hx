@@ -73,17 +73,19 @@ class Version extends neko.db.Object {
 		if( p >= max ) return;
 		switch( x.nodeType ) {
 		case Xml.PCData:
-			if( p + x.nodeValue.length > max ) {
+			if( p + x.nodeValue.length >= max ) {
 				buf.addSub(x.nodeValue,0,max - p);
+				buf.add("...");
 				pos[0] = max;
 			} else {
 				buf.add(x.nodeValue);
 				pos[0] += x.nodeValue.length;
 			}
-		case Xml.PCData:
+		case Xml.CData:
 			buf.add("<![CDATA[");
-			if( p + x.nodeValue.length > max ) {
+			if( p + x.nodeValue.length >= max ) {
 				buf.addSub(x.nodeValue,0,max - p);
+				buf.add("...");
 				pos[0] = max;
 			} else {
 				buf.add(x.nodeValue);

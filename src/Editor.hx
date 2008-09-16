@@ -265,7 +265,7 @@ class Editor {
 		if( t.charAt(0) == "\n" ) t = t.substr(1);
 		if( t.charAt(t.length-1) == "\n" ) t = t.substr(0,t.length - 1);
 		t = StringTools.replace(t,"\t","    ");
-		t = StringTools.htmlEscape(t);
+		t = StringTools.htmlEscape(t).split('"').join("&quot;");
 		switch( style ) {
 		case "xml", "html":
 			var me = this;
@@ -329,7 +329,7 @@ class Editor {
 	function paragraph( t : String ) : String {
 		var me = this;
 		// unhtml
-		t = StringTools.htmlEscape(t);
+		t = StringTools.htmlEscape(t).split('"').join("&quot;");
 		// span
 		t = makeSpans(t);
 		// newlines

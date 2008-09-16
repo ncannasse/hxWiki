@@ -203,7 +203,7 @@ class App {
 			neko.Sys.setTimeLocale(Text.get.locale2);
 		try {
 			database = initDatabase(Config.get("db"));
-		} catch( e : #if php Int #else Dynamic #end ) {
+		} catch( e : Dynamic ) {
 			errorHandler(e);
 			cleanup();
 			return;
