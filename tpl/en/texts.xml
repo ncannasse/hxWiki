@@ -1,6 +1,5 @@
 <texts>
 
-	<t id="date_fmt">%A %d %B at %H:%M</t>
 	<t id="locale1">en_US.UTF-8</t>
 	<t id="locale2">EN</t>
 	<t id="short_days">Mo|Tu|We|Th|Fr|Sa|Su</t>

@@ -158,6 +158,9 @@ class App {
 				uri += "?path="+request.get("path");
 			context.uri = uri;
 		}
+		context.dateFormat = function(d,fmt) {
+			return DateTools.format(d,fmt);
+		};
 		context.lang_classes = function(l) {
 			#if php
 			return "off";

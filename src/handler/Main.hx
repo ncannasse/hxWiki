@@ -596,11 +596,13 @@ class Main extends Handler<Void> {
 			var datas = neko.Web.getMultipart(group.maxUploadSize);
 			var filename = datas.get("Filename");
 			if( filename == null )
+				filename = request.get("Filename");
+			if( filename == null )
 				throw "No filename defined";
 			if( !~/^[ A-Za-z0-9._-]+$/.match(filename) )
 				throw "Invalid filename "+filename;
 			var ext = filename.split(".").pop().toLowerCase();
-			if( !Lambda.exists(getExtensions(group).files,function(x) return ext == x) )
+			if( !Lambda.exists(getExtensions(group).files,function(x) return x == "*" || ext == x) )
 				throw "Unsupported file extension "+ext;
 			var f = db.File.manager.search({ name : filename },false).first();
 			var content = datas.get("file");

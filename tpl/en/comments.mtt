@@ -7,7 +7,7 @@
 	<li>
 		<div class="user">
 			::if c.uid::
-				<a href="/wiki/user?name=::c._user.name::">::c._user.name::</a>
+				<a href="/wiki/user?name=::c._user.name::">::c._user.realName::</a>
 			::elseif c.url::
 				<a href="::c.url::">::c.userName::</a>
 			::else::
@@ -15,7 +15,7 @@
 			::end::
 		</div>
 		<div class="date">
-			::c.date::
+			::dateFormat(c.date,'%b %d, %Y at %H:%M')::
 		</div>
 		<div class="comment">
 			::raw c.htmlContent::
@@ -25,7 +25,7 @@
 	::if editor::
 	<li id="comment_preview" style="display : none">
 		<div class="user">(you)</div>
-		<div class="date">::now::</div>
+		<div class="date">::dateFormat(now,'%b %d, %Y at %H:%M')::</div>
 		<div class="comment" id="::editor.preview::">
 		</div>
 	</li>
