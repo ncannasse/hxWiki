@@ -179,7 +179,7 @@ class EntryManager extends neko.db.Manager<Entry> {
 				cond += " AND MONTH(date) = "+m;
 			if( d != null )
 				cond += " AND DAYOFMONTH(date) = "+d;
-			return objects("SELECT Entry.* FROM Entry, Version WHERE pid = "+entry.id+" AND vid = Version.id AND "+cond,false);
+			return objects("SELECT Entry.* FROM Entry, Version WHERE pid = "+entry.id+" AND vid = Version.id AND "+cond+" ORDER BY Version.date DESC",false);
 		}
 	}
 
