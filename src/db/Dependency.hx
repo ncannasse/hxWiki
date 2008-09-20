@@ -27,7 +27,7 @@ class DependencyManager extends neko.db.Manager<Dependency> {
 	}
 
 	public function subSignature( e : Entry, edefault : Entry ) {
-		return execute("SELECT MD5(GROUP_CONCAT(CONCAT(name,'#',IFNULL(title,'')))) FROM Entry WHERE pid IN ("+e.id+","+edefault.id+")").getResult(0);
+		return execute("SELECT MD5(GROUP_CONCAT(CONCAT(name,'#',IFNULL(title,'')))) FROM Entry WHERE pid IN ("+Std.string(e.id)+","+Std.string(edefault.id)+")").getResult(0);
 	}
 
 	public function renamed( e : Entry ) {
