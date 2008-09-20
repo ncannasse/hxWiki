@@ -39,9 +39,15 @@
 		<input type="hidden" name="path" value="::entry._path::"/>
 		<input type="hidden" name="lang" value="::entry._lang.code::"/>
 		::if user == null::
+		<span class="group">
 			<span class="tfield">Name :</span> <input name="name" class="field" value="::request.get('name','')::" tabindex="1"/>
+		</span>
+		<span class="group">
 			<span class="tfield">Email :</span> <input name="email" class="field" value="::request.get('email','')::" tabindex="2"/>
+		</span>
+		<span class="group">
 			<span class="tfield">Website :</span> <input name="url" class="field" value="::request.get('url','')::" tabindex="3"/>
+		</span>
 		::end::
 		<ul class="buttons">
 			::foreach b editor.config.buttons::

@@ -408,6 +408,10 @@ ul.menu li a:hover {
 	text-align			: right;
 }
 
+.login form .group {
+	display : block;
+}
+
 .login input.field {
 	width				: 100px;
 	margin-bottom		: 2px;
@@ -898,11 +902,12 @@ dl.user dd {
 }
 
 .calendar table {
-	margin-left : 20px;
+	margin-left : 15px;
+	font-size : 10pt;
 }
 
 .calendar .next {
-	text-align : right;	
+	text-align : right;
 }
 
 .search {
@@ -923,12 +928,21 @@ dl.user dd {
 
 .blog .link_prev, .blog .link_next, .blog .link_create {
 	display : inline;
-	margin-right : 20px;	
+	margin-right : 20px;
 }
 
 .blog .create input.field {
 	display : block;
 	width : 200px;
+}
+
+ul.menu {
+	margin-left : 350px;
+}
+
+ul.menu li a {
+	color : #eef;
+	font-size : 20px;
 }
 
 /* BLOG */
@@ -1029,8 +1043,11 @@ ul.comments .comment {
 	font-size : 12pt;
 }
 
-.edit_comments input.field {
+.edit_comments span.group {
 	display : block;
+}
+
+.edit_comments input.field {
 	font-size : 10pt;
 	width : 400px;
 	height : 16px;

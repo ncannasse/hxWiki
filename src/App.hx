@@ -143,13 +143,9 @@ class App {
 			title : Config.get("title"),
 			style : Config.get("style","default"),
 		};
-		if( database == null ) {
-			context.links = function(_) return [];
-			context.langs = [];
-		} else {
-			context.links = function(n) return db.Link.manager.list(n);
-			context.langs = db.Lang.manager.all(false);
-		}
+		// allow database failures here
+		context.links = function(n) return try db.Link.manager.list(n) catch( e : Dynamic ) new List();
+		context.langs = try db.Lang.manager.all(false) catch( e : Dynamic ) new List();
 		if( request == null )
 			context.uri = "/";
 		else {
