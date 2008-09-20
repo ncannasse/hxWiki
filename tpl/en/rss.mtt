@@ -1,0 +1,28 @@
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+<channel>
+	<title>::config.title::</title>
+	<link>::config.url::</link>
+	<description>::entry._title::</description>
+	<generator>haXe Wiki System</generator>
+	<language>::entry._lang.code::</language>
+	::foreach e posts::
+	<item>
+		<title>::e._title::</title>
+		<link>::config.url::::e._path::</link>
+		<guid>::config.url::::e._path::</guid>
+		<dc:date>::dateFormat(e._version.date,"%a, %e %b %Y %H:%M:%S %z")::</dc:date>
+		<pubDate>::dateFormat(e._version.date,"%a, %e %b %Y %H:%M:%S %z")::</pubDate>
+		::set u = e._version._author::
+		::if u::
+		<dc:creator>::u.realName::</dc:creator>
+		<author>::u.realName::</author>
+		::else::
+		<dc:creator>Anonymous</dc:creator>
+		<author>Anonymous</author>
+		::end::
+		<description>::e._version.getPreview(100).html::</description>
+		<content:encoded>::e._version.htmlContent::</content:encoded>
+	</item>
+	::end::
+</channel>
+</rss>

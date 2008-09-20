@@ -61,6 +61,8 @@ class Main extends Handler<Void> {
 		free("remoting",doRemoting);
 		free("latest",doLatest);
 		free("comment",doComment);
+		free("deleteComment",doDeleteComment);
+		free("rss","rss.mtt",doRSS);
 	}
 
 	public static function encodePass( p : String ) {
@@ -201,6 +203,7 @@ class Main extends Handler<Void> {
 		// add comments
 		if( r.canReadComments ) {
 			App.context.comments = db.Comment.manager.search({ eid : entry.id },false);
+			App.context.canDeleteComments = r.canDeleteComments;
 			if( r.canComment ) {
 				App.context.group = group;
 				App.context.now = Date.now();
@@ -804,6 +807,25 @@ class Main extends Handler<Void> {
 			s.serializeException(Std.string(e));
 			neko.Lib.print(s.toString());
 		}
+	}
+
+	function doDeleteComment() {
+		var c = db.Comment.manager.get(request.getInt("id"),false);
+		if( c == null )
+			throw Action.Goto("/");
+		if( getRights(c.entry).canDeleteComments )
+			c.delete();
+		throw Action.Goto(c.entry.getURL()+"#comments");
+	}
+
+	function doRSS() {
+		var entry = getEntry(getPath(),getLang());
+		neko.Web.setHeader("Content-Type","application/xml");
+		// dates need to be printed in english
+		if( !neko.Sys.setTimeLocale("EN") )
+			neko.Sys.setTimeLocale("en_US.UTF8");
+		App.context.entry = entry;
+		App.context.posts = db.Entry.manager.selectSubs(entry,SPage(0,10));
 	}
 
 }

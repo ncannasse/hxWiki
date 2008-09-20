@@ -142,6 +142,7 @@ class App {
 		context.config = {
 			title : Config.get("title"),
 			style : Config.get("style","default"),
+			url : Config.get("url"),
 		};
 		// allow database failures here
 		context.links = function(n) return try db.Link.manager.list(n) catch( e : Dynamic ) new List();
