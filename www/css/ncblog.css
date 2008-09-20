@@ -25,47 +25,47 @@ a.file, a.extern {
 }
 
 .file {
-	background-image	: url('/img/haxe/items/undefined_file.gif');
+	background-image	: url('/img/ncblog/items/undefined_file.gif');
 	padding-right		: 20px;
 }
 
 a.extern {
-	background-image	: url('/img/haxe/items/extern.gif');
+	background-image	: url('/img/ncblog/items/extern.gif');
 	padding-right		: 16px;
 }
 
 .file_zip, .file_tgz, .file_gz {
-	background-image	: url('/img/haxe/items/zip.gif');
+	background-image	: url('/img/ncblog/items/zip.gif');
 	padding-right		: 17px;
 }
 
 .file_exe, .file_dmg {
-	background-image	: url('/img/haxe/items/exe.gif');
+	background-image	: url('/img/ncblog/items/exe.gif');
 	padding-right		: 17px;
 }
 
 .file_gif, .file_jpg, .file_png  {
-	background-image	: url('/img/haxe/items/img.gif');
+	background-image	: url('/img/ncblog/items/img.gif');
 	padding-right		: 21px;
 }
 
 .file_pdf {
-	background-image	: url('/img/haxe/items/pdf.gif');
+	background-image	: url('/img/ncblog/items/pdf.gif');
 	padding-right		: 16px;
 }
 
 .file_txt {
-	background-image	: url('/img/haxe/items/txt.gif');
+	background-image	: url('/img/ncblog/items/txt.gif');
 	padding-right		: 18px;
 }
 
 .file_swf {
-	background-image	: url('/img/haxe/items/swf.gif');
+	background-image	: url('/img/ncblog/items/swf.gif');
 	padding-right		: 20px;
 }
 
 .file_xml {
-	background-image	: url('/img/haxe/items/xml.gif');
+	background-image	: url('/img/ncblog/items/xml.gif');
 	padding-right		: 20px;
 }
 
@@ -104,13 +104,13 @@ ul {
 }
 
 .view ul {
-	list-style-image	: url('/img/haxe/items/ul_spot.gif');
+	list-style-image	: url('/img/ncblog/items/ul_spot.gif');
 	list-style-position	: outside;
 	margin				: 5px 0px 25px 22px;
 }
 
 .view ul ul {
-	list-style-image	: url('/img/haxe/items/ul_spot4.gif');
+	list-style-image	: url('/img/ncblog/items/ul_spot4.gif');
 	margin				: 5px 0px 5px 25px;
 }
 
@@ -125,7 +125,7 @@ ul {
 }
 
 .view .biglist li {
-	background-image	: url('/img/haxe/items/ul_spot2.gif');
+	background-image	: url('/img/ncblog/items/ul_spot2.gif');
 	background-position	: 0px 2px;
 	background-repeat	: no-repeat;
 	padding-left		: 24px;
@@ -133,7 +133,7 @@ ul {
 	text-align			: justify;
 }
 .view .biglist ul ul li {
-	list-style-image 	: url('/img/haxe/items/ul_spot.gif');
+	list-style-image 	: url('/img/ncblog/items/ul_spot.gif');
 	background 			: none;
 	padding-left 		: 0px;
 	margin-bottom 		: 1px;
@@ -234,12 +234,12 @@ textarea {
 }
 
 .content input.button, span.button a {
-	background			: transparent url('/img/haxe/buttons/button1.png') top left no-repeat;
+	background			: transparent url('/img/ncblog/buttons/button1.png') top left no-repeat;
 	color				: #09598a;
 }
 
 span.button2 a {
-	background			: transparent url('/img/haxe/buttons/button2.png') top left no-repeat;
+	background			: transparent url('/img/ncblog/buttons/button2.png') top left no-repeat;
 	color				: #9d4700;
 }
 
@@ -259,17 +259,17 @@ span.button a, span.button2 a {
 }
 
 .content input.button:hover, span.button a:hover{
-	background-image	: url('/img/haxe/buttons/button1_hover.png');
+	background-image	: url('/img/ncblog/buttons/button1_hover.png');
 }
 
 span.button2 a:hover {
-	background-image	: url('/img/haxe/buttons/button2_hover.png');
+	background-image	: url('/img/ncblog/buttons/button2_hover.png');
 }
 
 /* LAYOUT STRUCTURE */
 
 .all { /* haxe_ie6.css */
-	background			: #fff url('/img/haxe/bg_main.gif') top left repeat-x;
+	background			: #fff url('/img/ncblog/bg_main.gif') top left repeat-x;
 	background-position	: 0px 0px;
 }
 
@@ -285,7 +285,7 @@ span.button2 a:hover {
 .header {
 	margin-bottom		: -8px;
 	height				: 102px;
-	background-image	: url('/img/haxe/logo_haxe.gif');
+	background-image	: url('/img/ncblog/logo_haxe.gif');
 	width				: 1021px;
 }
 
@@ -296,7 +296,7 @@ span.button2 a:hover {
 .site {
 	width				: 963px;
 	min-height			: 720px; /* haxe_ie6.css */
-	background-image	: url('/img/haxe/bg_content.png'); /* haxe_ie6.css, haxe_ie7.css */
+	background-image	: url('/img/ncblog/bg_content.png'); /* haxe_ie6.css, haxe_ie7.css */
 	background-position	: center top;
 	padding-top			: 1px; /* ffox bug with notification */
 
@@ -307,7 +307,7 @@ span.button2 a:hover {
 	height				: 67px;
 	text-align			: center;
 	padding-top			: 15px;
-	background-image	: url('/img/haxe/bg_bottom.png');
+	background-image	: url('/img/ncblog/bg_bottom.png');
 	background-repeat	: repeat-x;
 	color				: #c35700;
 	font-size			: 9pt;
@@ -335,14 +335,14 @@ span.button2 a:hover {
 
 #notification {
 	background-color	: #f0f8fd;
-	background-image	: url('/img/haxe/items/confirm.gif');
+	background-image	: url('/img/ncblog/items/confirm.gif');
 	border				: 1px solid #97cbeb;
 	color				: #09598a;
 }
 
 .error, #notification.error {
 	background-color	: #ffefa3;
-	background-image	: url('/img/haxe/items/error.gif');
+	background-image	: url('/img/ncblog/items/error.gif');
 	border				: 1px solid #d85700;
 	color				: #bf4d00;
 }
@@ -419,14 +419,14 @@ ul.menu li a:hover {
 }
 
 .login input.button, .search input.button {
-	background-image	: url('/img/haxe/buttons/button_ok.png');
+	background-image	: url('/img/ncblog/buttons/button_ok.png');
 	width				: 40px;
 	height				: 25px;
 	color				: #09598a;
 }
 
 .login input.button:hover, .search input.button:hover {
-	background-image	: url('/img/haxe/buttons/button_ok_hover.png');
+	background-image	: url('/img/ncblog/buttons/button_ok_hover.png');
 }
 
 .links {
@@ -434,7 +434,7 @@ ul.menu li a:hover {
 }
 
 .links li {
-	background			: transparent url('/img/haxe/items/ul_spot3.gif') no-repeat left center;
+	background			: transparent url('/img/ncblog/items/ul_spot3.gif') no-repeat left center;
 	margin-bottom		: 5px;
 	padding-left		: 15px;
 }
@@ -502,7 +502,7 @@ ul.buttons li {
 	float				: left;
 	margin-right		: 10px;
 	padding				: 2px 0px;
-	background			: #f4fafd url('/img/haxe/buttons/button0.gif') repeat-x bottom left;
+	background			: #f4fafd url('/img/ncblog/buttons/button0.gif') repeat-x bottom left;
 	border				: 1px solid #bde1f6;
 	font-size			: 9pt;
 	min-width			: 20px;
@@ -515,7 +515,7 @@ ul.buttons li a {
 }
 
 ul.buttons li:hover {
-	background			: #f8fcfe url('/img/haxe/buttons/button0_hover.gif');
+	background			: #f8fcfe url('/img/ncblog/buttons/button0_hover.gif');
 	border-color		: #70bdeb;
 }
 
@@ -548,7 +548,7 @@ table.history th {
 	font-variant		: small-caps;
 	font-size			: 12pt
 	height				: 30px;
-	background			: #c8e3f9 url('/img/haxe/items/bg_th1.gif') top left repeat-x;
+	background			: #c8e3f9 url('/img/ncblog/items/bg_th1.gif') top left repeat-x;
 }
 
 table.history td, table.history th {
@@ -611,11 +611,11 @@ ul.map a.no_content, ul.map a.browse {
 }
 
 ul.map a.browse {
-	background 			: url('/img/haxe/items/plus.gif') no-repeat left center;
+	background 			: url('/img/ncblog/items/plus.gif') no-repeat left center;
 }
 
 ul.map a.no_content {
-	background 			: url('/img/haxe/items/txt2.gif') no-repeat 1px center;
+	background 			: url('/img/ncblog/items/txt2.gif') no-repeat 1px center;
 }
 
 /* BROWSE */
@@ -670,14 +670,14 @@ p.browse {
 
 .api_index ul li span.pack {
 	padding-left		: 20px;
-	background-image	: url('/img/haxe/items/plus.gif');
+	background-image	: url('/img/ncblog/items/plus.gif');
 	background-repeat	: no-repeat;
 	font-weight			: bold;
 }
 
 .api_index ul li a.intern {
 	padding-left		: 20px;
-	background-image	: url('/img/haxe/items/txt2.gif');
+	background-image	: url('/img/ncblog/items/txt2.gif');
 	background-repeat	: no-repeat;
 }
 
@@ -723,7 +723,7 @@ p.browse {
 
 ul.results li {
 	padding				: 3px 0px 3px 20px;
-	background-image	: url('/img/haxe/items/ul_spot4.gif');
+	background-image	: url('/img/ncblog/items/ul_spot4.gif');
 	background-position	: 5px 10px;
 	background-repeat	: no-repeat;
 	margin-bottom		: 5px;
@@ -771,7 +771,7 @@ dl.user {
 	padding				: 5px;
 	-moz-border-radius	: 5px;
 	border				: 1px solid #c2d9e6;
-	background			: #e7f4fc url('/img/haxe/items/bg_box1.gif') top left repeat-x;
+	background			: #e7f4fc url('/img/ncblog/items/bg_box1.gif') top left repeat-x;
 	color				: #09598a;
 	min-height			: 100px;
 	width				: 300px;
@@ -797,13 +797,13 @@ dl.user dd {
 }
 
 .box1 { /* blue */
-	background			: #e8f5fc url('/img/haxe/items/bg_box1.gif') top left repeat-x;
+	background			: #e8f5fc url('/img/ncblog/items/bg_box1.gif') top left repeat-x;
 	border				: 4px solid #e8f5fc;
 	color				: #09598a;
 }
 
 .box2 { /* orange */
-	background			: #ffefa3 url('/img/haxe/items/bg_box2.gif') top left repeat-x;
+	background			: #ffefa3 url('/img/ncblog/items/bg_box2.gif') top left repeat-x;
 	border				: 4px solid #ffefa3;
 	color				: #c35700;
 }
@@ -814,7 +814,7 @@ dl.user dd {
 	width				: 281px;
 	height				: 141px;
 	display				: block;
-	background			: transparent url('/img/haxe/items/box_intro.gif') top left no-repeat;
+	background			: transparent url('/img/ncblog/items/box_intro.gif') top left no-repeat;
 	padding-top			: 1px; /* ff bug */
 	float				: left;
 	position			: relative;
@@ -848,7 +848,7 @@ dl.user dd {
 }
 
 .box_intro .img1 {
-	background-image	: url('/img/haxe/items/intro/intro1.gif');
+	background-image	: url('/img/ncblog/items/intro/intro1.gif');
 	width				: 75px;
 	height				: 56px;
 	margin-left			: 18px;
@@ -856,7 +856,7 @@ dl.user dd {
 }
 
 .box_intro .img2 {
-	background-image	: url('/img/haxe/items/intro/intro2.gif');
+	background-image	: url('/img/ncblog/items/intro/intro2.gif');
 	width				: 87px;
 	height				: 57px;
 	margin-left			: 9px;
@@ -864,7 +864,7 @@ dl.user dd {
 }
 
 .box_intro .img3 {
-	background-image	: url('/img/haxe/items/intro/intro3.gif');
+	background-image	: url('/img/ncblog/items/intro/intro3.gif');
 	width				: 81px;
 	height				: 47px;
 	margin-left			: 14px;
@@ -872,7 +872,7 @@ dl.user dd {
 }
 
 .box_intro .img4 {
-	background-image	: url('/img/haxe/items/intro/intro4.gif');
+	background-image	: url('/img/ncblog/items/intro/intro4.gif');
 	width				: 74px;
 	height				: 51px;
 	margin-left			: 17px;
