@@ -4,7 +4,7 @@
 }
 
 body {
-	background-color	: #fec736;
+	background-color	: #2d6e81;
 	font-family			: "trebuchet ms", sans-serif;
 	font-size			: 10.5pt;
 }
@@ -283,7 +283,7 @@ span.button2 a:hover {
 }
 
 .header {
-	margin-bottom		: -8px;
+	margin-bottom		: -9px;
 	height				: 102px;
 	background-image	: url('/img/ncblog/logo_haxe.gif');
 	width				: 1021px;
@@ -303,18 +303,18 @@ span.button2 a:hover {
 }
 
 .footer {
-	background-color	: #fec736;
+	background-color	: #2d6e81;
 	height				: 67px;
 	text-align			: center;
 	padding-top			: 15px;
 	background-image	: url('/img/ncblog/bg_bottom.png');
 	background-repeat	: repeat-x;
-	color				: #c35700;
+	color				: #fff;
 	font-size			: 9pt;
 }
 
 .footer a {
-	color				: #c35700;
+	color				: #fff;
 }
 
 .content  {

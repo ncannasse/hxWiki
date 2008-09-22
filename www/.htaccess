@@ -1,6 +1,6 @@
 <FilesMatch "^([_a-z0-9A-Z-])+$">
 	RewriteEngine On
-	RewriteRule (.*) /
+	RewriteRule (.*) /index.n
 </FilesMatch>
 
 <FilesMatch "^file$">
