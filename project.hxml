@@ -7,7 +7,7 @@
 
 --next
 # JS
--js www/wiki.js
+-js www/app.js
 -main JsTools
 -cp src
 

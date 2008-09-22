@@ -10,7 +10,7 @@
 		::raw '<!--[if IE 7]>'::
 		<link rel="stylesheet" type="text/css" href="/css/::config.style::_ie7.css"/>
 		::raw '<![endif]-->'::
-		<script type="text/javascript" src="/wiki.js"></script>
+		<script type="text/javascript" src="/app.js"></script>
 	</head>
 
 	<body>

@@ -2,7 +2,7 @@
   <output name="Web" mode="neko" out="www/index.n" class="App" lib="" cmd="http://dev.hxwiki.com" main="True" debug="False">-cp src
 -D spod_rtti
 -lib templo</output>
-  <output name="JS" mode="js" out="www/wiki.js" class="JsTools" lib="" cmd="" main="True" debug="False">-cp src</output>
+  <output name="JS" mode="js" out="www/app.js" class="JsTools" lib="" cmd="" main="True" debug="False">-cp src</output>
   <output name="Upload" mode="swf9" out="www/upload.swf" class="Uploader" lib="" cmd="" main="True" debug="False">-cp src</output>
   <output name="ApiSync" mode="neko" out="apisync.n" class="tools.ApiSync" lib="" cmd="" main="True" debug="False">-cp src
 -D no_remoting_shutdown</output>
@@ -10,7 +10,7 @@
 -D spod_rtti
 -lib templo
 --remap neko:php
--D root_dir</output>
+-D force_std_separator</output>
   <files path="">
     <dir path="db">
       <file path="src\db\Comment.hx" />
@@ -50,6 +50,7 @@
       <file path="tpl\en\map.mtt" />
       <file path="tpl\en\map_tree.mtt" />
       <file path="tpl\en\register.mtt" />
+      <file path="tpl\en\rss.mtt" />
       <file path="tpl\en\search.mtt" />
       <file path="tpl\en\texts.xml" />
       <file path="tpl\en\user.mtt" />
