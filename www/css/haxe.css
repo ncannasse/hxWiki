@@ -269,7 +269,7 @@ span.button2 a:hover {
 /* LAYOUT STRUCTURE */
 
 .all { /* haxe_ie6.css */
-	background			: #fff; url('/img/haxe/bg_main.gif') top left repeat-x;
+	background			: #fff url('/img/haxe/bg_main.gif') top left repeat-x;
 	background-position	: 0px 0px;
 }
 
