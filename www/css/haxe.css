@@ -269,7 +269,7 @@ span.button2 a:hover {
 /* LAYOUT STRUCTURE */
 
 .all { /* haxe_ie6.css */
-	background			: #fff url('/img/haxe/bg_main.gif') top left repeat-x;
+	background			: #fff; url('/img/haxe/bg_main.gif') top left repeat-x;
 	background-position	: 0px 0px;
 }
 
@@ -289,14 +289,20 @@ span.button2 a:hover {
 	width				: 1021px;
 }
 
-.header a {
+.header .home {
+	cursor : pointer;
+	width : 350px;
+	height: 100px;
+}
+
+.header .home a {
 	display				: none;
 }
 
 .site {
 	width				: 963px;
 	min-height			: 720px; /* haxe_ie6.css */
-	background-image	: url('/img/haxe/bg_content.png'); /* haxe_ie6.css, haxe_ie7.css */
+	background-image	: url('/img/haxe/bg_content.gif');
 	background-position	: center top;
 	padding-top			: 1px; /* ffox bug with notification */
 

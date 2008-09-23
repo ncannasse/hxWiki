@@ -1,32 +1,26 @@
 /* LAYOUT STRUCTURE */
 
-.site {	
-	background-image	: url('/img/ncblog/bg_content_ie.gif');	
-}
-
-/* */
-
-#notification, #notification.error {	
+#notification, #notification.error {
 	position			: absolute;
 	margin				: 15px 0px 0px 45px;
-	padding				: 3px;	
+	padding				: 3px;
 	text-align			: center;
-	background-image	: none;		
+	background-image	: none;
 }
 
 /* REGISTER */
 
 form.register input.field {
-	display				: block;	
+	display				: block;
 	width				: 150px;
 }
 
 form.register span.group {
 	display				: inline;
-	width				: auto;		
+	width				: auto;
 }
 
 form.register input.button {
 	margin-top			: 10px;
-	margin-left			: 90px;	
+	margin-left			: 90px;
 }

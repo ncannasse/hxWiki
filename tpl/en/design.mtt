@@ -17,7 +17,7 @@
 	<body>
 		<div class="all">
 			<div class="header">
-				<a href="/">::config.title::</a>
+				<div class="home" onclick="document.location = '/'"><a href="/">::config.title::</a></div>
 			</div>
 			<div class="site">
 				<ul class="menu">
