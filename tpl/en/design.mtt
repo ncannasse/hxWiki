@@ -10,6 +10,7 @@
 		::raw '<!--[if IE 7]>'::
 		<link rel="stylesheet" type="text/css" href="/css/::config.style::_ie7.css"/>
 		::raw '<![endif]-->'::
+		<link rel="alternate" type="application/rss+xml" title="::config.title::" href="/wiki/rss?path=::rss::" ::cond rss::/>
 		<script type="text/javascript" src="/app.js"></script>
 	</head>
 
@@ -84,8 +85,8 @@
 					<ul>
 						<li ::cond dbAccess::><a href="/db">Database</a></li>
 						<li><a href="/wiki/map">Wiki Map</a></li>
-						::if calendar::
-						<li><a href="/wiki/rss?path=::if( entries != null ) entry._path else entry._parent._path::">RSS Feed</a></li>
+						::if rss::
+						<li><a href="/wiki/rss?path=::rss::">RSS Feed</a></li>
 						::else::
 						<li><a href="/wiki/history">Latest Changes</a></li>
 						::end::

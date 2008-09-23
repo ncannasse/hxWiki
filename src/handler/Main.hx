@@ -230,9 +230,11 @@ class Main extends Handler<Void> {
 				App.context.canCreate = r.canCreate;
 				App.context.entries = db.Entry.manager.selectSubs(entry,selector);
 				App.context.calendar = new Calendar(entry,year,month);
+				App.context.rss = entry.get_path();
 			} else {
 				App.prepareTemplate("blog_post.mtt");
 				App.context.calendar = new Calendar(entry.parent,year,month);
+				App.context.rss = entry.parent.get_path();
 			}
 		}
 	}
