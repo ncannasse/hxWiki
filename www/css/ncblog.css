@@ -282,17 +282,20 @@ span.button2 a:hover {
 	background-repeat	: no-repeat;
 }
 
-.header {
-	margin-bottom		: -9px;
-	height				: 102px;
-	background-image	: url('/img/ncblog/logo_haxe.gif');
-	width				: 1021px;
+.header {	
+	height				: 101px;
+	background-image	: url('/img/ncblog/logo_haxe.gif');	
+	width				: 1151px;
+	padding-top			: 1px; /** patch for ffbox bug **/
+	margin-bottom		: -1px; /** patch for ffbox bug **/
 }
 
-.header .home {
-	cursor : pointer;
-	width : 350px;
-	height: 100px;
+.header .home {	
+	cursor 				: pointer;
+	width 				: 265px;
+	height				: 45px;
+	margin-left			: 110px;
+	margin-top			: 50px;	
 }
 
 .header .home a {
@@ -359,14 +362,10 @@ span.button2 a:hover {
 
 /* CONTENTS */
 
-/*ul.menu {
-	display				: inline;
-}*/
-
 ul.menu {
 	position			: absolute;
-	margin-top			: -22px;
-	margin-left			: 300px;
+	margin-top			: -24px;
+	margin-left			: 450px;
 }
 
 ul.menu li {
@@ -375,11 +374,11 @@ ul.menu li {
 	margin-left			: 35px;
 }
 
-ul.menu li a {
-	font-size			: 12pt;
-	color				: #c35700;
+ul.menu li a {	
+	color				: #fff;
 	font-weight			: bold;
 	text-decoration		: none;
+	font-size			: 11.5pt;
 }
 
 ul.menu li a:hover {
@@ -940,15 +939,6 @@ dl.user dd {
 .blog .create input.field {
 	display : block;
 	width : 200px;
-}
-
-ul.menu {
-	margin-left : 350px;
-}
-
-ul.menu li a {
-	color : #eef;
-	font-size : 20px;
 }
 
 /* BLOG */
