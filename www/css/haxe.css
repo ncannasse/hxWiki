@@ -121,6 +121,7 @@ ul {
 
 .view .biglist ul{
 	list-style			: none;
+	list-style-image		: none;
 	margin-left			: 10px;
 }
 
@@ -612,15 +613,17 @@ ul.map a.has_content {
 	font-style 			: normal;
 }
 
-ul.map a.no_content, ul.map a.browse {
-	padding-left 		: 20px;
+ul.map .no_content, ul.map .browse {
+	width 		: 20px;	
+	float		: left;
 }
 
-ul.map a.browse {
+ul.map .browse {
 	background 			: url('/img/haxe/items/plus.gif') no-repeat left center;
+	cursor		: pointer;
 }
 
-ul.map a.no_content {
+ul.map .no_content {
 	background 			: url('/img/haxe/items/txt2.gif') no-repeat 1px center;
 }
 
@@ -659,6 +662,7 @@ p.browse {
 .api_index ul li {
   margin				: 0;
   list-style			: none;
+  list-style-image		: none;
   -moz-border-radius	: 10px;
 }
 
