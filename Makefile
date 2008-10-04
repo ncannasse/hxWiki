@@ -6,7 +6,7 @@ templates:
 
 deploy_haxe: templates
 	haxe project.hxml
-	rsync -avz --delete --exclude "www/favicon.ico" --exclude ".htaccess" --exclude "www/file" --exclude "www/_media" --exclude="*.out" --exclude="*.svn" --exclude="*.neko" tpl www ncannasse@haxe.org:/data/haxe
+	rsync -avz --delete --exclude "www/favicon.ico" --exclude ".htaccess" --exclude "www/file" --exclude "www/_media" --exclude="*.out" --exclude="*.svn" --exclude="*.neko" --exclude="*.php" tpl www ncannasse@haxe.org:/data/haxe
 
 api:
 	haxe project.hxml
