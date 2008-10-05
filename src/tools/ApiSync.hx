@@ -191,7 +191,7 @@ class ApiSync {
 			for( x in subs )
 				processIndex(x,"  * ");
 			current.add("\n[/api_index]");
-			if( api.write(path,lang,(name == "" ? "haXe API" : name),current.toString()) )
+			if( full != "flash.system" && api.write(path,lang,(name == "" ? "haXe API" : name),current.toString()) )
 				log("Updating "+full+" ["+lang+"]");
 			else
 				log("Skipping "+full+" ["+lang+"]",true);
@@ -208,6 +208,11 @@ class ApiSync {
 			path.unshift("api");
 			// get previous content
 			var prev = api.read(path,lang);
+			// only synchronize modified classes
+			if( prev == null && lang != "en" ) {
+				log("Skipping "+i.path+" ["+lang+"]",true);
+				return;
+			}
 			previousContent = (prev == null) ? "" : prev.content;
 			// set context
 			typeParams = prefix(i.params,i.path);

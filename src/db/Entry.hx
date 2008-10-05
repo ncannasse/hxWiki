@@ -12,7 +12,7 @@ class Entry extends neko.db.Object {
 	static var INDEXES = [["pid","name",true]];
 	static function RELATIONS() {
 		return [
-			{ key : "pid", prop : "parent", manager : Entry.manager, lock : false },
+			{ key : "pid", prop : "parent", manager : Entry.manager, lock : false, cascade : true },
 			{ key : "vid", prop : "version", manager : Version.manager, lock : false },
 			{ key : "lid", prop : "lang", manager : Lang.manager, lock : false },
 		];

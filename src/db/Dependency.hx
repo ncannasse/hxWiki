@@ -6,7 +6,7 @@ class Dependency extends neko.db.Object {
 	static function RELATIONS() {
 		return [
 			{ prop : "entry", key : "eid", manager : Entry.manager, lock : false },
-			{ prop : "target", key : "tid", manager : Entry.manager, lock : false },
+			{ prop : "target", key : "tid", manager : Entry.manager, lock : false, cascade : true },
 		];
 	}
 	public static var manager = new DependencyManager(Dependency);
