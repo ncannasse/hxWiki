@@ -186,6 +186,12 @@ class ApiSync {
 			var path = full.split(".");
 			if( full == "" ) path = [];
 			path.unshift("api");
+
+			if( lang != "en" && !api.exists(path,lang) ) {
+				log("Skipping all "+full+" ["+lang+"]",true);
+				return;
+			}
+
 			current = new StringBuf();
 			current.add("[api_index]\n\n");
 			for( x in subs )
@@ -539,8 +545,7 @@ class ApiSync {
 		}
 		parser.sort();
 		log("Generating");
-		var langs = api.getLangs(["api"]);
-		for( l in langs )
+		for( l in api.getAllLangs() )
 			s.process(TPackage("","",parser.root),l);
 		log("Done");
 	}

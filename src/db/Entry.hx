@@ -135,8 +135,8 @@ class EntryManager extends neko.db.Manager<Entry> {
 	}
 
 	public function resolve( path : List<String>, lang : Lang ) {
-		var eid = null;
-		var vid = null;
+		var eid : Int = null;
+		var vid : Int = null;
 		for( name in path ) {
 			var r = result("SELECT id, vid FROM Entry WHERE name = "+quote(name)+" AND lid = "+lang.id+" AND pid "+((eid == null)?"IS NULL":"= "+eid));
 			if( r == null )

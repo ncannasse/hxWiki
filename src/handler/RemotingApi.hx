@@ -34,6 +34,15 @@ class RemotingApi {
 		return langs;
 	}
 
+	public function getAllLangs() : Array<String> {
+		return Lambda.array(db.Lang.manager.all(false).map(function(l) return l.code));
+	}
+
+	public function exists( path : Array<String>, lang : String ) : Bool {
+		var e = db.Entry.get(Lambda.list(path),getLang(lang));
+		return e.id != null;
+	}
+
 	public function read( path : Array<String>, lang : String ) : Null<{ title : String, content : String }> {
 		var e = main.getEntry(path,getLang(lang));
 		if( !e.hasContent() )
