@@ -7,14 +7,21 @@ class Uploader {
 
 	static function main() {
 		if( haxe.Firebug.detect() ) haxe.Firebug.redirectTraces();
-		flash.Lib.current.stage.scaleMode = flash.display.StageScaleMode.NO_SCALE;
-		flash.Lib.current.stage.scaleMode = flash.display.StageScaleMode.NO_SCALE;
-		params = flash.Lib.current.loaderInfo.parameters;
+		var mc = flash.Lib.current;
+		var stage = mc.stage;
+		stage.scaleMode = flash.display.StageScaleMode.NO_SCALE;
+		params = mc.loaderInfo.parameters;
 		try {
 			cnx = haxe.remoting.ExternalConnection.jsConnect(params.object,null);
 		} catch( e : Dynamic ) {
 			trace(e);
 		}
+		mc.graphics.beginFill(0,0);
+		mc.graphics.drawRect(0,0,1000,1000);
+		stage.addEventListener(flash.events.MouseEvent.CLICK,function(_) browse());
+	}
+
+	static function browse() {
 		f = new flash.net.FileReference();
 		f.addEventListener("select",onBrowseSelect);
 		f.browse([new flash.net.FileFilter(params.title,params.pattern)]);

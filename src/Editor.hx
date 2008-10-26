@@ -1,6 +1,7 @@
 #if js
 import js.Dom.Textarea;
 import js.Dom.Event;
+import js.Dom.HtmlDom;
 #end
 
 typedef EditorButton = {
@@ -112,7 +113,52 @@ class Editor {
 		return false;
 	}
 
-	public function initUpload( title, pattern, img ) {
+
+	public function initUpload(button,title,pattern,img) {
+		var loaded = false;
+		var but = js.Lib.document.getElementById(button);
+		var me = this;
+		var target = button + "_swf";
+		js.Lib.document.write('<div id="'+target+'"></div>');
+		but.onmouseover = function(_) {
+			if(loaded) return;
+			loaded = true;
+			var doc = js.Lib.document;
+			var win = js.Lib.window;
+			var swf = doc.getElementById(target);
+			swf.style.position = "absolute";
+			swf.style.left = "0px";
+			swf.style.top = "0px";
+			var p = getElementPosition(but);
+			swf.style.width = p.width + "px";
+			swf.style.height = p.height + "px";
+			swf.style.zIndex = 10;
+			var p2 = getElementPosition(swf);
+			swf.style.top = (p.y - p2.y) + "px";
+			swf.style.left = (p.x - p2.x) + "px";
+			me.displayUpload(target,title,pattern,img);
+		}
+	}
+
+	static function getElementPosition( o : HtmlDom ) {
+		var ret = { x : 0, y : 0, width : o.offsetWidth, height : o.offsetHeight}
+		var p = o;
+		while(p != null) {
+			if(p.offsetParent != null) {
+				ret.x += p.offsetLeft - p.scrollLeft;
+				ret.y += p.offsetTop - p.scrollTop;
+			}
+			else {
+				ret.x += p.offsetLeft;
+				ret.y += p.offsetTop;
+			}
+			p = p.offsetParent;
+		}
+		return ret;
+	}
+
+
+	function displayUpload( target, title, pattern, img ) {
 		var params = {
 			title : title,
 			pattern : pattern,
@@ -123,12 +169,12 @@ class Editor {
 			object : config.name,
 			sid : config.sid,
 		};
-		var swf = new js.SWFObject("/upload.swf","swf_upload",100,5,"9","#FFFFFF");
+		var swf = new js.SWFObject("/upload.swf","swf_upload",cast "100%",cast "100%","9","#FFFFFF");
 		var params = Lambda.map(Reflect.fields(params),function(k) return k+"="+StringTools.urlEncode(Reflect.field(params,k)));
 		swf.addParam("AllowScriptAccess","always");
 		swf.addParam("wmode","transparent");
 		swf.addParam("FlashVars",params.join("&"));
-		swf.write("upload");
+		swf.write(target);
 		uploadImage = img;
 		// init incoming connection
 		var me = this;

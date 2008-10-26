@@ -16,7 +16,6 @@
 
 <div class="editor" ::cond edit::>
 	::raw editor.initJS()::
-	<div id="upload"></div>
 	<form method="POST" action="/wiki/edit?submit=1">
 		<input type="hidden" name="path" value="::entry._path::"/>
 		<input type="hidden" name="lang" value="::entry._lang.code::"/>
@@ -27,8 +26,12 @@
 			<li><a href="#" onclick="::editor.buttonAction(b)::">::b.label::</a></li>
 			::end::
 			<li><a href="#" onclick="::editor.config.name::.spanAction('Please choose CSS class :')">SPAN</a></li>
-			<li ::cond group.canUploadImage::><a href="#" onclick="::editor.config.name::.initUpload('Image','::editor.extensions(extensions.images)::',true)">IMG</a></li>
-			<li ::cond group.canUploadImage::><a href="#" onclick="::editor.config.name::.initUpload('All','::editor.extensions(extensions.files)::',false)">FILE</a></li>
+			<li ::cond group.canUploadImage::><a href="#" id="upload_img">IMG</a></li>
+			<li ::cond group.canUploadImage::><a href="#" id="upload_file">FILE</a></li>
+			<script type="text/javascript">
+				::editor.config.name::.initUpload('upload_img','Image','::editor.extensions(extensions.images)::',true);
+				::editor.config.name::.initUpload('upload_file','All','::editor.extensions(extensions.files)::',false);
+			</script>
 		</ul>
 		<span class="tfield">Content :</span>
 		<textarea name="::editor.content::" tabindex="2" onkeyup="::editor.config.name::.updatePreview()" onkeydown="return ::editor.config.name::.handleTab(event)">::if entry._version != null::::entry._version.content::::end::</textarea>
