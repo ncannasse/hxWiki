@@ -417,7 +417,7 @@ class Editor {
 		});
 		t = ~/@([ A-Za-z0-9._-]+\.swf):([0-9]+)x([0-9]+)(:[^@]+)?@/.customReplace(t,function(r) {
 			var id = me.uniqueId++;
-			var str = '<div id="swf_'+id+'">['+r.matched(1)+']</div>';
+			var str = '<div class="swf" id="swf_'+id+'" style="width : '+r.matched(2)+'px">['+r.matched(1)+']</div>';
 			str += '<script type="text/javascript" id="js_'+id+'">';
 			str += "var o = new js.SWFObject('/file/"+r.matched(1)+"','swfobj_"+id+"',"+r.matched(2)+","+r.matched(3)+",'9','#FFFFFF');";
 			var params = r.matched(4);
