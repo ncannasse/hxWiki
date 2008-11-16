@@ -55,8 +55,12 @@
 			<li><a href="#" onclick="::editor.buttonAction(b)::">::b.label::</a></li>
 			::end::
 			<li><a href="#" onclick="::editor.config.name::.spanAction('Please choose CSS class :')">SPAN</a></li>
-			<li ::cond group.canUploadImage::><a href="#" onclick="::editor.config.name::.initUpload('Image','::editor.extensions(extensions.images)::',true)">IMG</a></li>
-			<li ::cond group.canUploadImage::><a href="#" onclick="::editor.config.name::.initUpload('All','::editor.extensions(extensions.files)::',false)">FILE</a></li>
+			<li ::cond group.canUploadImage::><a href="#" id="upload_img">IMG</a></li>
+			<li ::cond group.canUploadImage::><a href="#" id="upload_file">FILE</a></li>
+			<script type="text/javascript">
+				::editor.config.name::.initUpload('upload_img','Image','::editor.extensions(extensions.images)::',true);
+				::editor.config.name::.initUpload('upload_file','All','::editor.extensions(extensions.files)::',false);
+			</script>
 		</ul>
 		<span class="tfield">Message :</span>
 		<textarea name="::editor.content::" tabindex="5" onkeyup="::editor.config.name::.updatePreview()" onkeydown="return ::editor.config.name::.handleTab(event)">::request.get(editor.content,'')::</textarea>
