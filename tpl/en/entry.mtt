@@ -16,6 +16,11 @@
 
 <div class="editor" ::cond edit::>
 	::raw editor.initJS()::
+	<script type="text/javascript">
+		window.onbeforeunload = function() {
+			return false;
+		};
+	</script>
 	<form method="POST" action="/wiki/edit?submit=1">
 		<input type="hidden" name="path" value="::entry._path::"/>
 		<input type="hidden" name="lang" value="::entry._lang.code::"/>
@@ -35,8 +40,8 @@
 		</ul>
 		<span class="tfield">Content :</span>
 		<textarea name="::editor.content::" tabindex="2" onkeyup="::editor.config.name::.updatePreview()" onkeydown="return ::editor.config.name::.handleTab(event)">::if entry._version != null::::entry._version.content::::end::</textarea>
-		<input type="submit" value="Modify" class="button"/>
-		<input type="submit" value="Cancel" onclick="if( confirm('Cancel Changes ?') ) document.location = '/::entry._path::'; return false" class="button"/>
+		<input type="submit" value="Modify" class="button" onclick="window.onbeforeunload = null; return true"/>
+		<input type="submit" value="Cancel" onclick="window.onbeforeunload = null; document.location = '/::entry._path::'; return false" class="button"/>
 	</form>
 </div>
 
