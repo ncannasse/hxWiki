@@ -46,6 +46,7 @@
       <file path="tpl\en\entry.mtt" />
       <file path="tpl\en\error.mtt" />
       <file path="tpl\en\history.mtt" />
+      <file path="tpl\en\latestComments.mtt" />
       <file path="tpl\en\macros.mtt" />
       <file path="tpl\en\map.mtt" />
       <file path="tpl\en\map_tree.mtt" />

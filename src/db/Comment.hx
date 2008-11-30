@@ -9,7 +9,7 @@ class Comment extends neko.db.Object {
 			{ prop : "user", key : "uid", manager : User.manager, lock : false },
 		];
 	}
-	public static var manager = new neko.db.Manager<Comment>(Comment);
+	public static var manager = new CommentManager(Comment);
 
 	public var id : SId;
 	public var entry(dynamic,dynamic) : Entry;
@@ -20,5 +20,13 @@ class Comment extends neko.db.Object {
 	public var url : SNull<STinyText>;
 	public var content : SText;
 	public var htmlContent : SText;
+
+}
+
+class CommentManager extends neko.db.Manager<Comment> {
+
+	public function browse( pos : Int, count : Int ) {
+		return objects("SELECT * FROM Comment ORDER BY date DESC LIMIT "+pos+","+count,false);
+	}
 
 }

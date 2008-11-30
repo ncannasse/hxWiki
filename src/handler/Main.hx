@@ -62,6 +62,7 @@ class Main extends Handler<Void> {
 		free("latest",doLatest);
 		free("comment",doComment);
 		free("deleteComment",doDeleteComment);
+		free("latestComments","latestComments.mtt",doLatestComments);
 		free("rss","rss.mtt",doRSS);
 	}
 
@@ -828,6 +829,12 @@ class Main extends Handler<Void> {
 			neko.Sys.setTimeLocale("en_US.UTF8");
 		App.context.entry = entry;
 		App.context.posts = db.Entry.manager.selectSubs(entry,SPage(0,10));
+	}
+
+	function doLatestComments() {
+		var page = request.getInt("page",1);
+		App.context.page = page;
+		App.context.comments = db.Comment.manager.browse(page * 20,20);
 	}
 
 }

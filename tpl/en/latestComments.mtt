@@ -1,0 +1,38 @@
+::use 'design.mtt'::
+
+<h1>Latest Comments</h1>
+
+<ul class="comments">
+	::foreach c comments::
+	<li>
+		<div class="entry">
+			<a href="/::c._entry._path::">::c._entry._title::</a>
+		</div>
+		<div class="user">
+			::if c.uid::
+				<a href="/wiki/user?name=::c._user.name::">::c._user.realName::</a>
+			::elseif c.url::
+				<a href="::c.url::">::c.userName::</a>
+			::else::
+				::c.userName::
+			::end::
+		</div>
+		<a class="admin" href="/wiki/deleteComment?id=::c.id::" ::cond canDeleteComments::>[delete]</a>
+		<div class="date">
+			::dateFormat(c.date,'%b %d, %Y at %H:%M')::
+		</div>
+		<div class="comment">
+			::raw c.htmlContent::
+		</div>
+	</li>
+	::end::
+</ul>
+
+<a href="/wiki/latestComments?page=::page + 1::">&lt; Prev</a> |
+::if page > 1::
+<a href="/wiki/latestComments?page=::page - 1::">Next &gt;</a>
+::else::
+Next &gt;
+::end::
+
+::end::

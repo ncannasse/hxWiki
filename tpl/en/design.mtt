@@ -90,6 +90,7 @@
 						::else::
 						<li><a href="/wiki/history">Latest Changes</a></li>
 						::end::
+						<li ::cond canDeleteComments::><a href="/wiki/latestComments">Latest Comments</a></li>
 						<li ::cond user::><a href="/wiki/logout" $$confirm()>Logout</a></li>
 						::foreach l links(1)::
 						<li><a href="::l.url::">::l.title::</a></li>
