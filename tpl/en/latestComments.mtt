@@ -29,7 +29,7 @@
 </ul>
 
 <a href="/wiki/latestComments?page=::page + 1::">&lt; Prev</a> |
-::if page > 1::
+::if page > 0::
 <a href="/wiki/latestComments?page=::page - 1::">Next &gt;</a>
 ::else::
 Next &gt;

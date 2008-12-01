@@ -832,7 +832,7 @@ class Main extends Handler<Void> {
 	}
 
 	function doLatestComments() {
-		var page = request.getInt("page",1);
+		var page = request.getInt("page",0);
 		App.context.page = page;
 		App.context.comments = db.Comment.manager.browse(page * 20,20);
 	}
