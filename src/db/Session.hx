@@ -83,6 +83,8 @@ class Session extends SessionData {
 		s.sid = makeUniqueId(32);
 		s.ctime = Date.now();
 		s.userName = "";
+		if( Std.random(1000) == 0 )
+			cleanup(3);
 		return s;
 	}
 
