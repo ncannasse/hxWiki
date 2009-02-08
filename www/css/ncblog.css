@@ -283,20 +283,20 @@ span.button2 a:hover {
 	background-repeat	: no-repeat;
 }
 
-.header {	
+.header {
 	height				: 101px;
-	background-image	: url('/img/ncblog/logo_haxe.gif');	
+	background-image	: url('/img/ncblog/logo_haxe.gif');
 	width				: 1151px;
 	padding-top			: 1px; /** patch for ffbox bug **/
 	margin-bottom		: -1px; /** patch for ffbox bug **/
 }
 
-.header .home {	
+.header .home {
 	cursor 				: pointer;
 	width 				: 265px;
 	height				: 45px;
 	margin-left			: 110px;
-	margin-top			: 50px;	
+	margin-top			: 50px;
 }
 
 .header .home a {
@@ -375,7 +375,7 @@ ul.menu li {
 	margin-left			: 35px;
 }
 
-ul.menu li a {	
+ul.menu li a {
 	color				: #fff;
 	font-weight			: bold;
 	text-decoration		: none;
@@ -386,7 +386,7 @@ ul.menu li a:hover {
 	text-decoration		: underline;
 }
 
-.login, .langs, .search, .links, .calendar {
+.login, .langs, .search, .links, .calendar, .menu2 {
 	font-size			: 9pt;
 	width				: 164px;
 	position			: absolute;
@@ -654,7 +654,7 @@ p.browse {
 
 .api_index ul {
 	margin				: 0;
-	list-style-image	: none;	
+	list-style-image	: none;
 }
 
 .api_index ul ul {
@@ -927,8 +927,22 @@ dl.user dd {
 	margin-top : 320px;
 }
 
+.menu2 {
+	margin-top : 470px;
+}
+
 .login {
-	margin-top : 450px;
+	margin-top : 65px;
+	margin-left : 950px;
+	color : #888;
+}
+
+.login input.field {
+	border : 1px solid #C3DCEB;
+}
+
+.login h1, .login .button {
+	display : none;
 }
 
 .langs, .login p {
