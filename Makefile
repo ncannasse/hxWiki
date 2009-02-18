@@ -1,16 +1,24 @@
-all:
+RSYNC_EXCLUDES=--exclude "www/favicon.ico" --exclude ".htaccess" --exclude "www/file" --exclude "www/_media" --exclude="*.out" --exclude="*.svn" --exclude="*.neko" --exclude="*.php"
+
+all: compile
+
+prepare: templates compile
 
 templates:
 	(cd tpl/en && temploc2 -output ../tmp/ -macros macros.mtt *.mtt)
 	(cd tpl/en && temploc2 -php -output ../tmp/ -macros macros.mtt *.mtt)
 
-deploy_haxe: templates
+compile:
 	haxe project.hxml
-	rsync -avz --delete --exclude "www/favicon.ico" --exclude ".htaccess" --exclude "www/file" --exclude "www/_media" --exclude="*.out" --exclude="*.svn" --exclude="*.neko" --exclude="*.php" tpl www ncannasse@haxe.org:/data/haxe
 
-deploy_kaze: templates
-	haxe project.hxml
-	rsync -avz --delete --exclude "www/favicon.ico" --exclude ".htaccess" --exclude "www/file" --exclude "www/_media" --exclude="*.out" --exclude="*.svn" --exclude="*.neko" --exclude="*.php" tpl www ncannasse@kazegames.com:/data/kaze_www
+deploy_haxe: prepare
+	rsync -avz --delete $(RSYNC_EXCLUDES) tpl www ncannasse@haxe.org:/data/haxe
+
+deploy_nc: prepare
+	rsync -avz --delete $(RSYNC_EXCLUDES) tpl www ncannasse@kazegames.com:/data/ncannasse.fr
+
+deploy_kaze: prepare
+	rsync -avz --delete $(RSYNC_EXCLUDES) tpl www ncannasse@kazegames.com:/data/kaze_www
 
 api:
 	haxe project.hxml
