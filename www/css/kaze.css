@@ -4,7 +4,8 @@
 }
 
 body {
-	background-color	: #fec736;
+	background-color	: #2d6e81;
+	background-image		: url('/img/kaze/bg.gif');
 	font-family			: "trebuchet ms", sans-serif;
 	font-size			: 10.5pt;
 }
@@ -108,13 +109,13 @@ ul {
 }
 
 .view ul {
-	list-style-image	: url('/img/haxe/items/ul_spot.gif');
+	list-style-image	: url('/img/ncblog/items/ul_spot.gif');
 	list-style-position	: outside;
 	margin				: 5px 0px 25px 22px;
 }
 
 .view ul ul {
-	list-style-image	: url('/img/haxe/items/ul_spot4.gif');
+	list-style-image	: url('/img/ncblog/items/ul_spot4.gif');
 	margin				: 5px 0px 5px 25px;
 }
 
@@ -130,7 +131,7 @@ ul {
 }
 
 .view .biglist li {
-	background-image	: url('/img/haxe/items/ul_spot2.gif');
+	background-image	: url('/img/ncblog/items/ul_spot2.gif');
 	background-position	: 0px 2px;
 	background-repeat	: no-repeat;
 	padding-left		: 24px;
@@ -138,7 +139,7 @@ ul {
 	text-align			: justify;
 }
 .view .biglist ul ul li {
-	list-style-image 	: url('/img/haxe/items/ul_spot.gif');
+	list-style-image 	: url('/img/ncblog/items/ul_spot.gif');
 	background 			: none;
 	padding-left 		: 0px;
 	margin-bottom 		: 1px;
@@ -230,7 +231,7 @@ textarea {
 	border				: 1px solid #97cbeb;
 }
 
-.content input.button, span.button a, span.button2 a {
+.content input.button, span.button a {
 	border-style		: none;
 	width				: 110px;
 	height				: 34px;
@@ -239,13 +240,8 @@ textarea {
 }
 
 .content input.button, span.button a {
-	background			: transparent url('/img/haxe/buttons/button1.png') top left no-repeat;
+	background			: transparent url('/img/ncblog/buttons/button1.png') top left no-repeat;
 	color				: #09598a;
-}
-
-span.button2 a {
-	background			: transparent url('/img/haxe/buttons/button2.png') top left no-repeat;
-	color				: #9d4700;
 }
 
 .content input.button {
@@ -254,7 +250,7 @@ span.button2 a {
 	font-size			: 9.5pt;
 }
 
-span.button a, span.button2 a {
+span.button a {
 	display				: block;
 	text-align			: center;
 	height				: 28px;
@@ -264,17 +260,13 @@ span.button a, span.button2 a {
 }
 
 .content input.button:hover, span.button a:hover{
-	background-image	: url('/img/haxe/buttons/button1_hover.png');
-}
-
-span.button2 a:hover {
-	background-image	: url('/img/haxe/buttons/button2_hover.png');
+	background-image	: url('/img/ncblog/buttons/button1_hover.png');
 }
 
 /* LAYOUT STRUCTURE */
 
 .all { /* haxe_ie6.css */
-	background			: #fff url('/img/haxe/bg_main.gif') top left repeat-x;
+	background			: url('/img/kaze/bg_main.gif') top left repeat-x;
 	background-position	: 0px 0px;
 }
 
@@ -288,16 +280,19 @@ span.button2 a:hover {
 }
 
 .header {
-	margin-bottom		: -8px;
-	height				: 102px;
-	background-image	: url('/img/haxe/logo_haxe.gif');
-	width				: 1021px;
+	height				: 150px;
+	background-image	: url('/img/kaze/kaze_logo.gif');
+	width				: 960px;
+	padding-top			: 1px; /** patch for ffbox bug **/
+	margin-bottom		: -1px; /** patch for ffbox bug **/
 }
 
 .header .home {
-	cursor : pointer;
-	width : 350px;
-	height: 100px;
+	cursor 				: pointer;
+	width 				: 265px;
+	height				: 45px;
+	margin-left			: 110px;
+	margin-top			: 50px;
 }
 
 .header .home a {
@@ -305,31 +300,30 @@ span.button2 a:hover {
 }
 
 .site {
-	width				: 963px;
+	width				: 960px;
 	min-height			: 720px; /* haxe_ie6.css */
-	background-image	: url('/img/haxe/bg_content.gif');
+	background-image	: url('/img/kaze/bg_repeat.gif');
+	background-repeat	: repeat-y;
 	background-position	: center top;
 	padding-top			: 1px; /* ffox bug with notification */
 
 }
 
 .footer {
-	background-color	: #fec736;
+	background-color	: #2d6e81;
 	height				: 67px;
 	text-align			: center;
 	padding-top			: 15px;
-	background-image	: url('/img/haxe/bg_bottom.png');
+	background-image	: url('/img/kaze/bg_bottom.gif');
 	background-repeat	: repeat-x;
-	color				: #c35700;
 	font-size			: 9pt;
 }
 
 .footer a {
-	color				: #c35700;
 }
 
 .content  {
-	padding				: 45px 45px 45px 45px;
+	padding				: 5px 45px 45px 45px;
 	width				: 635px;
 }
 
@@ -346,14 +340,14 @@ span.button2 a:hover {
 
 #notification {
 	background-color	: #f0f8fd;
-	background-image	: url('/img/haxe/items/confirm.gif');
+	background-image	: url('/img/ncblog/items/confirm.gif');
 	border				: 1px solid #97cbeb;
 	color				: #09598a;
 }
 
 .error, #notification.error {
 	background-color	: #ffefa3;
-	background-image	: url('/img/haxe/items/error.gif');
+	background-image	: url('/img/ncblog/items/error.gif');
 	border				: 1px solid #d85700;
 	color				: #bf4d00;
 }
@@ -364,14 +358,10 @@ span.button2 a:hover {
 
 /* CONTENTS */
 
-/*ul.menu {
-	display				: inline;
-}*/
-
 ul.menu {
 	position			: absolute;
-	margin-top			: -22px;
-	margin-left			: 300px;
+	margin-top			: -90px;
+	margin-left			: 600px;
 }
 
 ul.menu li {
@@ -381,28 +371,27 @@ ul.menu li {
 }
 
 ul.menu li a {
-	font-size			: 12pt;
-	color				: #c35700;
 	font-weight			: bold;
 	text-decoration		: none;
+	font-size			: 11.5pt;
 }
 
 ul.menu li a:hover {
 	text-decoration		: underline;
 }
 
-.login, .langs, .search, .links {
+.login, .langs, .search, .links, .calendar, .menu2 {
 	font-size			: 9pt;
 	width				: 164px;
 	position			: absolute;
-	margin-left			: 740px;
+	margin-left			: 750px;
 }
 
 .login {
-	margin-top			: 45px;
+	margin-top			: 0px;
 }
 
-.login h1, .langs h1, .search h1, .links h1 {
+.login h1, .langs h1, .search h1, .links h1, .calendar h1 {
 	color				: #4381a7;
 	font-size			: 11pt;
 	border-bottom		: 2px solid #d4ebf9;
@@ -419,6 +408,10 @@ ul.menu li a:hover {
 	text-align			: right;
 }
 
+.login form .group {
+	display : block;
+}
+
 .login input.field {
 	width				: 100px;
 	margin-bottom		: 2px;
@@ -430,14 +423,14 @@ ul.menu li a:hover {
 }
 
 .login input.button, .search input.button {
-	background-image	: url('/img/haxe/buttons/button_ok.png');
+	background-image	: url('/img/ncblog/buttons/button_ok.png');
 	width				: 40px;
 	height				: 25px;
 	color				: #09598a;
 }
 
 .login input.button:hover, .search input.button:hover {
-	background-image	: url('/img/haxe/buttons/button_ok_hover.png');
+	background-image	: url('/img/ncblog/buttons/button_ok_hover.png');
 }
 
 .links {
@@ -445,13 +438,13 @@ ul.menu li a:hover {
 }
 
 .links li {
-	background			: transparent url('/img/haxe/items/ul_spot3.gif') no-repeat left center;
+	background			: transparent url('/img/ncblog/items/ul_spot3.gif') no-repeat left center;
 	margin-bottom		: 5px;
 	padding-left		: 15px;
 }
 
 .search {
-	margin-top			: 315px;
+	margin-top			: 350px;
 }
 
 .search form input {
@@ -513,7 +506,7 @@ ul.buttons li {
 	float				: left;
 	margin-right		: 10px;
 	padding				: 2px 0px;
-	background			: #f4fafd url('/img/haxe/buttons/button0.gif') repeat-x bottom left;
+	background			: #f4fafd url('/img/ncblog/buttons/button0.gif') repeat-x bottom left;
 	border				: 1px solid #bde1f6;
 	font-size			: 9pt;
 	min-width			: 20px;
@@ -526,7 +519,7 @@ ul.buttons li a {
 }
 
 ul.buttons li:hover {
-	background			: #f8fcfe url('/img/haxe/buttons/button0_hover.gif');
+	background			: #f8fcfe url('/img/ncblog/buttons/button0_hover.gif');
 	border-color		: #70bdeb;
 }
 
@@ -559,7 +552,7 @@ table.history th {
 	font-variant		: small-caps;
 	font-size			: 12pt
 	height				: 30px;
-	background			: #c8e3f9 url('/img/haxe/items/bg_th1.gif') top left repeat-x;
+	background			: #c8e3f9 url('/img/ncblog/items/bg_th1.gif') top left repeat-x;
 }
 
 table.history td, table.history th {
@@ -618,12 +611,12 @@ ul.map a.has_content {
 }
 
 ul.map .no_content, ul.map .browse {
-	width 		: 20px;	
+	width 		: 20px;
 	float		: left;
 }
 
 ul.map .browse {
-	background 			: url('/img/haxe/items/plus.gif') no-repeat left center;
+	background 			: url('/img/ncblog/items/plus.gif') no-repeat left center;
 	cursor		: pointer;
 }
 
@@ -666,7 +659,7 @@ p.browse {
 .api_index ul li {
   margin				: 0;
   list-style			: none;
-  list-style-image		: none;
+  list-style-image	: none;
   -moz-border-radius	: 10px;
 }
 
@@ -684,7 +677,7 @@ p.browse {
 
 .api_index ul li span.pack {
 	padding-left		: 20px;
-	background-image	: url('/img/haxe/items/plus.gif');
+	background-image	: url('/img/ncblog/items/plus.gif');
 	background-repeat	: no-repeat;
 	font-weight			: bold;
 }
@@ -737,7 +730,7 @@ p.browse {
 
 ul.results li {
 	padding				: 3px 0px 3px 20px;
-	background-image	: url('/img/haxe/items/ul_spot4.gif');
+	background-image	: url('/img/ncblog/items/ul_spot4.gif');
 	background-position	: 5px 10px;
 	background-repeat	: no-repeat;
 	margin-bottom		: 5px;
@@ -785,7 +778,7 @@ dl.user {
 	padding				: 5px;
 	-moz-border-radius	: 5px;
 	border				: 1px solid #c2d9e6;
-	background			: #e7f4fc url('/img/haxe/items/bg_box1.gif') top left repeat-x;
+	background			: #e7f4fc url('/img/ncblog/items/bg_box1.gif') top left repeat-x;
 	color				: #09598a;
 	min-height			: 100px;
 	width				: 300px;
@@ -811,96 +804,190 @@ dl.user dd {
 }
 
 .box1 { /* blue */
-	background			: #e8f5fc url('/img/haxe/items/bg_box1.gif') top left repeat-x;
+	background			: #e8f5fc url('/img/ncblog/items/bg_box1.gif') top left repeat-x;
 	border				: 4px solid #e8f5fc;
 	color				: #09598a;
 }
 
 .box2 { /* orange */
-	background			: #ffefa3 url('/img/haxe/items/bg_box2.gif') top left repeat-x;
+	background			: #ffefa3 url('/img/ncblog/items/bg_box2.gif') top left repeat-x;
 	border				: 4px solid #ffefa3;
 	color				: #c35700;
 }
 
-/* INTRO */
+/* NC BLOG */
 
-.box_intro {
-	width				: 281px;
-	height				: 141px;
-	display				: block;
-	background			: transparent url('/img/haxe/items/box_intro.gif') top left no-repeat;
-	padding-top			: 1px; /* ff bug */
-	float				: left;
-	position			: relative;
-	margin-right		: 15px;
-	margin-left			: 10px;
-	margin-bottom		: 20px;
+.calendar {
+	margin-top : 100px;
 }
 
-.box_intro .title:first-letter {
-	font-size			: 11pt;
+.calendar table {
+	margin-left : 15px;
+	font-size : 10pt;
 }
 
-.box_intro .title {
-	color				: #ec7a01;
-	margin-left			: 85px;
-	margin-top			: 20px;
-	display				: block;
-	position			: absolute;
+.calendar .next {
+	text-align : right;
 }
 
-.box_intro .title a {
-	color				: #ec7a01;
-	font-size			: 16pt;
-	font-weight			: bold;
+.search {
+	margin-top : 30px;
 }
 
-.box_intro .img1, .box_intro .img2, .box_intro .img3, .box_intro .img4 {
-	background-position	: top left;
-	background-repeat	: no-repeat;
-	position			: absolute;
+.links {
+	margin-top : 330px;
 }
 
-.box_intro .img1 {
-	background-image	: url('/img/haxe/items/intro/intro1.gif');
-	width				: 75px;
-	height				: 56px;
-	margin-left			: 18px;
-	margin-top			: 45px;
+.menu2 {
+	margin-top : 470px;
 }
 
-.box_intro .img2 {
-	background-image	: url('/img/haxe/items/intro/intro2.gif');
-	width				: 87px;
-	height				: 57px;
-	margin-left			: 9px;
-	margin-top			: 45px;
+.login {
+	margin-top : 0px;
+	margin-left : 950px;
+	color : #888;
 }
 
-.box_intro .img3 {
-	background-image	: url('/img/haxe/items/intro/intro3.gif');
-	width				: 81px;
-	height				: 47px;
-	margin-left			: 14px;
-	margin-top			: 45px;
+.login input.field {
+	border : 1px solid #C3DCEB;
 }
 
-.box_intro .img4 {
-	background-image	: url('/img/haxe/items/intro/intro4.gif');
-	width				: 74px;
-	height				: 51px;
-	margin-left			: 17px;
-	margin-top			: 45px;
+.login h1, .login .button {
+	display : none;
 }
 
-.box_intro .desc {
-	font-size			: 9pt;
-	width				: 185px;
-	margin-left			: 85px;
-	margin-top			: 50px;
-	position			: absolute;
-	z-index				: 1;
-	text-align			: left;
-	display				: block;
-	color				: #09598a;
+.langs, .login p {
+	display : none;
 }
+
+.blog .link_prev, .blog .link_next, .blog .link_create {
+	display : inline;
+	margin-right : 20px;
+}
+
+.blog .create input.field {
+	display : block;
+	width : 200px;
+}
+
+/* BLOG */
+
+.blog h1.title {
+	display : none;
+}
+
+.post h1.title {
+	display : block;
+}
+
+.post .date, .posts .date {
+	float : left;
+	margin-right : 5px;
+}
+
+.posts li {
+	margin-bottom : 50px;
+}
+
+.posts a.more {
+	text-decoration : none;
+}
+
+.posts .comments {
+	width : 100%;
+	padding : 5px;
+	margin-top : 5px;
+	border-top : 1px solid #ddd;
+	background : #f7f7f7;
+}
+
+.posts .title {
+	margin-top			: -6px;
+	margin-bottom		: 5px;
+}
+
+.posts .title a {
+	font-size	: 17pt;
+	font-weight : bold;
+	color		: #09598a;
+	text-decoration : none;
+}
+
+.posts .view {
+	margin-top : 5px;
+}
+
+.post .user a, .posts .user a {
+	font-weight : bold;
+	text-decoration : none;
+}
+
+.blog .view {
+	margin-top : 20px;
+}
+
+.blog .date {
+	padding-left : 20px;
+	background : url('/img/ncblog/time.png') no-repeat;
+	color : #888;
+	font-size : 10pt;
+}
+
+/* COMMENTS */
+
+h1.comments {
+	font-size : 14pt;
+	display : block;
+	margin-top : 5px;
+	margin-bottom : 20px;
+}
+
+ul.comments li {
+}
+
+ul.comments .user {
+	font-size : 14pt;
+	font-weight : bold;
+}
+
+ul.comments .date {
+	float : none;
+}
+
+ul.comments .user a {
+	text-decoration : none;
+}
+
+ul.comments .comment {
+	padding : 10px;
+}
+
+.edit_comments span.tfield {
+	float : left;
+	width : 100px;
+	font-size : 12pt;
+}
+
+.edit_comments span.group {
+	display : block;
+}
+
+.edit_comments input.field {
+	font-size : 10pt;
+	width : 400px;
+	height : 16px;
+	margin-bottom : 5px;
+}
+
+.edit_comments ul.buttons, .edit_comments input.button {
+	margin-left : 100px;
+}
+
+.edit_comments textarea {
+	margin-top : 10px;
+	margin-bottom : 10px;
+	display : block;
+	width : 400px;
+	height : 150px;
+}
+

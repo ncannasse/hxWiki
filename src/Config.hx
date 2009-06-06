@@ -30,4 +30,14 @@ class Config {
 	public static var DEBUG = get("debug","0") == "1";
 	public static var TPL = DIR + "tpl/"+LANG+"/";
 
+	public static function getSection( name : String ) {
+		var e = xml.elementsNamed(name).next();
+		if( e == null )
+			return null;
+		var b = new StringBuf();
+		for( x in e )
+			b.add(x.toString());
+		return b.toString();
+	}
+
 }

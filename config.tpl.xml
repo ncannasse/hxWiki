@@ -7,4 +7,6 @@
 	title="haXe Wiki"
 	admin_password="admin"
 	url="http://dev.hxwiki.com/"
-/>
+>
+	<copy>&copy; 2007-2009 <a href="http://www.motion-twin.com">Motion-Twin</a></copy>
+</config>

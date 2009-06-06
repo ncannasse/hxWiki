@@ -147,6 +147,7 @@ class App {
 		// allow database failures here
 		context.links = function(n) return try db.Link.manager.list(n) catch( e : Dynamic ) new List();
 		context.langs = try db.Lang.manager.all(false) catch( e : Dynamic ) new List();
+		context.section = Config.getSection;
 		if( request == null )
 			context.uri = "/";
 		else {

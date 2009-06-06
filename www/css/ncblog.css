@@ -9,8 +9,12 @@ body {
 	font-size			: 10.5pt;
 }
 
-a, strong, b {
+a {
 	color				: #09598a;
+}
+
+strong, b {
+	color				: #031E2F;
 }
 
 a.broken {
@@ -25,47 +29,47 @@ a.file, a.extern {
 }
 
 .file {
-	background-image	: url('/img/ncblog/items/undefined_file.gif');
+	background-image	: url('/img/common/file.gif');
 	padding-right		: 20px;
 }
 
 a.extern {
-	background-image	: url('/img/ncblog/items/extern.gif');
+	background-image	: url('/img/common/extern.gif');
 	padding-right		: 16px;
 }
 
 .file_zip, .file_tgz, .file_gz {
-	background-image	: url('/img/ncblog/items/zip.gif');
+	background-image	: url('/img/common/zip.gif');
 	padding-right		: 17px;
 }
 
 .file_exe, .file_dmg {
-	background-image	: url('/img/ncblog/items/exe.gif');
+	background-image	: url('/img/common/exe.gif');
 	padding-right		: 17px;
 }
 
 .file_gif, .file_jpg, .file_png  {
-	background-image	: url('/img/ncblog/items/img.gif');
+	background-image	: url('/img/common/img.gif');
 	padding-right		: 21px;
 }
 
 .file_pdf {
-	background-image	: url('/img/ncblog/items/pdf.gif');
+	background-image	: url('/img/common/pdf.gif');
 	padding-right		: 16px;
 }
 
 .file_txt {
-	background-image	: url('/img/ncblog/items/txt.gif');
+	background-image	: url('/img/common/txt.gif');
 	padding-right		: 18px;
 }
 
 .file_swf {
-	background-image	: url('/img/ncblog/items/swf.gif');
+	background-image	: url('/img/common/swf.gif');
 	padding-right		: 20px;
 }
 
 .file_xml {
-	background-image	: url('/img/ncblog/items/xml.gif');
+	background-image	: url('/img/common/xml.gif');
 	padding-right		: 20px;
 }
 
@@ -226,7 +230,7 @@ textarea {
 	border				: 1px solid #97cbeb;
 }
 
-.content input.button, span.button a, span.button2 a {
+.content input.button, span.button a {
 	border-style		: none;
 	width				: 110px;
 	height				: 34px;
@@ -239,18 +243,13 @@ textarea {
 	color				: #09598a;
 }
 
-span.button2 a {
-	background			: transparent url('/img/ncblog/buttons/button2.png') top left no-repeat;
-	color				: #9d4700;
-}
-
 .content input.button {
 	padding-bottom		: 3px;
 	font-weight			: bold;
 	font-size			: 9.5pt;
 }
 
-span.button a, span.button2 a {
+span.button a {
 	display				: block;
 	text-align			: center;
 	height				: 28px;
@@ -261,10 +260,6 @@ span.button a, span.button2 a {
 
 .content input.button:hover, span.button a:hover{
 	background-image	: url('/img/ncblog/buttons/button1_hover.png');
-}
-
-span.button2 a:hover {
-	background-image	: url('/img/ncblog/buttons/button2_hover.png');
 }
 
 /* LAYOUT STRUCTURE */
@@ -627,7 +622,7 @@ ul.map .browse {
 }
 
 ul.map .no_content {
-	background 			: url('/img/ncblog/items/txt2.gif') no-repeat 1px center;
+	background 			: url('/img/common/txt2.gif') no-repeat 1px center;
 }
 
 /* BROWSE */
@@ -690,7 +685,7 @@ p.browse {
 
 .api_index ul li a.intern {
 	padding-left		: 20px;
-	background-image	: url('/img/ncblog/items/txt2.gif');
+	background-image	: url('/img/common/txt2.gif');
 	background-repeat	: no-repeat;
 }
 
@@ -819,89 +814,6 @@ dl.user dd {
 	background			: #ffefa3 url('/img/ncblog/items/bg_box2.gif') top left repeat-x;
 	border				: 4px solid #ffefa3;
 	color				: #c35700;
-}
-
-/* INTRO */
-
-.box_intro {
-	width				: 281px;
-	height				: 141px;
-	display				: block;
-	background			: transparent url('/img/ncblog/items/box_intro.gif') top left no-repeat;
-	padding-top			: 1px; /* ff bug */
-	float				: left;
-	position			: relative;
-	margin-right		: 15px;
-	margin-left			: 10px;
-	margin-bottom		: 20px;
-}
-
-.box_intro .title:first-letter {
-	font-size			: 11pt;
-}
-
-.box_intro .title {
-	color				: #ec7a01;
-	margin-left			: 85px;
-	margin-top			: 20px;
-	display				: block;
-	position			: absolute;
-}
-
-.box_intro .title a {
-	color				: #ec7a01;
-	font-size			: 16pt;
-	font-weight			: bold;
-}
-
-.box_intro .img1, .box_intro .img2, .box_intro .img3, .box_intro .img4 {
-	background-position	: top left;
-	background-repeat	: no-repeat;
-	position			: absolute;
-}
-
-.box_intro .img1 {
-	background-image	: url('/img/ncblog/items/intro/intro1.gif');
-	width				: 75px;
-	height				: 56px;
-	margin-left			: 18px;
-	margin-top			: 45px;
-}
-
-.box_intro .img2 {
-	background-image	: url('/img/ncblog/items/intro/intro2.gif');
-	width				: 87px;
-	height				: 57px;
-	margin-left			: 9px;
-	margin-top			: 45px;
-}
-
-.box_intro .img3 {
-	background-image	: url('/img/ncblog/items/intro/intro3.gif');
-	width				: 81px;
-	height				: 47px;
-	margin-left			: 14px;
-	margin-top			: 45px;
-}
-
-.box_intro .img4 {
-	background-image	: url('/img/ncblog/items/intro/intro4.gif');
-	width				: 74px;
-	height				: 51px;
-	margin-left			: 17px;
-	margin-top			: 45px;
-}
-
-.box_intro .desc {
-	font-size			: 9pt;
-	width				: 185px;
-	margin-left			: 85px;
-	margin-top			: 50px;
-	position			: absolute;
-	z-index				: 1;
-	text-align			: left;
-	display				: block;
-	color				: #09598a;
 }
 
 /* NC BLOG */

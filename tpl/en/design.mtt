@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
@@ -122,7 +122,8 @@
 				</div>
 			</div>
 			<div class="footer">
-				(c) 2007-2008 <a href="http://www.motion-twin.com" target="_blank">Motion-Twin</a> · Powered by <a href="http://haxe.org">haXe</a>
+				::set copy = section('copy')::
+				::if copy::::raw copy:: · ::end::Powered by <a href="http://haxe.org">haXe</a>
 			</div>
 		</div>
 	</body>
