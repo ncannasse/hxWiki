@@ -13,6 +13,12 @@
 -D force_std_separator</output>
   <files path="">
     <dir path="db">
+      <dir path="forum">
+        <file path="src\db\ForumBrowsing.hx" />
+        <file path="src\db\ForumMessage.hx" />
+        <file path="src\db\ForumMessageManager.hx" />
+        <file path="src\db\ForumTheme.hx" />
+      </dir>
       <file path="src\db\Comment.hx" />
       <file path="src\db\Dependency.hx" />
       <file path="src\db\Entry.hx" />
@@ -28,6 +34,7 @@
     </dir>
     <dir path="handler">
       <file path="src\handler\Action.hx" />
+      <file path="src\handler\Forum.hx" />
       <file path="src\handler\Handler.hx" />
       <file path="src\handler\Main.hx" />
       <file path="src\handler\RemotingApi.hx" />
@@ -45,6 +52,9 @@
       <file path="tpl\en\design.mtt" />
       <file path="tpl\en\entry.mtt" />
       <file path="tpl\en\error.mtt" />
+      <file path="tpl\en\forum_main.mtt" />
+      <file path="tpl\en\forum_post.mtt" />
+      <file path="tpl\en\forum_thread.mtt" />
       <file path="tpl\en\history.mtt" />
       <file path="tpl\en\latestComments.mtt" />
       <file path="tpl\en\macros.mtt" />

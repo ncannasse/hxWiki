@@ -14,6 +14,7 @@ class Group extends neko.db.Object {
 	public var canUploadSWF : SBool;
 	public var canUploadOverwrite : SBool;
 	public var canAccessDB : SBool;
+	public var canModerateForum : SBool;
 	public var maxUploadSize : SInt;
 	public var allowedFiles : STinyText;
 

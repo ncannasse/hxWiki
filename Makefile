@@ -1,4 +1,4 @@
-RSYNC_EXCLUDES=--exclude "www/favicon.ico" --exclude ".htaccess" --exclude "www/file" --exclude "www/_media" --exclude="*.out" --exclude="*.svn" --exclude="*.neko" --exclude="*.php"
+RSYNC_EXCLUDES=--exclude="www/favicon.ico" --exclude=".htaccess" --exclude="www/file" --exclude="www/_media" --exclude="*.out" --exclude="*.svn" --exclude="*.neko" --exclude="*.php"
 
 all: compile
 
@@ -18,7 +18,7 @@ deploy_nc: prepare
 	rsync -avz --delete $(RSYNC_EXCLUDES) tpl www ncannasse@kazegames.com:/data/ncannasse.fr
 
 deploy_kaze: prepare
-	rsync -avz --delete $(RSYNC_EXCLUDES) tpl www ncannasse@kazegames.com:/data/kaze_www
+	rsync -avz --delete $(RSYNC_EXCLUDES) tpl www ncannasse@kazegames.com:/data/kazegames.com
 
 api:
 	haxe project.hxml

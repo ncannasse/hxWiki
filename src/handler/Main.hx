@@ -17,6 +17,7 @@ class Main extends Handler<Void> {
 			return;
 		case "db":
 			if( App.user != null && App.user.group.canAccessDB ) {
+				mt.db.TableInfos.OLD_COMPAT = true;
 				mt.db.Admin.handler();
 				return;
 			}
@@ -187,6 +188,21 @@ class Main extends Handler<Void> {
 		if( !r.canView )
 			throw Action.Error("/wiki/register",Text.get.err_cant_view);
 		App.context.rights = r;
+
+		if( r.isForum ) {
+			path = Lambda.list(r.path.split("/"));
+			entry = db.Entry.get(path,entry.lang);
+			App.context.entry = entry;
+			App.context.group = group;
+			App.context.extensions = getExtensions(group);
+			App.context.isModerator = group.canModerateForum;
+			var theme = db.ForumTheme.manager.search({ path : path.join("/") },false).first();
+			if( theme == null )
+				throw "Missing theme "+path.join("/");
+			App.context.path = "/"+theme.path;
+			new handler.Forum(theme,callback(createEditor,entry,false)).execute(App.request,path.length);
+			return;
+		}
 
 		if( version == null )
 			version = entry.version;

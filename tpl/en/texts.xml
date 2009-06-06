@@ -49,4 +49,12 @@
 	<t id="err_invalid_check">Spam check failure</t>
 	<t id="err_empty_content">Please enter some text in your comment</t>
 
+	<!-- forum -->
+
+	<t id="err_thread_locked">This thread is locked</t>
+	<t id="err_forum_title_empty">Your topic needs a title</t>
+	<t id="err_content_too_short">The content of your post is too short</t>
+	<t id="err_forum_ban">You've been temporary banned from posting on the forum</t>
+	<t id="forum_move_confirm">This message has been moved</t>
+
 </texts>

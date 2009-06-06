@@ -1,0 +1,52 @@
+﻿::use 'design.mtt'::
+<div class="forum">
+
+<h1><a href="::path::">::entry._title::</a></h1>
+
+<table class="threads">
+<tr>
+	<th>Topic</th>
+	<th>Author</th>
+	<th>Replies</th>
+	<th>Last Answer</th>
+</tr>
+::foreach b threads::
+	<tr>
+		<th class="date" colspan="4">::if b.date:: ::b.date:: ::else:: Sticky ::end::</th>
+	</tr>
+	::foreach t b.threads::
+		<tr class="treaded_::t.readed::" onclick="javascript:document.location='::path::/thread/::t.id::'">
+			<td class="title">
+				<img class="lockicon" src="/img/common/lock.gif" alt="Lock" title="Topic Locked" ::cond t.isLocked::/>
+				<a class="title" href="::path::/thread/::t.id::">::t.title::</a>
+				<a class="admin" href="::path::/message/::t.id::/delete?page=::browser.page::" $$confirm() ::cond isModerator::><img src="/img/common/del.gif"/></a>
+			</td>
+			<td class="user">
+				::t.name::
+				<img src="/img/common/mod.gif" alt="Moderator" title="::t.login:: is Moderator" ::cond t.isModerator::/>
+			</td>
+			<td class="msgcount">::t.replyCount::</td>
+			<td class="lastmsg">
+				::dateFormat(t.mdate,'%b %d at %H:%M')::
+			</td>
+		</tr>
+	::end::
+::end::
+</table>
+
+::if theme::
+	$$browse(::browser::,::path::)
+::end::
+
+<ul class="options">
+	<li ::cond (threads != null && theme != null)::><span class="button"><a href="::path::/post">New topic</a></span></li>
+	<li>
+		<form action="::path::/search">
+			<input class="field" type="text" name="search"/>
+			<input class="button" type="submit" value="Search"/>
+		</form>
+	</li>
+</ul>
+
+</div>
+::end::

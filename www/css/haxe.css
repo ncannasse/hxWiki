@@ -618,7 +618,7 @@ ul.map a.has_content {
 }
 
 ul.map .no_content, ul.map .browse {
-	width 		: 20px;	
+	width 		: 20px;
 	float		: left;
 }
 
@@ -903,4 +903,89 @@ dl.user dd {
 	text-align			: left;
 	display				: block;
 	color				: #09598a;
+}
+
+/* FORUM */
+
+.forum a img {
+	border : none;
+}
+
+.browser {
+	text-align : center;
+}
+
+table.threads {
+	margin-top			: 10px;
+	border				: 1px solid #c2d9e6;
+	border-collapse		: separate;
+	border-spacing		: 1px;
+	-moz-border-radius	: 5px;
+	width				: 100%;
+}
+
+table.threads th {
+	color 				: #4381a7;
+	font-variant		: small-caps;
+	font-size			: 12pt
+	height				: 30px;
+	background			: #c8e3f9 url('/img/haxe/items/bg_th1.gif') top left repeat-x;
+}
+
+.forum ul.msg li {
+	margin-top			: 8px;
+	border				: 1px solid #c2d9e6;
+}
+
+.forum ul.msg .mheader {
+	color 				: #4381a7;
+	font-variant		: small-caps;
+	font-size			: 12pt
+	height				: 36px;
+	padding				: 3px;
+	background			: #c8e3f9 url('/img/haxe/items/bg_th1.gif') top left repeat-x;
+}
+
+.forum ul.msg .mcontent {
+	padding : 3px;
+}
+
+.forum ul.msg .mcontent p {
+	margin-bottom : 0px;
+}
+
+table.threads td, table.threads th {
+	text-align			: center;
+	padding				: 5px 5px;
+}
+
+table.threads tr {
+	background-color	: #f1f8fd;
+}
+
+table.threads tr.even {
+	background-color 	: #e4f2fc;
+}
+
+table.threads tr:hover {
+	background-color	: #ffeec1;
+}
+
+table.threads tr.treaded_true:hover, table.threads tr.treaded_false:hover {
+	cursor : pointer;
+}
+
+table.threads a.title {
+	text-decoration : none;
+}
+
+table.threads tr.treaded_false .title {
+	font-weight : bold;
+}
+
+table.threads td {
+	font-size			: 9pt;
+	border-color		: #fff #c2d9e6 #c2d9e6 transparent;
+	border-style		: solid;
+	border-width		: 1px;
 }

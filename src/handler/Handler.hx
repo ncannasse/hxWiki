@@ -10,5 +10,9 @@ class Handler<T> extends mtwin.web.Handler<T> {
 		return App.user != null;
 	}
 
+	override function isModerator() : Bool {
+		return App.user != null && App.user.group.canModerateForum;
+	}
+
 }
 

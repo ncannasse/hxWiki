@@ -1,0 +1,58 @@
+﻿::use 'design.mtt'::
+
+<div class="forum">
+
+<h1><a href="::path::">::entry._title::</a> &gt; ::if thread:: <a href="::path::/thread/::thread.id::">::thread.title::</a> &gt; Reply::else:: New Topic ::end:: </h1>
+
+<ul class="msg">
+	<li>
+		<div class="mheader">
+			<a class="user" href="/wiki/user?name=::user.name::">::user.realName::</a>
+			<span class="date">::dateFormat(message.date,'%b %d at %H:%M')::</span>
+		</div>
+		<div class="mcontent" id="::editor.preview::">::raw message.htmlContent::</div>
+	</li>
+</ul>
+
+::raw editor.initJS()::
+
+<form name="forum" id="forum" action="::action::" method="POST">
+
+	<div class="msg_title" ::cond message.isThread()::>
+		Title : <input class="field" maxlength="35" type="text" name="title" value="::message.title::"/>
+	</div>
+
+	<ul class="buttons">
+		::foreach b editor.config.buttons::
+		<li><a href="#" onclick="::editor.buttonAction(b)::">::b.label::</a></li>
+		::end::
+		<li><a href="#" onclick="::editor.config.name::.spanAction('Please choose CSS class :')">SPAN</a></li>
+		<li ::cond group.canUploadImage::><a href="#" id="upload_img">IMG</a></li>
+		<li ::cond group.canUploadImage::><a href="#" id="upload_file">FILE</a></li>
+		<script type="text/javascript" ::cond group.canUploadImage::>
+			::editor.config.name::.initUpload('upload_img','Image','::editor.extensions(extensions.images)::',true);
+			::editor.config.name::.initUpload('upload_file','All','::editor.extensions(extensions.files)::',false);
+		</script>
+	</ul>
+
+	<div class="message">
+		Message : <textarea name="::editor.content::" onkeyup="::editor.config.name::.updatePreview()" onkeydown="return ::editor.config.name::.handleTab(event)">::message.content::</textarea>
+	</div>
+
+	<div class="check" ::cond isModerator && message.isThread()::>
+		<input type="checkbox" name="isSticky" value="1" ::attr checked message.isSticky::/> Sticky
+	</div>
+
+	<div class="check" ::cond isModerator::>
+		<input type="checkbox" name="isLocked" value="1" ::attr checked isLocked::/> Close Thread
+	</div>
+
+	<div class="submit">
+		<input type="submit" name="submit" class="button" value="Publish"/>
+	</div>
+
+</form>
+
+</div>
+
+::end::

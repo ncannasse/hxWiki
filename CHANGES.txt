@@ -1,3 +1,6 @@
+2009-06-06
+	added forum mode
+
 2008-09-13
 	added blog mode
 

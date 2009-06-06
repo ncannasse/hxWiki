@@ -1,0 +1,39 @@
+﻿::use 'design.mtt'::
+
+<div class="forum">
+
+<h1><a href="::path::">::entry._title::</a> &gt; ::thread.title::</h1>
+
+<ul class="msg">
+::foreach m messages::
+<li>
+	<div class="mheader">
+		<img src="/img/common/mod.gif" alt="mod" ::cond m.isModerator::/>
+		<a class="user" href="/wiki/user?name=::m.login::">::m.name::</a>
+		<span class="date">::dateFormat(m.date,'%b %d at %H:%M')::</span>
+		<a href="::path::/message/::m.id::/edit" class="admin" ::cond isModerator::>[edit]</a>
+		<a href="::path::/message/::m.id::/delete?page=::browser.page::" class="admin" ::cond isModerator:: $$confirm()><img src="/img/common/del.gif"/></a>
+	</div>
+	<div class="mcontent">::raw m.htmlContent::</div>
+</li>
+::end::
+</ul>
+
+$$browse(::browser::,::path::/thread/::thread.id::)
+
+<ul class="options">
+	::if thread.canReply(user)::
+	<li><span class="button"><a href="::path::/thread/::thread.id::/reply">Reply</a></span></li>
+	::else::
+	<li><img src="/img/common/lock.gif" alt="lock"/> Thread locked ::if !thread.isLocked::automatically::end:: !</li>
+	::end::
+	::if isModerator::
+	<li ::cond thread.autoLocked()::>Thread locked automatically</li>
+	<li ::cond !thread.isLocked::><a href="::path::/thread/::thread.id::/lock">[Close Thread]</a></li>
+	<li ::cond thread.isLocked::><a href="::path::/thread/::thread.id::/unlock">[Open Thread]</a></li>
+	::end::
+</ul>
+
+</div>
+
+::end::

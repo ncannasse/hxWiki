@@ -2,4 +2,12 @@
 
 	<macro name="confirm()" onclick="return confirm('Please confirm this action.')"/>
 
+	<macro name="browse(b,url)">
+	<div class="browser">
+		&lt; ::if b.prev::<a href="::url::/?page=::b.prev::">Prev</a>::else::Prev::end::
+		| Page ::b.page:: ::if b.pages::/ ::b.pages::::end:: |
+		::if b.next::<a href="::url::/?page=::b.next::">Next</a>::else::Next::end:: &gt;
+	</div>
+	</macro>
+
 </macros>
