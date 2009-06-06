@@ -57,7 +57,7 @@
 			<li><a href="#" onclick="::editor.config.name::.spanAction('Please choose CSS class :')">SPAN</a></li>
 			<li ::cond group.canUploadImage::><a href="#" id="upload_img">IMG</a></li>
 			<li ::cond group.canUploadImage::><a href="#" id="upload_file">FILE</a></li>
-			<script type="text/javascript">
+			<script type="text/javascript" ::cond group.canUploadImage::>
 				::editor.config.name::.initUpload('upload_img','Image','::editor.extensions(extensions.images)::',true);
 				::editor.config.name::.initUpload('upload_file','All','::editor.extensions(extensions.files)::',false);
 			</script>

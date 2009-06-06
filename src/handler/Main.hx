@@ -583,7 +583,7 @@ class Main extends Handler<Void> {
 			// uncompress a small amount of data
 			buf = haxe.io.Bytes.alloc(64);
 			var bytes = new neko.zip.Uncompress(15);
-			bytes.run(content,8,buf,8);
+			bytes.execute(content,8,buf,8);
 			bytes.close();
 			#end
 		} else

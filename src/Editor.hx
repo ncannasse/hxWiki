@@ -240,7 +240,7 @@ class Editor {
 
 	public dynamic function getTitle( path : Array<String> ) {
 		#if js
-		var data = haxe.Http.request("/wiki/title?path="+path.join("/")+";lang="+config.lang);
+		var data = haxe.Http.requestUrl("/wiki/title?path="+path.join("/")+";lang="+config.lang);
 		if( data == "" )
 			return null;
 		return StringTools.htmlEscape(data);
@@ -284,7 +284,7 @@ class Editor {
 
 	public dynamic function getSubLinks( path : Array<String> ) : Array<{ url : String, title : String }> {
 		#if js
-		return haxe.Unserializer.run( haxe.Http.request("/wiki/sublist?path="+path.join("/")+";lang="+config.lang) );
+		return haxe.Unserializer.run( haxe.Http.requestUrl("/wiki/sublist?path="+path.join("/")+";lang="+config.lang) );
 		#else
 		return null;
 		#end

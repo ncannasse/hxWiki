@@ -120,10 +120,10 @@
 				<div class="content">
 					::raw __content__::
 				</div>
+			</div>
+			<div class="footer">
+				(c) 2007-2008 <a href="http://www.motion-twin.com" target="_blank">Motion-Twin</a> · Powered by <a href="http://haxe.org">haXe</a>
+			</div>
 		</div>
-		<div class="footer">
-			(c) 2007-2008 <a href="http://www.motion-twin.com" target="_blank">Motion-Twin</a> · Powered by <a href="http://haxe.org">haXe</a>
-		</div>
-	</div>
 	</body>
 </html>
