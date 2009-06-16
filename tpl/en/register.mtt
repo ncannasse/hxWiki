@@ -11,6 +11,8 @@
 	<span class="group"><span class="tfield">Realname :</span> <input name="name" class="field"/></span>
 	<span class="group"><span class="tfield">Pass :</span> <input type="password" name="spass" class="field"/></span>
 	<span class="group"><span class="tfield">Email :</span> <input name="email" class="field"/></span>
+	<span class="group"><span class="tfield">Code :</span> <input name="code" class="field"/></span>
+	<span class="group"><span class="tfield">&nbsp;</span> (please enter <script type="text/javascript">document.write('::code.k::'+(::code.a::*::code.b::)%::(code.c)::)</script>)</span>
 	<input type="submit" value="Register" class="button"/>
 </form>
 

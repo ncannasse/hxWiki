@@ -1,3 +1,6 @@
+2009-06-16
+	added register check code
+
 2009-06-06
 	added forum mode
 

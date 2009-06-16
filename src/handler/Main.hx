@@ -690,8 +690,16 @@ class Main extends Handler<Void> {
 	}
 
 	function doRegister() {
+		var sid = App.session.sid;
+		var code = {
+			a : sid.charCodeAt(0) * sid.charCodeAt(1) + sid.charCodeAt(2),
+			b : sid.charCodeAt(3) * sid.charCodeAt(4) + sid.charCodeAt(5),
+			k : sid.charAt(6),
+			c : 1000,
+		};
+		App.context.code = code;
 		var login = request.get("login");
-		if( login == null )
+		if( login == null || request.get("code") != code.k + ((code.a * code.b) % code.c) )
 			return;
 		if( !group.canRegister )
 			throw Action.Error("/wiki/register",Text.get.err_cant_register);
