@@ -12,6 +12,7 @@ class ApiSync {
 		{ file : "neko.xml", platform : "neko" },
 		{ file : "js.xml", platform : "js" },
 		{ file : "php.xml", platform : "php" },
+		{ file : "cpp.xml", platform : "cpp" },
 	];
 
 	var api : Proxy;
