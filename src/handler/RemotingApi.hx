@@ -15,12 +15,12 @@ class RemotingApi {
 		return l;
 	}
 
-	public function login( user : String, pass : String ) : { sid : String, uid : Int } {
+	public function login( user : String, pass : String ) : { sid : String, uid : Int, realName : String, group : String } {
 		var u = db.User.manager.search({ name : user, pass : Main.encodePass(pass) },false).first();
 		if( u == null )
 			throw "Invalid user name or password";
 		App.session.setUser(u);
-		return { sid : App.session.sid, uid : u.id };
+		return { sid : App.session.sid, uid : u.id, realName : u.realName, group : u.group.name };
 	}
 
 	public function getLangs( path : Array<String> ) : Array<String> {
