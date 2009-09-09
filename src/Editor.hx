@@ -311,7 +311,7 @@ class Editor {
 		if( t.charAt(0) == "\n" ) t = t.substr(1);
 		if( t.charAt(t.length-1) == "\n" ) t = t.substr(0,t.length - 1);
 		t = StringTools.replace(t,"\t","    ");
-		t = StringTools.htmlEscape(t).split('"').join("&quot;");
+		t = StringTools.htmlEscape(t);
 		switch( style ) {
 		case "xml", "html":
 			var me = this;

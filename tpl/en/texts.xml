@@ -38,6 +38,7 @@
 	<t id="bold">B</t>
 	<t id="italic">I</t>
 	<t id="code">Code</t>
+	<t id="quote">Quote</t>
 	<t id="link">A</t>
 	<t id="external_link">URL</t>
 

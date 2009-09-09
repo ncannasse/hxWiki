@@ -333,7 +333,8 @@ class Main extends Handler<Void> {
 		var e = new Editor(config);
 		e.addButton(Text.get.bold,"**");
 		e.addButton(Text.get.italic,"//");
-		e.addButton(Text.get.code,"''");
+		e.addButton(Text.get.code,"<code haxe>\n","\n</code>");
+		e.addButton(Text.get.quote,"''");
 		e.addButton("H1","====== "," ======");
 		e.addButton("H2","===== "," =====");
 		e.addButton("H3","==== "," ====");
