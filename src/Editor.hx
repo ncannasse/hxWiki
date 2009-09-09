@@ -346,10 +346,10 @@ class Editor {
 				return tag("comment",r.matched(0));
 			});
 			var kwds = [
-				"function","var","class","if","else","while","do","for","break","continue","return",
+				"function","class","var","if","else","while","do","for","break","continue","return",
 				"extends","implements","import","switch","case","default","static","public","private",
 				"try","catch","new","this","throw","extern","enum","in","interface","untyped","cast",
-				"override","typedef","f9dynamic","package","callback","inline",
+				"override","typedef","dynamic","package","callback","inline","using",
 			];
 			var types = [
 				"Array","Bool","Class","Date","DateTools","Dynamic","Enum","Float","Hash","Int",
