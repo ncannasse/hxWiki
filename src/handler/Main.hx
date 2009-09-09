@@ -702,14 +702,16 @@ class Main extends Handler<Void> {
 		var login = request.get("login");
 		if( login == null || request.get("code") != code.k + ((code.a * code.b) % code.c) )
 			return;
+		login = StringTools.trim(login);
 		if( !group.canRegister )
 			throw Action.Error("/wiki/register",Text.get.err_cant_register);
 		if( db.User.manager.count({ name : login }) > 0 || !~/^[A-Za-z0-9_]+$/.match(login) )
 			throw Action.Error("/wiki/register",Text.get.err_user_invalid);
 		var u = new db.User();
 		u.name = login;
-		u.pass = encodePass(request.get("spass"));
-		u.realName = request.get("name");
+		u.pass = encodePass(StringTools.trim(request.get("spass")));
+		u.realName = StringTools.trim(request.get("name"));
+		if( u.realName == "" ) u.realName = login;
 		u.email = request.get("email");
 		if( u.email == "" ) u.email = null;
 		u.group = db.Group.manager.search({ name : "user" },false).first();
