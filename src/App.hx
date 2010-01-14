@@ -45,6 +45,8 @@ class App {
 	}
 
 	static function initLang() {
+		if( Config.get("no_auto_lang","") == "1" )
+			return null;
 		var ldata = neko.Web.getClientHeader("Accept-Language");
 		var ldata = if( ldata == null ) [] else ldata.split(",");
 		var r = ~/^ ?([a-z]+)(-[a-zA-Z]+)?(;.*)?$/;
