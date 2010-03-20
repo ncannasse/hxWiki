@@ -196,8 +196,9 @@ class ApiSync {
 			var prev = api.read(path,lang);
 			previousContent = (prev == null) ? "" : prev.content;
 			current = new StringBuf();
-			current.add("[api_index]\n\n");
+			print("[api_index]\n\n");
 			processDoc(null,"");
+			print("\n\n");
 			for( x in subs )
 				processIndex(x,"  * ");
 			current.add("\n[/api_index]");
