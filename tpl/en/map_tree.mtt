@@ -1,6 +1,6 @@
 <li>
 	::set childs = e.childs()::
-	<div onclick="return Editor.toggle('map_::e.id::')" ::attr class if( childs.length > 0 ) 'browse' else 'no_content'::>&nbsp;</div>
+	<div onclick="JsTools.toggle('map_::e.id::'); return false" ::attr class if( childs.length > 0 ) 'browse' else 'no_content'::>&nbsp;</div>
 	<a href="::e.getURL()::" ::attr class if( e.vid != null ) 'has_content'::>::e._title::</a>
 	<ul class="map" id="map_::e.id::" style="display : none">
 	::foreach c childs::

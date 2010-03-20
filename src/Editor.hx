@@ -59,13 +59,6 @@ class Editor {
 
 	#if js
 
-	public static function toggle( id : String ) {
-		var e = js.Lib.document.getElementById(id);
-		if( e != null )
-			e.style.display = (e.style.display == "none") ? "" : "none";
-		return false;
-	}
-
 	public function getDocument() : Textarea {
 		return cast js.Lib.document.getElementsByName(content)[0];
 	}
@@ -475,6 +468,7 @@ class Editor {
 		t = b.toString();
 		// custom scripts
 		var r = ~/(<ul>)?(<li>)?\[\$([a-z]+):([a-zA-Z0-9_]+)\]([^\0]*?)\[\/\$\3:\4\](<\/li>)?(<\/ul>)?/;
+		var hasClic = false;
 		while( r.match(t) ) {
 			var tag = r.matched(4);
 			var content = r.matched(5);
@@ -491,7 +485,8 @@ class Editor {
 			// end-of-hack
 			var content = switch( r.matched(3) ) {
 			case "clic":
-				'<a href="#" onclick="return Editor.toggle(\''+tag+'\')">'+content+'</a>';
+				hasClic = true;
+				'<a href="#" onclick="return JsTools.toggleCookie(\''+tag+'\')">'+content+'</a>';
 			case "id":
 				'<div id="'+tag+'" style="display : none">'+content+'</div>';
 			default:
@@ -507,6 +502,8 @@ class Editor {
 		t = StringTools.replace(t, "<br/></p>", "</p>");
 		t = StringTools.replace(t, "<p></p>", "");
 		t = StringTools.replace(t, "><p>", ">\n<p>");
+		if( hasClic )
+			t += '<script type="text/javascript">JsTools.toggleInit()</script>';
 		return t;
 	}
 

@@ -189,13 +189,15 @@ class ApiSync {
 			if( full == "" ) path = [];
 			path.unshift("api");
 
-			if( lang != "en" && !api.exists(path,lang) ) {
+			if( !api.exists(path,lang) && lang != "en" ) {
 				log("Skipping all "+full+" ["+lang+"]",true);
 				return;
 			}
-
+			var prev = api.read(path,lang);
+			previousContent = (prev == null) ? "" : prev.content;
 			current = new StringBuf();
 			current.add("[api_index]\n\n");
+			processDoc(null,"");
 			for( x in subs )
 				processIndex(x,"  * ");
 			current.add("\n[/api_index]");

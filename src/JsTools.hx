@@ -25,6 +25,28 @@ class JsTools {
 		}
 	}
 
+	static var PREFIX = "haxe_api_";
+
+	public static function toggle( id : String ) {
+		var e = js.Lib.document.getElementById(id);
+		if( e == null ) return false;
+		e.style.display = (e.style.display == "none") ? "" : "none";
+		return e.style.display != "none";
+	}
+
+	static function toggleInit() {
+		for( c in js.Lib.document.cookie.split(';') ) {
+			c = StringTools.trim(c.split("=")[0]);
+			if( StringTools.startsWith(c,PREFIX) )
+				toggle(c.substr(PREFIX.length));
+		}
+	}
+
+	static function toggleCookie( id : String ) {
+		js.Lib.document.cookie = PREFIX+id+"=show"+";path = /;expires=" + if( toggle(id) ) "Wed, 01-Jan-20 00:00:01 GMT" else "Sat, 01-Jan-00 00:00:01 GMT";
+		return false;
+	}
+
 	static function main() {
 	}
 
