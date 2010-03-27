@@ -17,7 +17,7 @@
 				::c.userName::
 			::end::
 		</div>
-		<a class="admin" href="/wiki/deleteComment?id=::c.id::" ::cond canDeleteComments::>[delete]</a>
+		<a class="admin" href="/wiki/deleteComment?id=::c.id::;redir=/wiki/latestComments" ::cond canDeleteComments::>[delete]</a>
 		<div class="date">
 			::dateFormat(c.date,'%b %d, %Y at %H:%M')::
 		</div>

@@ -65,6 +65,7 @@ class Main extends Handler<Void> {
 		free("deleteComment",doDeleteComment);
 		free("latestComments","latestComments.mtt",doLatestComments);
 		free("rss","rss.mtt",doRSS);
+		free("rssComments","rssComments.mtt",doRSSComments);
 	}
 
 	public static function encodePass( p : String ) {
@@ -247,11 +248,13 @@ class Main extends Handler<Void> {
 				App.context.canCreate = r.canCreate;
 				App.context.entries = db.Entry.manager.selectSubs(entry,selector);
 				App.context.calendar = new Calendar(entry,year,month);
-				App.context.rss = entry.get_path();
+				App.context.rss = "/wiki/rss?path="+entry.get_path();
+				App.context.rssTitle = entry.get_title();
 			} else {
 				App.prepareTemplate("blog_post.mtt");
 				App.context.calendar = new Calendar(entry.parent,year,month);
 				App.context.rss = entry.parent.get_path();
+				App.context.rssTitle = entry.parent.get_title();
 			}
 		}
 	}
@@ -845,7 +848,7 @@ class Main extends Handler<Void> {
 			throw Action.Goto("/");
 		if( getRights(c.entry).canDeleteComments )
 			c.delete();
-		throw Action.Goto(c.entry.getURL()+"#comments");
+		throw Action.Goto(request.get("redir",c.entry.getURL()+"#comments"));
 	}
 
 	function doRSS() {
@@ -862,6 +865,18 @@ class Main extends Handler<Void> {
 		var page = request.getInt("page",0);
 		App.context.page = page;
 		App.context.comments = db.Comment.manager.browse(page * 20,20);
+		App.context.canDeleteComments = true;
+		App.context.rss = "/wiki/rssComments";
+		App.context.rssTitle = Text.get.latest_comments;
+	}
+
+	function doRSSComments() {
+		neko.Web.setHeader("Content-Type","application/xml");
+		// dates need to be printed in english
+		if( !neko.Sys.setTimeLocale("EN") )
+			neko.Sys.setTimeLocale("en_US.UTF8");
+		App.context.title = Text.get.latest_comments;
+		App.context.comments = db.Comment.manager.browse(0,50);
 	}
 
 }

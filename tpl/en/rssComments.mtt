@@ -1,0 +1,23 @@
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+<channel>
+	<title>::title:: ::config.title::</title>
+	<link>::config.url::</link>
+	<description>::title::</description>
+	<generator>haXe Wiki System</generator>
+	<language>en</language>
+	::foreach c comments::
+	<item>
+		<title>::c._entry._title::</title>
+		<link>::config.url::::c._entry._path::;c=::c.id::</link>
+		<guid>::config.url::::c._entry._path::;c=::c.id::</guid>
+		<dc:date>::dateFormat(c.date,"%a, %e %b %Y %H:%M:%S %z")::</dc:date>
+		<pubDate>::dateFormat(c.date,"%a, %e %b %Y %H:%M:%S %z")::</pubDate>
+		<dc:creator>::c.userName::</dc:creator>
+		<author>::c.userName::</author>
+		::fill content::<a href="::c.url::" ::cond c.url::>::c.url::</a> ::raw c.htmlContent:: <a href="::config.url::/wiki/deleteComment?id=::c.id::">[delete]</a>::end::
+		<description>::content::</description>
+		<content:encoded>::content::</content:encoded>
+	</item>
+	::end::
+</channel>
+</rss>

@@ -49,6 +49,7 @@
 	<t id="err_invalid_site">Please enter a valid website (or leave empty)</t>
 	<t id="err_invalid_check">Spam check failure</t>
 	<t id="err_empty_content">Please enter some text in your comment</t>
+	<t id="latest_comments">Latest comments</t>
 
 	<!-- forum -->
 
