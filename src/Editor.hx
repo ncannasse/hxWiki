@@ -445,26 +445,39 @@ class Editor {
 			codes.push(code);
 			return "##CODE"+(codes.length-1)+"##";
 		});
-		var div_open = ~/^\[([A-Za-z0-9_ ]+)\]$/;
-		var div_close = ~/^\[\/([A-Za-z0-9_ ]+)\]$/;
+		var div_open = ~/\[([A-Za-z0-9_ ]+)\]$/;
+		var div_close = ~/^\[\/([A-Za-z0-9_ ]+)\]/;
+		var pstack = new Array();
 		for( t in ~/\n[ \t]*\n/g.split(t) ) {
 			var p = paragraph(t);
+			var after = "\n";
+			while( div_open.match(p) ) {
+				var cl = div_open.matched(1);
+				pstack.push(cl);
+				b.add('<div class="'+cl+'">');
+				p = div_open.matchedRight();
+			}
+			while( div_close.match(p) ) {
+				var cl = div_close.matched(1);
+				while( pstack.length > 0 ) {
+					after += "</div>";
+					if( pstack.pop() == cl )
+						break;
+				}
+				p = div_close.matchedLeft();
+			}
 			switch( p.substr(0,3) ) {
 			case "<h1","<h2","<h3","<ul","<pr","##C","<sp":
 				b.add(p);
 			default:
-				if( div_open.match(p) )
-					b.add('<div class="'+div_open.matched(1)+'">');
-				else if( div_close.match(p) )
-					b.add('</div>');
-				else {
-					b.add("<p>");
-					b.add(p);
-					b.add("</p>");
-				}
+				b.add("<p>");
+				b.add(p);
+				b.add("</p>");
 			}
-			b.add("\n");
+			b.add(after);
 		}
+		for( d in pstack )
+			b.add("</div>");
 		t = b.toString();
 		// custom scripts
 		var r = ~/(<ul>)?(<li>)?\[\$([a-z]+):([a-zA-Z0-9_]+)\]([^\0]*?)\[\/\$\3:\4\](<\/li>)?(<\/ul>)?/;
