@@ -467,7 +467,7 @@ class Editor {
 				p = div_close.matchedLeft();
 			}
 			switch( p.substr(0,3) ) {
-			case "<h1","<h2","<h3","<ul","<pr","##C","<sp":
+			case "","<h1","<h2","<h3","<ul","<pr","##C","<sp":
 				b.add(p);
 			default:
 				b.add("<p>");
