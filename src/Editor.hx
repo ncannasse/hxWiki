@@ -445,26 +445,41 @@ class Editor {
 			codes.push(code);
 			return "##CODE"+(codes.length-1)+"##";
 		});
-		var div_open = ~/\[([A-Za-z0-9_ ]+)\]$/;
-		var div_close = ~/^\[\/([A-Za-z0-9_ ]+)\]/;
+		var div_begin = ~/^\[(\/?[A-Za-z0-9_ ]+)\]/;
+		var div_end = ~/\[(\/?[A-Za-z0-9_ ]+)\]$/;
 		var pstack = new Array();
 		for( t in ~/\n[ \t]*\n/g.split(t) ) {
 			var p = paragraph(t);
 			var after = "\n";
-			while( div_open.match(p) ) {
-				var cl = div_open.matched(1);
-				pstack.push(cl);
-				b.add('<div class="'+cl+'">');
-				p = div_open.matchedRight();
-			}
-			while( div_close.match(p) ) {
-				var cl = div_close.matched(1);
-				while( pstack.length > 0 ) {
-					after += "</div>";
-					if( pstack.pop() == cl )
-						break;
+			while( div_begin.match(p) ) {
+				var cl = div_begin.matched(1);
+				if( cl.charAt(0) == "/" ) {
+					cl = cl.substr(1);
+					while( pstack.length > 0 ) {
+						b.add("</div>");
+						if( pstack.pop() == cl )
+							break;
+					}
+				} else {
+					pstack.push(cl);
+					b.add('<div class="'+cl+'">');
 				}
-				p = div_close.matchedLeft();
+				p = div_begin.matchedRight();
+			}
+			while( div_end.match(p) ) {
+				var cl = div_end.matched(1);
+				if( cl.charAt(0) == "/" ) {
+					cl = cl.substr(1);
+					while( pstack.length > 0 ) {
+						after += "</div>";
+						if( pstack.pop() == cl )
+							break;
+					}
+				} else {
+					pstack.push(cl);
+					after += '<div class="'+cl+'">';
+				}
+				p = div_end.matchedLeft();
 			}
 			switch( p.substr(0,3) ) {
 			case "","<h1","<h2","<h3","<ul","<pr","##C","<sp":
