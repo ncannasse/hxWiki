@@ -441,7 +441,7 @@ class ApiSync {
 		}
 	}
 
-	function processTypedefType(t,all,platforms) {
+	function processTypedefType(t,all:Platforms,platforms:Platforms) {
 		switch( t ) {
 		case CAnonymous(fields):
 			print('[anon]\n\n');
