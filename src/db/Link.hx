@@ -7,7 +7,7 @@ class Link extends neko.db.Object {
 	public static var manager = new LinkManager(Link);
 
 	public var id : SId;
-	public var title : STinyText;
+	public var title : SText;
 	public var url : STinyText;
 	public var kind : SInt;
 	public var priority : SInt;
