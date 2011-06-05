@@ -8,8 +8,8 @@
 	::foreach c comments::
 	<item>
 		<title>::c._entry._title::</title>
-		<link>::config.url::::c._entry._path::;c=::c.id::</link>
-		<guid>::config.url::::c._entry._path::;c=::c.id::</guid>
+		<link>::config.url::::c._entry._path::#c::c.id::</link>
+		<guid>::config.url::::c._entry._path::#c::c.id::</guid>
 		<dc:date>::dateFormat(c.date,"%a, %e %b %Y %H:%M:%S %z")::</dc:date>
 		<pubDate>::dateFormat(c.date,"%a, %e %b %Y %H:%M:%S %z")::</pubDate>
 		<dc:creator>::c.userName::</dc:creator>

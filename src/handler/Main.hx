@@ -823,6 +823,10 @@ class Main extends Handler<Void> {
 					c.url = null;
 				else if( !~/^https?:\/\/[A-Za-z0-9_.\/-]+$/.match(c.url) )
 					throw Text.get.err_invalid_site;
+				else {
+					if( entry.version != null && entry.version.date.getTime() < Date.now().getTime() - DateTools.days(60) )
+						throw Text.get.err_spam_protect_url;
+				}
 			} else
 				c.userName = c.user.name;
 			var vars = neko.Web.getPostData();

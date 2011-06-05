@@ -50,6 +50,7 @@
 	<t id="err_invalid_check">Spam check failure</t>
 	<t id="err_empty_content">Please enter some text in your comment</t>
 	<t id="latest_comments">Latest comments</t>
+	<t id="err_spam_protect_url">You can't comment on an old post (spam protection)</t>
 
 	<!-- forum -->
 

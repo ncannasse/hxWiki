@@ -5,6 +5,7 @@
 <ul class="comments">
 	::foreach c comments::
 	<li>
+		<a name="c::c.id::"></a>
 		<div class="user">
 			::if c.uid::
 				<a href="/wiki/user?name=::c._user.name::">::c._user.realName::</a>

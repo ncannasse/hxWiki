@@ -853,7 +853,7 @@ dl.user dd {
 	border : 1px solid #C3DCEB;
 }
 
-.login h1, .login .button {
+.login h1 {
 	display : none;
 }
 

@@ -21,9 +21,7 @@
 			</div>
 			<div class="site">
 				<ul class="menu">
-					::foreach l links(0)::
-					<li><a href="::l.url::">::raw l.title::</a></li>
-					::end::
+					$$menuLinks(0)
 				</ul>
 
 				<div class="login">
@@ -92,9 +90,7 @@
 						::end::
 						<li ::cond canDeleteComments::><a href="/wiki/latestComments">Latest Comments</a></li>
 						<li ::cond user::><a href="/wiki/logout" $$confirm()>Logout</a></li>
-						::foreach l links(1)::
-						<li><a href="::l.url::">::raw l.title::</a></li>
-						::end::
+						$$menuLinks(1)
 					</ul>
 				</div>
 
@@ -108,9 +104,7 @@
 				</div>
 
 				<ul class="menu2">
-					::foreach l links(2)::
-					<li><a href="::l.url::">::raw l.title::</a></li>
-					::end::
+					$$menuLinks(2)
 				</ul>
 
 				<div id="notification" ::cond notification:: ::attr class if( notification.error ) 'error'::>

@@ -9,5 +9,11 @@
 		::if b.next::<a href="::url::/?page=::b.next::">Next</a>::else::Next::end:: &gt;
 	</div>
 	</macro>
+	
+	<macro name="menuLinks(id)">
+	::foreach l links(id)::
+	<li>::if l.url == ""::::raw l.title::::else::<a href="::l.url::">::raw l.title::</a>::end::</li>
+	::end::
+	</macro>
 
 </macros>
