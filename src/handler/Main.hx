@@ -471,7 +471,9 @@ class Main extends Handler<Void> {
 	}
 
 	function doRename() {
-		var path = request.get("name","").split("/");
+		var path = request.get("name", "").split("/");
+		while( path.remove("") ) {
+		}
 		var name = Editor.normalize(path.pop());
 		var psrc = getPath();
 		if( name == "" )
