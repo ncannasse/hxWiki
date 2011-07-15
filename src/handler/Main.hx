@@ -522,6 +522,7 @@ class Main extends Handler<Void> {
 
 	function doMap() {
 		var lang = getLang();
+		if( lang == null ) lang = getDefLang();
 		App.langSelected = lang;
 		App.context.lang = lang;
 		App.context.roots = db.Entry.manager.getRoots(lang);
