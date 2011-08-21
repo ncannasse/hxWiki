@@ -32,6 +32,7 @@ class Editor {
 		path : Array<String>,
 		sid : String,
 		lang : String,
+		allowRaw : Bool,
 		titles : Hash<{ exists : Bool, title : String }>,
 	};
 	var uniqueId : Int;
@@ -353,7 +354,10 @@ class Editor {
 			t = new EReg("\\b("+types.join("|")+")\\b","g").replace(t,'<span class="type">$1</span>');
 			t = ~/\b([0-9.]+)\b/g.replace(t,'<span class="number">$1</span>');
 			t = ~/([{}\[\]()])/g.replace(t,'<span class="op">$1</span>');
-			t = untag(t,true);
+			t = untag(t, true);
+		case "raw":
+			if( config.allowRaw )
+				return StringTools.htmlUnescape(t);
 		default:
 		}
 		return '<pre'+cl+'>'+t+"</pre>";

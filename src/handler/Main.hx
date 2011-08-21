@@ -77,8 +77,13 @@ class Main extends Handler<Void> {
 		var pass = request.get("pass","");
 		var url = request.get("url","/");
 		var u = db.User.manager.search({ name : user, pass : encodePass(pass) },false).first();
-		if( u == null )
-			throw Action.Error(url,Text.get.err_unknown_user_pass);
+		if( u == null ) {
+			// allow to login with clear password (user recovery mode)
+			if( pass.length < 32 )
+				u = db.User.manager.search({ name : user, pass : pass },false).first();
+			if( u == null )
+				throw Action.Error(url,Text.get.err_unknown_user_pass);
+		}
 		App.session.setUser(u);
 		throw Action.Goto(url);
 	}
@@ -318,6 +323,7 @@ class Main extends Handler<Void> {
 			path : entry.get_path().split("/"),
 			sid : App.session.sid,
 			lang : lang.code,
+			allowRaw : group.canInsertHTML,
 			titles : new Hash(),
 		};
 		// fill titles cache
