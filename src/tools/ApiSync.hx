@@ -542,6 +542,7 @@ class ApiSync {
 			pass : input("Pass",args[2]),
 		};
 		var url = "http://"+config.host+":"+config.port+"/wiki/remoting";
+		haxe.remoting.HttpConnection.TIMEOUT = 60;
 		var cnx = haxe.remoting.HttpConnection.urlConnect(url);
 		var api = new Proxy(cnx.api);
 		if( config.user != null ) {
