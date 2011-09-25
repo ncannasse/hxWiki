@@ -182,6 +182,11 @@ class ApiSync {
 		}
 	}
 
+	function start() {
+		current = new StringBuf();
+		id = 0;
+	}
+
 	function processRun( t : TypeTree, lang : String ) {
 		switch( t ) {
 		case TPackage(name,full,subs):
@@ -195,7 +200,7 @@ class ApiSync {
 			}
 			var prev = api.read(path,lang);
 			previousContent = (prev == null) ? "" : prev.content;
-			current = new StringBuf();
+			start();
 			print("[api_index]\n\n");
 			processDoc(null,"");
 			print("\n\n");
@@ -227,7 +232,7 @@ class ApiSync {
 			previousContent = (prev == null) ? "" : prev.content;
 			// set context
 			typeParams = prefix(i.params,i.path);
-			current = new StringBuf();
+			start();
 			// build
 			print("[api]\n\n");
 			switch(t) {
