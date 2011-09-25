@@ -52,7 +52,7 @@ class Session extends SessionData {
 		for( f in FIELDS )
 			Reflect.setField(o,f,Reflect.field(this,f));
 		var oldData = data;
-		data = neko.Lib.serialize(o);
+		data = neko.Lib.stringReference(neko.Lib.serialize(o));
 		if( data != oldData )
 			mtime = Date.now();
 		super.update();
@@ -66,7 +66,7 @@ class Session extends SessionData {
 			return null;
 		var o;
 		try {
-			o = neko.Lib.unserialize(s.data);
+			o = neko.Lib.unserialize(neko.Lib.bytesReference(s.data));
 		} catch( e : Dynamic ) {
 			return null;
 		}
