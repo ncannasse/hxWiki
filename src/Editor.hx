@@ -422,6 +422,7 @@ class Editor {
 				params = Lambda.map(params.substr(1).split("&amp;"),function(p) return Lambda.map(p.split("="),StringTools.urlEncode).join("=")).join("&");
 				str += "o.addParam('FlashVars','"+params+"');";
 			}
+			str += "o.addParam('wmode','direct');";
 			str += "o.write('swf_"+id+"');";
 			str += "</script>";
 			return str;
