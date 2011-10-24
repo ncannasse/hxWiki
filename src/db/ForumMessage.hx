@@ -1,16 +1,9 @@
 package db;
-import mt.db.Types;
+import sys.db.Types;
 
-class ForumMessage extends neko.db.Object {
+@:index(pid,mdate)
+class ForumMessage extends sys.db.Object {
 
-	static function RELATIONS(){ return [
-		{ key:"uid", prop:"user", manager:User.manager, lock : false },
-		{ key:"tid", prop:"theme", manager:ForumTheme.manager, lock : false },
-		{ key:"pid", prop:"parent", manager:ForumMessage.manager },
-		{ key:"lastUid", prop : "lastReply", manager : User.manager, lock : false },
-	]; }
-	static var INDEXES = [["pid","mdate"]];
-	static var PRIVATE_FIELDS = ["readed","isModerator","login"];
 	public static var COLUMNS = ["ForumMessage.*","User.name as login", "User.realName as name", "Group.canModerateForum as isModerator"];
 	public static var manager = new ForumMessageManager(ForumMessage);
 
@@ -29,13 +22,18 @@ class ForumMessage extends neko.db.Object {
 	public var lastUid : SNull<SInt>;
 	public var lastLogin : SString<20>;
 
-	public var readed : Bool;
-	public var login : String;
-	public var isModerator : Bool;
+	@:skip public var readed : Bool;
+	@:skip public var login : String;
+	@:skip public var isModerator : Bool;
 
-	public var user(dynamic,dynamic): User;
-	public var theme(dynamic,dynamic) : ForumTheme;
-	public var parent(dynamic,dynamic) : ForumMessage;
+	@:relation(uid)
+	public var user : User;
+	@:relation(tid)
+	public var theme : ForumTheme;
+	@:relation(pid,lock)
+	public var parent : SNull<ForumMessage>;
+	@:relation(lastUid)
+	public var lastReply : SNull<User>;
 
 	public function new(u) {
 		super();
@@ -76,7 +74,7 @@ class ForumMessage extends neko.db.Object {
 	override public function insert(){
 		super.insert();
 		try {
-			App.database.request("INSERT INTO ForumSearch (id,pid, data) VALUES ("+id+","+(if( parent == null ) id else parent.id)+","+manager.quote(user.name+" "+title+" "+content)+")");
+			App.database.request("INSERT INTO ForumSearch (id,pid, data) VALUES ("+id+","+(if( parent == null ) id else parent.id)+","+App.database.quote(user.name+" "+title+" "+content)+")");
 		} catch( e : Dynamic ) {
 			initSearchTable();
 			throw "ForumSearch table created";
@@ -93,11 +91,11 @@ class ForumMessage extends neko.db.Object {
 	}
 
 	public function updateContent() {
-		App.database.request("UPDATE ForumSearch SET data = "+manager.quote(user.name+" "+title+" "+content)+" WHERE id = "+id);
+		App.database.request("UPDATE ForumSearch SET data = "+App.database.quote(user.name+" "+title+" "+content)+" WHERE id = "+id);
 	}
 
 	public static function initSearchTable() {
-		App.database.request("CREATE TABLE ForumSearch ( id int primary key, pid int not null, data text not null, fulltext key FS_Data(data), key FS_Pid(pid) ) TYPE=MYISAM");
+		App.database.request("CREATE TABLE ForumSearch ( id int primary key, pid int not null, data text not null, fulltext key FS_Data(data), key FS_Pid(pid) ) ENGINE=MYISAM");
 	}
 
 	public static function search( text, u ) {

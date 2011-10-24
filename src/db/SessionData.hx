@@ -3,11 +3,8 @@ package db;
 /**
 	Application specific session.
 **/
-class SessionData extends neko.db.Object {
+@:skip class SessionData extends sys.db.Object {
 
-	static var __rtti = null;
-
-	public var user(dynamic,dynamic) : User;
 	public var userName : String;
 	public var lang : Int;
 	public var notification : { error : Bool, text : String };

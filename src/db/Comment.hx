@@ -1,20 +1,16 @@
 package db;
-import mt.db.Types;
+import sys.db.Types;
 
-class Comment extends neko.db.Object {
+class Comment extends sys.db.Object {
 
-	static function RELATIONS() {
-		return [
-			{ prop : "entry", key : "eid", manager : Entry.manager, lock : false },
-			{ prop : "user", key : "uid", manager : User.manager, lock : false },
-		];
-	}
 	public static var manager = new CommentManager(Comment);
 
 	public var id : SId;
-	public var entry(dynamic,dynamic) : Entry;
+	@:relation(eid)
+	public var entry : Entry;
 	public var date : SDateTime;
-	public var user(dynamic,dynamic) : SNull<User>;
+	@:relation(uid)
+	public var user : SNull<User>;
 	public var userName : STinyText;
 	public var userMail : STinyText;
 	public var url : SNull<STinyText>;
@@ -23,10 +19,10 @@ class Comment extends neko.db.Object {
 
 }
 
-class CommentManager extends neko.db.Manager<Comment> {
+class CommentManager extends sys.db.Manager<Comment> {
 
 	public function browse( pos : Int, count : Int ) {
-		return objects("SELECT * FROM Comment ORDER BY date DESC LIMIT "+pos+","+count,false);
+		return search(true, { orderBy : -date, limit : [pos,count] }, false);
 	}
 
 }

@@ -1,10 +1,8 @@
 package db;
-import mt.db.Types;
+import sys.db.Types;
 
-class Group extends neko.db.Object {
-
-	static var INDEXES = [["name",true]];
-	public static var manager = new neko.db.Manager<Group>(Group);
+@:index(name,unique)
+class Group extends sys.db.Object {
 
 	public var id : SId;
 	public var name : SString<32>;

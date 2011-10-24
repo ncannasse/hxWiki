@@ -1,7 +1,7 @@
 -cp src
 -neko www/index.n
 -main App
--D spod_rtti
+-D spod_macro
 -lib templo
 --next
 -js www/app.js

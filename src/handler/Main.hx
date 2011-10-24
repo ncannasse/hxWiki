@@ -16,8 +16,12 @@ class Main extends Handler<Void> {
 			execute(request,level);
 			return;
 		case "db":
-			if( App.user != null && App.user.group.canAccessDB ) {
-				mt.db.TableInfos.OLD_COMPAT = true;
+			if( App.user != null && App.user.group.canAccessDB ) untyped {
+				try {
+					mt.db.TableInfos.OLD_COMPAT = true;
+				} catch( e : Dynamic ) {
+					throw Action.Goto("/");
+				}
 				mt.db.Admin.handler();
 				return;
 			}
@@ -121,7 +125,7 @@ class Main extends Handler<Void> {
 	public function getRights( entry : db.Entry ) {
 		var p = (entry == null) ? [] : entry.get_path().split("/");
 		while( true ) {
-			var r = db.GroupRights.manager.getWithKeys({ gid : group.id, path : p.join("/") },false);
+			var r = db.GroupRights.manager.get({ gid : group.id, path : p.join("/") },false);
 			if( r != null )
 				return r;
 			if( p.pop() == null )
@@ -570,7 +574,7 @@ class Main extends Handler<Void> {
 			neko.Web.redirect(neko.Web.getURI()+"?retry="+Std.random(1000));
 			return;
 		}
-		ch.writeString(f.content);
+		ch.write(f.content);
 		ch.close();
 		neko.Web.redirect(neko.Web.getURI()+"?reload=1");
 	}
@@ -640,9 +644,9 @@ class Main extends Handler<Void> {
 			if( !Lambda.exists(getExtensions(group).files,function(x) return x == "*" || ext == x) )
 				throw "Unsupported file extension "+ext;
 			var f = db.File.manager.search({ name : filename },false).first();
-			var content = datas.get("file");
+			var content = neko.Lib.bytesReference(datas.get("file"));
 			if( f != null ) {
-				if( content != f.content && !group.canUploadOverwrite )
+				if( content.compare(f.content) != 0 && !group.canUploadOverwrite )
 					throw "File "+filename+" already exists with different content";
 				f = db.File.manager.get(f.id,true);
 			} else {
@@ -654,10 +658,10 @@ class Main extends Handler<Void> {
 			f.user = App.user;
 			f.content = content;
 			f.update();
-			neko.db.Manager.cnx.commit();
+			sys.db.Manager.cnx.commit();
 			try neko.FileSystem.deleteFile(neko.Web.getCwd()+"/file/"+filename) catch( e : Dynamic ) {};
 			if( ext == "swf" ) {
-				var h = getSWFHeader(haxe.io.Bytes.ofString(content));
+				var h = getSWFHeader(content);
 				filename += ":"+h.width+"x"+h.height;
 			}
 			neko.Lib.print(haxe.Serializer.run(filename));
@@ -749,7 +753,12 @@ class Main extends Handler<Void> {
 
 	public function setupDatabase() {
 		// create structure
-		mt.db.Admin.initializeDatabase();
+		var _db = neko.Lib.getClasses().db;
+		for( c in Reflect.fields(_db) ) {
+			var m = Reflect.field(_db, c).manager;
+			if( m != null ) sys.db.TableCreate.create(m);
+		}
+		
 		db.Entry.manager.createSearchTable();
 		// default lang
 		var l = new db.Lang();
@@ -805,7 +814,7 @@ class Main extends Handler<Void> {
 	}
 
 	function doLatest() {
-		var files = db.File.manager.latest();
+		var files = db.File.manager.search(true, { orderBy : -id }, false);
 		for( f in files )
 			neko.Lib.println(f.name);
 	}

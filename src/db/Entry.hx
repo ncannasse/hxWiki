@@ -1,5 +1,5 @@
 package db;
-import mt.db.Types;
+import sys.db.Types;
 import db.Version.VersionChange;
 
 enum Selector {
@@ -7,26 +7,22 @@ enum Selector {
 	SPage( page : Int, count : Int );
 }
 
-class Entry extends neko.db.Object {
+@:index(pid,name,unique)
+class Entry extends sys.db.Object {
 
-	static var INDEXES = [["pid","name",true]];
-	static function RELATIONS() {
-		return [
-			{ key : "pid", prop : "parent", manager : Entry.manager, lock : false, cascade : true },
-			{ key : "vid", prop : "version", manager : Version.manager, lock : false },
-			{ key : "lid", prop : "lang", manager : Lang.manager, lock : false },
-		];
-	}
 	public static var manager = new EntryManager(Entry);
 
 	public var id : SId;
 	public var name : SString<64>;
 	public var pid : SNull<SInt>;
-	public var parent(dynamic,dynamic) : SNull<Entry>;
+	@:relation(pid,cascade)
+	public var parent : SNull<Entry>;
 	public var title : SNull<STinyText>;
 	public var vid : SNull<SInt>;
-	public var version(dynamic,dynamic) : SNull<Version>;
-	public var lang(dynamic,dynamic) : Lang;
+	@:relation(vid)
+	public var version : SNull<Version>;
+	@:relation(lid)
+	public var lang : Lang;
 	public var lid : SInt;
 
 	public function childs() {
@@ -113,16 +109,16 @@ class Entry extends neko.db.Object {
 
 }
 
-class EntryManager extends neko.db.Manager<Entry> {
+class EntryManager extends sys.db.Manager<Entry> {
 
 	public function getChilds( e : Entry ) {
-		return objects("SELECT * FROM Entry WHERE pid = "+e.id+" ORDER BY name",false);
+		return search($parent == e,{ orderBy : name },false);
 	}
 
 	public function getChildsDef( e : Entry, edef : Entry ) {
 		if( e == edef )
 			return getChilds(e);
-		var list = objects("SELECT * FROM Entry WHERE pid = "+e.id+" UNION SELECT * FROM Entry WHERE pid = "+edef.id,false);
+		var list = unsafeObjects("SELECT * FROM Entry WHERE pid = "+e.id+" UNION SELECT * FROM Entry WHERE pid = "+edef.id,false);
 		var h = new Hash();
 		list = list.filter(function(e) if( h.exists(e.name) ) return false else { h.set(e.name,true); return true; });
 		var a = Lambda.array(list);
@@ -131,14 +127,14 @@ class EntryManager extends neko.db.Manager<Entry> {
 	}
 
 	public function getRoots( l : Lang ) {
-		return objects("SELECT * FROM Entry WHERE pid IS NULL AND lid = "+l.id+" ORDER BY name",false);
+		return search($parent == null && $lang == l,{ orderBy : -name },false);
 	}
 
 	public function resolve( path : List<String>, lang : Lang ) {
 		var eid : Int = null;
 		var vid : Int = null;
 		for( name in path ) {
-			var r = result("SELECT id, vid FROM Entry WHERE name = "+quote(name)+" AND lid = "+lang.id+" AND pid "+((eid == null)?"IS NULL":"= "+eid));
+			var r = select($name == name && $lang == lang && $pid == eid,false);
 			if( r == null )
 				return null;
 			eid = r.id;
@@ -149,22 +145,22 @@ class EntryManager extends neko.db.Manager<Entry> {
 
 	public function updateSearchContent( e : Entry ) {
 		if( e.version == null )
-			execute("DELETE FROM Search WHERE id = "+e.id);
+			getCnx().request("DELETE FROM Search WHERE id = "+e.id);
 		else {
 			var content = quote(e.get_title()+" "+e.version.content);
-			execute("INSERT INTO Search (id,data) VALUES ("+e.id+","+content+") ON DUPLICATE KEY UPDATE data = "+content);
+			getCnx().request("INSERT INTO Search (id,data) VALUES ("+e.id+","+content+") ON DUPLICATE KEY UPDATE data = "+content);
 		}
 	}
 
 	public function createSearchTable() {
-		execute("CREATE TABLE Search ( id int primary key, data text not null, fulltext key Search_data(data) ) TYPE=MYISAM");
+		getCnx().request("CREATE TABLE Search ( id int primary key, data text not null, fulltext key Search_data(data) ) ENGINE=MYISAM");
 	}
 
 	public function searchExpr( expr : String, pos : Int, count : Int ) : List<Entry> {
 		// there can be some Search not linked to any Entry in case there was a deadlock in a transaction
 		// implying the insert of a new Entry : both the Search and the Entry auto_increment doesn't get
 		// rollbacked as part of the transaction
-		return objects("SELECT Entry.* FROM Search LEFT JOIN Entry ON Entry.id = Search.id WHERE Entry.id IS NOT NULL AND MATCH(data) AGAINST ("+quote(expr)+" IN BOOLEAN MODE) LIMIT "+pos+","+count,false);
+		return unsafeObjects("SELECT Entry.* FROM Search LEFT JOIN Entry ON Entry.id = Search.id WHERE Entry.id IS NOT NULL AND MATCH(data) AGAINST ("+quote(expr)+" IN BOOLEAN MODE) LIMIT "+pos+","+count,false);
 	}
 
 	public function selectSubs( entry : Entry, sel : Selector ) {
@@ -172,14 +168,14 @@ class EntryManager extends neko.db.Manager<Entry> {
 			return new List();
 		switch( sel ) {
 		case SPage(n,c):
-			return objects("SELECT Entry.* FROM Entry, Version WHERE pid = "+entry.id+" AND Version.id = vid ORDER BY Version.date DESC LIMIT "+(n*c)+","+c,false);
+			return unsafeObjects("SELECT Entry.* FROM Entry, Version WHERE pid = "+entry.id+" AND Version.id = vid ORDER BY Version.date DESC LIMIT "+(n*c)+","+c,false);
 		case SDate(y,m,d):
 			var cond = "YEAR(date) = "+y;
 			if( m != null )
 				cond += " AND MONTH(date) = "+m;
 			if( d != null )
 				cond += " AND DAYOFMONTH(date) = "+d;
-			return objects("SELECT Entry.* FROM Entry, Version WHERE pid = "+entry.id+" AND vid = Version.id AND "+cond+" ORDER BY Version.date DESC",false);
+			return unsafeObjects("SELECT Entry.* FROM Entry, Version WHERE pid = "+entry.id+" AND vid = Version.id AND "+cond+" ORDER BY Version.date DESC",false);
 		}
 	}
 
@@ -189,7 +185,7 @@ class EntryManager extends neko.db.Manager<Entry> {
 			entries[i] = 0;
 		if( entry.id == null )
 			return entries;
-		var results = execute("SELECT DAYOFMONTH(date) AS day, COUNT(*) AS count FROM Entry, Version WHERE pid = "+entry.id+" AND vid = Version.id AND YEAR(date) = "+year+" AND MONTH(date) = "+month+" GROUP BY day");
+		var results = getCnx().request("SELECT DAYOFMONTH(date) AS day, COUNT(*) AS count FROM Entry, Version WHERE pid = "+entry.id+" AND vid = Version.id AND YEAR(date) = "+year+" AND MONTH(date) = "+month+" GROUP BY day");
 		for( r in results )
 			entries[r.day] = r.count;
 		return entries;

@@ -1,11 +1,9 @@
 package db;
-import mt.db.Types;
+import sys.db.Types;
 
 import db.ForumBrowsing;
 
-class ForumTheme extends neko.db.Object {
-
-	public static var manager = new neko.db.Manager<ForumTheme>(ForumTheme);
+class ForumTheme extends sys.db.Object {
 
 	public var id : SId;
 	public var path : SString<200>;

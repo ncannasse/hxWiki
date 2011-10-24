@@ -1,15 +1,11 @@
 package db;
-import mt.db.Types;
+import sys.db.Types;
 
-class GroupRights extends neko.db.Object {
+@:id(gid,path)
+class GroupRights extends sys.db.Object {
 
-	static var TABLE_IDS = ["gid","path"];
-	static function RELATIONS() {
-		return [{ prop : "group", key : "gid", manager : Group.manager, lock : false }];
-	}
-	public static var manager = new neko.db.Manager<GroupRights>(GroupRights);
-
-	public var group(dynamic,dynamic) : Group;
+	@:relation(gid)
+	public var group : Group;
 	public var gid : SInt;
 	public var path : SString<200>;
 	public var canView : SBool;

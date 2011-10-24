@@ -1,22 +1,16 @@
 package db;
-import mt.db.Types;
+import sys.db.Types;
 
 /**
 	Database session class
 **/
+@:id(sid) @:index(uid,unique)
 class Session extends SessionData {
 
-	static function RELATIONS() {
-		return [{ key : "uid", prop : "user", manager : User.manager }];
-	}
-
-	static var TABLE_IDS = ["sid"];
-	static var INDEXES = [["uid",true]];
 	static var UID_CHARS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-	static var manager = new neko.db.Manager<Session>(Session);
 	static var FIELDS = {
 		var fl = Type.getInstanceFields(SessionData);
-		for( x in Type.getInstanceFields(neko.db.Object) )
+		for( x in Type.getInstanceFields(sys.db.Object) )
 			fl.remove(x);
 		#if php
 		fl.remove("get_user");
@@ -26,6 +20,8 @@ class Session extends SessionData {
 		fl;
 	}
 
+	@:relation(uid)
+	public var user : SNull<User>;
 	public var sid : SString<32>;
 	public var uid : SNull<SInt>;
 	public var mtime : SDateTime;
@@ -34,7 +30,7 @@ class Session extends SessionData {
 
 	public override function setUser( u : User ) {
 		if( uid != u.id )
-			App.database.request("DELETE FROM Session WHERE uid = "+u.id);
+			manager.delete($user == u);
 		user = u;
 		super.setUser(u);
 	}
@@ -52,7 +48,7 @@ class Session extends SessionData {
 		for( f in FIELDS )
 			Reflect.setField(o,f,Reflect.field(this,f));
 		var oldData = data;
-		data = neko.Lib.stringReference(neko.Lib.serialize(o));
+		data = neko.Lib.serialize(o);
 		if( data != oldData )
 			mtime = Date.now();
 		super.update();
@@ -61,12 +57,12 @@ class Session extends SessionData {
 	static function loadExisting( sid ) {
 		if( sid == null )
 			return null;
-		var s = manager.getWithKeys({ sid : sid },true);
+		var s = manager.get(sid,true);
 		if( s == null )
 			return null;
 		var o;
 		try {
-			o = neko.Lib.unserialize(neko.Lib.bytesReference(s.data));
+			o = neko.Lib.unserialize(s.data);
 		} catch( e : Dynamic ) {
 			return null;
 		}
@@ -97,6 +93,6 @@ class Session extends SessionData {
 	}
 
 	public static function cleanup( days : Int ) {
-		App.database.request("DELETE FROM Session WHERE mtime < NOW() - INTERVAL "+days+" DAY");
+		manager.delete($mtime < $now() - $days(days));
 	}
 }

@@ -2,7 +2,7 @@ import mtwin.web.Handler;
 
 class App {
 
-	public static var database : neko.db.Connection;
+	public static var database : sys.db.Connection;
 	public static var session : db.Session;
 	public static var user : db.User;
 	public static var request : mtwin.web.Request;
@@ -103,9 +103,9 @@ class App {
 				redirect(url);
 			case Error(url,err,params):
 				database.rollback();
-				neko.db.Manager.cleanup();
+				sys.db.Manager.cleanup();
 				session = db.Session.initialize(sid);
-				if( user != null ) user.sync();
+				if( user != null ) user = db.User.manager.get(user.id);
 				session.setError(err,params);
 				session.update();
 				redirect(url);
@@ -127,7 +127,7 @@ class App {
 		var m = ~/^mysql:\/\/(.*):(.*)@(.*):(.*)\/(.*)$/;
 		if( !m.match(params) )
 			throw "Invalid format "+params;
-		return neko.db.Mysql.connect({
+		return sys.db.Mysql.connect({
 			user : m.matched(1),
 			pass : m.matched(2),
 			host : m.matched(3),
@@ -147,7 +147,7 @@ class App {
 			url : Config.get("url"),
 		};
 		// allow database failures here
-		context.links = function(n) return try db.Link.manager.list(n) catch( e : Dynamic ) new List();
+		context.links = function(n:Int) return try db.Link.manager.search($kind == n,{ orderBy : -priority },false) catch( e : Dynamic ) new List();
 		context.langs = try db.Lang.manager.all(false) catch( e : Dynamic ) new List();
 		context.section = Config.getSection;
 		if( request == null )
@@ -211,7 +211,7 @@ class App {
 			cleanup();
 			return;
 		}
-		neko.db.Transaction.main(database, mainLoop, errorHandler);
+		sys.db.Transaction.main(database, mainLoop, errorHandler);
 		database = null; // already closed
 		cleanup();
 	}

@@ -1,18 +1,14 @@
 package db;
-import mt.db.Types;
+import sys.db.Types;
 
-class User extends neko.db.Object {
-
-	static var INDEXES = [["name",true]];
-	static function RELATIONS() {
-		return [{ prop : "group", key : "gid", manager : Group.manager, lock : false }];
-	}
-	public static var manager = new neko.db.Manager<User>(User);
+@:index(name,unique)
+class User extends sys.db.Object {
 
 	public var id : SId;
 	public var name : SString<20>;
 	public var gid : SInt;
-	public var group(dynamic,dynamic) : Group;
+	@:relation(gid)
+	public var group : Group;
 	public var banEnding : SNull<SDateTime>;
 
 	// prefs

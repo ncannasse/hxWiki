@@ -1,9 +1,9 @@
 package db;
-import mt.db.Types;
+import sys.db.Types;
 
-class Lang extends neko.db.Object {
+@:index(code,unique)
+class Lang extends sys.db.Object {
 
-	static var INDEXES = [["code",true]];
 	public static var manager = new LangManager(Lang);
 
 	public var id : SId;
@@ -15,10 +15,10 @@ class Lang extends neko.db.Object {
 	}
 }
 
-class LangManager extends neko.db.Manager<Lang> {
+class LangManager extends sys.db.Manager<Lang> {
 
-	public function byCode( code ) {
-		return object("SELECT * FROM Lang WHERE code = "+quote(code),false);
+	public function byCode( code : String ) {
+		return select($code == code,false);
 	}
 
 }

@@ -1,5 +1,5 @@
 package db;
-import mt.db.Types;
+import sys.db.Types;
 
 enum VersionChange {
 	VContent;
@@ -9,20 +9,16 @@ enum VersionChange {
 	VRestore;
 }
 
-class Version extends neko.db.Object {
+class Version extends sys.db.Object {
 
-	static function RELATIONS() {
-		return [
-			{ key : "eid", prop : "entry", manager : Entry.manager, lock : false },
-			{ key : "uid", prop : "author", manager : User.manager, lock : false },
-		];
-	}
 	public static var manager = new VersionManager(Version);
 
 	public var id : SId;
 	public var date : SDateTime;
-	public var entry(dynamic,dynamic) : Entry;
-	public var author(dynamic,dynamic) : SNull<User>;
+	@:relation(eid)
+	public var entry : Entry;
+	@:relation(uid)
+	public var author : SNull<User>;
 	public var code : SInt;
 	public var content : SNull<SText>;
 	public var htmlContent : SNull<SText>;
@@ -122,17 +118,17 @@ class Version extends neko.db.Object {
 
 }
 
-class VersionManager extends neko.db.Manager<Version> {
+class VersionManager extends sys.db.Manager<Version> {
 
 	public function history( e : List<Entry>, user : User, pos : Int, count : Int ) {
 		var cond = (e == null || e.isEmpty())?"TRUE":"eid IN ("+e.map(function(e) return e.id).join(",")+")";
 		if( user != null )
 			cond += " AND uid = "+user.id;
-		return objects("SELECT * FROM Version WHERE "+cond+" ORDER BY id DESC LIMIT "+pos+","+count,false);
+		return unsafeObjects("SELECT * FROM Version WHERE " + cond + " ORDER BY id DESC LIMIT " + pos + "," + count, false);
 	}
 
 	public function previous( v : Version ) {
-		var r = result("SELECT MAX(id) as id FROM Version WHERE eid = "+v.entry.id+" AND id < "+v.id+" AND code IN (0,4)");
+		var r = getCnx().request("SELECT MAX(id) as id FROM Version WHERE eid = "+v.entry.id+" AND id < "+v.id+" AND code IN (0,4)").next();
 		if( r == null || r.id == null )
 			return null;
 		var v = get(r.id,false);
