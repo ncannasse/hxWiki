@@ -1,12 +1,12 @@
 <config
 	lang="en"
-	db="mysql://root:@slave:3306/hxwiki"
+	db="mysql://root:@localhost:3306/hxwiki"
 	debug="1"
 	cache="0"
-	style="default"
+	style="haxe"
 	title="haXe Wiki"
 	admin_password="admin"
 	url="http://dev.hxwiki.com/"
 >
-	<copy>&copy; 2007-2009 <a href="http://www.motion-twin.com">Motion-Twin</a></copy>
+	<copy>&copy; 2007-2011 <a href="http://www.motion-twin.com">Motion-Twin</a></copy>
 </config>
