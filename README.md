@@ -47,8 +47,7 @@ In order to setup the wiki :
    1. `cd www`
    2. `nekotools server -rewrite`
 
-5. copy `config.tpl.xml` as `config.xml` and configure the `db` field with
-   - your local mysql database server
+5. copy `config.tpl.xml` as `config.xml` and configure the `db` field with your local mysql database server
    
 6. visit `http://localhost:2000/`
    - it should create the database, refresh to start using !
