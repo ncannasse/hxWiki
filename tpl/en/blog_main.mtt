@@ -1,11 +1,8 @@
 ::use 'design.mtt'::
 <div class="blog main">
 
+::set pageTitle = entry._title::
 <h1 class="title"><a href="/::entry._path::">::entry._title::</a></h1>
-
-<script type="text/javascript">
-	document.title = '::config.title:: - ::entry._title::';
-</script>
 
 <form action="/wiki/edit" class="create" method="GET" ::cond request.exists("create")::>
 	<span class="tfield">Title :</span> <input name="title" class="field" onkeyup="document.getElementById('id_path').value = '::entry._path::/' + Editor.normalize(this.value)"/>

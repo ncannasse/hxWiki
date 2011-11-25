@@ -1,10 +1,7 @@
 ::use 'design.mtt'::
 
+::set pageTitle = entry._title::
 <h1 class="title"><a href="/::entry._path::">::entry._title::</a></h1>
-
-<script type="text/javascript">
-	document.title = '::config.title:: - ::entry._title::';
-</script>
 
 <div class="hierarchy">
 	::foreach e entry.getList()::

@@ -1,7 +1,8 @@
-﻿::use 'design.mtt'::
+::use 'design.mtt'::
 
 <div class="forum">
 
+::set pageTitle = entry._title::
 <h1><a href="::path::">::entry._title::</a> &gt; ::if thread:: <a href="::path::/thread/::thread.id::">::thread.title::</a> &gt; Reply::else:: New Topic ::end:: </h1>
 
 <ul class="msg">
