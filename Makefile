@@ -15,10 +15,8 @@ deploy_haxe: prepare
 	rsync -avz --delete $(RSYNC_EXCLUDES) tpl www ncannasse@haxe.org:/data/haxe
 
 deploy_nc: prepare
-	rsync -avz --delete $(RSYNC_EXCLUDES) tpl www ncannasse@ncannasse.fr:/data/ncannasse.fr
-
-deploy_kaze: prepare
-	rsync -avz --delete $(RSYNC_EXCLUDES) tpl www ncannasse@kazegames.com:/data/kazegames.com
+	rsync -avz --delete $(RSYNC_EXCLUDES) tpl www ncannasse_fr@deploy.motion-twin.com:ncannasse_fr
+	ssh ncannasse_fr@deploy.motion-twin.com deploy
 
 api:
 	haxe project.hxml
