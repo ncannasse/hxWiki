@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+	<head>
+	::use 'head.mtt'::::end::
+	<link href="http://fonts.googleapis.com/css?family=Montserrat|PT+Serif+Caption:400,400italic" rel="stylesheet" type="text/css"/>
+	</head>
+
+	<body>
+		<div id="topbar">
+			<div class="topcontent">
+				<div class="login">
+					::if user == null::
+						<a href="#" class="clic" onclick="$('.loginBox').toggle(200)">Login »</a>
+						<div class="loginBox" style="display:none">
+							<p>
+								You can <a href="/wiki/register">register</a> to create an account and edit the pages of the Wiki.
+							</p>
+							<form action="/wiki/login" method="POST">
+								<span class="group"><span class="tfield">User :</span> <input name="user" class="field"/></span>
+								<span class="group"><span class="tfield">Pass :</span> <input type="password" name="pass" class="field"/></span>
+								<input type="hidden" name="url" value="::uri::"/>
+								<input type="submit" value="OK" class="button"/>
+							</form>
+						</div>
+					::else::
+						<a href="#" class="clic" onclick="if( confirm('Disconnect ?') ) document.location = '/wiki/logout?url=::uri::'">::user.name:: »</a>
+					::end::
+				</div>
+				<div class="search">
+					<form action="/wiki/search">
+						<input name="s" class="sfield" value="Search" onfocus="if( $(this).attr('class').indexOf('init') < 0 ) { $(this).val('').addClass('init'); }" onkeyup="if( event.keyCode == 13 ) this.parentNode.submit()"/>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="gradient">
+			<div id="site">
+			<div id="head">
+				<a href="/" class="logo">
+					<img src="/img/haxe2/logo.png" alt="HaXe logo" />
+					<h1>Code once. Deploy everywhere.</h1>
+				</a>
+				<ul id="mainmenu">
+					$$menuLinks(0)
+				</ul>
+			</div>
+			<div id="content">
+				
+				<div id="notification" ::cond notification:: ::attr class if( notification.error ) 'error'::>
+					::raw notification.text::
+				</div>
+				
+				::raw __content__::
+				
+			</div>
+					
+			<div class="langs">
+				<ul>
+				::foreach l langs::
+				<li><a href="/wiki/setlang?url=::uri::;lang=::l.code::" class="::lang_classes(l)::"><img src="/img/::config.style::/flags/flag_::l.code::.gif" alt="::l.code::"/> <span class="name">::l.name::</span></a></li>
+				::end::
+				</ul>
+			</div>
+			
+		</div>
+		</div>
+		<div id="foot">
+			<div id="footcontent">
+				<div class="list">
+					<h2>About</h2>
+					<ul id="footmenu">
+						<li><a href="#">Shared</a></li>
+						<li><a href="#">Dedicated</a></li>
+						<li><a href="#">Custom</a></li>
+						<li><a href="#">Custom P2P</a></li>
+						<li><a href="#">Wowza</a></li>
+						<li><a href="#">Cluster</a></li>
+					</ul>
+				</div>
+				<div class="list">
+					<h2>Resources</h2>
+					<ul id="footmenu">
+						<li><a href="#">Shared</a></li>
+						<li><a href="#">Dedicated</a></li>
+						<li><a href="#">Custom</a></li>
+						<li><a href="#">Custom P2P</a></li>
+						<li><a href="#">Wowza</a></li>
+						<li><a href="#">Cluster</a></li>
+					</ul>
+				</div>
+				<div class="list">
+					<h2>Resources</h2>
+					<ul id="footmenu">
+						<li><a href="#">Shared</a></li>
+						<li><a href="#">Dedicated</a></li>
+						<li><a href="#">Custom</a></li>
+						<li><a href="#">Custom P2P</a></li>
+						<li><a href="#">Wowza</a></li>
+						<li><a href="#">Cluster</a></li>
+					</ul>
+				</div>
+				<div class="list">
+					<h2>Options</h2>
+					<ul id="footmenu">
+						<li ::cond dbAccess::><a href="/db">Database</a></li>
+						<li><a href="/wiki/map">Wiki Map</a></li>
+						::if rss::
+						<li><a href="::rss::">RSS Feed</a></li>
+						::else::
+						<li><a href="/wiki/history">Latest Changes</a></li>
+						::end::
+						<li ::cond canDeleteComments::><a href="/wiki/latestComments">Latest Comments</a></li>
+						$$menuLinks(1)
+					</ul>
+				</div>
+				<div class="list copy">
+					<img src="/img/haxe2/logo_foot.png" />
+					<p>All rights reserved. <a href="http://haxe.org">Powered by haXe</a></p>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

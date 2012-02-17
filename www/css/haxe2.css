@@ -1,0 +1,1058 @@
+body, a, p, table, tr, td, ul, li, ol, dl, dt, dd, h1, h2, h3, h4, h5, h6, pre, blockquote {
+	margin	: 0px;
+	padding	: 0px;
+}
+
+ul {
+	list-style	: none;
+}
+
+body, td, input, textarea, select {
+	font-family : "Segoe UI","Lucida Grande","Trebuchet MS",Arial,"lucida sans unicode",sans-serif;
+	color		: #333;
+}
+
+body {
+	background	: transparent url('/img/haxe2/bg.gif')	repeat left top;
+}
+
+a {
+	color		: #686868;
+	text-decoration	: none;
+}
+
+a:hover {
+	color		: #e68315;
+}
+
+form span.group {
+	display : block;
+}
+
+form .tfield {
+	display : inline-block;
+	width : 100px;
+}
+
+.gradient {
+	background	: transparent url('/img/haxe2/gradient.png') no-repeat center top;
+}
+
+/* TOP BAR */
+
+#topbar {
+	background	: transparent url('/img/haxe2/bartop.png') repeat-x left top;
+	height		: 32px;
+}
+
+#topbar .topcontent {
+	width : 960px;
+	margin : auto;
+}
+
+#topbar .login {
+	padding-top : 5px;
+	margin-left : 750px;
+}
+
+#topbar .login a.clic {
+	color : white;
+	font-weight : bold;
+	font-size : 13px;
+	text-shadow : 1px 0px 4px #444;
+}
+
+#topbar .loginBox {
+	position : absolute;
+	width : 250px;
+	margin-left : -100px;
+	background-color : white;
+	border : 1px solid #dcdcdc;
+	padding : 10px;
+}
+
+#topbar .search {
+	position : absolute;
+	top : 4px;
+	padding-left : 27px;
+	margin-left : 828px;
+	width : 105px;
+	height : 24px;
+	background-image : url('/img/haxe2/searchbg.png');
+}
+
+#topbar .search form {
+	margin : 0px;
+}
+
+#topbar .search input.sfield {
+	background : transparent;
+	border : none;
+	width : 100px;
+	color : #e3ad67;
+	font-weight : bold;
+}
+
+#topbar .search input.sfield.init {
+	color : white;
+}
+
+/* STRUCTURE */
+
+#site {
+	width		: 960px;
+	margin		: auto;
+}
+
+#head {
+	height		: 215px;
+	padding-top	: 1px;
+	text-align 	: right;
+}
+
+#head .logo {
+	display		: block;
+	text-align 	: left;
+	width		: 200px;
+	position	: absolute;
+	margin-top	: 50px;
+}
+
+#head .logo img {
+	border		: none;
+	margin-left	: 50px;
+}
+
+#head .logo h1 {
+	font-size		: 8pt;
+	font-family		: "PT Serif Caption","Segoe UI","Lucida Grande","Trebuchet MS",Arial,"lucida sans unicode",sans-serif;
+	font-weight		: normal;
+	font-style		: italic;
+	letter-spacing  : 1px;
+	color			: #8f8f8f;
+	margin-top 		: 5px;
+	text-shadow		: 0px 1px 1px #888;
+}
+
+#mainmenu {
+	display		: inline-block;
+	margin-top	: 95px;
+}
+
+#mainmenu li {
+	display			: inline-block;
+	font-family		: Montserrat,"Segoe UI","Lucida Grande","Trebuchet MS",Arial,"lucida sans unicode",sans-serif;
+	font-weight		: normal;
+	text-transform	: uppercase;
+	font-size		: 10pt;
+	margin-left		: 12px;
+	color			: #000;
+}
+
+#mainmenu li a, #mainmenu li a.button:hover {
+	color		: #434343;
+	font-size	: 10pt !important;
+}
+
+#mainmenu li a:hover {
+	color		: #7e7e7e;
+}
+
+.button, #mainmenu li.active a, ul.buttons a, .view .buttonDownload a, .infoBox .but a {
+	-moz-box-shadow		:inset 0px 1px 1px 0px #ffd992;
+	-webkit-box-shadow	:inset 0px 1px 1px 0px #ffd992;
+	box-shadow			: inset 0px 1px 1px 0px #ffd992;
+	
+	-moz-box-shadow		: 0px 1px 2px 0px #c2c1be;
+	-webkit-box-shadow	: 0px 1px 2px 0px #c2c1be;
+	box-shadow			: 0px 1px 2px 0px #c2c1be;
+	
+	background			: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #f9b727), color-stop(1, #f8a222) );
+	background			: -moz-linear-gradient( center top, #f9b727 5%, #f8a222 100% );
+	filter				: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f9b727', endColorstr='#f8a222');
+	
+	background-color	: #f9b727;
+	-moz-border-radius	: 5px;
+	-webkit-border-radius : 5px;
+	border-radius		: 5px;
+	border				: 1px solid #b66f18;
+	display				: inline-block;
+	color				: #292929;
+	padding				: 6px 18px;
+	text-decoration		: none;
+	text-shadow			: 1px 1px 0px #fbcf7c;
+	font-size			: 8pt;
+}
+
+.button:hover, #mainmenu li.active a:hover, ul.buttons a:hover, .view .buttonDownload a:hover, .infoBox .but a:hover {
+	background			: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #f8a222), color-stop(1, #f9b727) );
+	background			: -moz-linear-gradient( center top, #f8a222 5%, #f9b727 100% );
+	filter				: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f8a222', endColorstr='#f9b727');
+	background-color	: #f8a222;
+	color				: #292929;
+}
+
+.button:active, #mainmenu li.active a:active, ul.buttons a:active, , .infoBox .but a:active {
+	position			: relative;
+	top					: 1px;
+}
+
+ul.buttons a {
+	padding	: 2px 10px;
+	opacity : 0.3;
+}
+
+form {
+	margin : 15px 0px;
+}
+
+form ul.buttons a, ul.buttons a:hover {
+	opacity : 1;
+}
+
+#content {
+	position			: relative;
+	padding				: 20px 30px;
+	background-color	: #fff;
+	min-height			: 400px;
+	border				: 1px solid #dcdcdc;
+}
+
+.langs {
+	text-align : right;
+}
+
+.langs a {
+	opacity : 0.3;
+}
+
+.langs a.off img {
+	border : 2px solid red;
+}
+
+.langs a:hover {
+	opacity : 1;
+}
+
+.langs .name {
+	display : none;
+}
+
+#foot {
+	margin-top			: 112px;
+	background			: #dc7915 url('/img/haxe2/foot.png') no-repeat center top;
+	color				: #fff;
+	border-top			: 1px solid #bababa;
+}
+
+#footcontent {
+	width				: 960px;
+	padding-top			: 50px;
+	padding-bottom		: 80px;
+	margin				: auto;
+	font-size			: 10pt;
+}
+
+#foot a {
+	color				: #fed099;
+}
+
+#foot a:hover {
+	color				: #fff;
+}
+
+#foot h2 {
+	font-family		: Montserrat,"Segoe UI","Lucida Grande","Trebuchet MS",Arial,"lucida sans unicode",sans-serif;
+	font-weight		: normal;
+	text-transform	: uppercase;
+	font-size		: 11pt;
+	margin-bottom	: 5px;
+}
+
+#foot .list {
+	width			: 145px;
+	display			: inline-block;
+	vertical-align	: top;
+}
+
+#foot .copy {
+	width			: 328px;
+	text-align		: right;
+}
+
+#foot .copy p {
+	margin-top		: 15px;
+}
+
+#foot li {
+	margin-bottom	: 5px;
+}
+
+/* NOTIFICATIONS */
+
+#notification, .error, #notification.error {	/* haxe_ie6.css, haxe_ie7.css */
+	padding				: 10px 10px 10px 55px;
+	width				: 570px;
+	background-position	: top left;
+	background-repeat	: no-repeat;
+}
+
+#notification {
+	background-color	: #f0f8fd;
+	background-image	: url('/img/haxe/items/confirm.gif');
+	border				: 1px solid #97cbeb;
+	color				: #09598a;
+}
+
+.error, #notification.error {
+	background-color	: #ffefa3;
+	background-image	: url('/img/haxe/items/error.gif');
+	border				: 1px solid #d85700;
+	color				: #bf4d00;
+}
+
+.error {
+	margin				: 0px 0px 15px 0px;
+}
+
+/* CONTENT PAGE */
+
+.version, .hierarchy {
+	color				: #8a8a8a;
+	font-size			: 9pt;
+	text-align			: right;
+}
+
+.hierarchy a {
+	text-decoration : underline;
+}
+
+.hierarchy {
+	margin-top			: -5px;
+	margin-bottom		: 10px;
+}
+
+h1.title a {
+	color				: #424242;
+	text-shadow			: 0px 1px 3px #aaa;
+}
+
+#content ul.buttons li {
+	display : inline-block;
+}
+
+/* EDIT PAGE */
+
+textarea {
+	background-color	: #fff;
+	border-style		: none;
+}
+
+input.field {
+	vertical-align		: middle;
+	padding				: 2px;
+	border				: 1px solid #97cbeb;
+	color				: #09598a;
+}
+
+textarea {
+	display				: block;
+	margin				: 5px 0px;
+	font-family			: "trebuchet ms", sans-serif;
+	font-size			: 9pt;
+	width				: 890px;
+	height				: 300px;
+	background-color	: #eef7fd;
+	padding				: 5px 0px 0px 5px;
+	border				: 1px solid #97cbeb;
+}
+
+/* CONTENT */
+
+.view {
+	font-size : 10.5pt;
+}
+
+.view h1 {
+	color : #424242;
+	margin-top : 20px;
+	margin-bottom : 10px;
+}
+
+.view h2 {
+	color : #C35700;
+	margin-top : 15px;
+	margin-bottom : 5px;
+}
+
+.view h3 {
+	color : #09598A;
+	margin-top : 10px;
+}
+
+.view em {
+	color : #e68315;
+}
+
+.view p {
+	margin-top : 3px;
+	margin-bottom : 15px;
+	text-align : justify;
+}
+
+.view a {
+	text-decoration : underline;
+}
+
+a.broken {
+	color				: #e10005;
+	text-decoration 	: none;
+}
+
+a.file, a.extern {
+	background-color	: transparent;
+	background-position	: center right;
+	background-repeat	: no-repeat;
+	margin-right		: 2px;
+}
+
+.file {
+	background-image	: url('/img/common/file.gif');
+	padding-right		: 20px;
+}
+
+a.extern {
+	background-image	: url('/img/common/extern.gif');
+	padding-right		: 16px;
+}
+
+.file_zip, .file_tgz, .file_gz {
+	background-image	: url('/img/common/zip.gif');
+	padding-right		: 17px;
+}
+
+.file_exe, .file_dmg {
+	background-image	: url('/img/common/exe.gif');
+	padding-right		: 17px;
+}
+
+.file_gif, .file_jpg, .file_png  {
+	background-image	: url('/img/common/img.gif');
+	padding-right		: 21px;
+}
+
+.file_pdf {
+	background-image	: url('/img/common/pdf.gif');
+	padding-right		: 16px;
+}
+
+.file_txt {
+	background-image	: url('/img/common/txt.gif');
+	padding-right		: 18px;
+}
+
+.file_swf {
+	background-image	: url('/img/common/swf.gif');
+	padding-right		: 20px;
+}
+
+.file_xml {
+	background-image	: url('/img/common/xml.gif');
+	padding-right		: 20px;
+}
+
+.view ul {
+	list-style-image	: url('/img/haxe/items/ul_spot.gif');
+	list-style-position	: outside;
+	margin				: 5px 0px 25px 22px;
+}
+
+.view ul ul {
+	list-style-image	: url('/img/haxe/items/ul_spot4.gif');
+	margin				: 5px 0px 5px 25px;
+}
+
+.view ul li {
+	margin-bottom		: 5px;
+	text-align			: justify;
+}
+
+.view .biglist ul{
+	list-style			: none;
+	list-style-image		: none;
+	margin-left			: 10px;
+}
+
+.view .biglist li {
+	background-image	: url('/img/haxe/items/ul_spot2.gif');
+	background-position	: 0px 2px;
+	background-repeat	: no-repeat;
+	padding-left		: 24px;
+	margin-bottom		: 20px;
+	text-align			: justify;
+}
+.view .biglist ul ul li {
+	list-style-image 	: url('/img/haxe/items/ul_spot.gif');
+	background 			: none;
+	padding-left 		: 0px;
+	margin-bottom 		: 1px;
+}
+
+.view img, #swf_1 {
+	border 				: 1px solid #0079b9;
+	padding				: 1px;
+}
+
+.view .align_left {
+	float 				: left;
+	margin-right 		: 10px;
+}
+
+.view .align_right {
+	float 				: right;
+	margin-left 		: 10px;
+}
+
+.view .align_clear {
+	display 			: block;
+	clear 				: both;
+}
+
+pre {
+	background-color	: #eff8fd;
+	border 				: 1px dashed #c2d9e6;
+	padding 			: 5px;
+	margin 				: 10px 10px 30px 30px;
+	width				: 650px;
+	overflow			: auto;
+}
+
+.diff pre {
+	overflow			: auto;
+}
+
+pre.xml span, pre.html span {
+	color : #009;
+}
+
+pre.xml .comment, pre.xml .string, pre.html .comment, pre.html .string, pre.haxe .comment {
+	color : #090;
+}
+
+pre.haxe .kwd {
+	color : #009;
+	font-weight : bold;
+}
+
+pre.haxe .type, pre.haxe .number {
+	color : #557;
+}
+
+pre.haxe .string {
+	color : red;
+}
+
+pre.haxe .op {
+	font-weight : bold;
+}
+
+/* EDITOR */
+
+.editor .tfield {
+	font-size			: 13.5pt;
+	vertical-align		: middle;
+}
+
+.editor .field {
+	width				: 350px;
+	font-size			: 13.5pt;
+	padding-bottom		: 4px;
+}
+
+/* TABLE HISTORY */
+
+table.history {
+	margin-top			: 10px;
+	border				: 1px solid #c2d9e6;
+	border-collapse		: separate;
+	border-spacing		: 1px;
+	-moz-border-radius	: 5px;
+	width				: 100%;
+}
+
+table.history th {
+	color 				: #4381a7;
+	font-variant		: small-caps;
+	font-size			: 12pt
+	height				: 30px;
+	background			: #c8e3f9 url('/img/haxe/items/bg_th1.gif') top left repeat-x;
+}
+
+table.history td, table.history th {
+	text-align			: center;
+	padding				: 5px 5px;
+}
+
+table.history tr {
+	background-color	: #f1f8fd;
+}
+
+table.history tr.even {
+	background-color 	: #e4f2fc;
+}
+
+table.history tr:hover {
+	background-color	: #ffeec1;
+}
+
+table.history td {
+	font-size			: 9pt;
+	border-color		: #fff #c2d9e6 #c2d9e6 transparent;
+	border-style		: solid;
+	border-width		: 1px;
+}
+
+/* WIKI MAP */
+
+ul.map li {
+	-moz-border-radius	: 10px;
+}
+
+ul.map li:hover {
+	background-color	: #f2f9fd;
+}
+
+ul.map li ul.map {
+	margin-left			: 8px;
+	border-left			: 1px solid #c2d9e6;
+}
+
+ul.map li li {
+	margin-left	 		: 30px;
+}
+
+ul.map a {
+	text-decoration		: none;
+}
+
+ul.map a {
+	font-style 			: italic;
+}
+
+ul.map a.has_content {
+	font-style 			: normal;
+}
+
+ul.map .no_content, ul.map .browse {
+	width 		: 20px;
+	float		: left;
+}
+
+ul.map .browse {
+	background 			: url('/img/haxe/items/plus.gif') no-repeat left center;
+	cursor		: pointer;
+}
+
+ul.map .no_content {
+	background 			: url('/img/common/txt2.gif') no-repeat 1px center;
+}
+
+/* BROWSE */
+
+p.browse {
+	text-align			: center;
+}
+
+/* SEARCH RESULTS */
+
+ul.results li {
+	padding				: 3px 0px 3px 20px;
+	background-image	: url('/img/haxe/items/ul_spot4.gif');
+	background-position	: 5px 10px;
+	background-repeat	: no-repeat;
+	margin-bottom		: 5px;
+	-moz-border-radius	: 10px;
+}
+
+ul.results li:hover {
+	background-color	: #ffeec1;
+}
+
+/* USER SHEET */
+
+dl.user {
+	padding				: 5px;
+	-moz-border-radius	: 5px;
+	border				: 1px solid #c2d9e6;
+	background			: #e7f4fc url('/img/haxe/items/bg_box1.gif') top left repeat-x;
+	color				: #09598a;
+	min-height			: 100px;
+	width				: 300px;
+}
+
+dl.user dt {
+	margin-left			: 10px;
+	font-weight			: bold;
+}
+
+dl.user dd {
+	margin-left			: 30px;
+	margin-bottom		: 5px;
+}
+
+/* FORUM */
+
+.forum a img {
+	border : none;
+}
+
+.browser {
+	text-align : center;
+}
+
+table.threads {
+	margin-top			: 10px;
+	border				: 1px solid #c2d9e6;
+	border-collapse		: separate;
+	border-spacing		: 1px;
+	-moz-border-radius	: 5px;
+	width				: 100%;
+}
+
+table.threads th {
+	color 				: #4381a7;
+	font-variant		: small-caps;
+	font-size			: 12pt
+	height				: 30px;
+	background			: #c8e3f9 url('/img/haxe/items/bg_th1.gif') top left repeat-x;
+}
+
+.forum ul.msg li {
+	margin-top			: 8px;
+	border				: 1px solid #c2d9e6;
+}
+
+.forum ul.msg .mheader {
+	color 				: #4381a7;
+	font-variant		: small-caps;
+	font-size			: 12pt
+	height				: 36px;
+	padding				: 3px;
+	background			: #c8e3f9 url('/img/haxe/items/bg_th1.gif') top left repeat-x;
+}
+
+.forum ul.msg .mcontent {
+	padding : 3px;
+}
+
+.forum ul.msg .mcontent p {
+	margin-bottom : 0px;
+}
+
+table.threads td, table.threads th {
+	text-align			: center;
+	padding				: 5px 5px;
+}
+
+table.threads tr {
+	background-color	: #f1f8fd;
+}
+
+table.threads tr.even {
+	background-color 	: #e4f2fc;
+}
+
+table.threads tr:hover {
+	background-color	: #ffeec1;
+}
+
+table.threads tr.treaded_true:hover, table.threads tr.treaded_false:hover {
+	cursor : pointer;
+}
+
+table.threads a.title {
+	text-decoration : none;
+}
+
+table.threads tr.treaded_false .title {
+	font-weight : bold;
+}
+
+table.threads td {
+	font-size			: 9pt;
+	border-color		: #fff #c2d9e6 #c2d9e6 transparent;
+	border-style		: solid;
+	border-width		: 1px;
+}
+
+/* API */
+
+.api_index a {
+	text-decoration		: none;
+}
+
+.api_index ul a {
+	display				: block;
+}
+
+.api_index ul li div {
+	border-left			: 1px solid #c2d9e6;
+	padding				: 2px 0px 0px 4px;
+	margin-left			: 8px;
+}
+
+.api_index ul {
+	margin				: 0;
+	list-style-image	: none;
+}
+
+.api_index ul ul {
+	margin				: 0 0 0 4px;
+	list-style-image	: none;
+}
+
+.api_index ul li {
+  margin				: 0;
+  list-style			: none;
+  list-style-image		: none;
+  -moz-border-radius	: 10px;
+}
+
+.api_index ul li:hover {
+	background-color	: #e6f3fb;
+}
+
+.api_index ul ul li:hover {
+	background-color	: #f2f9fd;
+}
+
+.api_index ul ul ul li:hover {
+	background-color	: #fff;
+}
+
+.api_index ul li span.pack {
+	padding-left		: 20px;
+	background-image	: url('/img/haxe/items/plus.gif');
+	background-repeat	: no-repeat;
+	font-weight			: bold;
+}
+
+.api_index ul li a.intern {
+	padding-left		: 20px;
+	background-image	: url('/img/common/txt2.gif');
+	background-repeat	: no-repeat;
+}
+
+.api a {
+	text-decoration		: none;
+}
+
+.api a:hover {
+	text-decoration		: underline;
+}
+
+.api .name {
+	display 			: block;
+	font-size 			: 16pt;
+}
+
+.api .pf {
+	color 				: #888;
+	display 			: block;
+}
+
+.api .oop, .api .mod {
+	display 			: block;
+}
+
+.api .kwd {
+	color 				: #09598a;
+	font-weight 		: bold;
+}
+
+.api .field, .api .construct {
+	display 			: block;
+	margin-top 			: 10px;
+}
+
+.api .doc {
+	padding 			: 5px;
+	display 			: block;
+	margin-left 		: 10px;
+}
+
+/* HOMEPAGE */
+
+.homeBanner {
+	position : absolute;
+	left : 0px;
+	top : 0px;
+}
+
+.homeBannerSpace {
+	display : block;
+	height : 350px;
+}
+
+#wikeditor_preview .homeBanner {
+	display : none;
+}
+
+.homeBanner img {
+	border : none;
+}
+
+.view .space {
+	height : 20px;
+	display : block;
+}
+
+.quote {
+	font-family			: Montserrat, "Segoe UI","Lucida Grande","Trebuchet MS",Arial,"lucida sans unicode",sans-serif;;
+	text-transform		: uppercase;
+	word-spacing		: 5px;
+	text-align			: center;
+	width				: 800px;
+	padding-top			: 15px;
+	height				: 55px;
+	font-size			: 12pt;
+	line-height			: 17pt;
+	margin				: auto;
+	background			: transparent url('/img/haxe2/quotes.png') no-repeat 10px top;
+}
+
+.quote p {
+	text-align			: center;
+	margin				: 0px;
+}
+
+/* FEATURE BOX */
+
+.feature {
+	margin-left		: 30px;
+	font-size		: 10pt;
+	height			: 200px;
+	width			: 400px;
+	display 		: inline-block;
+}
+
+.feature img {
+	position			: absolute;
+	border				: none;
+}
+
+
+.feature h1, .feature .desc  {
+	width				: 245px;
+	position			: absolute;
+	padding				: 0px;
+	margin				: 0px;
+	margin-left			: 155px;
+	padding-right		: 25px;
+}
+
+.feature .desc {
+	margin-top			: 25px;
+}
+
+.feature h1 {
+	font-family			: Montserrat, "Segoe UI","Lucida Grande","Trebuchet MS",Arial,"lucida sans unicode",sans-serif;;
+	font-weight			: normal;
+	font-size			: 15pt;
+}
+
+/* INFO BOX */
+
+.infoBox {
+	width				: 386px;
+	height				: 271px;
+	background			: transparent url('/img/haxe2/box1bg.png') no-repeat left top;
+	display				: inline-block;
+	vertical-align		: top;
+	margin-left		 	: 30px;
+	margin-right		: 25px;
+	padding-top			: 10px;
+}
+
+.infoBox h1 {
+	margin				: 0px;
+	font-family			: Montserrat, "Segoe UI","Lucida Grande","Trebuchet MS",Arial,"lucida sans unicode",sans-serif;;
+	font-weight			: normal;
+	font-size			: 15pt;
+	text-align			: center;
+}
+
+.infoBox .sub {
+	display				: block;
+	font-family			: "PT Serif Caption","Segoe UI","Lucida Grande","Trebuchet MS",Arial,"lucida sans unicode",sans-serif;
+	font-weight			: normal;
+	font-style			: italic;
+	font-size			: 10pt;
+	color				: #7d7d7d;
+	text-align			: center;
+}
+
+.infoBox img {
+	border				: none;
+	margin-left			: 48px;
+}
+
+.infoBox .icon img {
+	position			: absolute;
+	margin-left			: 70px;
+	margin-top			: 3px;
+}
+
+.infoBox .desc {
+	display				: block;
+	font-family			: Montserrat, "Segoe UI","Lucida Grande","Trebuchet MS",Arial,"lucida sans unicode",sans-serif;
+	font-weight			: normal;
+	font-size			: 9pt;
+	text-align			: center;
+	width				: 330px;
+	margin				: auto;
+	margin-top			: 8px;
+	margin-bottom		: 2px;
+}
+
+
+.infoBox .but {
+	position			: absolute;
+	margin-top			: 210px;
+	margin-left			: 135px;
+}
+
+
+/* DOWNLOAD */
+
+.view .buttonDownload a, .view .buttonDownload a:hover {
+	text-decoration		: none;
+	text-transform		: uppercase;
+	font-weight			: bold;
+	background-image	: url('/img/haxe2/download.png');
+	background-repeat	: no-repeat;
+	background-position	: 10px top;
+	padding-left		: 39px;
+}
+
+/* OLD BOX1/BOX2 */
+
+.box1, .box2 {
+	margin				: 10px;
+	padding				: 10px;
+	display				: block;
+	-moz-border-radius	: 5px;
+}
+
+.box1 { /* blue */
+	background			: #e8f5fc url('/img/haxe/items/bg_box1.gif') top left repeat-x;
+	border				: 4px solid #e8f5fc;
+	color				: #09598a;
+}
+
+.box2 { /* orange */
+	background			: #ffefa3 url('/img/haxe/items/bg_box2.gif') top left repeat-x;
+	border				: 4px solid #ffefa3;
+	color				: #c35700;
+}
+
