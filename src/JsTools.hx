@@ -1,4 +1,5 @@
 import js.Dom;
+import js.JQuery;
 import Editor;
 
 class JsTools {
