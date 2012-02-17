@@ -35,7 +35,7 @@
   </compileTargets>
   <!-- Paths to exclude from the Project Explorer tree -->
   <hiddenPaths>
-    <!-- example: <hidden path="..." /> -->
+    <hidden path="tpl\tmp" />
   </hiddenPaths>
   <!-- Executed before build -->
   <preBuildCommand />

@@ -1,4 +1,4 @@
-::use 'design.mtt'::
+::use design_mtt::
 
 ::set pageTitle = entry._title::
 <h1 class="title"><a href="/::entry._path::">::entry._title::</a></h1>
@@ -15,7 +15,7 @@
 	::raw editor.initJS()::
 	<script type="text/javascript">
 		window.onbeforeunload = function() {
-			return false;
+			return "Warning : you will loose your changes !";
 		};
 	</script>
 	<form method="POST" action="/wiki/edit?submit=1">

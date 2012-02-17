@@ -190,6 +190,13 @@ class Main extends Handler<Void> {
 				}
 			}
 		}
+		
+		// force style
+		if( request.exists("__style") ) {
+			var style = request.get("__style");
+			if( ~/^[A-Za-z0-9_]+$/.match(style) )
+				App.session.designStyle = style;
+		}
 
 		var entry = if( cur != null ) db.Entry.get(path,cur) else db.Entry.get(path,def);
 

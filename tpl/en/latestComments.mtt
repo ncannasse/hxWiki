@@ -1,4 +1,4 @@
-::use 'design.mtt'::
+::use design_mtt::
 
 <h1>Latest Comments</h1>
 

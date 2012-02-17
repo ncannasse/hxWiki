@@ -1,4 +1,4 @@
-::use 'design.mtt'::
+::use design_mtt::
 
 ::if entry == null::
 <h1>Latest Changes</h1>

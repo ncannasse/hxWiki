@@ -138,18 +138,25 @@ class App {
 	}
 
 	static function initContext() {
+		var style = Config.get("style", "default");
+		if( session != null && session.designStyle != null )
+			style = session.designStyle;
 		context.user = user;
 		context.session = session;
 		context.request = request;
 		context.config = {
 			title : Config.get("title"),
-			style : Config.get("style","default"),
+			style : style,
 			url : Config.get("url"),
 		};
 		// allow database failures here
 		context.links = function(n:Int) return try db.Link.manager.search($kind == n,{ orderBy : -priority },false) catch( e : Dynamic ) new List();
 		context.langs = try db.Lang.manager.all(false) catch( e : Dynamic ) new List();
 		context.section = Config.getSection;
+		var parts = neko.Web.getURI().split("/");
+		context.current_url = parts[1] == "index.n" ? "/" : "/"+parts[1];
+		var customDesign = "design_" + style + ".mtt";
+		context.design_mtt = if( neko.FileSystem.exists(Config.TPL+customDesign) ) customDesign else "design.mtt";
 		if( request == null )
 			context.uri = "/";
 		else {

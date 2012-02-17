@@ -12,7 +12,7 @@
 	
 	<macro name="menuLinks(id)">
 	::foreach l links(id)::
-	<li>::if l.url == ""::::raw l.title::::else::<a href="::l.url::">::raw l.title::</a>::end::</li>
+	<li ::attr class if( l.url == current_url ) "active"::>::if l.url == ""::::raw l.title::::else::<a href="::l.url::">::raw l.title::</a>::end::</li>
 	::end::
 	</macro>
 

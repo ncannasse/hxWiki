@@ -8,6 +8,7 @@ package db;
 	public var userName : String;
 	public var lang : Int;
 	public var notification : { error : Bool, text : String };
+	public var designStyle : Null<String>;
 
 	public function setUser( u : User ) {
 	}

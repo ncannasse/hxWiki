@@ -1,4 +1,4 @@
-::use 'design.mtt'::
+::use design_mtt::
 <div class="forum">
 
 ::set pageTitle = entry._title::
