@@ -8,7 +8,7 @@ class ForumMessageManager extends sys.db.Manager<ForumMessage> {
 
 	override public function unsafeGet( id:Dynamic, ?lock:Bool ) : ForumMessage {
 		if (lock == null) lock = true;
-		return unsafeObject("SELECT "+ForumMessage.COLUMNS.join(",")+" FROM ForumMessage LEFT JOIN User ON ForumMessage.uid = User.id LEFT JOIN `Group` ON Group.id = User.gid WHERE ForumMessage.id = "+id+(if (lock) " FOR UPDATE" else ""), lock);
+		return unsafeObject("SELECT "+ForumMessage.COLUMNS.join(",")+" FROM ForumMessage LEFT JOIN User ON ForumMessage.uid = User.id LEFT JOIN `Group` ON Group.id = User.gid WHERE ForumMessage.id = "+id, lock);
 	}
 
 	public function browse( t : ForumTheme, ?u : User, ?sticky : Bool, start : Int, limit : Int ) {
