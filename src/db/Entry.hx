@@ -187,7 +187,7 @@ class EntryManager extends sys.db.Manager<Entry> {
 			return entries;
 		var results = getCnx().request("SELECT DAYOFMONTH(date) AS day, COUNT(*) AS count FROM Entry, Version WHERE pid = "+entry.id+" AND vid = Version.id AND YEAR(date) = "+year+" AND MONTH(date) = "+month+" GROUP BY day");
 		for( r in results )
-			entries[r.day] = r.count;
+			entries[Std.int(r.day)] = r.count;
 		return entries;
 	}
 
