@@ -18,7 +18,7 @@
 	::foreach t b.threads::
 		<tr class="treaded_::t.readed::" onclick="document.location='::path::/thread/::t.id::'">
 			<td class="title">
-				<img class="lockicon" src="/img/common/lock.gif" alt="Lock" title="Topic Locked" ::cond t.isLocked::/>
+				<img class="lockicon" src="/img/common/lock.gif" alt="Lock" title="Topic Locked" ::cond t.isLock::/>
 				<a class="title" href="::path::/thread/::t.id::">::t.title::</a>
 				<a class="admin" href="::path::/message/::t.id::/delete?page=::browser.page::" $$confirm() ::cond isModerator::><img src="/img/common/del.gif"/></a>
 			</td>

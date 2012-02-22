@@ -3,7 +3,7 @@ package db;
 /**
 	Application specific session.
 **/
-@:skip class SessionData extends sys.db.Object {
+@:skipFields @:skip class SessionData extends sys.db.Object {
 
 	public var userName : String;
 	public var lang : Int;

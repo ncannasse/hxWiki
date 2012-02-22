@@ -16,7 +16,7 @@ class ForumMessage extends sys.db.Object {
 	public var title : SString<35>;
 	public var content : SText;
 	public var htmlContent : SText;
-	public var isLocked : SBool;
+	public var isLock : SBool;
 	public var isSticky : SBool;
 	public var replyCount : SInt;
 	public var lastUid : SNull<SInt>;
@@ -62,7 +62,7 @@ class ForumMessage extends sys.db.Object {
 			return true;
 		if( u.group.canModerateForum )
 			return true;
-		if( isLocked || autoLocked() )
+		if( isLock || autoLocked() )
 			return false;
 		return true;
 	}

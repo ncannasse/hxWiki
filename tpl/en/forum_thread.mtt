@@ -26,12 +26,12 @@ $$browse(::browser::,::path::/thread/::thread.id::)
 	::if thread.canReply(user)::
 	<li><span class="button"><a href="::path::/thread/::thread.id::/reply">Reply</a></span></li>
 	::else::
-	<li><img src="/img/common/lock.gif" alt="lock"/> Thread locked ::if !thread.isLocked::automatically::end:: !</li>
+	<li><img src="/img/common/lock.gif" alt="lock"/> Thread locked ::if !thread.isLock::automatically::end:: !</li>
 	::end::
 	::if isModerator::
 	<li ::cond thread.autoLocked()::>Thread locked automatically</li>
-	<li ::cond !thread.isLocked::><a href="::path::/thread/::thread.id::/lock">[Close Thread]</a></li>
-	<li ::cond thread.isLocked::><a href="::path::/thread/::thread.id::/unlock">[Open Thread]</a></li>
+	<li ::cond !thread.isLock::><a href="::path::/thread/::thread.id::/lock">[Close Thread]</a></li>
+	<li ::cond thread.isLock::><a href="::path::/thread/::thread.id::/unlock">[Open Thread]</a></li>
 	::end::
 </ul>
 

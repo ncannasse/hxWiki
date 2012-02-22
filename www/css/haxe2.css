@@ -59,7 +59,7 @@ form .tfield {
 	color : white;
 	font-weight : bold;
 	font-size : 13px;
-	text-shadow : 1px 0px 4px #444;
+	text-shadow : 1px 0px 1px #444;
 }
 
 #topbar .loginBox {
@@ -131,7 +131,6 @@ form .tfield {
 	letter-spacing  : 1px;
 	color			: #8f8f8f;
 	margin-top 		: 5px;
-	text-shadow		: 0px 1px 1px #888;
 }
 
 #mainmenu {

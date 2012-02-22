@@ -93,7 +93,7 @@ class Thread extends Handler<ForumMessage> {
 	}
 
 	function doLock( lock, thread:ForumMessage ){
-		thread.isLocked = lock;
+		thread.isLock = lock;
 		thread.update();
 		throw Action.Goto(path+"/thread/"+thread.id);
 	}
@@ -141,10 +141,10 @@ class Thread extends Handler<ForumMessage> {
 		}
 		if( App.request.exists("submit") && checkCanPost(m) ) {
 			if( root == m )
-				root.isLocked = lock;
-			else if( lock != root.isLocked ) {
+				root.isLock = lock;
+			else if( lock != root.isLock ) {
 				var r = db.ForumMessage.manager.get(root.id);
-				r.isLocked = lock;
+				r.isLock = lock;
 				r.update();
 			}
 			if( isEdit ) {
@@ -162,10 +162,10 @@ class Thread extends Handler<ForumMessage> {
 				parent.mdate = m.date;
 				parent.lastUid = App.user.id;
 				parent.lastLogin = App.user.name;
-				if( m.isLocked )
-					parent.isLocked = true;
+				if( m.isLock )
+					parent.isLock = true;
 				if( parent.replyCount >= Config.FORUM_MAX_POST_PER_THREAD )
-					parent.isLocked = true;
+					parent.isLock = true;
 				parent.update();
 			}
 			throw Action.Goto(path+"/thread/"+if( parent == null ) m.id else parent.id);
@@ -173,7 +173,7 @@ class Thread extends Handler<ForumMessage> {
 		App.context.thread = parent;
 		App.context.theme = theme;
 		App.context.message = m;
-		App.context.isLocked = root.isLocked || lock;
+		App.context.isLocked = root.isLock || lock;
 		App.context.editor = editor;
 		if( isEdit )
 			App.context.action = path + "/message/"+m.id+"/edit";
