@@ -67,17 +67,12 @@
 		<div id="foot">
 			<div id="footcontent">
 				<div class="list">
-					<h2>About</h2>
+					<h2>Menu</h2>
 					<ul id="footmenu">
-						<li><a href="#">Shared</a></li>
-						<li><a href="#">Dedicated</a></li>
-						<li><a href="#">Custom</a></li>
-						<li><a href="#">Custom P2P</a></li>
-						<li><a href="#">Wowza</a></li>
-						<li><a href="#">Cluster</a></li>
+						$$menuLinks(0)
 					</ul>
 				</div>
-				<div class="list">
+				<div class="list" ::cond false::>
 					<h2>Resources</h2>
 					<ul id="footmenu">
 						<li><a href="#">Shared</a></li>
@@ -88,7 +83,7 @@
 						<li><a href="#">Cluster</a></li>
 					</ul>
 				</div>
-				<div class="list">
+				<div class="list" ::cond false::>
 					<h2>Resources</h2>
 					<ul id="footmenu">
 						<li><a href="#">Shared</a></li>

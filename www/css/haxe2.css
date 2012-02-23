@@ -59,7 +59,7 @@ form .tfield {
 	color : white;
 	font-weight : bold;
 	font-size : 13px;
-	text-shadow : 1px 0px 1px #444;
+	text-shadow : 0px 1px 2px #444;
 }
 
 #topbar .loginBox {
@@ -279,7 +279,8 @@ form ul.buttons a, ul.buttons a:hover {
 }
 
 #foot .copy {
-	width			: 328px;
+	float			: right;
+	width			: 330px;
 	text-align		: right;
 }
 
