@@ -226,15 +226,23 @@ form ul.buttons a, ul.buttons a:hover {
 }
 
 .langs a {
-	opacity : 0.3;
+	opacity : 0.4;
 }
 
-.langs a.off img {
-	border : 2px solid red;
+.langs a.current {
+	opacity : 1;
+}
+
+.langs a.off {
+	opacity : 0.1;
 }
 
 .langs a:hover {
 	opacity : 1;
+}
+
+.langs a.off:hover {
+	opacity : 0.5;
 }
 
 .langs .name {
