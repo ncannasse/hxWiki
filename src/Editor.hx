@@ -368,7 +368,23 @@ class Editor {
 			return '<span class="'+r.matched(1)+'">'+makeSpans(r.matched(2))+'</span>';
 		});
 	}
-
+	
+	function makeTitle( titles : Hash<Bool>, code, str ) {
+		var part = ~/[^a-z0-9]+/g.replace(str.toLowerCase(), "-");
+		while( part.charCodeAt(0) == "-".code )
+			part = part.substr(1);
+		while( part.length > 0 && part.charCodeAt(part.length - 1) == "-".code )
+			part = part.substr(0, part.length - 1);
+		if( titles.exists(part) ) {
+			var count = 2;
+			while( titles.exists(part + "_" + count) )
+				count++;
+			part += "_" + count;
+		}
+		titles.set(part, true);
+		return '<' + code + '><a href="#' + part + '" name="' + part + '">' + str + '</a></' + code + '>';
+	}
+	
 	function paragraph( t : String ) : String {
 		var me = this;
 		// unhtml
@@ -378,9 +394,11 @@ class Editor {
 		// newlines
 		t = StringTools.replace(t,"\n","<br/>");
 		// titles
-		t = ~/====== ?(.*?) ?======/g.replace(t,"<h1>$1</h1>");
-		t = ~/===== ?(.*?) ?=====/g.replace(t,"<h2>$1</h2>");
-		t = ~/==== ?(.*?) ?====/g.replace(t,"<h3>$1</h3>");
+		var titles = new Hash();
+		titles.set("", true);
+		t = ~/====== ?(.*?) ?======/g.customReplace(t,function(r) return makeTitle(titles,"h1",r.matched(1)));
+		t = ~/===== ?(.*?) ?=====/g.customReplace(t,function(r) return makeTitle(titles,"h2",r.matched(1)));
+		t = ~/==== ?(.*?) ?====/g.customReplace(t,function(r) return makeTitle(titles,"h3",r.matched(1)));
 		// links
 		t = ~/\[\[(https?:[^\]"]*?)\|(.*?)\]\]/g.replace(t,'<a href="$1" class="extern">$2</a>');
 		t = ~/\[\[(https?:[^\]"]*?)\]\]/g.replace(t,'<a href="$1" class="extern">$1</a>');
