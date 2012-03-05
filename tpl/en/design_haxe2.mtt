@@ -38,22 +38,22 @@
 			<div id="head">
 				<a href="/" class="logo">
 					<img src="/img/haxe2/logo.png" alt="HaXe logo" />
-					<h1>Code once. Deploy everywhere.</h1>
+					<h1>One language, everywhere.</h1>
 				</a>
 				<ul id="mainmenu">
 					$$menuLinks(0)
 				</ul>
 			</div>
 			<div id="content">
-				
+
 				<div id="notification" ::cond notification:: ::attr class if( notification.error ) 'error'::>
 					::raw notification.text::
 				</div>
-				
+
 				::raw __content__::
-				
+
 			</div>
-					
+
 			<div class="langs">
 				<ul>
 				::foreach l langs::
@@ -61,7 +61,7 @@
 				::end::
 				</ul>
 			</div>
-			
+
 		</div>
 		</div>
 		<div id="foot">
