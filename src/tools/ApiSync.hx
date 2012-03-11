@@ -7,8 +7,8 @@ class Proxy extends haxe.remoting.Proxy<handler.RemotingApi> {
 class ApiSync {
 
 	static var FILES = [
-		{ file : "flash.xml", platform : "flash" },
-		{ file : "flash9.xml", platform : "flash9" },
+		{ file : "flash8.xml", platform : "flash8" },
+		{ file : "flash9.xml", platform : "flash" },
 		{ file : "neko.xml", platform : "neko" },
 		{ file : "js.xml", platform : "js" },
 		{ file : "php.xml", platform : "php" },
@@ -43,7 +43,7 @@ class ApiSync {
 	}
 
 	function formatPath( path : String ) {
-		if( path.substr(0,7) == "flash9." )
+		if( path.substr(0,7) == "flash8." )
 			return "flash."+path.substr(7);
 		var pack = path.split(".");
 		if( pack.length > 1 && pack[pack.length-2].charAt(0) == "_" ) {
@@ -525,7 +525,7 @@ class ApiSync {
 		case Xml.Element:
 			var p = x.get("path");
 			if( p != null && p.substr(0,6) == "flash." )
-				x.set("path","flash9." + p.substr(6));
+				x.set("path","flash8." + p.substr(6));
 			for( x in x.elements() )
 				transformPackage(x);
 		default:
@@ -556,7 +556,7 @@ class ApiSync {
 		for( f in FILES ) {
 			var data = neko.io.File.getContent(f.file);
 			var x = Xml.parse(data).firstElement();
-			if( f.platform == "flash9" )
+			if( f.platform == "flash8" )
 				transformPackage(x);
 			parser.process(x,f.platform);
 		}
