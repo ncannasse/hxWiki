@@ -511,7 +511,7 @@ class ApiSync {
 		if( def != null )
 			return def;
 		neko.Lib.print(name+": ");
-		return neko.io.File.stdin().readLine();
+		return Sys.stdin().readLine();
 	}
 
 	static function log( msg, ?cr ) {
