@@ -107,7 +107,7 @@
 			</div>
 			<div class="footer">
 				::set copy = section('copy')::
-				::if copy::::raw copy:: · ::end::Powered by <a href="http://haxe.org">haXe</a>
+				::if copy::::raw copy:: · ::end::Powered by <a href="http://haxe.org">Haxe</a>
 			</div>
 		</div>
 	</body>
