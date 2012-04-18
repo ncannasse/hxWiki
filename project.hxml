@@ -3,6 +3,7 @@
 -main App
 -D spod_macro
 -lib templo
+-lib mtwin
 --next
 -js www/app.js
 -main JsTools
