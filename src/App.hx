@@ -148,7 +148,10 @@ class App {
 			title : Config.get("title"),
 			style : style,
 			url : Config.get("url"),
+			gsearch : Config.get("gsearch",""),
 		};
+		if( context.config.gsearch == "" )
+			context.config.gsearch = null;
 		// allow database failures here
 		context.links = function(n:Int) return try db.Link.manager.search($kind == n,{ orderBy : -priority },false) catch( e : Dynamic ) new List();
 		context.langs = try db.Lang.manager.all(false) catch( e : Dynamic ) new List();

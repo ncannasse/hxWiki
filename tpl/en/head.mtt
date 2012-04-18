@@ -1,6 +1,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
 <title>::if pageTitle::::pageTitle:: - ::end::::config.title::</title>
 <link rel="stylesheet" type="text/css" href="/css/::config.style::.css"/>
+<link rel="stylesheet" type="text/css" href="/css/::config.style::_gsearch.css" ::cond config.gsearch::/>
 <link rel="icon" href="/img/::config.style::/favicon.ico" type="image/x-icon"/>
 ::raw '<!--[if IE 6]>'::
 <link rel="stylesheet" type="text/css" href="/css/::config.style::_ie6.css"/>

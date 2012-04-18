@@ -76,7 +76,7 @@ form .tfield {
 	top : 4px;
 	padding-left : 27px;
 	margin-left : 828px;
-	width : 105px;
+	width : 200px;
 	height : 24px;
 	background-image : url('/img/haxe2/searchbg.png');
 }
@@ -157,7 +157,7 @@ form .tfield {
 	color		: #7e7e7e;
 }
 
-.button, #mainmenu li.active a, ul.buttons a, .view .buttonDownload a, .infoBox .but a {
+.button, #mainmenu li.active a, ul.buttons a, .view .buttonDownload a, .infoBox .but a, .gsc-search-box input.gsc-search-button {
 	-moz-box-shadow		:inset 0px 1px 1px 0px #ffd992;
 	-webkit-box-shadow	:inset 0px 1px 1px 0px #ffd992;
 	box-shadow			: inset 0px 1px 1px 0px #ffd992;
@@ -183,7 +183,7 @@ form .tfield {
 	font-size			: 8pt;
 }
 
-.button:hover, #mainmenu li.active a:hover, ul.buttons a:hover, .view .buttonDownload a:hover, .infoBox .but a:hover {
+.button:hover, #mainmenu li.active a:hover, ul.buttons a:hover, .view .buttonDownload a:hover, .infoBox .but a:hover, .gsc-search-box input.gsc-search-button:hover {
 	background			: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #f8a222), color-stop(1, #f9b727) );
 	background			: -moz-linear-gradient( center top, #f8a222 5%, #f9b727 100% );
 	filter				: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f8a222', endColorstr='#f9b727');
@@ -1074,3 +1074,13 @@ table.threads td {
 	color				: #c35700;
 }
 
+/* Google search bar style */
+input.gsc-input, .gsc-input-box, .gsc-input-box-hover, .gsc-input-box-focus {
+    border-color: #CE7918;
+}
+input.gsc-search-button, input.gsc-search-button:hover, input.gsc-search-button:focus {
+    border-color: #CE7918;
+    background-color: #CE7918;
+    background-image: none;
+    filter: none;
+}

@@ -1,0 +1,42 @@
+#topbar .search {
+	background-image : none;
+	top : 0px;
+	margin-left : 778px;
+}
+
+.gsc-search-box td {
+	//padding : 1px;
+}
+
+.gsc-search-box input {
+	font-family : Arial;
+}
+
+
+table.gsc-search-box {
+	padding : 0px !important;
+	margin : 0px !important;
+}
+
+table.gsc-search-box tr {
+	padding : 0px !important;
+	margin : 0px !important;
+}
+
+.gsc-input {
+	margin : 0px !important;
+	padding : 0px !important;
+}
+
+.gsib_a {
+	margin : 0px !important;
+	padding : 0px !important;
+}
+
+.gs-title {
+	color : #cc7a17 !important;
+}
+
+.gs-title b {
+	color : #cc7a17 !important;
+}

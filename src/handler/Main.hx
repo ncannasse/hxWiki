@@ -61,8 +61,11 @@ class Main extends Handler<Void> {
 		free("upload",doUpload);
 		free("sublist",doSubList);
 		free("restore",doRestore);
-		free("logout",doLogout);
-		free("search","search.mtt",doSearch);
+		free("logout", doLogout);
+		if( Config.get("gsearch", "") != ""	)
+			free("search", "search_google.mtt", doGSearch);
+		else
+			free("search", "search.mtt", doSearch);
 		free("remoting",doRemoting);
 		free("latest",doLatest);
 		free("comment",doComment);
@@ -749,6 +752,9 @@ class Main extends Handler<Void> {
 		App.context.u = u;
 	}
 
+	function doGSearch() {
+	}
+	
 	function doSearch() {
 		var s = request.get("s","");
 		var page = request.getInt("page",0);
