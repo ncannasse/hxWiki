@@ -1,4 +1,3 @@
-
 <a name="comments"></a>
 <h1 class="comments">::comments.length:: Comment::if comments.length != 1::s::end::</h1>
 
@@ -19,7 +18,7 @@
 		<div class="date">
 			::dateFormat(c.date,'%b %d, %Y at %H:%M')::
 		</div>
-		<div class="comment">
+		<div class="comment view">
 			::raw c.htmlContent::
 		</div>
 	</li>
