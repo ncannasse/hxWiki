@@ -28,7 +28,7 @@
     }
 
     var urlParams = parseParamsFromUrl();
-    var queryParamName = "cse_query";
+    var queryParamName = "s";
     if (urlParams[queryParamName]) {
       customSearchControl.execute(urlParams[queryParamName]);
     }
