@@ -62,3 +62,13 @@ In order to setup the wiki :
 
 9. visit `http://localhost:2000/`
     - it should create the database, refresh to start using !
+
+CONFIG OPTIONS
+-----
+
++ change website design
+  - set `style="haxe"` for old design 
+  - set `style="haxe2"` for new design
+
++ use google search
+  - set gsearch `gsearch="1"`
