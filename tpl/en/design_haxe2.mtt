@@ -38,7 +38,7 @@
 					    var options = new google.search.DrawOptions();
 					    options.setAutoComplete(true);
 					    customSearchControl.setAutoCompletionId('::config.gsearch::+qptype:1');
-					    options.enableSearchboxOnly("/wiki/search", "cse_query");
+					    options.enableSearchboxOnly("/wiki/search", "s");
 					    customSearchControl.draw('cse-search-form', options);
 					  }, true);
 					</script>
