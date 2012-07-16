@@ -13,6 +13,8 @@ class ApiSync {
 		{ file : "js.xml", platform : "js" },
 		{ file : "php.xml", platform : "php" },
 		{ file : "cpp.xml", platform : "cpp" },
+		{ file : "cs.xml", platform : "cs" },
+		{ file : "java.xml", platform : "java" },
 	];
 
 	var api : Proxy;
