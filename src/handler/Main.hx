@@ -16,15 +16,12 @@ class Main extends Handler<Void> {
 			execute(request,level);
 			return;
 		case "db":
-			if( App.user != null && App.user.group.canAccessDB ) untyped {
-				try {
-					mt.db.TableInfos.OLD_COMPAT = true;
-				} catch( e : Dynamic ) {
-					throw Action.Goto("/");
-				}
-				mt.db.Admin.handler();
+			#if spodadmin
+			if( App.user != null && App.user.group.canAccessDB ) {
+				spadm.Admin.handler();
 				return;
 			}
+			#end
 		case "file":
 			doFile(request.getPathInfoPart(level++));
 			return;

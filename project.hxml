@@ -4,6 +4,7 @@
 -D spod_macro
 -lib templo
 -lib mtwin
+-lib spodadmin
 --next
 -js www/app.js
 -main JsTools
