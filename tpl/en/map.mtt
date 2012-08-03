@@ -3,7 +3,7 @@
 <h1>Wiki Map</h1>
 
 <p>
-	This is the <img src="/img/::config.style::/flags/flag_::lang.code::.gif" alt="::lang.name::"/> ::lang.name:: wiki map. You can select another language to view its own wiki map.
+	This is the $$flag(::lang::) ::lang.name:: wiki map. You can select another language to view its own wiki map.
 </p>
 
 <ul class="map">

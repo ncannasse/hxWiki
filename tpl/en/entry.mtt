@@ -22,7 +22,7 @@
 		<input type="hidden" name="path" value="::entry._path::"/>
 		<input type="hidden" name="lang" value="::entry._lang.code::"/>
 		<span class="tfield">Title :</span> <input name="title" value="::entry._title::" class="field" tabindex="1"/>
-		<div class="infos">You are currently editing this page in <img src="/img/::config.style::/flags/flag_::entry._lang.code::.gif"/> <b>::entry._lang.name::</b></div>
+		<div class="infos">You are currently editing this page in $$flag(::entry._lang::) <b>::entry._lang.name::</b></div>
 		<ul class="buttons">
 			::foreach b editor.config.buttons::
 			<li><a href="#" onclick="::editor.buttonAction(b)::">::b.label::</a></li>
