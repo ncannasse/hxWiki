@@ -5,7 +5,7 @@
 <h1 class="title"><a href="/::entry._path::">::entry._title::</a></h1>
 
 <form action="/wiki/edit" class="create" method="GET" ::cond request.exists("create")::>
-	<span class="tfield">Title :</span> <input name="title" class="field" onkeyup="document.getElementById('id_path').value = '::entry._path::/' + Editor.normalize(this.value)"/>
+	<span class="tfield">Title :</span> <input name="title" class="field" onchange="this.onkeyup()" onkeyup="document.getElementById('id_path').value = '::entry._path::/' + Editor.normalize(this.value)"/>
 	<span class="tfield">URL :</span> <input id="id_path" name="path" class="field"/>
 	<input type="submit" value="OK" class="button"/>
 </form>

@@ -935,7 +935,7 @@ dl.user dd {
 
 /* COMMENTS */
 
-h1.comments {
+.ccount {
 	font-size : 14pt;
 	display : block;
 	margin-top : 5px;
