@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+	<head>
+	::use 'head.mtt'::::end::
+	</head>
+
+	<body class="::bodyClass::">
+		<div class="all">
+			<div class="topBar">
+				<div class="center">
+					<div class="icons">
+						<img src="/img/shiro/iconFollow.png"/>
+						<a href="http://www.facebook.com/shirogames" target="_blank"><img src="/img/shiro/iconFB.png"/></a>
+						<a href="https://plus.google.com/104393754571323074324" target="_blank"><img src="/img/shiro/iconGP.png"/></a>
+						<a href="http://twitter.com/shirogames" target="_blank"><img src="/img/shiro/iconTW.png"/></a>
+						<a href="::rss::" target="_blank" ::cond rss::><img src="/img/shiro/iconRSS.png"/></a>
+					</div>
+					<p>Welcome to Shirogames official website</p>
+				</div>
+			</div>
+			<div class="menuBar">
+				<div class="center">
+					<ul class="topMenu">
+						$$menuLinks(0)
+					</ul>
+					<a href="/" class="logo"><img src="/img/shiro/logo.png"/></a>
+				</div>
+			</div>
+			<div class="gfxBar">
+				<div class="center">
+				</div>
+			</div>
+			
+			<div class="pageContent">
+				<div class="center">
+					<div id="notification" ::cond notification:: ::attr class if( notification.error ) 'error'::>
+						::raw notification.text::
+					</div>
+
+					<div class="content">
+						::raw __content__::
+					</div>
+					
+					<div class="copy">(c)2012 ShiroGames</div>
+				</div>
+			</div>
+			
+			<div class="footer">
+				<div class="center">
+					
+					<div class="list">
+						<h2>Menu</h2>
+						<ul>
+							$$menuLinks(0)
+						</ul>
+					</div>
+					<div class="list">
+						<h2>Options</h2>
+						<ul>
+							<li ::cond dbAccess::><a href="/db">Database</a></li>
+							<li><a href="/wiki/map">Wiki Map</a></li>
+							::if rss::
+							<li><a href="::rss::">RSS Feed</a></li>
+							::else::
+							<li><a href="/wiki/history">Latest Changes</a></li>
+							::end::
+							<li ::cond canDeleteComments::><a href="/wiki/latestComments">Latest Comments</a></li>
+							$$menuLinks(1)
+							<li>
+								::if user == null::
+								<a href="#" class="clic" onclick="$('.loginBox').toggle(200)">Login</a>
+								<div class="loginBox" style="display:none">
+									<p>
+										You can <a href="/wiki/register">register</a> to create an account and edit the pages of the Wiki.
+									</p>
+									<form action="/wiki/login" method="POST">
+										<span class="group"><span class="tfield">User :</span> <input name="user" class="field"/></span>
+										<span class="group"><span class="tfield">Pass :</span> <input type="password" name="pass" class="field"/></span>
+										<input type="hidden" name="url" value="::uri::"/>
+										<input type="submit" value="OK" class="button"/>
+									</form>
+								</div>
+							::else::
+								<a href="#" class="clic" onclick="if( confirm('Disconnect ?') ) document.location = '/wiki/logout?url=::uri::'">Logout</a>
+							::end::
+							</li>
+						</ul>
+					</div>
+					<div class="list">
+						<h2>Read in...</h2>
+						<div class="langs">
+							<ul>
+							::foreach l langs::
+							<li><a href="/wiki/setlang?url=::uri::;lang=::l.code::" class="::lang_classes(l)::"><span class="name">::l.name::</span></a></li>
+							::end::
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</body>
+</html>

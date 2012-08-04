@@ -1,0 +1,8 @@
+::use 'design_'+config.style+'.mtt'::
+	<div class="splitLeft">
+	::raw __content__::
+	</div>
+	<div class="splitRight">
+		::raw section('splitHTML')::
+	</div>
+::end::

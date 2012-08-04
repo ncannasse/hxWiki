@@ -1,0 +1,287 @@
+var defColor = #272727;
+var hideColor = #565656;
+var lightColor = #F1EDEA;
+var mainColor = #EF3449;
+
+var hidden = {
+	color : $hideColor;
+	font-size : 10pt;
+}
+
+body {
+	background-color: $defColor;
+	margin : 0;
+	padding : 0;
+}
+
+a {
+	color : $mainColor;
+	text-decoration : none;
+}
+
+a:hover {
+	color : $mainColor * 1.2;
+	text-decoration : underline;
+}
+
+a img {
+	border : none;
+}
+
+.center {
+	width	: 960px;
+	margin  : 0px auto;
+}
+
+.topBar {
+	background-color	: $defColor;
+	color				: #91908E;
+	hss-height			: 41px;
+	padding				: 10px;
+	p {
+		margin:0;
+		padding:0;
+	}
+	.icons {
+		position : absolute;
+		top : 7px;
+		width : 960px;
+		text-align : right;
+	}
+}
+
+.menuBar {
+	background-color 	: $lightColor;
+	height				: 118px;
+	ul.topMenu {
+		float : right;
+		margin: 0;
+		padding:0;
+		li {
+			list-style  : none;
+			display 	: inline-block;
+			height		: 118px;
+			a {
+				display	: block;
+				width		: 107px;
+				line-height : 118px;
+				vertical-align: middle;
+				text-align  : center;
+				color		: $defColor;
+				text-decoration : none;
+			}
+		}
+		li.active a, li:hover a {
+			background-color : $mainColor;
+			color : $lightColor;
+		}
+	}
+}
+
+#notification {
+	position: absolute;
+	padding : 5px;
+	width : 600px;
+	margin-left : 180px;
+	margin-top : -50px;
+	background-color : #afa;
+	border			 : 1px solid #080;
+	color			 : #080;
+	text-align		 : center;
+}
+
+#notification.error {
+	background-color : #faa;
+	border-color	 : #800;
+	color			 : #800;
+}
+
+.gfxBar {
+	background	: url('/img/shiro/gfxBar.png') repeat-x;
+	background-color 	: #A8A8A8;
+	height : 200px;
+}
+
+.copy {
+	$hidden;
+	text-transform:uppercase;
+	text-align:center;
+	margin-top:70px;
+	padding:3px;
+}
+
+.footer {
+	background-color : $defColor;
+	color : $lightColor;
+	.list {
+		display: inline-block;
+		width : 200px;
+		vertical-align:top;
+		h2 {
+			font-size:12pt;
+		}
+		ul {
+			list-style:none;
+			padding-left : 5px;
+			a {
+				color:$hideColor;
+			}
+		}
+	}
+	.loginBox {
+		padding : 10px;
+		color:$defColor;
+		position : absolute;
+		top : 50px;
+		background-color:$lightColor;
+		border:1px solid $defColor;
+	}
+}
+
+.pageContent {
+	padding-top:1px;
+	color : $defColor;
+	background-color:#E6E1DE;
+}
+
+body.user_offline .content {
+	.version, ul.buttons {
+		display:none;
+	}
+	.editor ul.buttons {
+		display:block;
+	}
+}
+
+input[type=submit] {
+	border:1px solid $hideColor;
+	padding:2px 4px;
+	background-color:$defColor;
+	color:$lightColor;
+}
+
+input[type=submit]:hover {
+	background-color:$hideColor;
+}
+
+
+ul.buttons {
+	padding:0;
+	list-style:none;
+	li {
+		display:inline-block;
+		a {
+			display:block;
+			border:1px solid $hideColor;
+			padding:2px 4px;
+			background-color:$defColor;
+			color:$lightColor;
+		}
+		a:hover{
+			background-color:$hideColor;
+			text-decoration:none;
+		}
+	}
+}
+
+.splitLeft, .splitRight {
+	display:inline-block;
+	vertical-align:top;
+}
+
+.splitLeft {
+	width:600px;
+}
+.splitRight {
+	width:300px;
+	padding-left:45px;
+	h1 {
+		color:$mainColor;
+	}
+}
+	
+
+.content {
+	
+	.hierarchy {
+		$hidden;
+		a {
+			$hidden;
+		}
+	}
+	h1.title {
+		background : url('/img/shiro/h1bg.png') repeat-x;
+		margin-bottom:5px;
+		height : 35px;
+		font-size : 26px;
+		padding-left : 10px;
+		a {
+			color : $defColor;
+		}
+	}
+	.version, .ccount {
+		float:right;
+		$hidden;
+	}
+	.blog {
+		ul.posts {
+			li {
+				list-style : none;
+			}
+			.title {
+				font-size : 30px;
+			}
+		}
+		.comments {
+			float : right;
+			a {
+				$hidden;
+			}
+		}
+		.title {
+			margin-bottom : 5px;
+		}
+		.date, .user {
+			$hidden;
+			display : inline-block;
+		}
+		.date {
+			span {
+				display:none;
+			}
+		}
+		.link_prev, .link_create, .link_next {
+			a { $hidden; }
+			display : inline-block;
+			padding : 0px 5px;
+		}
+	}
+	ul.comments {
+		float:none !important;
+		display:block;
+		margin:0;
+		list-style: none;
+		li {
+			margin-bottom : 20px;
+			.comment.view p {
+				margin : 10px 0px;
+			}
+		}
+	}
+}
+
+.editor {
+	textarea {
+		width : 900px;
+		height : 400px;
+		display: block;
+	}
+}
+
+.editor.edit_comments {
+	margin-left : 40px;
+	textarea {
+		width : 600px;
+		height : 200px;
+	}
+}
