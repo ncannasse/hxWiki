@@ -46,10 +46,12 @@ In order to setup the wiki :
 
 4. configure website
     - copy `config.tpl.xml` as `config.xml` and set the `db` field with your local mysql database server `db="mysql://root:@localhost:3306/hxwiki"`
+    - set the admin password ! (will be used to create the admin user, can be removed later)
 
-5. install mtwin and templo libraries
+5. install a few haxelib libraries
     - `haxelib install mtwin`
     - `haxelib install templo`
+    - `haxelib install spodadmin`
 
 6. compile by running `haxe project.hxml`
 
@@ -67,8 +69,18 @@ CONFIG OPTIONS
 -----
 
 + change website design
-  - set `style="haxe"` for old design 
+  - set `style="haxe"` for old design
   - set `style="haxe2"` for new design
 
 + use google search
   - set gsearch `gsearch="1"`
+
++ to setup a part of the website as a blog :
+  - login as `admin`
+  - insert an `EntryConfig` definition with the path of your blog `my/blog` for instance
+  - don't forget to check `isBlog`
+
++ to setup a part of the website as a forum :
+  - same as the blog before
+  - check `isForum` instead of `isBlog`
+  - insert also the corresponding `ForumTheme`
