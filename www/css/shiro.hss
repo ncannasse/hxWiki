@@ -285,3 +285,12 @@ ul.buttons {
 		height : 200px;
 	}
 }
+
+body.bible {
+	.gfxBar {
+		height : 1px;
+	}
+	.pageContent {
+		background-color : #DEE2E6;
+	}
+}
