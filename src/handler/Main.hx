@@ -134,6 +134,21 @@ class Main extends Handler<Void> {
 		return new db.GroupRights(group,"");
 	}
 
+	public function getConfig( entry : db.Entry ) {
+		var p = (entry == null) ? [] : entry.get_path().split("/");
+		while( true ) {
+			// try/catch for transition
+			var c = try db.EntryConfig.manager.get( { path : p.join("/") }, false) catch( e : Dynamic ) null;
+			if( c != null )
+				return c;
+			if( p.pop() == null )
+				break;
+		}
+		var c = new db.EntryConfig();
+		c.path = "";
+		return c;
+	}
+	
 	function updateContent( entry : db.Entry ) {
 		var editor = createEditor(entry,false);
 		var v = db.Version.manager.get(entry.vid);
@@ -206,8 +221,13 @@ class Main extends Handler<Void> {
 			throw Action.Error("/wiki/register",Text.get.err_cant_view);
 		App.context.rights = r;
 
-		if( r.isForum ) {
-			path = Lambda.list(r.path.split("/"));
+		var config = getConfig(entry);
+		App.context.config = config;
+		if( config.designMTT != null )
+			App.context.design_mtt = config.designMTT;
+		
+		if( config.isForum ) {
+			path = Lambda.list(config.path.split("/"));
 			entry = db.Entry.get(path,entry.lang);
 			App.context.entry = entry;
 			App.context.group = group;
@@ -215,7 +235,7 @@ class Main extends Handler<Void> {
 			App.context.isModerator = group.canModerateForum;
 			var theme = db.ForumTheme.manager.search({ path : path.join("/") },false).first();
 			if( theme == null )
-				throw "Missing theme "+path.join("/");
+				throw "Missing ForumTheme '"+path.join("/")+"' in database";
 			App.context.path = "/"+theme.path;
 			new handler.Forum(theme,callback(createEditor,entry,false)).execute(App.request,path.length);
 			return;
@@ -247,10 +267,10 @@ class Main extends Handler<Void> {
 		}
 
 		// display as blog
-		if( r.isBlog && !request.exists("rename") ) {
+		if( config.isBlog && !request.exists("rename") ) {
 			var year = request.getInt("year");
 			var month = request.getInt("month");
-			if( entry.parent == null || !getRights(entry.parent).isBlog ) {
+			if( entry.parent == null || !getConfig(entry.parent).isBlog ) {
 				var selector;
 				if( year != null )
 					selector = SDate(year,month,request.getInt("day"));
@@ -445,7 +465,7 @@ class Main extends Handler<Void> {
 			changes = true;
 		} else if( entry.version == null || entry.version.content != content ) {
 			// if blog, don't save history
-			if( rights.isBlog && entry.vid != null ) {
+			if( getConfig(entry).isBlog && entry.vid != null ) {
 				v = db.Version.manager.get(entry.vid);
 				v.setChange(VContent,content,null);
 				v.update();

@@ -144,22 +144,41 @@ class App {
 		context.user = user;
 		context.session = session;
 		context.request = request;
-		context.config = {
+		var config = {
 			title : Config.get("title"),
 			style : style,
 			url : Config.get("url"),
 			gsearch : Config.get("gsearch",""),
 		};
-		if( context.config.gsearch == "" )
-			context.config.gsearch = null;
+		if( config.gsearch == "" )
+			config.gsearch = null;
+		if( context.config == null )
+			context.config = config;
+		else
+			for( f in Reflect.fields(config) )
+				Reflect.setField(context.config, f, Reflect.field(config, f));
+
 		// allow database failures here
 		context.links = function(n:Int) return try db.Link.manager.search($kind == n,{ orderBy : -priority },false) catch( e : Dynamic ) new List();
 		context.langs = try db.Lang.manager.all(false) catch( e : Dynamic ) new List();
 		context.section = Config.getSection;
 		var parts = neko.Web.getURI().split("/");
-		context.current_url = parts[1] == "index.n" ? "/" : "/"+parts[1];
-		var customDesign = "design_" + style + ".mtt";
-		context.design_mtt = if( neko.FileSystem.exists(Config.TPL+customDesign) ) customDesign else "design.mtt";
+		context.current_url = parts[1] == "index.n" ? "/" : "/" + parts[1];
+		
+		// body class
+		var userClass = user == null ? "offline" : user.group.name;
+		var bodyClass = "user_" + userClass;
+		if( context.config.cssClass != null )
+			bodyClass += " " + context.config.cssClass;
+		context.bodyClass = bodyClass;
+		
+		// which design mtt to choose
+		if( context.design_mtt == null ) {
+			var customDesign = "design_" + style + ".mtt";
+			context.design_mtt = if( neko.FileSystem.exists(Config.TPL+customDesign) ) customDesign else "design.mtt";
+		}
+		
+		// uri
 		if( request == null )
 			context.uri = "/";
 		else {

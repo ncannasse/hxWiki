@@ -4,7 +4,7 @@
 	::use 'head.mtt'::::end::
 	</head>
 
-	<body>
+	<body class="::bodyClass::">
 		<div class="all">
 			<div class="header">
 				<div class="home" onclick="document.location = '/'"><a href="/">::config.title::</a></div>

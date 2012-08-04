@@ -15,8 +15,6 @@ class GroupRights extends sys.db.Object {
 	public var canComment : SBool;
 	public var canReadComments : SBool;
 	public var canDeleteComments : SBool;
-	public var isBlog : SBool;
-	public var isForum : SBool;
 
 	public function new( g, path ) {
 		super();
