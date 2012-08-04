@@ -499,13 +499,12 @@ ul.menu li a:hover {
 }
 
 ul.buttons {
-	height				: 25px;
 	margin-top			: 20px;
 }
 
 ul.buttons li {
-	float				: left;
-	margin-right		: 10px;
+	display				: inline-block;
+	margin-right		: 5px;
 	padding				: 2px 0px;
 	background			: #f4fafd url('/img/ncblog/buttons/button0.gif') repeat-x bottom left;
 	border				: 1px solid #bde1f6;
@@ -516,7 +515,7 @@ ul.buttons li {
 
 ul.buttons li a {
 	text-decoration		: none;
-	padding				: 0px 10px;
+	padding				: 0px 8px;
 }
 
 ul.buttons li:hover {
