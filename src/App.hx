@@ -61,6 +61,12 @@ class App {
 		return null;
 	}
 
+	static function requireHttpAuth(){
+		neko.Web.setReturnCode( 401 );
+		neko.Web.setHeader("status","401 Authorization Required");
+		neko.Web.setHeader("WWW-Authenticate","Basic realm=\"Please identify yourself\"");
+	}
+	
 	static function mainLoop() {
 		// init
 		request = new mtwin.web.Request();
@@ -79,6 +85,21 @@ class App {
 				throw "Database initialized";
 			}
 		}
+		
+		if( session.uid == null && Config.USE_HTACCESS ) {
+			var auth = neko.Web.getAuthorization();
+			if( auth == null ) {
+				requireHttpAuth();
+				return;
+			}
+			var u = db.User.manager.search({ name : auth.user },false).first();
+			if( u == null || handler.Main.encodePass(auth.pass) != u.pass ) {
+				requireHttpAuth();
+				return;
+			}
+			App.session.setUser(u);
+		}
+		
 		user = if( session.uid != null ) db.User.manager.get(session.uid) else null;
 		langFlags = function(l) return true;
 		langSelected = null;

@@ -30,13 +30,15 @@ class Config {
 	public static var DEBUG = get("debug","0") == "1";
 	public static var TPL = DIR + "tpl/"+LANG+"/";
 
+	public static var USE_HTACCESS = get("htaccess","0") == "1";
+	
 	public static var FORUM_AUTOLOCK_DAYS = 180;
 	public static var FORUM_MIN_MSGLEN = 10;
 	public static var FORUM_THREADS_PER_PAGE = 20;
 	public static var FORUM_MESSAGES_PER_PAGE = 15;
 	public static var FORUM_CANT_POST_DAYS = 0;
 	public static var FORUM_MAX_POST_PER_THREAD = 1000;
-
+	
 	public static function getSection( name : String ) {
 		var e = xml.elementsNamed(name).next();
 		if( e == null )
