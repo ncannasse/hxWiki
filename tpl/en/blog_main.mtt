@@ -18,10 +18,10 @@
 			<a href="/::e._path::">::e._title::</a>
 		</div>
 		<div class="date">
-			Posted on ::dateFormat(version.date,'%b %d %Y')::
+			<span>Posted</span> on ::dateFormat(version.date,'%b %d %Y')::
 		</div>
 		<div class="user">
-			 by ::if version.uid::<a href="/wiki/user?name=::version._author.name::">::version._author.realName::</a>::else::Anonymous::end::
+			by ::if version.uid::<a href="/wiki/user?name=::version._author.name::">::version._author.realName::</a>::else::Anonymous::end::
 		</div>
 		<div class="view">
 			::set prev = version.getPreview(1000)::

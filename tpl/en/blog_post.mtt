@@ -15,7 +15,7 @@
 		You are viewing an old version of this entry, click <a href="/::entry._path::">here</a> to see latest version.
 	</div>
 	<div class="date">
-		Posted on ::dateFormat(version.date,'%b %d %Y')::
+		<span>Posted</span> on ::dateFormat(version.date,'%b %d %Y')::
 	</div>
 	<div class="user">
 		 by ::if version.uid::<a href="/wiki/user?name=::version._author.name::">::version._author.realName::</a>::else::Anonymous::end::

@@ -3,8 +3,9 @@
 ::set pageTitle = entry._title::
 <h1 class="title"><a href="/::entry._path::">::entry._title::</a></h1>
 
-<div class="hierarchy">
-	::foreach e entry.getList()::
+::set hierarchy = entry.getList()::
+<div class="hierarchy" ::cond hierarchy.length > 1::>
+	::foreach e hierarchy::
 	::if !repeat.e.first:: &gt;::end:: <a href="/::e._path::">::e._title::</a>
 	::end::
 </div>
