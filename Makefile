@@ -20,6 +20,7 @@ deploy_nc: prepare
 
 deploy_shiro: prepare
 	rsync -avz --delete $(RSYNC_EXCLUDES) tpl www ncannasse@shirogames.com:/data/shirogames
+	rsync -avz --delete $(RSYNC_EXCLUDES) tpl www ncannasse@shirogames.com:/data/bible
 
 api:
 	haxe project.hxml
