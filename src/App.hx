@@ -159,7 +159,7 @@ class App {
 				Reflect.setField(context.config, f, Reflect.field(config, f));
 
 		// allow database failures here
-		context.links = function(n:Int) return try db.Link.manager.search($kind == n,{ orderBy : -priority },false) catch( e : Dynamic ) new List();
+		context.links = function(n:Int) return try db.Link.manager.search($kind == n,{ orderBy : [-priority,id] },false) catch( e : Dynamic ) new List();
 		context.langs = try db.Lang.manager.all(false) catch( e : Dynamic ) new List();
 		context.section = Config.getSection;
 		var parts = neko.Web.getURI().split("/");
