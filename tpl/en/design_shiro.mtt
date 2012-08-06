@@ -15,7 +15,7 @@
 						<a href="http://twitter.com/shirogames" target="_blank"><img src="/img/shiro/iconTW.png"/></a>
 						<a href="::rss::" target="_blank" ::cond rss::><img src="/img/shiro/iconRSS.png"/></a>
 					</div>
-					<p>Welcome to Shirogames official website</p>
+					::raw section("topBar")::
 				</div>
 			</div>
 			<div class="menuBar">
@@ -30,7 +30,7 @@
 				<div class="center">
 				</div>
 			</div>
-			
+
 			<div class="pageContent">
 				<div class="center">
 					<div id="notification" ::cond notification:: ::attr class if( notification.error ) 'error'::>
@@ -40,14 +40,14 @@
 					<div class="content">
 						::raw __content__::
 					</div>
-					
+
 					<div class="copy">(c)2012 ShiroGames</div>
 				</div>
 			</div>
-			
+
 			<div class="footer">
 				<div class="center">
-					
+
 					<div class="list">
 						<h2>Menu</h2>
 						<ul>
@@ -98,7 +98,7 @@
 					</div>
 				</div>
 			</div>
-			
+
 		</div>
 	</body>
 </html>
