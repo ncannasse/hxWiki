@@ -9,6 +9,7 @@ var hidden = {
 }
 
 body {
+	font-family:'Helvetica';
 	background-color: $defColor;
 	margin : 0;
 	padding : 0;
@@ -100,6 +101,10 @@ a img {
 	background	: url('/img/shiro/gfxBar.png') repeat-x;
 	background-color 	: #A8A8A8;
 	height : 200px;
+	.center {
+		background : url('/img/shiro/artwork.png');
+		height : 200px;
+	}
 }
 
 .copy {
@@ -209,6 +214,11 @@ ul.buttons {
 			$hidden;
 		}
 	}
+	
+	ul {
+		list-style-image:url('/img/shiro/shiroIcon.png');
+	}
+	
 	h1.title {
 		background : url('/img/shiro/h1bg.png') repeat-x;
 		margin-bottom:5px;
