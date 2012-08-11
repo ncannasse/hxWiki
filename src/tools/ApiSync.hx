@@ -463,6 +463,10 @@ class ApiSync {
 					set : RNormal,
 					params : null,
 					platforms : platforms,
+					#if haxe_211
+					line : null,
+					meta : [],
+					#end
 				},false);
 			}
 			print('[/anon]\n');
