@@ -291,6 +291,35 @@ ul.buttons {
 			}
 		}
 	}
+	
+	// custom styles
+	
+	.pad {
+		padding : 20px;
+	}
+	
+	.left {
+		float : left;
+	}
+	
+	.right {
+		float : right;
+	}
+	
+	.border img {
+		outline : 5px solid $lightColor;
+	}
+	
+	.space {
+		display : block;
+		height : 1px;
+		margin-bottom : 30px;
+	}
+	
+	.clear {
+		display:block;
+		clear : both;
+	}
 }
 
 .editor {
@@ -306,6 +335,13 @@ ul.buttons {
 	textarea {
 		width : 600px;
 		height : 200px;
+	}
+	.group {
+		display : block;
+		.tfield {
+			display : inline-block;
+			width : 100px;
+		}
 	}
 }
 
