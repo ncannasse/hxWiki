@@ -141,6 +141,14 @@ a img {
 		background-color:$lightColor;
 		border:1px solid $defColor;
 	}
+	.langs {
+		a.current {
+			color : $hideColor * 1.3;
+		}
+		a.off {
+			color : #765656;
+		}
+	}
 }
 
 .pageContent {
@@ -149,12 +157,17 @@ a img {
 	background-color:#E6E1DE;
 }
 
-body.user_offline .content {
-	.version, ul.buttons {
-		display:none;
+body.user_offline {
+	.content {
+		.version, ul.buttons {
+			display:none;
+		}
+		.editor ul.buttons {
+			display:block;
+		}
 	}
-	.editor ul.buttons {
-		display:block;
+	.langs a {
+		color:$hideColor !important;
 	}
 }
 
