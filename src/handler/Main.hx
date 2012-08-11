@@ -347,6 +347,8 @@ class Main extends Handler<Void> {
 	public function createEditor( entry : db.Entry, cache : Bool ) {
 		var lang = entry.lang;
 		var defaultLang = getDefLang();
+		var target = Config.get("linkTarget", "");
+		if( target == "" ) target = null;
 		var config = {
 			buttons : new Array(),
 			text : Text.get.empty_text,
@@ -356,6 +358,7 @@ class Main extends Handler<Void> {
 			lang : lang.code,
 			allowRaw : group.canInsertHTML,
 			titles : new Hash(),
+			externLinkTarget : target,
 		};
 		// fill titles cache
 		if( cache )

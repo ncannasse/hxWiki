@@ -34,6 +34,7 @@ class Editor {
 		lang : String,
 		allowRaw : Bool,
 		titles : Hash<{ exists : Bool, title : String }>,
+		externLinkTarget : Null<String>,
 	};
 	var uniqueId : Int;
 	var subcache : Hash<Array<{ title : String, url : String }>>;
@@ -400,8 +401,9 @@ class Editor {
 		t = ~/===== ?(.*?) ?=====/g.customReplace(t,function(r) return makeTitle(titles,"h2",r.matched(1)));
 		t = ~/==== ?(.*?) ?====/g.customReplace(t,function(r) return makeTitle(titles,"h3",r.matched(1)));
 		// links
-		t = ~/\[\[(https?:[^\]"]*?)\|(.*?)\]\]/g.replace(t,'<a href="$1" class="extern">$2</a>');
-		t = ~/\[\[(https?:[^\]"]*?)\]\]/g.replace(t,'<a href="$1" class="extern">$1</a>');
+		var target = config.externLinkTarget == null ? "" : ' target="' + config.externLinkTarget + '"';
+		t = ~/\[\[(https?:[^\]"]*?)\|(.*?)\]\]/g.replace(t,'<a href="$1" class="extern"'+target+'">$2</a>');
+		t = ~/\[\[(https?:[^\]"]*?)\]\]/g.replace(t,'<a href="$1" class="extern"'+target+'>$1</a>');
 		t = ~/\[\[([^\]]*?)\]\]/.customReplace(t,function(r) {
 			var link = r.matched(1);
 			if( link.substr(link.length-2,2) == "/*" ) {
