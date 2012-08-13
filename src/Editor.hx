@@ -402,7 +402,7 @@ class Editor {
 		t = ~/==== ?(.*?) ?====/g.customReplace(t,function(r) return makeTitle(titles,"h3",r.matched(1)));
 		// links
 		var target = config.externLinkTarget == null ? "" : ' target="' + config.externLinkTarget + '"';
-		t = ~/\[\[(https?:[^\]"]*?)\|(.*?)\]\]/g.replace(t,'<a href="$1" class="extern"'+target+'">$2</a>');
+		t = ~/\[\[(https?:[^\]"]*?)\|(.*?)\]\]/g.replace(t,'<a href="$1" class="extern"'+target+'>$2</a>');
 		t = ~/\[\[(https?:[^\]"]*?)\]\]/g.replace(t,'<a href="$1" class="extern"'+target+'>$1</a>');
 		t = ~/\[\[([^\]]*?)\]\]/.customReplace(t,function(r) {
 			var link = r.matched(1);
