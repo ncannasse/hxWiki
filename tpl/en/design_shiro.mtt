@@ -11,10 +11,10 @@
 				<div class="center">
 					<div class="icons">
 						<img src="/img/shiro/iconFollow.png"/>
-						<a href="http://www.facebook.com/shirogames" target="_blank"><img src="/img/shiro/iconFB.png"/></a>
-						<a href="https://plus.google.com/104393754571323074324" target="_blank"><img src="/img/shiro/iconGP.png"/></a>
-						<a href="http://twitter.com/shirogames" target="_blank"><img src="/img/shiro/iconTW.png"/></a>
-						<a href="::rss::" target="_blank" ::cond rss::><img src="/img/shiro/iconRSS.png"/></a>
+						<a href="http://www.facebook.com/shirogames" target="_blank" class="fb"></a>
+						<a href="https://plus.google.com/104393754571323074324" target="_blank" class="gp"></a>
+						<a href="http://twitter.com/shirogames" target="_blank" class="tw"></a>
+						<a href="::rss::" target="_blank" ::cond rss:: class="rss"></a>
 					</div>
 					::raw section("topBar")::
 				</div>
@@ -42,7 +42,7 @@
 						::raw __content__::
 					</div>
 
-					<div class="copy">(c)2012 ShiroGames</div>
+					<div class="copy"><img src="/img/shiro/copy.png"/></div>
 				</div>
 			</div>
 

@@ -5,11 +5,11 @@ var mainColor = #EF3449;
 
 var hidden = {
 	color : $hideColor;
-	font-size : 10pt;
+	font-size : 9pt;
 }
 
 body {
-	font-family:'Helvetica';
+	font-family:'Arial';
 	background-color: $defColor;
 	margin : 0;
 	padding : 0;
@@ -38,16 +38,43 @@ a img {
 	background-color	: $defColor;
 	color				: #91908E;
 	hss-height			: 41px;
-	padding				: 10px;
 	p {
 		margin:0;
-		padding:0;
+		padding:10px;
 	}
 	.icons {
 		position : absolute;
-		top : 7px;
 		width : 960px;
 		text-align : right;
+		a {
+			display : inline-block;
+			width : 41px;
+			height : 41px;
+		}
+		a.fb {
+			background-image : url('/img/shiro/facebook.gif');
+		}
+		a.fb:hover {
+			background-image : url('/img/shiro/facebook_hover.gif');
+		}
+		a.gp {
+			background-image : url('/img/shiro/googleplus.gif');
+		}
+		a.gp:hover {
+			background-image : url('/img/shiro/googleplus_hover.gif');
+		}
+		a.tw {
+			background-image : url('/img/shiro/twitter.gif');
+		}
+		a.tw:hover {
+			background-image : url('/img/shiro/twitter_hover.gif');
+		}
+		a.rss {
+			background-image : url('/img/shiro/rss.gif');
+		}
+		a.rss:hover {
+			background-image : url('/img/shiro/rss_hover.gif');
+		}
 	}
 }
 
@@ -98,21 +125,18 @@ a img {
 }
 
 .gfxBar {
-	background	: url('/img/shiro/gfxBar.png') repeat-x;
-	background-color 	: #A8A8A8;
-	height : 200px;
+	background	: url('/img/shiro/gfxBar2.png') repeat-x;
+	background-color 	: #E6E1DE;
+	height : 195px;
 	.center {
-		background : url('/img/shiro/artwork.png');
-		height : 200px;
+		background : url('/img/shiro/artwork2.png') 0px -5px;
+		height : 195px;
 	}
 }
 
 .copy {
-	$hidden;
-	text-transform:uppercase;
 	text-align:center;
 	margin-top:70px;
-	padding:3px;
 }
 
 .footer {
@@ -120,7 +144,7 @@ a img {
 	color : $lightColor;
 	.list {
 		display: inline-block;
-		width : 200px;
+		width : 315px;
 		vertical-align:top;
 		h2 {
 			font-size:12pt;
@@ -214,13 +238,14 @@ ul.buttons {
 	width:300px;
 	padding-left:45px;
 	h1 {
-		color:$mainColor;
+		font-size:24px;
+		color:$defColor;
 	}
 }
 	
 
 .content {
-	
+		
 	.hierarchy {
 		$hidden;
 		a {
@@ -262,11 +287,12 @@ ul.buttons {
 			}
 		}
 		.title {
-			margin-bottom : 5px;
+			margin-bottom : 0px;
 		}
 		.date, .user {
 			$hidden;
 			display : inline-block;
+			font-style : italic;
 		}
 		.date {
 			span {
@@ -279,6 +305,13 @@ ul.buttons {
 			padding : 0px 5px;
 		}
 	}
+	
+	.blog .posts {
+		.title {
+			margin-bottom : -5px;
+		}
+	}
+	
 	ul.comments {
 		float:none !important;
 		display:block;
@@ -294,31 +327,38 @@ ul.buttons {
 	
 	// custom styles
 	
-	.pad {
-		padding : 20px;
-	}
+	.view {
+		
+		p {
+			font-size:15px;
+		}
 	
-	.left {
-		float : left;
-	}
-	
-	.right {
-		float : right;
-	}
-	
-	.border img {
-		outline : 5px solid $lightColor;
-	}
-	
-	.space {
-		display : block;
-		height : 1px;
-		margin-bottom : 30px;
-	}
-	
-	.clear {
-		display:block;
-		clear : both;
+		.pad {
+			padding : 20px;
+		}
+		
+		.left {
+			float : left;
+		}
+		
+		.right {
+			float : right;
+		}
+		
+		.border img {
+			outline : 5px solid $lightColor;
+		}
+		
+		.space {
+			display : block;
+			height : 1px;
+			margin-bottom : 30px;
+		}
+		
+		.clear {
+			display:block;
+			clear : both;
+		}
 	}
 }
 

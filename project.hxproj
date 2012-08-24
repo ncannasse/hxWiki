@@ -36,6 +36,7 @@
   <!-- Paths to exclude from the Project Explorer tree -->
   <hiddenPaths>
     <hidden path="tpl\tmp" />
+    <hidden path="www\css\shiro.css" />
   </hiddenPaths>
   <!-- Executed before build -->
   <preBuildCommand />
