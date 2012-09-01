@@ -18,4 +18,19 @@
 	<img src="/img/flags/flag_::l.code::.gif" alt="::l.code::"/>
 	</macro>
 
+	<macro name="blogInfos(version)">
+		<div class="date">
+			::raw format.postDate(version.date)::
+		</div>
+		<div class="user">
+			::fill author::::if version.uid::<a href="/wiki/user?name=::version._author.name::">::version._author.realName::</a>::else::Anonymous::end::::end::
+			::raw format.postAuthor(author)::
+		</div>
+	</macro>
+
+	<macro name="comments(count)">
+		::fill cctext::comment::if count > 1::s::end::::end::
+		::raw format.comments(count,cctext)::
+	</macro>
+
 </macros>

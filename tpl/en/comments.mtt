@@ -1,5 +1,5 @@
 <a name="comments"></a>
-<div class="ccount">::comments.length:: Comment::if comments.length != 1::s::end::</div>
+<div class="ccount">$$comments(::comments.length::)</div>
 
 <ul class="comments">
 	::foreach c comments::
@@ -16,7 +16,7 @@
 		</div>
 		<a class="admin" href="/wiki/deleteComment?id=::c.id::" ::cond canDeleteComments::>[delete]</a>
 		<div class="date">
-			::dateFormat(c.date,'%b %d, %Y at %H:%M')::
+			::raw format.commentDate(c.date)::
 		</div>
 		<div class="comment view">
 			::raw c.htmlContent::
@@ -26,7 +26,7 @@
 	::if editor::
 	<li id="comment_preview" style="display : none">
 		<div class="user">(you)</div>
-		<div class="date">::dateFormat(now,'%b %d, %Y at %H:%M')::</div>
+		<div class="date">::format.commentDate(now)::</div>
 		<div class="comment" id="::editor.preview::">
 		</div>
 	</li>

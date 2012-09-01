@@ -17,19 +17,14 @@
 		<div class="title">
 			<a href="/::e._path::">::e._title::</a>
 		</div>
-		<div class="date">
-			<span>Posted</span> on ::dateFormat(version.date,'%b %d %Y')::
-		</div>
-		<div class="user">
-			by ::if version.uid::<a href="/wiki/user?name=::version._author.name::">::version._author.realName::</a>::else::Anonymous::end::
-		</div>
+		$$blogInfos(::version::)
 		<div class="view">
 			::set prev = version.getPreview(1000)::
 			::raw prev.html::
 			<a href="/::e._path::" class="more" ::cond prev.broken::>(more...)</a>
 		</div>
 		<div class="comments">
-			<a href="/::e._path::#comments">::e.countComments():: comment(s)</a>
+			<a href="/::e._path::#comments">$$comments(::e.countComments()::)</a>
 		</div>
 	</li>
 	::end::

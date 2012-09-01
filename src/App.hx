@@ -182,7 +182,7 @@ class App {
 		// allow database failures here
 		context.links = function(n:Int) return try db.Link.manager.search($kind == n,{ orderBy : [-priority,id] },false) catch( e : Dynamic ) new List();
 		context.langs = try db.Lang.manager.all(false) catch( e : Dynamic ) new List();
-		context.section = Config.getSection;
+		context.section = function(s) return Config.getSection(s);
 		var parts = neko.Web.getURI().split("/");
 		context.current_url = parts[1] == "index.n" ? "/" : "/" + parts[1];
 		
@@ -210,6 +210,20 @@ class App {
 		}
 		context.dateFormat = function(d,fmt) {
 			return DateTools.format(d,fmt);
+		};
+		context.format = {
+			postDate : function(d:Date) {
+				return DateTools.format(d, Config.getSection("post_date","<span>Posted</span> on %b %d %Y"));
+			},
+			postAuthor : function(a:String) {
+				return Config.getSection("post_author","by ::u::").split("::u::").join(a);
+			},
+			commentDate : function(d:Date) {
+				return DateTools.format(d, Config.getSection("comment_date","%b %d, %Y at %H:%M"));
+			},
+			comments : function(n:Int, t:String) {
+				return Config.getSection("comments_fmt","::n:: ::t::").split("::n::").join(""+n).split("::t::").join(t);
+			},
 		};
 		context.lang_classes = function(l) {
 			#if php

@@ -39,10 +39,10 @@ class Config {
 	public static var FORUM_CANT_POST_DAYS = 0;
 	public static var FORUM_MAX_POST_PER_THREAD = 1000;
 	
-	public static function getSection( name : String ) {
+	public static function getSection( name : String, ?def : String ) {
 		var e = xml.elementsNamed(name).next();
 		if( e == null )
-			return null;
+			return def;
 		var b = new StringBuf();
 		for( x in e )
 			b.add(x.toString());
