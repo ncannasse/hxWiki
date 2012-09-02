@@ -47,6 +47,8 @@
 				::raw __content__::
 			</div>
 		</div>
+		
+		<div class="clear"></div>
 
 		<div class="footer">
 		<div class="footerBG">
@@ -70,7 +72,7 @@
 					<li><a href="/wiki/map">Wiki Map</a></li>
 					::if rss::
 					<li><a href="::rss::">RSS Feed</a></li>
-					::else::
+					::elseif user::
 					<li><a href="/wiki/history">Latest Changes</a></li>
 					::end::
 					<li ::cond canDeleteComments::><a href="/wiki/latestComments">Latest Comments</a></li>
