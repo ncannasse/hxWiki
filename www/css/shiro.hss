@@ -147,38 +147,6 @@ a img {
 .gfxBar {
 	height : 328px;
 	background-color : #A5A19E;
-	.banner {
-		position : absolute;
-		width : 713px;
-		height : 327px;
-		background-image : url('/img/shiro/banner.jpg');
-	}
-	.text {
-		position : absolute;
-		margin-top : 327px - 123px;
-		height : 123px;
-		width : 713px;
-		color : white;
-		background-color : rgba(0,0,0,0.5);
-		h1, p {
-			text-align : right;
-			margin : 0;
-			padding : 0;
-			padding-right : 30px;
-		}
-		h1 {
-			padding-right : 25px;
-			margin : 5px;
-			margin-bottom : 10px;
-			font-weight : bold;
-			text-shadow : 0px 3px rgba(0,0,0,0.5);
-		}
-		p {
-			font-size : 13px;
-			line-height : 17px;
-			text-shadow : 0px 2px rgba(0,0,0,0.5);
-		}
-	}
 	.topMenu {
 		margin : 0;
 		padding : 0;
@@ -212,6 +180,46 @@ a img {
 			border-right : 15px solid $mainColor;
 			color : $mainColor;
 			text-decoration : none;
+		}
+	}
+}
+
+.topBanner {
+	position : absolute;
+	left : 1px;
+	top : 124px;
+	.banner {
+		position : absolute;
+		width : 713px;
+		height : 327px;
+	}
+	.text {
+		position : absolute;
+		margin-top : 327px - 123px;
+		height : 123px;
+		width : 713px;
+		color : white;
+		background-color : rgba(0,0,0,0.5);
+		h1, p {
+			text-align : right;
+			margin : 0;
+			padding : 0;
+			padding-right : 30px;
+		}
+		h1 {
+			padding-right : 25px;
+			margin : 5px;
+			margin-bottom : 10px;
+			font-weight : bold;
+			text-shadow : 0px 3px rgba(0,0,0,0.5);
+			a {
+				color : white;
+			}
+		}
+		p {
+			font-size : 13px;
+			line-height : 17px;
+			text-shadow : 0px 2px rgba(0,0,0,0.5);
 		}
 	}
 }

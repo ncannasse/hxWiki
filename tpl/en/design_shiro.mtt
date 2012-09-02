@@ -31,21 +31,6 @@
 			<a href="/" class="logo"><img src="/img/shiro/head_bar.png"/></a>
 		</div>
 		<div class="gfxBar">
-			<div class="banner"></div>
-			<div class="text">
-				<h1>
-					PROJECT Z.
-				</h1>
-				<p>
-					We are currently working on our first game.
-				</p>
-				<p>
-					It is an online action-adventure cooperative game, which will be released on PC in 2013.
-				</p>
-				<p>
-					We will be posting more news and artwork in the near future so check back soon!
-				</p>
-			</div>
 			<ul class="topMenu">
 				$$menuLinks(0)
 			</ul>
