@@ -41,6 +41,7 @@ class Main extends Handler<Void> {
 		App.prepareTemplate("entry.mtt");
 		this.request = request;
 		doView(path);
+		App.context.dbAccess = group.canAccessDB; // twice
 	}
 
 	override function initialize() {
@@ -222,10 +223,9 @@ class Main extends Handler<Void> {
 		App.context.rights = r;
 
 		var config = getConfig(entry);
-		App.context.config = config;
 		if( config.designMTT != null )
 			App.context.design_mtt = config.designMTT;
-		
+			
 		if( config.isForum ) {
 			path = Lambda.list(config.path.split("/"));
 			entry = db.Entry.get(path,entry.lang);
@@ -299,6 +299,38 @@ class Main extends Handler<Void> {
 				App.context.rss = entry.parent.get_path();
 				App.context.rssTitle = entry.parent.get_title();
 			}
+		}
+		
+		// layout
+		if( config.layout != null ) {
+			var old = App.context;
+			App.context.design_mtt = "raw.mtt";
+			var content = App.getCurrentContent();
+			var content = ~/::([A-Za-z_]+)(\([A-Za-z\/0-9_]+\))?::/g.customReplace(config.layout,function(r) {
+				var cmd = r.matched(1);
+				var param = r.matched(2);
+				if( param != null ) {
+					param = param.substr(1, param.length - 2);
+					switch( cmd ) {
+					case "section":
+						return Config.getSection(param, "#section(" + param + ") not found");
+					case "page":
+						var path = Lambda.list(param.split("/"));
+						var entry = if( cur != null ) db.Entry.get(path,cur) else db.Entry.get(path,def);
+						var version = entry.version;
+						return version == null ? '<a href="' + entry.getURL() + '">' + entry.get_path() + "</a> not created" : version.htmlContent;
+					default:
+						return "Unknown Command #" + cmd;
+					}
+				} else if( cmd == "__content__" )
+					return content;
+				else
+					return Reflect.field(old, cmd);
+			});
+			App.context.__content__ = content;
+			if( config.designMTT != null )
+				App.context.design_mtt = config.designMTT;
+			App.prepareTemplate("empty.mtt");
 		}
 	}
 

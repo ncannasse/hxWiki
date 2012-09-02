@@ -37,6 +37,14 @@ class App {
 		sendNoCacheHeaders();
 		neko.Lib.print(result);
 	}
+	
+	public static function getCurrentContent() {
+		initContext();
+		var str = template.execute(context);
+		template = null;
+		context = {};
+		return str;
+	}
 
 	static function redirect( url:String ) {
 		template = null;

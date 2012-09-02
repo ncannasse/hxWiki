@@ -9,5 +9,6 @@ class EntryConfig extends sys.db.Object {
 	public var isForum : SBool;
 	public var cssClass : Null<STinyText>;
 	public var designMTT : Null<STinyText>;
+	public var layout : Null<SText>;
 
 }
