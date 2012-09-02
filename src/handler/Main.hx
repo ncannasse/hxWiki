@@ -302,11 +302,19 @@ class Main extends Handler<Void> {
 		}
 		
 		// layout
-		if( config.layout != null ) {
+		var layout = null;
+		var ecur = entry, ccur = config;
+		while( ccur.layout == null ) {
+			if( ecur == null ) break;
+			ecur = ecur.parent;
+			ccur = getConfig(ecur);
+		}
+		
+		if( ccur.layout != null ) {
 			var old = App.context;
 			App.context.design_mtt = "raw.mtt";
 			var content = App.getCurrentContent();
-			var content = ~/::([A-Za-z_]+)(\([A-Za-z\/0-9_]+\))?::/g.customReplace(config.layout,function(r) {
+			var content = ~/::([A-Za-z_]+)(\([A-Za-z\/0-9_]+\))?::/g.customReplace(ccur.layout,function(r) {
 				var cmd = r.matched(1);
 				var param = r.matched(2);
 				if( param != null ) {
@@ -361,7 +369,7 @@ class Main extends Handler<Void> {
 			App.context.u = user;
 			params = "user="+user.id;
 		}
-		if( !getRights(entry).canView )
+		if( !getRights(entry).canView || !getRights(entry).canViewChanges )
 			throw Action.Error("/wiki/register",Text.get.err_cant_view);
 		if( request.exists("diff") ) {
 			var v = db.Version.manager.get(request.getInt("diff"),false);

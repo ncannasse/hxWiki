@@ -81,7 +81,7 @@
 	::else::
 	<li ::cond rights.canEdit::><a href="/wiki/restore?::eparams::;version=::version.id::" $$confirm()>restore</a></li>
 	::end::
-	<li><a href="/wiki/history?::eparams::">history</a></li>
+	<li ::cond rights.canViewChanges::><a href="/wiki/history?::eparams::">history</a></li>
 	<li><a href="/wiki/backlinks?::eparams::">backlinks</a></li>
 	<li ::cond dbAccess && entry.id != null::><a href="/db/Entry/edit/::entry.id::">db</a></li>
 </ul>
