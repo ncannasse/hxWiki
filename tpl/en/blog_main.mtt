@@ -31,7 +31,7 @@
 </ul>
 
 ::if page != null::
-<div class="link_prev"><a href="/::entry._path::?page=::(page + 1)::">&lt;&lt; Previous</a></div>
+<div class="link_prev" ::cond hasPrev::><a href="/::entry._path::?page=::(page + 1)::">&lt;&lt; Previous</a></div>
 <div class="link_create" ::cond canCreate::><a href="/::entry._path::?create=1">New Post</a></div>
 <div class="link_next" ::cond page > 0::><a href="/::entry._path::?page=::(page - 1)::">Next &gt;&gt;</a></div>
 ::end::

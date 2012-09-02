@@ -12,7 +12,7 @@
 
 ::set eparams = 'path='+entry._path+';lang='+entry._lang.code::
 
-<div class="editor" ::cond edit::>
+<div class="editor edit_page" ::cond edit::>
 	::raw editor.initJS()::
 	<script type="text/javascript">
 		window.onbeforeunload = function() {

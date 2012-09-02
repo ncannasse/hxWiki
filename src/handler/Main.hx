@@ -272,17 +272,24 @@ class Main extends Handler<Void> {
 			var month = request.getInt("month");
 			if( entry.parent == null || !getConfig(entry.parent).isBlog ) {
 				var selector;
+				var size = null;
 				if( year != null )
 					selector = SDate(year,month,request.getInt("day"));
 				else {
 					var page = request.getInt("page",0);
 					if( page < 0 ) page = 0;
-					selector = SPage(page,10);
+					size = 10;
+					selector = SPage(page,size+1);
 					App.context.page = page;
 				}
 				App.prepareTemplate("blog_main.mtt");
 				App.context.canCreate = r.canCreate;
-				App.context.entries = db.Entry.manager.selectSubs(entry,selector);
+				var entries = db.Entry.manager.selectSubs(entry, selector);
+				if( size != null && entries.length > size ) {
+					entries.remove(entries.last());
+					App.context.hasNext = true;
+				}
+				App.context.entries = entries;
 				App.context.calendar = new Calendar(entry,year,month);
 				App.context.rss = "/wiki/rss?path="+entry.get_path();
 				App.context.rssTitle = entry.get_title();
