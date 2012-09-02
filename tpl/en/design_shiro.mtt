@@ -1,119 +1,154 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
-	<head>
-	::use 'head.mtt'::::end::
-	<meta property="og:image" content="http://shirogames.com/img/shiro/logoSquare.png"/>
-	</head>
+<head>
+::use 'head.mtt'::::end::
+<meta property="og:image" content="http://shirogames.com/img/shiro/logoSquare.png"/>
+</head>
 
-	<body class="::bodyClass::">
-		<div class="all">
-			<div class="topBar">
-				<div class="center">
-					<div class="icons">
-						<img src="/img/shiro/iconFollow.png"/>
-						<a href="http://www.facebook.com/shirogames" target="_blank" class="fb"></a>
-						<a href="https://plus.google.com/104393754571323074324" target="_blank" class="gp"></a>
-						<a href="http://twitter.com/shirogames" target="_blank" class="tw"></a>
-						<a href="::rss::" target="_blank" ::cond rss:: class="rss"></a>
-					</div>
-					::raw section("topBar")::
-				</div>
+<body class="::bodyClass::">
+<div class="all">
+	<div class="allInside">
+		
+		<div class="topBar">
+			<div class="icons">
+				<img src="/img/shiro/iconFollow.png"/>
+				<a href="http://www.facebook.com/shirogames" target="_blank" class="fb"></a>
+				<a href="https://plus.google.com/104393754571323074324" target="_blank" class="gp"></a>
+				<a href="http://twitter.com/shirogames" target="_blank" class="tw"></a>
+				<a href="::if rss::::rss::::else::/wiki/rss?path=blog::end::" target="_blank" class="rss"></a>
 			</div>
-			<div class="menuBar">
-				<div class="center">
-					<ul class="topMenu">
-						$$menuLinks(0)
-					</ul>
-					<a href="/" class="logo"><img src="/img/shiro/logo.png"/></a>
-				</div>
+			<div class="langs">
+				<ul>
+				::foreach l langs::
+				<li><a href="/wiki/setlang?url=::uri::;lang=::l.code::" class="::lang_classes(l)::">$$flag(::l::)</a></li>
+				::end::
+				</ul>
 			</div>
-			<div class="gfxBar">
-				<div class="center">
-				</div>
+			::raw section("topBar")::
+		</div>
+		<div class="menuBar">
+			<a href="/" class="logo"><img src="/img/shiro/head_bar.png"/></a>
+		</div>
+		<div class="gfxBar">
+			<div class="banner"></div>
+			<div class="text">
+				<h1>
+					PROJECT Z.
+				</h1>
+				<p>
+					We are currently working on our first game.
+				</p>
+				<p>
+					It is an online action-adventure cooperative game, which will be released on PC in 2013.
+				</p>
+				<p>
+					We will be posting more news and artwork in the near future so check back soon!
+				</p>
 			</div>
+			<ul class="topMenu">
+				$$menuLinks(0)
+			</ul>
+		</div>
+		
+		<div class="clear"></div>
 
-			<div class="pageContent">
-				<div class="center">
-					<div id="notification" ::cond notification:: ::attr class if( notification.error ) 'error'::>
-						::raw notification.text::
-					</div>
-
-					<div class="content">
-						::raw __content__::
-					</div>
-
-					<div class="copy"><img src="/img/shiro/copy.png"/></div>
-				</div>
-			</div>
-
-			<div class="footer">
-				<div class="center">
-
-					<div class="list">
-						<h2>Menu</h2>
-						<ul>
-							$$menuLinks(0)
-						</ul>
-					</div>
-					<div class="list">
-						<h2>Options</h2>
-						<ul>
-							<li ::cond dbAccess::><a href="/db">Database</a></li>
-							<li><a href="/wiki/map">Wiki Map</a></li>
-							::if rss::
-							<li><a href="::rss::">RSS Feed</a></li>
-							::else::
-							<li><a href="/wiki/history">Latest Changes</a></li>
-							::end::
-							<li ::cond canDeleteComments::><a href="/wiki/latestComments">Latest Comments</a></li>
-							$$menuLinks(1)
-							<li>
-								::if user == null::
-								<a href="#" class="clic" onclick="$('.loginBox').toggle(200)">Login</a>
-								<div class="loginBox" style="display:none">
-									<p>
-										You can <a href="/wiki/register">register</a> to create an account and edit the pages of the Wiki.
-									</p>
-									<form action="/wiki/login" method="POST">
-										<span class="group"><span class="tfield">User :</span> <input name="user" class="field"/></span>
-										<span class="group"><span class="tfield">Pass :</span> <input type="password" name="pass" class="field"/></span>
-										<input type="hidden" name="url" value="::uri::"/>
-										<input type="submit" value="OK" class="button"/>
-									</form>
-								</div>
-							::else::
-								<a href="#" class="clic" onclick="if( confirm('Disconnect ?') ) document.location = '/wiki/logout?url=::uri::'">Logout</a>
-							::end::
-							</li>
-						</ul>
-					</div>
-					<div class="list">
-						<h2>Read in...</h2>
-						<div class="langs">
-							<ul>
-							::foreach l langs::
-							<li><a href="/wiki/setlang?url=::uri::;lang=::l.code::" class="::lang_classes(l)::"><span class="name">::l.name::</span></a></li>
-							::end::
-							</ul>
-						</div>
-					</div>
-				</div>
+		<div class="pageContent">
+			<div id="notification" ::cond notification:: ::attr class if( notification.error ) 'error'::>
+				::raw notification.text::
 			</div>
 
+			<div class="content">
+				::raw __content__::
+			</div>
 		</div>
 
-	<script type="text/javascript">
-	  var _gaq = _gaq || [];
-	  _gaq.push(['_setAccount', 'UA-34072033-1']);
-	  _gaq.push(['_setDomainName', 'shirogames.com']);
-	  _gaq.push(['_trackPageview']);
+		<div class="footer">
+		<div class="footerBG">
+			<div class="list about">
+				<h2>About Shiro Games</h2>
+				<p>
+					<b>Shiro Games</b> is an independent game development studio based in Bordeaux, France.
+				</p>
+				<p>
+					The studio was set up in 2012 with the simple goal of making games we love and that will all bring something new to the table.
+				</p>
+				<a href="/about">Learn more..</a>
+			</div>
+			<div class="list links">
+				<h2>Inside Shiro Games</h2>
+				<ul>
+					$$menuLinks(0)
+				</ul>
+				<ul>
+					<li ::cond dbAccess::><a href="/db">Database</a></li>
+					<li><a href="/wiki/map">Wiki Map</a></li>
+					::if rss::
+					<li><a href="::rss::">RSS Feed</a></li>
+					::else::
+					<li><a href="/wiki/history">Latest Changes</a></li>
+					::end::
+					<li ::cond canDeleteComments::><a href="/wiki/latestComments">Latest Comments</a></li>
+					$$menuLinks(1)
+					<li>
+						::if user == null::
+						<a href="#" class="clic" onclick="$('.loginBox').toggle(200)">Login</a>
+						<div class="loginBox" style="display:none">
+							<p>
+								You can <a href="/wiki/register">register</a> to create an account and edit the pages of the Wiki.
+							</p>
+							<form action="/wiki/login" method="POST">
+								<span class="group"><span class="tfield">User :</span> <input name="user" class="field"/></span>
+								<span class="group"><span class="tfield">Pass :</span> <input type="password" name="pass" class="field"/></span>
+								<input type="hidden" name="url" value="::uri::"/>
+								<input type="submit" value="OK" class="button"/>
+							</form>
+						</div>
+					::else::
+						<a href="#" class="clic" onclick="if( confirm('Disconnect ?') ) document.location = '/wiki/logout?url=::uri::'">Logout</a>
+					::end::
+					</li>
+				</ul>
+			</div>
+			<div class="list contact">
+				<h2>Contact Details</h2>
+				
+				<div class="address">
+					<h3>SHIROGAMES</h3>
+					<p>
+						Rue Esprit des Lois
+					</p>
+					<p>
+						33000 Bordeaux, FRANCE
+					</p>
+				</div>
+				
+				<p class="mail">
+					<a href="mailto:contact@shirogames.com">contact@shirogames.com</a>
+				</p>
+				
+				<p class="phone">
+					(soon)
+				</p>
+				
+			</div>
+		</div>
+		</div>
+		
+	</div>
+</div>
 
-	  (function() {
-		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-	  })();
-	</script>
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-34072033-1']);
+  _gaq.push(['_setDomainName', 'shirogames.com']);
+  _gaq.push(['_trackPageview']);
 
-	</body>
+  (function() {
+	var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+</body>
 </html>

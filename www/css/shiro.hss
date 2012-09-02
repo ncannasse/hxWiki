@@ -1,11 +1,18 @@
 var defColor = #272727;
 var hideColor = #565656;
+var medColor = #838280;
 var lightColor = #F1EDEA;
 var mainColor = #EF3449;
 
 var hidden = {
-	color : $hideColor;
+	color : $medColor;
 	font-size : 9pt;
+}
+
+var box = {
+	background-color : #F1EDEA;
+	border : 1px solid #D7D2CF;
+	padding : 15px;
 }
 
 body {
@@ -13,8 +20,24 @@ body {
 	background-color: $defColor;
 	margin : 0;
 	padding : 0;
+	background : url('/img/shiro/bg_square.png');
 }
 
+.all {
+	position : relative;
+	margin : 0px auto;
+	width : 962px;
+	border-left : 1px solid #A6A5A1;
+	border-right : 1px solid #A6A5A1;
+	box-shadow : -4px 0px rgba(#A6A5A1,0.1), 4px 0px rgba(#A6A5A1,0.1);
+}
+
+.allInside {
+	background-color:#E6E1DE;
+	border-left : 1px solid #F3EEEB;
+	border-right : 1px solid #F3EEEB;
+}
+	
 a {
 	color : $mainColor;
 	text-decoration : none;
@@ -42,9 +65,30 @@ a img {
 		margin:0;
 		padding:10px;
 	}
+	.langs {
+		padding : 10px;
+		ul {
+			padding : 0;
+			margin : 0;
+			list-style : none;
+			li {
+				display : inline-block;
+				margin-right :  10px;
+			}
+			a {
+				opacity : 0.7;
+			}
+			a.off {
+				opacity : 0.1;
+			}
+			a.current img {
+				border : 1px solid $lightColor;
+			}
+		}
+	}
 	.icons {
 		position : absolute;
-		width : 960px;
+		right : 2px;
 		text-align : right;
 		a {
 			display : inline-block;
@@ -79,31 +123,7 @@ a img {
 }
 
 .menuBar {
-	background-color 	: $lightColor;
-	height				: 118px;
-	ul.topMenu {
-		float : right;
-		margin: 0;
-		padding:0;
-		li {
-			list-style  : none;
-			display 	: inline-block;
-			height		: 118px;
-			a {
-				display	: block;
-				width		: 107px;
-				line-height : 118px;
-				vertical-align: middle;
-				text-align  : center;
-				color		: $defColor;
-				text-decoration : none;
-			}
-		}
-		li.active a, li:hover a {
-			background-color : $mainColor;
-			color : $lightColor;
-		}
-	}
+	height				: 83px;
 }
 
 #notification {
@@ -125,12 +145,74 @@ a img {
 }
 
 .gfxBar {
-	background	: url('/img/shiro/gfxBar2.png') repeat-x;
-	background-color 	: #E6E1DE;
-	height : 195px;
-	.center {
-		background : url('/img/shiro/artwork2.png') 0px -5px;
-		height : 195px;
+	height : 328px;
+	background-color : #A5A19E;
+	.banner {
+		position : absolute;
+		width : 713px;
+		height : 327px;
+		background-image : url('/img/shiro/banner.jpg');
+	}
+	.text {
+		position : absolute;
+		margin-top : 327px - 123px;
+		height : 123px;
+		width : 713px;
+		color : white;
+		background-color : rgba(0,0,0,0.5);
+		h1, p {
+			text-align : right;
+			margin : 0;
+			padding : 0;
+			padding-right : 30px;
+		}
+		h1 {
+			padding-right : 25px;
+			margin : 5px;
+			margin-bottom : 10px;
+			font-weight : bold;
+			text-shadow : 0px 3px rgba(0,0,0,0.5);
+		}
+		p {
+			font-size : 13px;
+			line-height : 17px;
+			text-shadow : 0px 2px rgba(0,0,0,0.5);
+		}
+	}
+	.topMenu {
+		margin : 0;
+		padding : 0;
+		margin-left : 713px;
+		list-style : none;
+		li {
+			hss-width : 247px;
+			hss-height : 82px;
+			background : url('/img/shiro/menubg.png') repeat-x;
+			text-align : right;
+			a {
+				hss-height : 82px;
+				padding-right : 40px;
+				padding-top : 30px;
+				display : block;
+				font-size : 14px;
+				color : #7E7D7B;
+				text-transform : uppercase;
+				font-weight : 600;
+			}
+		}
+		li.active {
+			a {
+				padding-right  : 25px;
+				border-right : 15px solid $mainColor;
+				color : $mainColor;
+			}
+		}
+		li a:hover {
+			padding-right  : 25px;
+			border-right : 15px solid $mainColor;
+			color : $mainColor;
+			text-decoration : none;
+		}
 	}
 }
 
@@ -141,44 +223,96 @@ a img {
 
 .footer {
 	background-color : $defColor;
-	color : $lightColor;
+	color : #706C6D;
+	a {
+		color : #706C6D;
+	}
+	font-size : 11px;
+	.footerBG {
+		background-image : url('/img/shiro/footerBG.png');
+		height : 170px;
+	}
 	.list {
 		display: inline-block;
-		width : 315px;
 		vertical-align:top;
+		padding : 10px 15px 0px 10px;
+		h2, b {
+			color : $lightColor;
+		}
+		h3 {
+			color : #ACA8A7;
+		}
 		h2 {
+			margin-top : 0px;
+			margin-bottom : 20px;
 			font-size:12pt;
+			text-shadow : 0px 3px rgba(0,0,0,0.5);
+		}
+		p:last-child {
+			margin-bottom : 0px;
 		}
 		ul {
-			list-style:none;
-			padding-left : 5px;
-			a {
-				color:$hideColor;
+			display : inline-block;
+			vertical-align : top;
+			font-size : 14px;
+			width : 100px;
+			margin : 0px;
+			padding-left: 40px;
+			li {
+				margin-bottom : 5px;
 			}
 		}
 	}
+	.list.about {
+		width : 370px - 25px;
+		p {
+			margin-left : 90px;
+		}
+		a {
+			float : right;
+			color : #ACA8A7;
+			font-style : italic;
+		}
+	}
+	.list.links {
+		width : 340px - 25px;
+	}
+	.list.contact {
+		position : relative;
+		h3, p {
+			margin : 0;
+			padding : 0;
+		}
+		.address, .mail, .phone {
+			width : 190px;
+			position : absolute;
+			margin-left : 30px;
+		}
+		.address {
+			top : 40px;
+		}
+		.mail {
+			top : 110px;
+		}
+		.phone {
+			top : 145px;
+		}
+	}
+	
 	.loginBox {
 		padding : 10px;
 		color:$defColor;
 		position : absolute;
 		top : 50px;
+		left : 100px;
 		background-color:$lightColor;
 		border:1px solid $defColor;
-	}
-	.langs {
-		a.current {
-			color : $hideColor * 1.3;
-		}
-		a.off {
-			color : #765656;
-		}
 	}
 }
 
 .pageContent {
-	padding-top:1px;
+	padding : 15px;
 	color : $defColor;
-	background-color:#E6E1DE;
 }
 
 body.user_offline {
@@ -190,38 +324,49 @@ body.user_offline {
 			display:block;
 		}
 	}
-	.langs a {
-		color:$hideColor !important;
+	.langs a img {
+		border : none !important;
 	}
 }
 
+var button = {
+	border : 1px solid #C5C1BE;
+	background : #E6E1DE;
+	font-size : 12px;
+	color : $hideColor;
+	padding : 2px;
+	text-align : center;
+	display : inline-block;
+	min-width : 40px;
+}
+
+var buttonOver = {
+	background-color: $lightColor;
+	text-decoration : none;
+}
+
 input[type=submit] {
-	border:1px solid $hideColor;
-	padding:2px 4px;
-	background-color:$defColor;
-	color:$lightColor;
+	$button;
+	display : block;
+	width : 100%;
 }
 
 input[type=submit]:hover {
-	background-color:$hideColor;
+	$buttonOver;
 }
 
 
 ul.buttons {
 	padding:0;
+	margin : 5px 0px;
 	list-style:none;
 	li {
 		display:inline-block;
 		a {
-			display:block;
-			border:1px solid $hideColor;
-			padding:2px 4px;
-			background-color:$defColor;
-			color:$lightColor;
+			$button;
 		}
 		a:hover{
-			background-color:$hideColor;
-			text-decoration:none;
+			$buttonOver;
 		}
 	}
 }
@@ -232,14 +377,14 @@ ul.buttons {
 }
 
 .splitLeft {
-	width:600px;
+	hss-width : 700px;
+	padding-right : 15px;
 }
+
 .splitRight {
-	width:300px;
-	padding-left:45px;
+	hss-width : 225px;
 	h1 {
-		font-size:24px;
-		color:$defColor;
+		text-align : right;
 	}
 }
 	
@@ -247,9 +392,13 @@ ul.buttons {
 .content {
 		
 	.hierarchy {
-		$hidden;
+		position : absolute;
+		margin-top : -17px;
+		font-size : 10px;
+		color : $medColor;
 		a {
-			$hidden;
+			color : $medColor;
+			font-size : 10px;
 		}
 	}
 	
@@ -258,70 +407,192 @@ ul.buttons {
 	}
 	
 	h1.title {
-		background : url('/img/shiro/h1bg.png') repeat-x;
-		margin-bottom:5px;
-		height : 35px;
-		font-size : 26px;
-		padding-left : 10px;
+		margin : 0;
+		margin-bottom : 15px;
+		padding : 0;
+		text-transform : uppercase;
+		font-size : 18px;
+		font-weight : 400;
+		color : $medColor;
 		a {
-			color : $defColor;
+			color : $medColor;
 		}
 	}
-	.version, .ccount {
+	.version {
 		float:right;
 		$hidden;
 	}
 	.blog {
 		ul.posts {
+			padding : 0;
 			li {
+				position : relative;
 				list-style : none;
+				margin-bottom : 15px;
+				$box;
+			}
+			.view, .title, .user {
+				margin-left : 50px;
 			}
 			.title {
-				font-size : 30px;
+				text-transform : uppercase;
+				font-weight : bold;
+				margin-bottom : 25px;
+			}
+			.user {
+				font-size : 11px;
+				position : absolute;
+				margin-top : -30px;
+			}
+			.view {
+				background : transparent;
+				padding : 0px;
+				border : none;
+				p {
+					margin-bottom : 0px;
+				}
+				h1 {
+					font-size : 20px;
+				}
+				h2,h3 {
+					font-size : 18px;
+				}
+			}
+			.date {
+				position : absolute;
+				top : 15px;
+			}
+			.comments {
+				position : absolute;
+				top : 60px;
+				left : 21px;
 			}
 		}
-		.comments {
-			float : right;
+		.dateBox {
+			hss-width : 40px;
+			hss-height : 38px;
+			border : 1px solid #C5C1BE;
+			background : #E6E1DE;
+			color : $hideColor;
+			font-weight : bold;
+			text-transform : uppercase;
+			padding : 3px;
+			.m, .d {
+				display : block;
+			}
+			.m {
+				letter-spacing : 3px;
+				font-size : 11px;
+				margin-top : -2px;
+				margin-left : 3px;
+			}
+			.d {
+				text-align : center;
+				font-size : 24px;
+				margin-top : -6px;
+			}
+		}
+		div.ccount {
+			width : 28px;
+			height : 23px;
+			background-image : url('/img/shiro/commentBox.png');
+			text-align : center;
+			line-height : 20px;
+			font-size : 10px;
+			color : $hideColor;
 			a {
-				$hidden;
+				font-size : 10px;
+				color : $hideColor;
+			}
+			a:hover {
+				text-decoration : none;
+				color : $defColor;
 			}
 		}
 		.title {
 			margin-bottom : 0px;
 		}
-		.date, .user {
+		.user {
 			$hidden;
 			display : inline-block;
 			font-style : italic;
-		}
-		.date {
-			span {
-				display:none;
+			a {
+				color : $defColor;
 			}
 		}
 		.link_prev, .link_create, .link_next {
-			a { $hidden; }
-			display : inline-block;
-			padding : 0px 5px;
+			a {
+				font-size : 14px;
+				text-transform : uppercase;
+				color : $medColor;
+			}
+			float : left;
+		}
+		.link_create {
+			margin-left : 150px;
+		}
+		.link_next {
+			float : right;
 		}
 	}
 	
-	.blog .posts {
-		.title {
-			margin-bottom : -5px;
+	.blog.post {
+		position : relative;
+		
+		h1.title {
+			margin-bottom : 15px;
+		}
+		
+		.user {
+			position : absolute;
+			margin-top : -18px;
+		}
+		
+		.dateBox {
+			position : absolute;
+			right : 0px;
+			top : 37px;
+		}
+		
+		.ccount {
+			position : absolute;
+			margin-top : -30px;
+			left : 645px;
+			.ccount {
+				margin : 0px;
+				left : 0px;
+				position : relative;
+				background : none;
+			}
 		}
 	}
 	
 	ul.comments {
+		padding : 0;
 		float:none !important;
 		display:block;
 		margin:0;
 		list-style: none;
 		li {
-			margin-bottom : 20px;
+			margin-top : 15px;
 			.comment.view p {
 				margin : 10px 0px;
 			}
+			.comment.view p:first-child {
+				margin-top : 0px;
+			}
+			.comment.view p:last-child {
+				margin-bottom : 0px;
+			}
+		}
+		
+		.user {
+			position : relative !important;
+			display : inline-block;
+		}
+		.date {
+			$hidden;
+			display : inline-block;
 		}
 	}
 	
@@ -329,10 +600,20 @@ ul.buttons {
 	
 	.view {
 		
+		$box;
+		
 		p {
 			font-size:15px;
 		}
 	
+		p:first-child {
+			margin-top : 0px;
+		}
+		
+		p:last-child {
+			margin-bottom : 0px;
+		}
+		
 		.pad {
 			padding : 20px;
 		}
@@ -346,7 +627,7 @@ ul.buttons {
 		}
 		
 		.border img {
-			outline : 5px solid $lightColor;
+			outline : 5px solid white;
 		}
 		
 		.space {
@@ -360,21 +641,38 @@ ul.buttons {
 			clear : both;
 		}
 	}
+	
+	.box {
+		$box;
+		margin-bottom : 15px;
+	}
+	
 }
 
 .editor {
+	margin : 15px 0px;
+	font-size : 14px;
 	textarea {
-		width : 900px;
+		width : 890px;
 		height : 400px;
 		display: block;
 	}
 }
 
+.editor.edit_page {
+	$box;
+	input[type=submit] {
+		width : 445px;
+		display : inline-block;
+	}
+}
+
 .editor.edit_comments {
-	margin-left : 40px;
+	$box;
 	textarea {
-		width : 600px;
-		height : 200px;
+		width : 99%;
+		height : 100px;
+		margin-top : 15px;
 	}
 	.group {
 		display : block;
@@ -391,5 +689,66 @@ body.bible {
 	}
 	.pageContent {
 		background-color : #DEE2E6;
+	}
+}
+
+.socialLinks {
+	a {
+		display : inline-block;
+		width : 45px;
+		height : 45px;
+	}
+	a:hover {
+		opacity : 0.8;
+	}
+	a.fb {
+		background-image : url('/img/shiro/iconFB_col.png');
+	}
+	a.gp {
+		background-image : url('/img/shiro/iconGP_col.png');
+	}
+	a.tw {
+		background-image : url('/img/shiro/iconTW_col.png');
+	}
+	a.rss {
+		background-image : url('/img/shiro/iconRSS_col.png');
+	}
+}
+
+#twtr-widget-1.twtr-widget {
+	$box;
+	padding-bottom : 5px;
+	font-family : Arial !important;
+	width : 195px;
+	.twtr-doc {
+		h4 {
+			font-weight : normal;
+		}
+		background : transparent !important;
+		.twtr-hd, .twtr-bd, .twtr-ft {
+			margin : 0 !important;
+			padding : 0 !important;
+			width : 195px !important;
+		}
+		.twtr-tweet {
+			margin-top : 10px !important;
+		}
+		.twtr-ft {
+			margin-top : 10px !important;
+		}
+		.twtr-tweet-wrap {
+			padding : 0 !important;
+			margin : 0 !important;
+			margin-bottom : 10px !important;
+		}
+		.twtr-tweet-text em {
+			a {
+				color : $medColor !important;
+			}
+		}
+		.twtr-ft div {
+			padding : 0 !important;
+			margin : 0 !important;
+		}
 	}
 }
