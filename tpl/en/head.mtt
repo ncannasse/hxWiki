@@ -3,11 +3,5 @@
 <link rel="stylesheet" type="text/css" href="/css/::config.style::.css"/>
 <link rel="stylesheet" type="text/css" href="/css/::config.style::_gsearch.css" ::cond config.gsearch::/>
 <link rel="icon" href="/img/::config.style::/favicon.ico" type="image/x-icon"/>
-::raw '<!--[if IE 6]>'::
-<link rel="stylesheet" type="text/css" href="/css/::config.style::_ie6.css"/>
-::raw '<![endif]-->'::
-::raw '<!--[if IE 7]>'::
-<link rel="stylesheet" type="text/css" href="/css/::config.style::_ie7.css"/>
-::raw '<![endif]-->'::
 <link rel="alternate" type="application/rss+xml" title="::rssTitle::" href="::rss::" ::cond rss::/>
 <script type="text/javascript" src="/app.js"></script>
