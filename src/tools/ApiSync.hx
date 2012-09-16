@@ -120,7 +120,7 @@ class ApiSync {
 			var me = this;
 			display(fields,function(f) {
 				me.print(f.name+" : ");
-				me.processType(f.t);
+				me.processType(#if haxe_211 f.type #else f.t #end);
 			},", ");
 			print(" }");
 		case CDynamic(t):
@@ -453,7 +453,7 @@ class ApiSync {
 		case CAnonymous(fields):
 			print('[anon]\n\n');
 			for( f in fields ) {
-				processClassField(all,{
+				processClassField(all,#if haxe_211 f #else {
 					name : f.name,
 					type : f.t,
 					isPublic : true,
@@ -467,7 +467,7 @@ class ApiSync {
 					line : null,
 					meta : [],
 					#end
-				},false);
+				} #end,false);
 			}
 			print('[/anon]\n');
 		default:
