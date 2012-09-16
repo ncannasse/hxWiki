@@ -223,8 +223,10 @@ class App {
 			postDate : function(d:Date) {
 				return DateTools.format(d, Config.getSection("post_date","<span>Posted</span> on %b %d %Y"));
 			},
-			postAuthor : function(a:String) {
-				return Config.getSection("post_author","by ::u::").split("::u::").join(a);
+			postAuthor : function(u:db.User) {
+				var uname = u == null ? "Anonymous" : u.realName;
+				var ulink = u == null ? "#" : "/wiki/user?name=" + u.name;
+				return Config.getSection("post_author",'by <a href="::link::">::u::</a>').split("::u::").join(uname).split("::link::").join(ulink);
 			},
 			commentDate : function(d:Date) {
 				return DateTools.format(d, Config.getSection("comment_date","%b %d, %Y at %H:%M"));

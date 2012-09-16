@@ -23,8 +23,7 @@
 			::raw format.postDate(version.date)::
 		</div>
 		<div class="user">
-			::fill author::::if version.uid::<a href="/wiki/user?name=::version._author.name::">::version._author.realName::</a>::else::Anonymous::end::::end::
-			::raw format.postAuthor(author)::
+			::raw format.postAuthor(if( version.uid == null ) null else version._author)::
 		</div>
 	</macro>
 
