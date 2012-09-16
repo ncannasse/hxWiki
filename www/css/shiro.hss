@@ -72,6 +72,29 @@ a img {
 	}
 	.langs {
 		padding : 10px;
+		font-size : 12px;
+		.current {
+			padding-top : 2px;
+			a {
+				cursor : pointer;
+				color : #CDC9C6;
+			}
+			span {
+				display : none;
+			}
+			span.current {
+				display : inline-block;
+			}
+		}
+		select {
+			position : absolute;
+			z-index : 9;
+			width : 100px;
+			overflow : hidden;
+			color : $lightColor;
+			background : $defColor;
+			border : 1px solid $lightColor;
+		}
 		ul {
 			padding : 0;
 			margin : 0;
@@ -170,7 +193,7 @@ a img {
 				font-size : 14px;
 				color : #7E7D7B;
 				text-transform : uppercase;
-				font-weight : 600;
+				text-shadow : 0 1px 2px rgba(0,0,0,0.3);
 			}
 		}
 		li.active {
@@ -193,6 +216,7 @@ a img {
 	position : absolute;
 	left : 1px;
 	top : 124px;
+	font-family : "Trebuchet MS";
 	.banner {
 		position : absolute;
 		width : 713px;
@@ -216,7 +240,7 @@ a img {
 			margin : 5px;
 			margin-bottom : 10px;
 			font-weight : bold;
-			text-shadow : 0px 3px rgba(0,0,0,0.5);
+			text-shadow : 0px 1px 5px black;
 			a {
 				color : white;
 			}
@@ -224,7 +248,7 @@ a img {
 		p {
 			font-size : 13px;
 			line-height : 17px;
-			text-shadow : 0px 2px rgba(0,0,0,0.5);
+			text-shadow : 0px 1px 3px black;
 		}
 	}
 }
@@ -296,19 +320,13 @@ a img {
 			margin : 0;
 			padding : 0;
 		}
-		.address, .mail, .phone {
+		.address {
 			width : 190px;
 			position : absolute;
 			margin-left : 30px;
 		}
 		.address {
-			top : 40px;
-		}
-		.mail {
-			top : 110px;
-		}
-		.phone {
-			top : 145px;
+			top : 65px;
 		}
 	}
 	
@@ -420,6 +438,7 @@ ul.buttons {
 	}
 	
 	h1.title {
+		font-family : "Trebuchet MS";
 		margin : 0;
 		margin-bottom : 15px;
 		padding : 0;
@@ -529,7 +548,7 @@ ul.buttons {
 			$hidden;
 			display : inline-block;
 			font-style : italic;
-			a {
+			a, span {
 				color : $defColor;
 			}
 		}
@@ -702,10 +721,16 @@ body.bible {
 }
 
 .socialLinks {
+	height : 44px;
+	.icons {
+		font-size : 0;
+		position : absolute;
+	}
 	a {
 		display : inline-block;
 		width : 45px;
 		height : 45px;
+		margin-right : 5px;
 	}
 	a:hover {
 		opacity : 0.8;

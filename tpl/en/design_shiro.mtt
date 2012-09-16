@@ -19,11 +19,19 @@
 				<a href="::if rss::::rss::::else::/wiki/rss?path=blog::end::" target="_blank" class="rss"></a>
 			</div>
 			<div class="langs">
-				<ul>
+				<div class="current">
+					Language :
+					<a onclick="$(this).parent().hide(); $('#lang_select').show().attr('size',::langs.length::)">
+						::foreach l langs::
+						<span class="::lang_classes(l)::">::l.name::</span>
+						::end::
+					</a>
+				</div>
+				<select id="lang_select" onchange="document.location='/wiki/setlang?url=::uri::;lang='+this.value" style="display:none">
 				::foreach l langs::
-				<li><a href="/wiki/setlang?url=::uri::;lang=::l.code::" class="::lang_classes(l)::">$$flag(::l::)</a></li>
+				<option value="::l.code::" ::attr selected (lang_classes(l).indexOf('current',0) != -1)::>::l.name::</option>
 				::end::
-				</ul>
+				</select>
 			</div>
 			::raw section("topBar")::
 		</div>
@@ -101,7 +109,7 @@
 				<h2>Contact Details</h2>
 				
 				<div class="address">
-					<h3>SHIROGAMES</h3>
+					<h3>SHIRO GAMES</h3>
 					<p>
 						Rue Esprit des Lois
 					</p>
@@ -109,15 +117,7 @@
 						33000 Bordeaux, FRANCE
 					</p>
 				</div>
-				
-				<p class="mail">
-					<a href="mailto:contact@shirogames.com">contact@shirogames.com</a>
-				</p>
-				
-				<p class="phone">
-					(soon)
-				</p>
-				
+								
 			</div>
 		</div>
 		</div>
