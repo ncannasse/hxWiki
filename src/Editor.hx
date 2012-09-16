@@ -15,7 +15,10 @@ typedef EditorButton = {
 class Editor {
 
 	public static function normalize(name:String) {
-		return ~/[^a-z0-9.]+/g.replace(name.toLowerCase(),"_");
+		name = ~/[^a-z0-9.]+/g.replace(name.toLowerCase(), "_");
+		while( StringTools.endsWith(name, "_") )
+			name = name.substr(0, -1);
+		return name;
 	}
 
 	static inline function isEmpty(s) {
@@ -75,9 +78,8 @@ class Editor {
 			refresh.timestamp = start;
 			if( refresh.changed )
 				return false;
-			var me = this;
 			refresh.changed = true;
-			tqueue.add(function() { me.refresh.changed = false; me.updatePreview(); });
+			tqueue.add(function() { refresh.changed = false; updatePreview(); });
 			return false;
 		}
 		refresh.changed = false;
@@ -112,7 +114,6 @@ class Editor {
 	public function initUpload(button,title,pattern,img) {
 		var loaded = false;
 		var but = js.Lib.document.getElementById(button);
-		var me = this;
 		var target = button + "_swf";
 		js.Lib.document.write('<div id="'+target+'"></div>');
 		but.onmouseover = function(_) {
@@ -131,7 +132,7 @@ class Editor {
 			var p2 = getElementPosition(swf);
 			swf.style.top = (p.y - p2.y) + "px";
 			swf.style.left = (p.x - p2.x) + "px";
-			me.displayUpload(target,title,pattern,img);
+			displayUpload(target,title,pattern,img);
 		}
 	}
 
@@ -172,9 +173,8 @@ class Editor {
 		swf.write(target);
 		uploadImage = img;
 		// init incoming connection
-		var me = this;
 		var ctx = new haxe.remoting.Context();
-		ctx.addObject("api",{ uploadResult : function(url) haxe.Timer.delay(callback(me.uploadResult,url),1), uploadError : uploadError });
+		ctx.addObject("api",{ uploadResult : function(url) haxe.Timer.delay(callback(uploadResult,url),1), uploadError : uploadError });
 		haxe.remoting.ExternalConnection.flashConnect(config.name,"upload",ctx);
 	}
 
@@ -262,6 +262,12 @@ class Editor {
 			link = inf[0];
 			title = inf[1];
 		}
+		var parts = link.split("#");
+		var anchor = null;
+		if( parts.length > 1 ) {
+			anchor = normalize(parts.pop());
+			link = parts.join("#");
+		}
 		var p = makePath(link);
 		var url = p.path.join("/");
 		var inf = config.titles.get(url);
@@ -271,7 +277,7 @@ class Editor {
 			config.titles.set(url,inf);
 		}
 		return {
-			url : "/" + url,
+			url : "/" + url + (anchor == null ? "" : "#"+anchor),
 			title : if( title == null ) inf.title else title,
 			exists : inf.exists,
 		};
@@ -309,7 +315,6 @@ class Editor {
 		t = StringTools.htmlEscape(t);
 		switch( style ) {
 		case "xml", "html":
-			var me = this;
 			t = ~/(&lt;\/?)([a-zA-Z0-9:_]+)([^&]*?)(\/?&gt;)/.customReplace(t,function(r) {
 				var tag = r.matched(2);
 				var attr = ~/([a-zA-Z0-9:_]+)="([^"]*?)"/g.replace(r.matched(3),'<span class="att">$1</span><span class="kwd">=</span><span class="string">"$2"</span>');
@@ -387,7 +392,6 @@ class Editor {
 	}
 	
 	function paragraph( t : String ) : String {
-		var me = this;
 		// unhtml
 		t = StringTools.htmlEscape(t).split('"').join("&quot;");
 		// span
@@ -407,11 +411,11 @@ class Editor {
 		t = ~/\[\[([^\]]*?)\]\]/.customReplace(t,function(r) {
 			var link = r.matched(1);
 			if( link.substr(link.length-2,2) == "/*" ) {
-				var path = me.makePath(link.substr(0,link.length-2)).path;
-				var list = me.subcache.get(path.join("/"));
+				var path = makePath(link.substr(0,link.length-2)).path;
+				var list = subcache.get(path.join("/"));
 				if( list == null ) {
-					list = me.getSubLinks(path);
-					me.subcache.set(path.join("/"),list);
+					list = getSubLinks(path);
+					subcache.set(path.join("/"),list);
 				}
 				var str = '<ul class="subs">';
 				for( i in list )
@@ -419,7 +423,7 @@ class Editor {
 				str += "</ul>";
 				return str;
 			}
-			var i = me.getInfos(r.matched(1));
+			var i = getInfos(r.matched(1));
 			var cl = i.exists ? "intern" : "broken";
 			return '<a href="'+i.url+'" class="'+cl+'">'+i.title+'</a>';
 		});
@@ -433,7 +437,7 @@ class Editor {
 			return '<a href="/file/'+link+'" class="file file_'+ext+'">'+title+'</a>';
 		});
 		t = ~/@([ A-Za-z0-9._-]+\.swf):([0-9]+)x([0-9]+)(:[^@]+)?@/.customReplace(t,function(r) {
-			var id = me.uniqueId++;
+			var id = uniqueId++;
 			var str = '<div class="swf" id="swf_'+id+'" style="width : '+r.matched(2)+'px">['+r.matched(1)+']</div>';
 			str += '<script type="text/javascript" id="js_'+id+'">';
 			str += "var o = new js.SWFObject('/file/"+r.matched(1)+"','swfobj_"+id+"',"+r.matched(2)+","+r.matched(3)+",'9','#FFFFFF');";
@@ -461,12 +465,11 @@ class Editor {
 	public function format( t : String ) : String {
 		uniqueId = 1;
 		t = ~/\r\n?/g.replace(t,"\n");
-		var me = this;
 		var b = new StringBuf();
 		var codes = new Array();
 		t = ~/<code( [a-zA-Z0-9]+)?>([^\0]*?)<\/code>/.customReplace(t,function(r) {
 			var style = r.matched(1);
-			var code = me.code(r.matched(2),isEmpty(style)?null:style.substr(1));
+			var code = code(r.matched(2),isEmpty(style)?null:style.substr(1));
 			codes.push(code);
 			return "##CODE"+(codes.length-1)+"##";
 		});
