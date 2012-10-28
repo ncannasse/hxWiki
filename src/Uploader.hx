@@ -6,7 +6,6 @@ class Uploader {
 	static var params : Dynamic;
 
 	static function main() {
-		if( haxe.Firebug.detect() ) haxe.Firebug.redirectTraces();
 		var mc = flash.Lib.current;
 		var stage = mc.stage;
 		stage.scaleMode = flash.display.StageScaleMode.NO_SCALE;

@@ -44,7 +44,7 @@ class Editor {
 	#if js
 	var previewBlock : String;
 	var uploadImage : Bool;
-	var tqueue : haxe.TimerQueue;
+	var twait : haxe.Timer;
 	var refresh : { latest : String, timestamp : Float, auto : Bool, changed : Bool };
 	#end
 
@@ -53,7 +53,6 @@ class Editor {
 		#if js
 		config = haxe.Unserializer.run(data);
 		refresh = { latest : null, timestamp : 0., auto : true, changed : false };
-		tqueue = new haxe.TimerQueue(1000);
 		#else
 		config = data;
 		#end
@@ -79,7 +78,15 @@ class Editor {
 			if( refresh.changed )
 				return false;
 			refresh.changed = true;
-			tqueue.add(function() { refresh.changed = false; updatePreview(); });
+			if( twait == null ) {
+				twait = new haxe.Timer(1000);
+				twait.run = function() {
+					twait.stop();
+					twait = null;
+					refresh.changed = false;
+					updatePreview();
+				};
+			}
 			return false;
 		}
 		refresh.changed = false;

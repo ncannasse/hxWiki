@@ -131,6 +131,10 @@ class ApiSync {
 				l.add(t);
 				processPath("Dynamic",l);
 			}
+		#if (haxe_211 || haxe3)
+		case CAbstract(path,params):
+			processPath(path,params);
+		#end
 		}
 	}
 
@@ -246,6 +250,10 @@ class ApiSync {
 				processEnum(e);
 			case TTypedecl(t):
 				processTypedef(t);
+			#if (haxe_211 || haxe3)
+			case TAbstractdecl(a):
+				processAbstract(a);
+			#end
 			}
 			print("[/api]");
 			// save
@@ -414,6 +422,23 @@ class ApiSync {
 		}
 	}
 
+	#if (haxe_211 || haxe3)
+	function processAbstract(a : Abstractdef) {
+		print('[name]');
+		if( a.isPrivate )
+			keyword("private");
+		keyword("abstract");
+		print(formatPath(a.path));
+		if( a.params.length != 0 ) {
+			print("<");
+			print(a.params.join(", "));
+			print(">");
+		}
+		print('[/name]\n');
+		processInfos(a);
+	}
+	#end
+	
 	function processTypedef(t : Typedef) {
 		print('[name]');
 		if( t.isPrivate )
