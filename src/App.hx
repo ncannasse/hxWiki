@@ -197,8 +197,8 @@ class App {
 		// body class
 		var userClass = user == null ? "offline" : user.group.name;
 		var bodyClass = "user_" + userClass;
-		if( context.config.cssClass != null )
-			bodyClass += " " + context.config.cssClass;
+		if( context.cssClass != null )
+			bodyClass += " " + context.cssClass;
 		context.bodyClass = bodyClass;
 		
 		// which design mtt to choose

@@ -225,6 +225,7 @@ class Main extends Handler<Void> {
 		var config = getConfig(entry);
 		if( config.designMTT != null )
 			App.context.design_mtt = config.designMTT;
+		App.context.cssClass = config.cssClass;
 			
 		if( config.isForum ) {
 			path = Lambda.list(config.path.split("/"));
