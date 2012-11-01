@@ -3,6 +3,7 @@
 	<head>
 	::use 'head.mtt'::::end::
 	<link href="http://fonts.googleapis.com/css?family=Montserrat|PT+Serif+Caption:400,400italic" rel="stylesheet" type="text/css"/>
+	<link href='http://fonts.googleapis.com/css?family=Strait' rel='stylesheet' type='text/css'/>
 	</head>
 
 	<body class="::bodyClass::">
@@ -45,7 +46,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="gradient">
+		<div id="gradient">
 			<div id="site">
 			<div id="head">
 				<a href="/" class="logo">
@@ -84,28 +85,6 @@
 						$$menuLinks(0)
 					</ul>
 				</div>
-				<div class="list" ::cond false::>
-					<h2>Resources</h2>
-					<ul id="footmenu">
-						<li><a href="#">Shared</a></li>
-						<li><a href="#">Dedicated</a></li>
-						<li><a href="#">Custom</a></li>
-						<li><a href="#">Custom P2P</a></li>
-						<li><a href="#">Wowza</a></li>
-						<li><a href="#">Cluster</a></li>
-					</ul>
-				</div>
-				<div class="list" ::cond false::>
-					<h2>Resources</h2>
-					<ul id="footmenu">
-						<li><a href="#">Shared</a></li>
-						<li><a href="#">Dedicated</a></li>
-						<li><a href="#">Custom</a></li>
-						<li><a href="#">Custom P2P</a></li>
-						<li><a href="#">Wowza</a></li>
-						<li><a href="#">Cluster</a></li>
-					</ul>
-				</div>
 				<div class="list">
 					<h2>Options</h2>
 					<ul id="footmenu">
@@ -117,6 +96,11 @@
 						<li><a href="/wiki/history">Latest Changes</a></li>
 						::end::
 						<li ::cond canDeleteComments::><a href="/wiki/latestComments">Latest Comments</a></li>
+						::if user == null::
+						<li><a href="#" class="clic" onclick="$('.loginBox').toggle(200)">Login</a></li>
+						::else::
+						<li><a href="#" class="clic" onclick="if( confirm('Disconnect ?') ) document.location = '/wiki/logout?url=::uri::'">Logout</a></li>
+						::end::
 						$$menuLinks(1)
 					</ul>
 				</div>

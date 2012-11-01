@@ -34,7 +34,7 @@ form .tfield {
 	width : 100px;
 }
 
-.gradient {
+#gradient {
 	background	: transparent url('/img/haxe2/gradient.png') no-repeat center top;
 }
 
@@ -64,6 +64,7 @@ form .tfield {
 
 #topbar .loginBox {
 	position : absolute;
+	z-index : 9;
 	width : 250px;
 	margin-left : -100px;
 	background-color : white;
@@ -159,21 +160,13 @@ form .tfield {
 }
 
 .button, #mainmenu li.active a, ul.buttons a, .view .buttonDownload a, .infoBox .but a, .gsc-search-box input.gsc-search-button {
-	-moz-box-shadow		:inset 0px 1px 1px 0px #ffd992;
-	-webkit-box-shadow	:inset 0px 1px 1px 0px #ffd992;
 	box-shadow			: inset 0px 1px 1px 0px #ffd992;
 
-	-moz-box-shadow		: 0px 1px 2px 0px #c2c1be;
-	-webkit-box-shadow	: 0px 1px 2px 0px #c2c1be;
 	box-shadow			: 0px 1px 2px 0px #c2c1be;
 
-	background			: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #f9b727), color-stop(1, #f8a222) );
-	background			: -moz-linear-gradient( center top, #f9b727 5%, #f8a222 100% );
-	filter				: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f9b727', endColorstr='#f8a222');
+	background			: linear-gradient( #f9b727, #f8a222 );
 
 	background-color	: #f9b727;
-	-moz-border-radius	: 5px;
-	-webkit-border-radius : 5px;
 	border-radius		: 5px;
 	border				: 1px solid #b66f18;
 	display				: inline-block;
@@ -185,14 +178,12 @@ form .tfield {
 }
 
 .button:hover, #mainmenu li.active a:hover, ul.buttons a:hover, .view .buttonDownload a:hover, .infoBox .but a:hover, .gsc-search-box input.gsc-search-button:hover {
-	background			: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #f8a222), color-stop(1, #f9b727) );
-	background			: -moz-linear-gradient( center top, #f8a222 5%, #f9b727 100% );
-	filter				: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f8a222', endColorstr='#f9b727');
+	background			: linear-gradient( #f8a222, #f9b727 );
 	background-color	: #f8a222;
 	color				: #292929;
 }
 
-.button:active, #mainmenu li.active a:active, ul.buttons a:active, , .infoBox .but a:active {
+.button:active, #mainmenu li.active a:active, ul.buttons a:active, .infoBox .but a:active {
 	position			: relative;
 	top					: 1px;
 }
@@ -594,16 +585,16 @@ table.history {
 	border				: 1px solid #c2d9e6;
 	border-collapse		: separate;
 	border-spacing		: 1px;
-	-moz-border-radius	: 5px;
+	border-radius		: 5px;
 	width				: 100%;
 }
 
 table.history th {
 	color 				: #4381a7;
 	font-variant		: small-caps;
-	font-size			: 12pt
+	font-size			: 12pt;
 	height				: 30px;
-	background			: #c8e3f9 url('/img/haxe/items/bg_th1.gif') top left repeat-x;
+	background			: #c8e3f9 url('/img/haxe/items/bg_th1.gif') repeat-x;
 }
 
 table.history td, table.history th {
@@ -633,7 +624,7 @@ table.history td {
 /* WIKI MAP */
 
 ul.map li {
-	-moz-border-radius	: 10px;
+	border-radius	: 10px;
 }
 
 ul.map li:hover {
@@ -689,7 +680,7 @@ ul.results li {
 	background-position	: 5px 10px;
 	background-repeat	: no-repeat;
 	margin-bottom		: 5px;
-	-moz-border-radius	: 10px;
+	border-radius	: 10px;
 }
 
 ul.results li:hover {
@@ -700,9 +691,9 @@ ul.results li:hover {
 
 dl.user {
 	padding				: 5px;
-	-moz-border-radius	: 5px;
+	border-radius		: 5px;
 	border				: 1px solid #c2d9e6;
-	background			: #e7f4fc url('/img/haxe/items/bg_box1.gif') top left repeat-x;
+	background			: #e7f4fc url('/img/haxe/items/bg_box1.gif') repeat-x;
 	color				: #09598a;
 	min-height			: 100px;
 	width				: 300px;
@@ -733,16 +724,16 @@ table.threads {
 	border				: 1px solid #c2d9e6;
 	border-collapse		: separate;
 	border-spacing		: 1px;
-	-moz-border-radius	: 5px;
+	border-radius		: 5px;
 	width				: 100%;
 }
 
 table.threads th {
 	color 				: #4381a7;
 	font-variant		: small-caps;
-	font-size			: 12pt
+	font-size			: 12pt;
 	height				: 30px;
-	background			: #c8e3f9 url('/img/haxe/items/bg_th1.gif') top left repeat-x;
+	background			: #c8e3f9 url('/img/haxe/items/bg_th1.gif') repeat-x;
 }
 
 .forum ul.msg li {
@@ -753,10 +744,10 @@ table.threads th {
 .forum ul.msg .mheader {
 	color 				: #4381a7;
 	font-variant		: small-caps;
-	font-size			: 12pt
+	font-size			: 12pt;
 	height				: 36px;
 	padding				: 3px;
-	background			: #c8e3f9 url('/img/haxe/items/bg_th1.gif') top left repeat-x;
+	background			: #c8e3f9 url('/img/haxe/items/bg_th1.gif') repeat-x;
 }
 
 .forum ul.msg .mcontent {
@@ -834,7 +825,7 @@ table.threads td {
   margin				: 0;
   list-style			: none;
   list-style-image		: none;
-  -moz-border-radius	: 10px;
+  border-radius			: 10px;
 }
 
 .api_index ul li:hover {
@@ -927,7 +918,7 @@ table.threads td {
 }
 
 .quote {
-	font-family			: Montserrat, "Segoe UI","Lucida Grande","Trebuchet MS",Arial,"lucida sans unicode",sans-serif;;
+	font-family			: Montserrat, "Segoe UI","Lucida Grande","Trebuchet MS",Arial,"lucida sans unicode",sans-serif;
 	text-transform		: uppercase;
 	word-spacing		: 5px;
 	text-align			: center;
@@ -975,7 +966,7 @@ table.threads td {
 }
 
 .feature h1 {
-	font-family			: Montserrat, "Segoe UI","Lucida Grande","Trebuchet MS",Arial,"lucida sans unicode",sans-serif;;
+	font-family			: Montserrat, "Segoe UI","Lucida Grande","Trebuchet MS",Arial,"lucida sans unicode",sans-serif;
 	font-weight			: normal;
 	font-size			: 15pt;
 }
@@ -995,7 +986,7 @@ table.threads td {
 
 .infoBox h1 {
 	margin				: 0px;
-	font-family			: Montserrat, "Segoe UI","Lucida Grande","Trebuchet MS",Arial,"lucida sans unicode",sans-serif;;
+	font-family			: Montserrat, "Segoe UI","Lucida Grande","Trebuchet MS",Arial,"lucida sans unicode",sans-serif;
 	font-weight			: normal;
 	font-size			: 15pt;
 	text-align			: center;
@@ -1060,17 +1051,17 @@ table.threads td {
 	margin				: 10px;
 	padding				: 10px;
 	display				: block;
-	-moz-border-radius	: 5px;
+	border-radius		: 5px;
 }
 
 .box1 { /* blue */
-	background			: #e8f5fc url('/img/haxe/items/bg_box1.gif') top left repeat-x;
+	background			: #e8f5fc url('/img/haxe/items/bg_box1.gif') repeat-x;
 	border				: 4px solid #e8f5fc;
 	color				: #09598a;
 }
 
 .box2 { /* orange */
-	background			: #ffefa3 url('/img/haxe/items/bg_box2.gif') top left repeat-x;
+	background			: #ffefa3 url('/img/haxe/items/bg_box2.gif') repeat-x;
 	border				: 4px solid #ffefa3;
 	color				: #c35700;
 }
@@ -1083,5 +1074,182 @@ input.gsc-search-button, input.gsc-search-button:hover, input.gsc-search-button:
     border-color: #CE7918;
     background-color: #CE7918;
     background-image: none;
-    filter: none;
+    filter: CSS('none');
+}
+
+/* Foundation Changes */
+
+body.foundation {
+	
+	#topbar {
+		//background	: linear-gradient(#f99b2a,#e68a1b);
+		background : url('/img/haxe2/toplight.png') repeat-x;
+		height : 110px;
+		.search { display : none; }
+		.login a { display : none; }
+	}
+	#gradient {
+		background : none;
+	}
+	#head {
+		position : absolute;
+		top : 0px;
+		.logo {
+			position : absolute;
+			margin-left: 10px;
+			img {
+				margin-left : 0px;
+				max-width : 60px;
+				max-height : 60px;
+			}
+			margin-top : 10px;
+			h1 {
+				display : none;
+			}
+		}
+		#mainmenu {
+			position : absolute;
+			margin-top : 30px;
+			width : 940px;
+			li {
+				font-family : "Strait", "Segoe UI","Lucida Grande","Trebuchet MS",Arial,"lucida sans unicode",sans-serif;
+			}
+			span.title {
+				font-weight : bold;
+				font-size : 12pt !important;
+				color : #8D5411;
+			}
+			a {
+				text-transform: none;
+				font-weight : bold;
+				font-size : 12pt !important;
+				display : inline-block;
+				color : #eee;
+				text-shadow : 0px 1px 3px #432909;
+				border-left : 2px solid #DB861F;
+				padding-left : 10px;
+			}
+			a:hover {
+				text-shadow : 0px 0px 2px #432909;
+			}
+			li.active a {
+				color : white;
+				background : none;
+				border : none;
+				border-left : 2px solid #DB861F;
+				box-shadow: none;
+				padding : 0;
+				padding-left : 10px;
+				filter : CSS('none');
+				border-radius : 0;
+			}
+			li:first-child a {
+				border-left : none;
+			}
+		}
+	}
+	#content {
+		background: url('/img/haxe2/grey.png') repeat-x;
+		background-color : white;
+		margin-top : -30px;
+		border-radius : 15px;
+		position : relative;
+		padding-top : 70px;
+		h1.title {
+			a {
+				font-family : "Strait", "Segoe UI","Lucida Grande","Trebuchet MS",Arial,"lucida sans unicode",sans-serif;
+				text-shadow : none;
+				color : #666;
+			}
+			font-size : 20pt;
+			left: 15px;
+			top: 5px;
+			width : 960px;
+			position : absolute;
+		}
+		h1 {
+			font-size : 16pt;
+		}
+		
+		table.features {
+			border-collapse : collapse;
+			border : 1px solid #aaa;
+			
+			margin : 20px 0px;
+			
+			tr:first-child {
+				border-bottom : 1px solid #aaa;
+			}
+			
+			tr.grey {
+				background-color : #eee;
+			}
+			
+			td,th {
+				text-align : center;
+				padding : 5px 10px;
+			}
+			
+			tr td:first-child {
+				text-align : left;
+			}
+			
+			th {
+				color : #484848;
+				width : 80px;
+				text-align : center;
+			}
+			td {
+				position : relative;
+				color : #686868;
+				span {
+					text-decoration : underline;
+					cursor : pointer;
+				}
+				p {
+					display : none;
+				}
+			}
+			td:hover {
+				p {
+					z-index : 1;
+					font-size : 9.5pt;
+					color : #686868;
+					display : block;
+					position : absolute;
+					background-color : white;
+					border : 1px solid #777;
+					width : 300px;
+					border-radius : 3px;
+					padding : 6px;
+					margin-left : 100px;
+				}
+				span {
+					text-decoration : none;
+				}
+			}
+			
+			div.y {
+				display:inline-block;
+				width : 16px;
+				height : 16px;
+				background-image : url('/img/haxe2/tick.png');
+			}
+		}
+	}
+	#site > .langs {
+		display : none;
+	}
+	#foot {
+		margin-top : -30px;
+	}
+}
+
+body.foundation.user_offline {
+	#content > .version {
+		display : none;
+	}
+	#content > ul.buttons {
+		display : none;
+	}
 }
