@@ -1001,6 +1001,20 @@ body.foundation #content {
 	position : relative;
 	padding-top : 70px;
 }
+body.foundation #content .box1 {
+	border : none;
+	border-radius : 0;
+	-moz-border-radius : 0;
+	-webkit-border-radius : 0;
+	background : #e8f5fe;
+	background : -moz-linear-gradient(top,#e8f5fe 0%,#ffffff 100%);
+	background : -o-linear-gradient(top,#e8f5fe 0%,#ffffff 100%);
+	background : -webkit-gradient(linear,left top,left bottom,color-stop(0%,#e8f5fe),color-stop(100%,#ffffff));
+	background : linear-gradient(#e8f5fe,#ffffff);
+	background-color : transparent\9;
+	filter : progid:DXImageTransform.Microsoft.gradient(startColorstr=#e8f5fe, endColorstr=#ffffff);
+	zoom : 1;
+}
 body.foundation #content h1.title {
 	font-size : 20pt;
 	left : 15px;
@@ -1075,6 +1089,26 @@ body.foundation #content table.features div.y {
 	width : 16px;
 	height : 16px;
 	background-image : url("/img/haxe2/tick.png");
+}
+body.foundation #content .imageList ul {
+	list-style-image : none;
+	margin-top : 20px;
+}
+body.foundation #content .imageList ul li {
+	position : relative;
+	height : 100px;
+	padding-left : 100px;
+	padding-top : 10px;
+	width : 500px;
+	margin-left : 100px;
+}
+body.foundation #content .imageList ul li img, body.foundation #content .imageList ul li form {
+	border : none;
+	max-width : 80px;
+	max-height : 80px;
+	position : absolute;
+	margin-top : -10px;
+	left : 0px;
 }
 body.foundation #site>.langs {
 	display : none;

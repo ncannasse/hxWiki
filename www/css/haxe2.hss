@@ -1155,6 +1155,13 @@ body.foundation {
 		border-radius : 15px;
 		position : relative;
 		padding-top : 70px;
+		
+		.box1 {
+			border : none;
+			border-radius : 0;
+			background : linear-gradient(#e8f5fe,#ffffff);
+		}
+		
 		h1.title {
 			a {
 				font-family : "Strait", "Segoe UI","Lucida Grande","Trebuchet MS",Arial,"lucida sans unicode",sans-serif;
@@ -1234,6 +1241,27 @@ body.foundation {
 				width : 16px;
 				height : 16px;
 				background-image : url('/img/haxe2/tick.png');
+			}
+		}
+		
+		.imageList ul {
+			list-style-image : none;
+			margin-top : 20px;
+			li {
+				position : relative;
+				height : 100px;
+				padding-left : 100px;
+				padding-top : 10px;
+				width : 500px;
+				margin-left : 100px;
+				img, form {
+					border : none;
+					max-width : 80px;
+					max-height : 80px;
+					position : absolute;
+					margin-top : -10px;
+					left : 0px;
+				}
 			}
 		}
 	}
