@@ -1265,6 +1265,14 @@ body.foundation {
 				}
 			}
 		}
+		
+		.imageList .box1 ul {
+			margin : 10px 0px;
+			padding : 0px;
+			li {
+				padding-top : 0px;
+			}
+		}
 	}
 	#site > .langs {
 		display : none;
