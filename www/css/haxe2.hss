@@ -1247,19 +1247,20 @@ body.foundation {
 		.imageList ul {
 			list-style-image : none;
 			margin-top : 20px;
+			var imgSize = 120px;
 			li {
 				position : relative;
 				height : 100px;
-				padding-left : 100px;
-				padding-top : 10px;
+				padding-left : $imgSize + 20px;
+				padding-top : 20px;
 				width : 500px;
 				margin-left : 100px;
 				img, form {
 					border : none;
-					max-width : 80px;
-					max-height : 80px;
+					max-width : $imgSize;
+					max-height : $imgSize;
 					position : absolute;
-					margin-top : -10px;
+					top : 0px;
 					left : 0px;
 				}
 			}
