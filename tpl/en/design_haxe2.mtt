@@ -4,7 +4,7 @@
 	::use 'head.mtt'::::end::
 	<link href="http://fonts.googleapis.com/css?family=Montserrat|PT+Serif+Caption:400,400italic" rel="stylesheet" type="text/css"/>
 	<link href='http://fonts.googleapis.com/css?family=Strait' rel='stylesheet' type='text/css'/>
-	<meta property="og:image" content="::config.url::img/haxe/logo.jpg"/>
+	<meta property="og:image" content="::config.url::img/haxe2/logo.jpg"/>
 	</head>
 
 	<body class="::bodyClass::">
