@@ -313,6 +313,7 @@ class Main extends Handler<Void> {
 		
 		if( ccur.layout != null ) {
 			var old = App.context;
+			var old_mtt = App.context.design_mtt;
 			App.context.design_mtt = "raw.mtt";
 			var content = App.getCurrentContent();
 			var content = ~/::([A-Za-z_]+)(\([A-Za-z\/0-9_]+\))?::/g.customReplace(ccur.layout,function(r) {
@@ -336,9 +337,9 @@ class Main extends Handler<Void> {
 				else
 					return Reflect.field(old, cmd);
 			});
+			App.context = old;
+			App.context.design_mtt = old_mtt;
 			App.context.__content__ = content;
-			if( config.designMTT != null )
-				App.context.design_mtt = config.designMTT;
 			App.prepareTemplate("empty.mtt");
 		}
 	}
