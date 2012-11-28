@@ -835,12 +835,15 @@ class Main extends Handler<Void> {
 
 	public function setupDatabase() {
 		// create structure
+		#if spodadmin
+		spadm.Admin.initializeDatabase();
+		#else
 		var _db = neko.Lib.getClasses().db;
 		for( c in Reflect.fields(_db) ) {
 			var m = Reflect.field(_db, c).manager;
 			if( m != null ) sys.db.TableCreate.create(m);
 		}
-		
+		#end
 		db.Entry.manager.createSearchTable();
 		// default lang
 		var l = new db.Lang();
