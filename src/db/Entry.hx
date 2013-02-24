@@ -119,7 +119,7 @@ class EntryManager extends sys.db.Manager<Entry> {
 		if( e == edef )
 			return getChilds(e);
 		var list = unsafeObjects("SELECT * FROM Entry WHERE pid = "+e.id+" UNION SELECT * FROM Entry WHERE pid = "+edef.id,false);
-		var h = new Hash();
+		var h = new Map();
 		list = list.filter(function(e) if( h.exists(e.name) ) return false else { h.set(e.name,true); return true; });
 		var a = Lambda.array(list);
 		a.sort(function(e1,e2) return Reflect.compare(e1.name,e2.name));

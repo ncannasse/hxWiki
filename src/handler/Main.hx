@@ -74,7 +74,7 @@ class Main extends Handler<Void> {
 	}
 
 	public static function encodePass( p : String ) {
-		return haxe.Md5.encode("some salt with "+p+" and "+p);
+		return haxe.crypto.Md5.encode("some salt with "+p+" and "+p);
 	}
 
 	function doLogin() {
@@ -176,7 +176,7 @@ class Main extends Handler<Void> {
 
 	function doView( path : List<String> ) {
 		// list available contents
-		var langs = new Hash();
+		var langs = new Map();
 		var def = null;
 		var cur = null;
 		for( l in db.Lang.manager.all(false) ) {
@@ -238,7 +238,7 @@ class Main extends Handler<Void> {
 			if( theme == null )
 				throw "Missing ForumTheme '"+path.join("/")+"' in database";
 			App.context.path = "/"+theme.path;
-			new handler.Forum(theme,callback(createEditor,entry,false)).execute(App.request,path.length);
+			new handler.Forum(theme,createEditor.bind(entry,false)).execute(App.request,path.length);
 			return;
 		}
 
@@ -316,7 +316,7 @@ class Main extends Handler<Void> {
 			var old_mtt = App.context.design_mtt;
 			App.context.design_mtt = "raw.mtt";
 			var content = App.getCurrentContent();
-			var content = ~/::([A-Za-z_]+)(\([A-Za-z\/0-9_]+\))?::/g.customReplace(ccur.layout,function(r) {
+			var content = ~/::([A-Za-z_]+)(\([A-Za-z\/0-9_]+\))?::/g.map(ccur.layout,function(r) {
 				var cmd = r.matched(1);
 				var param = r.matched(2);
 				if( param != null ) {
@@ -406,7 +406,7 @@ class Main extends Handler<Void> {
 			sid : App.session.sid,
 			lang : lang.code,
 			allowRaw : group.canInsertHTML,
-			titles : new Hash(),
+			titles : new Map(),
 			externLinkTarget : target,
 		};
 		// fill titles cache
@@ -647,9 +647,9 @@ class Main extends Handler<Void> {
 		}
 		var ch;
 		try {
-			ch = neko.io.File.write(neko.Web.getCwd()+"/file/"+f.name,true);
+			ch = sys.io.File.write(neko.Web.getCwd()+"/file/"+f.name,true);
 		} catch( e : Dynamic ) {
-			neko.Sys.sleep(0.5); // wait for another process to write ?
+			Sys.sleep(0.5); // wait for another process to write ?
 			neko.Web.redirect(neko.Web.getURI()+"?retry="+Std.random(1000));
 			return;
 		}
@@ -738,16 +738,16 @@ class Main extends Handler<Void> {
 			f.content = content;
 			f.update();
 			sys.db.Manager.cnx.commit();
-			try neko.FileSystem.deleteFile(neko.Web.getCwd()+"/file/"+filename) catch( e : Dynamic ) {};
+			try sys.FileSystem.deleteFile(neko.Web.getCwd()+"/file/"+filename) catch( e : Dynamic ) {};
 			if( ext == "swf" ) {
 				var h = getSWFHeader(content);
 				filename += ":"+h.width+"x"+h.height;
 			}
-			neko.Lib.print(haxe.Serializer.run(filename));
+			Sys.print(haxe.Serializer.run(filename));
 		} catch( e : Dynamic ) {
 			var s = new haxe.Serializer();
 			s.serializeException(Std.string(e));
-			neko.Lib.print(s.toString());
+			Sys.print(s.toString());
 		}
 	}
 
@@ -933,7 +933,7 @@ class Main extends Handler<Void> {
 			} else
 				c.userName = c.user.name;
 			var vars = neko.Web.getPostData();
-			var check = haxe.Md5.encode(vars.substr(0,vars.length-32));
+			var check = haxe.crypto.Md5.encode(vars.substr(0,vars.length-32));
 			if( check != vars.substr(vars.length-32,32) )
 				throw Text.get.err_invalid_check;
 			c.content = StringTools.trim(request.get(editor.content,""));
@@ -962,8 +962,8 @@ class Main extends Handler<Void> {
 		var entry = getEntry(getPath(),getLang());
 		neko.Web.setHeader("Content-Type","application/xml");
 		// dates need to be printed in english
-		if( !neko.Sys.setTimeLocale("EN") )
-			neko.Sys.setTimeLocale("en_US.UTF8");
+		if( !Sys.setTimeLocale("EN") )
+			Sys.setTimeLocale("en_US.UTF8");
 		App.context.entry = entry;
 		App.context.posts = db.Entry.manager.selectSubs(entry,SPage(0,10));
 	}
@@ -980,8 +980,8 @@ class Main extends Handler<Void> {
 	function doRSSComments() {
 		neko.Web.setHeader("Content-Type","application/xml");
 		// dates need to be printed in english
-		if( !neko.Sys.setTimeLocale("EN") )
-			neko.Sys.setTimeLocale("en_US.UTF8");
+		if( !Sys.setTimeLocale("EN") )
+			Sys.setTimeLocale("en_US.UTF8");
 		App.context.title = Text.get.latest_comments;
 		App.context.comments = db.Comment.manager.browse(0,50);
 	}

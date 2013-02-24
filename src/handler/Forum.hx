@@ -64,8 +64,8 @@ class Thread extends Handler<ForumMessage> {
 	override function initialize() {
 		free("objectDefault", "forum_thread.mtt", object(doShow, ReadOnly));
 		logged("reply", "forum_post.mtt", object(doReply, ReadOnly));
-		moderator("lock", object(callback(doLock,true)));
-		moderator("unlock", object(callback(doLock,false)));
+		moderator("lock", object(doLock.bind(true)));
+		moderator("unlock", object(doLock.bind(false)));
 		moderator("move", object(doMove));
 	}
 
@@ -76,7 +76,7 @@ class Thread extends Handler<ForumMessage> {
 			thread.replyCount,
 			Config.FORUM_MESSAGES_PER_PAGE,
 			thread.browse,
-			callback(thread.browsePosition,date)
+			thread.browsePosition.bind(date)
 		);
 		var messages = browser.current();
 		if( browser.page == 1 )
@@ -264,7 +264,7 @@ class Forum extends Handler<Void> {
 		var browser = new ResultsBrowser(
 			db.ForumMessage.manager.countThreads(theme),
 			Config.FORUM_THREADS_PER_PAGE,
-			callback(theme.browse,App.user,false)
+			theme.browse.bind(App.user,false)
 		);
 		var threads = ForumTheme.groupByDay(browser.current());
 		if( browser.page == 1 ) {

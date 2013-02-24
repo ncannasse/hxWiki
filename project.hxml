@@ -10,9 +10,9 @@
 -main JsTools
 -cp src
 -D embed-js
---dce no
+-dce no
 --next
--swf9 www/upload.swf
+-swf www/upload.swf
 -main Uploader
 -cp src
 --next

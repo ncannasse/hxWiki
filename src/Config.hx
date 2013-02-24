@@ -7,10 +7,10 @@ class Config {
 		DIR = cwd + "../";
 		var data;
 		try {
-			data = neko.io.File.getContent(DIR+"config.xml");
+			data = sys.io.File.getContent(DIR+"config.xml");
 		} catch( e : Dynamic ) {
 			DIR = cwd + "cfg/";
-			data = neko.io.File.getContent(DIR+"config.xml");
+			data = sys.io.File.getContent(DIR+"config.xml");
 		}
 		return Xml.parse(data).firstElement();
 	}

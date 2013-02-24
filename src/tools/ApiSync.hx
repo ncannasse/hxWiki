@@ -120,7 +120,7 @@ class ApiSync {
 			var me = this;
 			display(fields,function(f) {
 				me.print(f.name+" : ");
-				me.processType(#if haxe_211 f.type #else f.t #end);
+				me.processType(#if haxe3 f.type #else f.t #end);
 			},", ");
 			print(" }");
 		case CDynamic(t):
@@ -131,10 +131,8 @@ class ApiSync {
 				l.add(t);
 				processPath("Dynamic",l);
 			}
-		#if (haxe_211 || haxe3)
 		case CAbstract(path,params):
 			processPath(path,params);
-		#end
 		}
 	}
 
@@ -161,7 +159,7 @@ class ApiSync {
 
 	function processIndex( t : TypeTree, depth : String ) {
 		switch( t ) {
-		case TPackage(name,full,subs):
+		case TPackage(name,_,subs):
 			var isPrivate = name.charAt(0) == "_";
 			if( isPrivate || name == "Remoting" ) return;
 			var uid = "pack"+(id++);
@@ -250,10 +248,8 @@ class ApiSync {
 				processEnum(e);
 			case TTypedecl(t):
 				processTypedef(t);
-			#if (haxe_211 || haxe3)
 			case TAbstractdecl(a):
 				processAbstract(a);
-			#end
 			}
 			print("[/api]");
 			// save
@@ -422,7 +418,6 @@ class ApiSync {
 		}
 	}
 
-	#if (haxe_211 || haxe3)
 	function processAbstract(a : Abstractdef) {
 		print('[name]');
 		if( a.isPrivate )
@@ -437,7 +432,6 @@ class ApiSync {
 		print('[/name]\n');
 		processInfos(a);
 	}
-	#end
 	
 	function processTypedef(t : Typedef) {
 		print('[name]');
@@ -477,23 +471,8 @@ class ApiSync {
 		switch( t ) {
 		case CAnonymous(fields):
 			print('[anon]\n\n');
-			for( f in fields ) {
-				processClassField(all,#if haxe_211 f #else {
-					name : f.name,
-					type : f.t,
-					isPublic : true,
-					isOverride : false,
-					doc : null,
-					get : RNormal,
-					set : RNormal,
-					params : null,
-					platforms : platforms,
-					#if haxe_211
-					line : null,
-					meta : [],
-					#end
-				} #end,false);
-			}
+			for( f in fields )
+				processClassField(all,f,false);
 			print('[/anon]\n');
 		default:
 			if( all.length != platforms.length ) {
@@ -564,7 +543,7 @@ class ApiSync {
 	}
 
 	public static function main() {
-		var args = neko.Sys.args();
+		var args = Sys.args();
 		var host = input("Host",args[0]).split(":");
 		var config = {
 			host : host[0],
@@ -585,7 +564,7 @@ class ApiSync {
 		log("Reading files");
 		var parser = new haxe.rtti.XmlParser();
 		for( f in FILES ) {
-			var data = neko.io.File.getContent(f.file);
+			var data = sys.io.File.getContent(f.file);
 			var x = Xml.parse(data).firstElement();
 			if( f.platform == "flash8" )
 				transformPackage(x);

@@ -1,7 +1,7 @@
 #if js
-import js.Dom.Textarea;
-import js.Dom.Event;
-import js.Dom.HtmlDom;
+//import js.Dom.Textarea;
+//import js.Dom.Event;
+//import js.Dom.HtmlDom;
 #end
 
 typedef EditorButton = {
@@ -12,6 +12,7 @@ typedef EditorButton = {
 	text : String,
 }
 
+@:expose
 class Editor {
 
 	public static function normalize(name:String) {
@@ -36,11 +37,11 @@ class Editor {
 		sid : String,
 		lang : String,
 		allowRaw : Bool,
-		titles : Hash<{ exists : Bool, title : String }>,
+		titles : Map<String,{ exists : Bool, title : String }>,
 		externLinkTarget : Null<String>,
 	};
 	var uniqueId : Int;
-	var subcache : Hash<Array<{ title : String, url : String }>>;
+	var subcache : Map<String,Array<{ title : String, url : String }>>;
 	#if js
 	var previewBlock : String;
 	var uploadImage : Bool;
@@ -56,19 +57,19 @@ class Editor {
 		#else
 		config = data;
 		#end
-		subcache = new Hash();
+		subcache = new Map();
 		content = config.name + "_content";
 		preview = config.name + "_preview";
 	}
 
 	#if js
 
-	public function getDocument() : Textarea {
-		return cast js.Lib.document.getElementsByName(content)[0];
+	public function getDocument() : js.html.TextAreaElement {
+		return cast js.Browser.document.getElementsByName(content)[0];
 	}
 
 	public function updatePreview() {
-		var prev = js.Lib.document.getElementById(preview);
+		var prev = js.Browser.document.getElementById(preview);
 		var start = haxe.Timer.stamp();
 		var data = getDocument().value;
 		if( data == refresh.latest )
@@ -95,13 +96,13 @@ class Editor {
 
 		// in case we have a preview block to show/hide
 		if( previewBlock != null )
-			js.Lib.document.getElementById(previewBlock).style.display = StringTools.trim(data) == "" ? "none" : "";
+			js.Browser.document.getElementById(previewBlock).style.display = StringTools.trim(data) == "" ? "none" : "";
 
 		if( haxe.Timer.stamp() - start > 0.15 )
 			refresh.auto = false;
 		// execute generate JS scripts
 		for( i in 1...uniqueId ) {
-			var e = js.Lib.document.getElementById("js_"+i);
+			var e = js.Browser.document.getElementById("js_"+i);
 			if( e != null )
 				js.Lib.eval(e.innerHTML);
 		}
@@ -109,7 +110,7 @@ class Editor {
 		return false;
 	}
 
-	public function handleTab(e:Event) {
+	public function handleTab(e:js.html.KeyboardEvent) {
 		if( e.keyCode != 9 || e.altKey || e.ctrlKey || e.shiftKey )
 			return true;
 		var sel = new js.Selection(getDocument());
@@ -120,14 +121,14 @@ class Editor {
 
 	public function initUpload(button,title,pattern,img) {
 		var loaded = false;
-		var but = js.Lib.document.getElementById(button);
+		var but = js.Browser.document.getElementById(button);
 		var target = button + "_swf";
-		js.Lib.document.write('<div id="'+target+'"></div>');
+		js.Browser.document.write('<div id="'+target+'"></div>');
 		but.onmouseover = function(_) {
 			if(loaded) return;
 			loaded = true;
-			var doc = js.Lib.document;
-			var win = js.Lib.window;
+			var doc = js.Browser.document;
+			var win = js.Browser.window;
 			var swf = doc.getElementById(target);
 			swf.style.position = "absolute";
 			swf.style.left = "0px";
@@ -135,7 +136,7 @@ class Editor {
 			var p = getElementPosition(but);
 			swf.style.width = p.width + "px";
 			swf.style.height = p.height + "px";
-			swf.style.zIndex = 10;
+			swf.style.zIndex = "10";
 			var p2 = getElementPosition(swf);
 			swf.style.top = (p.y - p2.y) + "px";
 			swf.style.left = (p.x - p2.x) + "px";
@@ -143,7 +144,7 @@ class Editor {
 		}
 	}
 
-	static function getElementPosition( o : HtmlDom ) {
+	static function getElementPosition( o : js.html.Element ) {
 		var ret = { x : 0, y : 0, width : o.offsetWidth, height : o.offsetHeight}
 		var p = o;
 		while(p != null) {
@@ -181,12 +182,12 @@ class Editor {
 		uploadImage = img;
 		// init incoming connection
 		var ctx = new haxe.remoting.Context();
-		ctx.addObject("api",{ uploadResult : function(url) haxe.Timer.delay(callback(uploadResult,url),1), uploadError : uploadError });
+		ctx.addObject("api",{ uploadResult : function(url) haxe.Timer.delay(uploadResult.bind(url),1), uploadError : uploadError });
 		haxe.remoting.ExternalConnection.flashConnect(config.name,"upload",ctx);
 	}
 
 	public function spanAction( title ) {
-		var span = js.Lib.window.prompt(title);
+		var span = js.Browser.window.prompt(title,"");
 		if( span == null || !~/^([A-Za-z0-9_])+$/.match(span) )
 			return false;
 		var sel = new js.Selection(getDocument());
@@ -322,7 +323,7 @@ class Editor {
 		t = StringTools.htmlEscape(t);
 		switch( style ) {
 		case "xml", "html":
-			t = ~/(&lt;\/?)([a-zA-Z0-9:_]+)([^&]*?)(\/?&gt;)/.customReplace(t,function(r) {
+			t = ~/(&lt;\/?)([a-zA-Z0-9:_]+)([^&]*?)(\/?&gt;)/g.map(t,function(r) {
 				var tag = r.matched(2);
 				var attr = ~/([a-zA-Z0-9:_]+)="([^"]*?)"/g.replace(r.matched(3),'<span class="att">$1</span><span class="kwd">=</span><span class="string">"$2"</span>');
 				return '<span class="kwd">'+r.matched(1)+'</span><span class="tag">'+tag+'</span>'+attr+'<span class="kwd">'+r.matched(4)+'</span>';
@@ -331,7 +332,7 @@ class Editor {
 		case "haxe":
 			var tags = new Array();
 			var untag = function(s,html) {
-				return ~/##TAG([0-9]+)##/.customReplace(s,function(r) {
+				return ~/##TAG([0-9]+)##/g.map(s,function(r) {
 					var t = tags[Std.parseInt(r.matched(1))];
 					return html ? t.html : t.old;
 				});
@@ -340,16 +341,16 @@ class Editor {
 				tags.push({ old : s, html : '<span class="'+c+'">'+untag(s,false)+'</span>' });
 				return "##TAG"+(tags.length-1)+"##";
 			};
-			t = ~/\/\*((.|\n)*?)\*\//.customReplace(t,function(r) {
+			t = ~/\/\*((.|\n)*?)\*\//g.map(t,function(r) {
 				return tag("comment",r.matched(0));
 			});
-			t = ~/"(\\"|[^"])*?"/.customReplace(t,function(r) {
+			t = ~/"(\\"|[^"])*?"/g.map(t,function(r) {
 				return tag("string",r.matched(0));
 			});
-			t = ~/'(\\'|[^'])*?'/.customReplace(t,function(r) {
+			t = ~/'(\\'|[^'])*?'/g.map(t,function(r) {
 				return tag("string",r.matched(0));
 			});
-			t = ~/\/\/[^\n]*/.customReplace(t,function(r) {
+			t = ~/\/\/[^\n]*/g.map(t,function(r) {
 				return tag("comment",r.matched(0));
 			});
 			var kwds = [
@@ -377,12 +378,12 @@ class Editor {
 	}
 
 	static function makeSpans( t : String ) : String {
-		return ~/\n*\[([A-Za-z0-9_ ]+)\]\n*([^<>]*?)\n*\[\/\1\]\n*/.customReplace(t,function(r) {
+		return ~/\n*\[([A-Za-z0-9_ ]+)\]\n*([^<>]*?)\n*\[\/\1\]\n*/g.map(t,function(r) {
 			return '<span class="'+r.matched(1)+'">'+makeSpans(r.matched(2))+'</span>';
 		});
 	}
 	
-	function makeTitle( titles : Hash<Bool>, code, str ) {
+	function makeTitle( titles : Map<String,Bool>, code, str ) {
 		var part = ~/[^a-z0-9]+/g.replace(str.toLowerCase(), "-");
 		while( part.charCodeAt(0) == "-".code )
 			part = part.substr(1);
@@ -406,16 +407,16 @@ class Editor {
 		// newlines
 		t = StringTools.replace(t,"\n","<br/>");
 		// titles
-		var titles = new Hash();
+		var titles = new Map();
 		titles.set("", true);
-		t = ~/====== ?(.*?) ?======/g.customReplace(t,function(r) return makeTitle(titles,"h1",r.matched(1)));
-		t = ~/===== ?(.*?) ?=====/g.customReplace(t,function(r) return makeTitle(titles,"h2",r.matched(1)));
-		t = ~/==== ?(.*?) ?====/g.customReplace(t,function(r) return makeTitle(titles,"h3",r.matched(1)));
+		t = ~/====== ?(.*?) ?======/g.map(t,function(r) return makeTitle(titles,"h1",r.matched(1)));
+		t = ~/===== ?(.*?) ?=====/g.map(t,function(r) return makeTitle(titles,"h2",r.matched(1)));
+		t = ~/==== ?(.*?) ?====/g.map(t,function(r) return makeTitle(titles,"h3",r.matched(1)));
 		// links
 		var target = config.externLinkTarget == null ? "" : ' target="' + config.externLinkTarget + '"';
 		t = ~/\[\[(https?:[^\]"]*?)\|(.*?)\]\]/g.replace(t,'<a href="$1" class="extern"'+target+'>$2</a>');
 		t = ~/\[\[(https?:[^\]"]*?)\]\]/g.replace(t,'<a href="$1" class="extern"'+target+'>$1</a>');
-		t = ~/\[\[([^\]]*?)\]\]/.customReplace(t,function(r) {
+		t = ~/\[\[([^\]]*?)\]\]/g.map(t,function(r) {
 			var link = r.matched(1);
 			if( link.substr(link.length-2,2) == "/*" ) {
 				var path = makePath(link.substr(0,link.length-2)).path;
@@ -436,14 +437,14 @@ class Editor {
 		});
 		// images / files
 		t = ~/@([ A-Za-z0-9._-]+)@/g.replace(t,'<img src="/file/$1" alt="$1" class="intern"/>');
-		t = ~/\{\{([ A-Za-z0-9._-]+)(|.*?)\}\}/.customReplace(t,function(r) {
+		t = ~/\{\{([ A-Za-z0-9._-]+)(|.*?)\}\}/g.map(t,function(r) {
 			var link = r.matched(1);
 			var ext = link.split(".").pop();
 			var title = r.matched(2);
 			if( title == null || title == "" ) title = link else title = title.substr(1);
 			return '<a href="/file/'+link+'" class="file file_'+ext+'">'+title+'</a>';
 		});
-		t = ~/@([ A-Za-z0-9._-]+\.swf):([0-9]+)x([0-9]+)(:[^@]+)?@/.customReplace(t,function(r) {
+		t = ~/@([ A-Za-z0-9._-]+\.swf):([0-9]+)x([0-9]+)(:[^@]+)?@/g.map(t,function(r) {
 			var id = uniqueId++;
 			var str = '<div class="swf" id="swf_'+id+'" style="width : '+r.matched(2)+'px">['+r.matched(1)+']</div>';
 			str += '<script type="text/javascript" id="js_'+id+'">';
@@ -474,7 +475,7 @@ class Editor {
 		t = ~/\r\n?/g.replace(t,"\n");
 		var b = new StringBuf();
 		var codes = new Array();
-		t = ~/<code( [a-zA-Z0-9]+)?>([^\0]*?)<\/code>/.customReplace(t,function(r) {
+		t = ~/<code( [a-zA-Z0-9]+)?>([^\0]*?)<\/code>/g.map(t,function(r) {
 			var style = r.matched(1);
 			var code = code(r.matched(2),isEmpty(style)?null:style.substr(1));
 			codes.push(code);

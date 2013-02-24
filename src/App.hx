@@ -1,5 +1,6 @@
 import mtwin.web.Handler;
 
+@:expose
 class App {
 
 	public static var database : sys.db.Connection;
@@ -121,7 +122,7 @@ class App {
 			switch( e ) {
 			case ActionReservedToLoggedUsers:
 				session.setError(Text.get.err_must_login);
-			case UnknownAction(a):
+			case UnknownAction(_):
 				session.setError(Text.get.err_unknown_action,{ action : StringTools.htmlEscape(neko.Web.getURI()) });
 			default:
 			}
@@ -204,7 +205,7 @@ class App {
 		// which design mtt to choose
 		if( context.design_mtt == null ) {
 			var customDesign = "design_" + style + ".mtt";
-			context.design_mtt = if( neko.FileSystem.exists(Config.TPL+customDesign) ) customDesign else "design.mtt";
+			context.design_mtt = if( sys.FileSystem.exists(Config.TPL+customDesign) ) customDesign else "design.mtt";
 		}
 		
 		// uri
@@ -254,7 +255,7 @@ class App {
 			context = {};
 			initContext();
 			context.error = Std.string(e);
-			context.stack = haxe.Stack.toString(haxe.Stack.exceptionStack());
+			context.stack = haxe.CallStack.toString(haxe.CallStack.exceptionStack());
 			executeTemplate();
 		} catch( e : Dynamic ) {
 			neko.Lib.rethrow(e);
@@ -276,8 +277,8 @@ class App {
 	}
 
 	static function main() {
-		if( !neko.Sys.setTimeLocale(Text.get.locale1) )
-			neko.Sys.setTimeLocale(Text.get.locale2);
+		if( !Sys.setTimeLocale(Text.get.locale1) )
+			Sys.setTimeLocale(Text.get.locale2);
 		try {
 			database = initDatabase(Config.get("db"));
 		} catch( e : Dynamic ) {
