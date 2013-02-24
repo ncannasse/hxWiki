@@ -211,7 +211,7 @@ class ApiSync {
 			for( x in subs )
 				processIndex(x,"  * ");
 			current.add("\n[/api_index]");
-			if( full != "flash.system" && api.write(path,lang,(name == "" ? "haXe API" : name),current.toString()) )
+			if( full != "flash.system" && api.write(path,lang,(name == "" ? "Haxe API" : name),current.toString()) )
 				log("Updating "+full+" ["+lang+"]");
 			else
 				log("Skipping "+full+" ["+lang+"]",true);
