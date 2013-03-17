@@ -366,7 +366,7 @@ class ApiSync {
 			print(" : ");
 			processType(f.type);
 		}
-		if( f.platforms.length != platforms.length ) {
+		if( f.platforms.length != platforms.length && f.platforms.length > 0 ) {
 			print('[pf]Available in ');
 			display(f.platforms,print,", ");
 			print('[/pf]');
