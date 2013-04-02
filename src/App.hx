@@ -289,6 +289,10 @@ class App {
 		sys.db.Transaction.main(database, mainLoop, errorHandler);
 		database = null; // already closed
 		cleanup();
+		#if neko
+		if( Config.get("cache", "0") == "1" )
+			neko.Web.cacheModule(main);
+		#end
 	}
 
 }
