@@ -19,8 +19,8 @@ deploy_nc: prepare
 	ssh ncannasse_fr@deploy.motion-twin.com deploy
 
 deploy_shiro: prepare
-	rsync -avz --delete $(RSYNC_EXCLUDES) tpl www ncannasse@shirogames.com:/data/shirogames
-	rsync -avz --delete $(RSYNC_EXCLUDES) tpl www ncannasse@shirogames.com:/data/bible
+	rsync -avz --chmod=ug=rwX,o= --delete $(RSYNC_EXCLUDES) tpl www upload@shirogames.com:/data/shirogames
+	rsync -avz --chmod=ug=rwX,o= --delete $(RSYNC_EXCLUDES) tpl www upload@shirogames.com:/data/bible
 
 api:
 	haxe project.hxml
