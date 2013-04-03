@@ -19,7 +19,7 @@ deploy_nc: prepare
 	ssh ncannasse_fr@deploy.motion-twin.com deploy
 
 deploy_shiro: prepare
-	rsync -avz --chmod=ug=rwX,o= --delete $(RSYNC_EXCLUDES) tpl www upload@shirogames.com:/data/shirogames
+	rsync -avz --chmod=ug=rwX,o= --delete $(RSYNC_EXCLUDES) --exclude="www/js" tpl www upload@shirogames.com:/data/shirogames
 	rsync -avz --chmod=ug=rwX,o= --delete $(RSYNC_EXCLUDES) tpl www upload@shirogames.com:/data/bible
 
 api:
