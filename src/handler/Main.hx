@@ -16,9 +16,9 @@ class Main extends Handler<Void> {
 			execute(request,level);
 			return;
 		case "db":
-			#if spodadmin
+			#if dbadmin
 			if( App.user != null && App.user.group.canAccessDB ) {
-				spadm.Admin.handler();
+				sys.db.Admin.handler();
 				return;
 			}
 			#end
@@ -835,8 +835,8 @@ class Main extends Handler<Void> {
 
 	public function setupDatabase() {
 		// create structure
-		#if spodadmin
-		spadm.Admin.initializeDatabase();
+		#if dbadmin
+		sys.db.Admin.initializeDatabase();
 		#else
 		var _db = neko.Lib.getClasses().db;
 		for( c in Reflect.fields(_db) ) {
