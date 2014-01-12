@@ -27,6 +27,7 @@ class ApiSync {
 	function new(api) {
 		this.api = api;
 		id = 0;
+		curPackage = "";
 	}
 
 	function print(str) {
@@ -211,7 +212,7 @@ class ApiSync {
 			for( x in subs )
 				processIndex(x,"  * ");
 			current.add("\n[/api_index]");
-			if( full != "flash.system" && api.write(path,lang,(name == "" ? "Haxe API" : name),current.toString()) )
+			if( full != "flash8.system" && api.write(path,lang,(name == "" ? "Haxe API" : name),current.toString()) )
 				log("Updating "+full+" ["+lang+"]");
 			else
 				log("Skipping "+full+" ["+lang+"]",true);
@@ -490,12 +491,15 @@ class ApiSync {
 	function processDoc( doc : String, tag : String ) {
 		print('[doc'+tag+']');
 		var r = "\\[doc"+tag+"\\]([^\\0]*?)\\[/doc"+tag+"\\]";
-		var rdoc = new EReg(r,"");
-		if( rdoc.match(previousContent) && StringTools.trim(doc = rdoc.matched(1)) != ""  )
+		var rdoc = new EReg(r, "");
+		var genDoc = StringTools.startsWith(curPackage, "js.html");
+		if( !genDoc && rdoc.match(previousContent) && StringTools.trim(doc = rdoc.matched(1)) != "" )
 			print(doc);
 		else if( doc == null || StringTools.trim(doc) == "" )
 			print("\n");
-		else {
+		else if( genDoc ) {
+			print("<code raw>" + doc.split("<code>").join('<span class="code">').split("</code>").join('</span>') + '</code>');
+		} else {
 			// unixify line endings
 			doc = doc.split("\r\n").join("\n").split("\r").join("\n");
 			// trim stars
