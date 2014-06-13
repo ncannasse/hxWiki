@@ -57,6 +57,9 @@
 				<ul id="mainmenu">
 					$$menuLinks(0)
 				</ul>
+				<div class="warning">
+					You are currently visiting an old version of the website, go on newest <a href="http://haxe.org">Haxe.org</a>
+				</div>
 			</div>
 			<div id="content">
 
